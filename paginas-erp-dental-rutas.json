@@ -1,0 +1,810 @@
+{
+  "modulos": [
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\calendario-principal-de-citas.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\nueva-cita.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\editar-cita.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\vista-semanal-de-citas.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\vista-mensual-de-citas.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\bloqueos-de-sala-y-horarios.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\gestion-de-disponibilidad-de-profesionales.md"
+    },
+    {
+      "modulo": "Agenda de Citas y Programación",
+      "archivo_md": "paginas-erp-dental-md\\agenda-de-citas-y-programacion\\reprogramacion-masiva-de-citas.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\listado-de-pacientes.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\perfil-completo-del-paciente.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\nueva-ficha-de-paciente.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\historia-clinica-dental.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\odontograma-interactivo.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\tratamientos-realizados.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\alergias-y-antecedentes-medicos.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\documentos-del-paciente.md"
+    },
+    {
+      "modulo": "Gestión de Pacientes e Historia Clínica",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-pacientes-e-historia-clinica\\historial-de-visitas.md"
+    },
+    {
+      "modulo": "Presupuestos y Planes de Tratamiento",
+      "archivo_md": "paginas-erp-dental-md\\presupuestos-y-planes-de-tratamiento\\listado-de-presupuestos.md"
+    },
+    {
+      "modulo": "Presupuestos y Planes de Tratamiento",
+      "archivo_md": "paginas-erp-dental-md\\presupuestos-y-planes-de-tratamiento\\crear-nuevo-presupuesto.md"
+    },
+    {
+      "modulo": "Presupuestos y Planes de Tratamiento",
+      "archivo_md": "paginas-erp-dental-md\\presupuestos-y-planes-de-tratamiento\\editar-presupuesto.md"
+    },
+    {
+      "modulo": "Presupuestos y Planes de Tratamiento",
+      "archivo_md": "paginas-erp-dental-md\\presupuestos-y-planes-de-tratamiento\\plan-de-tratamiento-completo.md"
+    },
+    {
+      "modulo": "Presupuestos y Planes de Tratamiento",
+      "archivo_md": "paginas-erp-dental-md\\presupuestos-y-planes-de-tratamiento\\simulador-de-costos.md"
+    },
+    {
+      "modulo": "Presupuestos y Planes de Tratamiento",
+      "archivo_md": "paginas-erp-dental-md\\presupuestos-y-planes-de-tratamiento\\aprobacion-de-presupuestos.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\panel-de-facturacion.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\nueva-factura.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\editar-factura.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\recibos-y-pagos.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\anticipos-y-senales.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\comisiones-por-profesional.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\liquidacion-de-mutuas-seguros.md"
+    },
+    {
+      "modulo": "Facturación, Cobros y Contabilidad",
+      "archivo_md": "paginas-erp-dental-md\\facturacion-cobros-y-contabilidad\\exportacion-a-contabilidad.md"
+    },
+    {
+      "modulo": "Gestión de Mutuas/Seguros de Salud",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-mutuas-seguros-de-salud\\listado-de-mutuas-y-seguros.md"
+    },
+    {
+      "modulo": "Gestión de Mutuas/Seguros de Salud",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-mutuas-seguros-de-salud\\convenios-y-acuerdos.md"
+    },
+    {
+      "modulo": "Gestión de Mutuas/Seguros de Salud",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-mutuas-seguros-de-salud\\asistentes-de-facturacion.md"
+    },
+    {
+      "modulo": "Gestión de Mutuas/Seguros de Salud",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-mutuas-seguros-de-salud\\autorizaciones-de-tratamientos.md"
+    },
+    {
+      "modulo": "Gestión de Mutuas/Seguros de Salud",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-mutuas-seguros-de-salud\\historial-de-pagos-de-seguros.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\control-de-stock.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\listado-de-materiales-dentales.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\nuevo-material.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\ordenes-de-compra.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\alertas-de-reabastecimiento.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\caducidades-y-lotes.md"
+    },
+    {
+      "modulo": "Inventario y Compras",
+      "archivo_md": "paginas-erp-dental-md\\inventario-y-compras\\consumos-por-tratamiento.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\catalogo-de-proveedores.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\nuevo-proveedor.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\catalogo-de-productos-medicos.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\multiples-almacenes.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\transferencias-entre-almacenes.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\recepcion-de-mercancias.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\listado-de-empleados.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\ficha-de-empleado.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\nuevo-empleado.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\gestion-de-horarios-y-turnos.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\productividad-por-profesional.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\asignacion-de-permisos-y-roles.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\nominas-y-salarios.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\panel-de-crm.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\campanas-de-email.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\campanas-de-sms.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\recordatorios-de-citas.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\circuitos-automaticos-recalls.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\listas-de-pacientes.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\seguimiento-de-campanas.md"
+    },
+    {
+      "modulo": "Gestión de Proveedores y Almacén",
+      "archivo_md": "paginas-erp-dental-md\\gestion-de-proveedores-y-almacen\\promociones-y-ofertas.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\dashboard-principal.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\indicadores-de-citas.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\indicadores-de-facturacion.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\produccion-por-area.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\rentabilidad-y-analisis.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\informes-configurables.md"
+    },
+    {
+      "modulo": "Cuadro de Mandos e Informes",
+      "archivo_md": "paginas-erp-dental-md\\cuadro-de-mandos-e-informes\\exportacion-de-datos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\generador-de-documentos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\consentimientos-informados.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\cuestionarios-medicos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\recetas-medicas.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\cartas-al-paciente.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\plantillas-de-documentos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\captura-de-firmas.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\firma-de-consentimientos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\firma-de-presupuestos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\historial-de-firmas.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\ordenes-a-laboratorio.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\nueva-orden-de-trabajo.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\seguimiento-de-protesis.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\estados-de-fabricacion.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\recepcion-de-trabajos.md"
+    },
+    {
+      "modulo": "Documentación y Protocolos",
+      "archivo_md": "paginas-erp-dental-md\\documentacion-y-protocolos\\facturacion-de-laboratorio.md"
+    },
+    {
+      "modulo": "Integración Radiológica",
+      "archivo_md": "paginas-erp-dental-md\\integracion-radiologica\\visor-de-radiografias.md"
+    },
+    {
+      "modulo": "Integración Radiológica",
+      "archivo_md": "paginas-erp-dental-md\\integracion-radiologica\\subida-de-imagenes.md"
+    },
+    {
+      "modulo": "Integración Radiológica",
+      "archivo_md": "paginas-erp-dental-md\\integracion-radiologica\\vista-de-tac-y-ortopantomografias.md"
+    },
+    {
+      "modulo": "Integración Radiológica",
+      "archivo_md": "paginas-erp-dental-md\\integracion-radiologica\\modulo-dentia-ia-para-radiografias.md"
+    },
+    {
+      "modulo": "Integración Radiológica",
+      "archivo_md": "paginas-erp-dental-md\\integracion-radiologica\\analisis-de-imagenes.md"
+    },
+    {
+      "modulo": "Integración Radiológica",
+      "archivo_md": "paginas-erp-dental-md\\integracion-radiologica\\historial-radiologico-del-paciente.md"
+    },
+    {
+      "modulo": "Portal de Cita Online y Móvil",
+      "archivo_md": "paginas-erp-dental-md\\portal-de-cita-online-y-movil\\portal-web-de-citas-online.md"
+    },
+    {
+      "modulo": "Portal de Cita Online y Móvil",
+      "archivo_md": "paginas-erp-dental-md\\portal-de-cita-online-y-movil\\solicitud-de-cita-por-internet.md"
+    },
+    {
+      "modulo": "Portal de Cita Online y Móvil",
+      "archivo_md": "paginas-erp-dental-md\\portal-de-cita-online-y-movil\\agenda-mobile-vista-profesional.md"
+    },
+    {
+      "modulo": "Portal de Cita Online y Móvil",
+      "archivo_md": "paginas-erp-dental-md\\portal-de-cita-online-y-movil\\agenda-mobile-vista-recepcion.md"
+    },
+    {
+      "modulo": "Portal de Cita Online y Móvil",
+      "archivo_md": "paginas-erp-dental-md\\portal-de-cita-online-y-movil\\gestion-de-disponibilidad-publica.md"
+    },
+    {
+      "modulo": "Pasarela de Pagos y Financiación",
+      "archivo_md": "paginas-erp-dental-md\\pasarela-de-pagos-y-financiacion\\procesamiento-de-pagos.md"
+    },
+    {
+      "modulo": "Pasarela de Pagos y Financiación",
+      "archivo_md": "paginas-erp-dental-md\\pasarela-de-pagos-y-financiacion\\pasarela-one-pay.md"
+    },
+    {
+      "modulo": "Pasarela de Pagos y Financiación",
+      "archivo_md": "paginas-erp-dental-md\\pasarela-de-pagos-y-financiacion\\pagos-con-tarjeta.md"
+    },
+    {
+      "modulo": "Pasarela de Pagos y Financiación",
+      "archivo_md": "paginas-erp-dental-md\\pasarela-de-pagos-y-financiacion\\planes-de-financiacion.md"
+    },
+    {
+      "modulo": "Pasarela de Pagos y Financiación",
+      "archivo_md": "paginas-erp-dental-md\\pasarela-de-pagos-y-financiacion\\creditos-al-paciente.md"
+    },
+    {
+      "modulo": "Pasarela de Pagos y Financiación",
+      "archivo_md": "paginas-erp-dental-md\\pasarela-de-pagos-y-financiacion\\historial-de-pagos.md"
+    },
+    {
+      "modulo": "Seguridad y Cumplimiento",
+      "archivo_md": "paginas-erp-dental-md\\seguridad-y-cumplimiento\\registro-de-accesos.md"
+    },
+    {
+      "modulo": "Seguridad y Cumplimiento",
+      "archivo_md": "paginas-erp-dental-md\\seguridad-y-cumplimiento\\gestion-de-permisos.md"
+    },
+    {
+      "modulo": "Seguridad y Cumplimiento",
+      "archivo_md": "paginas-erp-dental-md\\seguridad-y-cumplimiento\\cumplimiento-rgpd-y-lopd.md"
+    },
+    {
+      "modulo": "Seguridad y Cumplimiento",
+      "archivo_md": "paginas-erp-dental-md\\seguridad-y-cumplimiento\\copias-de-seguridad.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\endodoncia-planificacion.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\endodoncia-registro-de-conductos.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\endodoncia-control-postoperatorio.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\periodoncia-periodontograma-avanzado.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\periodoncia-mantenimiento-periodontal.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\periodoncia-cirugia-periodontal.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\implantologia-planificacion-3d.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\implantologia-cirugia-guiada.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\implantologia-carga-inmediata.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\implantologia-control-de-osteointegracion.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\ortodoncia-diagnostico-fotos-modelos.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\ortodoncia-plan-de-tratamiento.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\ortodoncia-controles-mensuales.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\ortodoncia-retencion-y-contencion.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\odontopediatria-fichas-pediatricas.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\odontopediatria-fluorizaciones-y-selladores.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\cirugia-oral-preoperatorio.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\cirugia-oral-intraoperatorio.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\cirugia-oral-postoperatorio.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\estetica-dental-diseno-de-sonrisa-dsd.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\estetica-dental-blanqueamiento.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\protesis-fija-plan-y-pruebas.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\protesis-removible-ajustes-y-entrega.md"
+    },
+    {
+      "modulo": "Especialidades Clínicas",
+      "archivo_md": "paginas-erp-dental-md\\especialidades-clinicas\\atm-y-dolor-orofacial-evaluacion-y-seguimiento.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\registro-de-esterilizacion-por-lote.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\etiquetado-y-trazabilidad-de-instrumental.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\protocolos-de-limpieza-y-desinfeccion.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\control-biologico-y-quimico.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\incidencias-de-esterilizacion.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\asignacion-de-bandejas-a-pacientes.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\mantenimiento-de-autoclaves.md"
+    },
+    {
+      "modulo": "Esterilización y Trazabilidad",
+      "archivo_md": "paginas-erp-dental-md\\esterilizacion-y-trazabilidad\\informes-de-trazabilidad.md"
+    },
+    {
+      "modulo": "Mantenimiento y Equipamiento",
+      "archivo_md": "paginas-erp-dental-md\\mantenimiento-y-equipamiento\\inventario-de-equipos-clinicos.md"
+    },
+    {
+      "modulo": "Mantenimiento y Equipamiento",
+      "archivo_md": "paginas-erp-dental-md\\mantenimiento-y-equipamiento\\plan-de-mantenimiento-preventivo.md"
+    },
+    {
+      "modulo": "Mantenimiento y Equipamiento",
+      "archivo_md": "paginas-erp-dental-md\\mantenimiento-y-equipamiento\\partes-de-averia-y-correctivos.md"
+    },
+    {
+      "modulo": "Mantenimiento y Equipamiento",
+      "archivo_md": "paginas-erp-dental-md\\mantenimiento-y-equipamiento\\calendario-de-revisiones-tecnicas.md"
+    },
+    {
+      "modulo": "Mantenimiento y Equipamiento",
+      "archivo_md": "paginas-erp-dental-md\\mantenimiento-y-equipamiento\\garantias-y-contratos-de-servicio.md"
+    },
+    {
+      "modulo": "Mantenimiento y Equipamiento",
+      "archivo_md": "paginas-erp-dental-md\\mantenimiento-y-equipamiento\\informe-de-costes-de-equipamiento.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\registro-y-acceso-del-paciente.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\perfil-y-preferencias.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\mis-citas-proximas-y-pasadas.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\solicitar-modificar-cancelar-cita.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\mis-documentos-consentimientos-recetas.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\mis-imagenes-rx-fotos-clinicas.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\plan-de-tratamiento-aprobado.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\presupuestos-y-aprobaciones.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\pagos-y-financiacion.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\mensajeria-segura-con-la-clinica.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\encuestas-de-satisfaccion.md"
+    },
+    {
+      "modulo": "Portal del Paciente",
+      "archivo_md": "paginas-erp-dental-md\\portal-del-paciente\\programa-de-referidos-y-recompensas.md"
+    },
+    {
+      "modulo": "Teleodontología",
+      "archivo_md": "paginas-erp-dental-md\\teleodontologia\\sala-de-videoconsulta.md"
+    },
+    {
+      "modulo": "Teleodontología",
+      "archivo_md": "paginas-erp-dental-md\\teleodontologia\\agenda-de-teleconsultas.md"
+    },
+    {
+      "modulo": "Teleodontología",
+      "archivo_md": "paginas-erp-dental-md\\teleodontologia\\pre-triaje-online-cuestionarios.md"
+    },
+    {
+      "modulo": "Teleodontología",
+      "archivo_md": "paginas-erp-dental-md\\teleodontologia\\compartir-imagenes-documentos-en-vivo.md"
+    },
+    {
+      "modulo": "Teleodontología",
+      "archivo_md": "paginas-erp-dental-md\\teleodontologia\\consentimiento-para-teleconsulta.md"
+    },
+    {
+      "modulo": "Teleodontología",
+      "archivo_md": "paginas-erp-dental-md\\teleodontologia\\informe-de-teleconsulta.md"
+    },
+    {
+      "modulo": "Multi-sede y Franquicias",
+      "archivo_md": "paginas-erp-dental-md\\multi-sede-y-franquicias\\panel-global-de-centros.md"
+    },
+    {
+      "modulo": "Multi-sede y Franquicias",
+      "archivo_md": "paginas-erp-dental-md\\multi-sede-y-franquicias\\calendario-multicentro.md"
+    },
+    {
+      "modulo": "Multi-sede y Franquicias",
+      "archivo_md": "paginas-erp-dental-md\\multi-sede-y-franquicias\\transferencia-de-pacientes-entre-sedes.md"
+    },
+    {
+      "modulo": "Multi-sede y Franquicias",
+      "archivo_md": "paginas-erp-dental-md\\multi-sede-y-franquicias\\compras-centralizadas.md"
+    },
+    {
+      "modulo": "Multi-sede y Franquicias",
+      "archivo_md": "paginas-erp-dental-md\\multi-sede-y-franquicias\\cuadro-de-mandos-por-sede.md"
+    },
+    {
+      "modulo": "Multi-sede y Franquicias",
+      "archivo_md": "paginas-erp-dental-md\\multi-sede-y-franquicias\\permisos-y-roles-por-sede.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\plan-de-calidad-indicadores.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\auditoria-clinica-checklist.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\auditoria-administrativa-caja-facturas.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\no-conformidades-e-incidencias.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\acciones-correctivas-y-preventivas-capa.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\revision-por-la-direccion.md"
+    },
+    {
+      "modulo": "Calidad y Auditoría",
+      "archivo_md": "paginas-erp-dental-md\\calidad-y-auditoria\\informes-de-acreditacion-normativas.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\editor-de-landing-pages-de-campana.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\catalogo-de-servicios-en-web.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\seo-clinico-metadatos-keywords.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\integracion-con-google-ads-meta-ads.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\gestor-de-testimonios-y-casos-clinicos.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\pixel-conversiones-y-utm-tracking.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\calendario-editorial-y-redes-sociales.md"
+    },
+    {
+      "modulo": "Marketing Avanzado y Web",
+      "archivo_md": "paginas-erp-dental-md\\marketing-avanzado-y-web\\abm-account-based-marketing-para-empresas.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\cohortes-de-pacientes-retencion.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\embudo-de-conversion-lead-paciente.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\analisis-de-ausencias-no-show.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\produccion-por-profesional-box.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\coste-por-tratamiento-y-margen.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\proyecciones-y-forecasting.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\exportacion-bi-data-lake.md"
+    },
+    {
+      "modulo": "Analítica Avanzada & Data",
+      "archivo_md": "paginas-erp-dental-md\\analitica-avanzada-data\\alertas-inteligentes-kpi-thresholds.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\conectores-de-mensajeria-sms-whatsapp-email.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\integracion-radiologia-pacs-dicom.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\integracion-laboratorio-externo-stl-orden.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\pasarelas-de-pago-one-pay-stripe.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\webhooks-y-api-publica.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\sso-ldap-oauth.md"
+    },
+    {
+      "modulo": "Integraciones y APIs",
+      "archivo_md": "paginas-erp-dental-md\\integraciones-y-apis\\monitor-de-integraciones-logs-errores.md"
+    }
+  ],
+  "configuracion": {
+    "tiempo_espera": 30,
+    "modo": "secuencial",
+    "reintentos": 2
+  },
+  "descripcion": "Archivo con 200 páginas individuales del ERP Dental, organizadas por módulos"
+}
