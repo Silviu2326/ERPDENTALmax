@@ -1,0 +1,346 @@
+import { useState } from 'react';
+import { Calendar, Clock, User, DollarSign, FileText, Eye, X, Upload } from 'lucide-react';
+import { Visita, DetalleVisita, obtenerDetalleVisita } from '../api/historialVisitasApi';
+
+interface DetalleVisitaCardProps {
+  visita: Visita;
+  onVerDetalleCompleto?: (visita: DetalleVisita) => void;
+  onVerOdontograma?: (odontogramaId: string, fecha: string) => void;
+  onAdjuntarDocumento?: (visitaId: string) => void;
+}
+
+export default function DetalleVisitaCard({
+  visita,
+  onVerDetalleCompleto,
+  onVerOdontograma,
+  onAdjuntarDocumento,
+}: DetalleVisitaCardProps) {
+  const [detalleCompleto, setDetalleCompleto] = useState<DetalleVisita | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const formatearFecha = (fecha: string) => {
+    return new Date(fecha).toLocaleDateString('es-ES', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const formatearHora = (fecha: string) => {
+    return new Date(fecha).toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const getEstadoBadge = (estado: string) => {
+    const estados: Record<string, string> = {
+      programada: 'bg-yellow-100 text-yellow-800',
+      completada: 'bg-green-100 text-green-800',
+      cancelada: 'bg-red-100 text-red-800',
+    };
+
+    return (
+      <span className={`px-3 py-1 rounded-full text-sm font-medium ${estados[estado] || estados.programada}`}>
+        {estado.charAt(0).toUpperCase() + estado.slice(1)}
+      </span>
+    );
+  };
+
+  const calcularTotalPagos = () => {
+    if (!detalleCompleto?.pagosAsociados) return 0;
+    return detalleCompleto.pagosAsociados.reduce((total, pago) => total + pago.monto, 0);
+  };
+
+  const handleVerDetalle = async () => {
+    if (detalleCompleto) {
+      setShowModal(true);
+      if (onVerDetalleCompleto) {
+        onVerDetalleCompleto(detalleCompleto);
+      }
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const detalle = await obtenerDetalleVisita(visita._id);
+      setDetalleCompleto(detalle);
+      setShowModal(true);
+      if (onVerDetalleCompleto) {
+        onVerDetalleCompleto(detalle);
+      }
+    } catch (error) {
+      console.error('Error al cargar detalles:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const tratamientos = visita.tratamientosRealizados || [];
+  const totalPagos = calcularTotalPagos();
+
+  return (
+    <>
+      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500 hover:shadow-lg transition-all">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-blue-100 p-2 rounded-lg">
+                <Calendar className="w-5 h-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900 text-lg">{formatearFecha(visita.fechaHoraInicio)}</p>
+                <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+                  <Clock className="w-4 h-4" />
+                  {formatearHora(visita.fechaHoraInicio)} - {formatearHora(visita.fechaHoraFin)}
+                </p>
+              </div>
+            </div>
+
+            <div className="ml-11 space-y-2">
+              <div className="flex items-center gap-2 text-gray-700">
+                <User className="w-4 h-4 text-gray-500" />
+                <span className="text-sm">
+                  {visita.profesional.nombre} {visita.profesional.apellidos}
+                </span>
+              </div>
+
+              {tratamientos.length > 0 && (
+                <div className="mt-2">
+                  <p className="text-sm font-medium text-gray-700 mb-1">Tratamientos:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {tratamientos.slice(0, 3).map((tratamiento, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs"
+                      >
+                        {tratamiento.tratamiento.nombre}
+                        {tratamiento.pieza && ` (${tratamiento.pieza})`}
+                      </span>
+                    ))}
+                    {tratamientos.length > 3 && (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">
+                        +{tratamientos.length - 3} más
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {visita.notasClinicas && (
+                <div className="mt-2">
+                  <p className="text-sm text-gray-600 line-clamp-2">{visita.notasClinicas}</p>
+                </div>
+              )}
+
+              {totalPagos > 0 && (
+                <div className="flex items-center gap-2 text-gray-700 mt-2">
+                  <DollarSign className="w-4 h-4 text-green-500" />
+                  <span className="text-sm font-medium text-green-600">
+                    Pagado: ${totalPagos.toLocaleString('es-CL')}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="ml-4 flex flex-col items-end gap-2">
+            {getEstadoBadge(visita.estado)}
+            {visita.odontogramaSnapshot && (
+              <button
+                onClick={() => onVerOdontograma?.(visita.odontogramaSnapshot!._id, visita.fechaHoraInicio)}
+                className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
+              >
+                <Eye className="w-3 h-3" />
+                Odontograma
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+          <div className="flex items-center gap-4 text-sm text-gray-600">
+            {visita.documentosAdjuntos && visita.documentosAdjuntos.length > 0 && (
+              <div className="flex items-center gap-1">
+                <FileText className="w-4 h-4" />
+                <span>{visita.documentosAdjuntos.length} documento(s)</span>
+              </div>
+            )}
+          </div>
+
+          <button
+            onClick={handleVerDetalle}
+            disabled={loading}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm flex items-center gap-2 disabled:opacity-50"
+          >
+            {loading ? (
+              <>
+                <span className="animate-spin">⏳</span>
+                Cargando...
+              </>
+            ) : (
+              <>
+                <Eye className="w-4 h-4" />
+                Ver detalles completos
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Modal de detalles completos */}
+      {showModal && detalleCompleto && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+              <h3 className="text-xl font-semibold text-gray-900">
+                Detalles de la Visita - {formatearFecha(detalleCompleto.fechaHoraInicio)}
+              </h3>
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Información básica */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Profesional</p>
+                  <p className="font-medium">
+                    {detalleCompleto.profesional.nombre} {detalleCompleto.profesional.apellidos}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Estado</p>
+                  {getEstadoBadge(detalleCompleto.estado)}
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Fecha y Hora</p>
+                  <p className="font-medium">
+                    {formatearFecha(detalleCompleto.fechaHoraInicio)} {formatearHora(detalleCompleto.fechaHoraInicio)}
+                  </p>
+                </div>
+                {detalleCompleto.sede && (
+                  <div>
+                    <p className="text-sm text-gray-500">Sede</p>
+                    <p className="font-medium">{detalleCompleto.sede.nombre}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Tratamientos realizados */}
+              {detalleCompleto.tratamientosRealizados && detalleCompleto.tratamientosRealizados.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Tratamientos Realizados</h4>
+                  <div className="space-y-2">
+                    {detalleCompleto.tratamientosRealizados.map((tratamiento, idx) => (
+                      <div key={idx} className="bg-gray-50 p-4 rounded-lg">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="font-medium">{tratamiento.tratamiento.nombre}</p>
+                            {tratamiento.pieza && (
+                              <p className="text-sm text-gray-600">Pieza: {tratamiento.pieza}</p>
+                            )}
+                            {tratamiento.notas && (
+                              <p className="text-sm text-gray-600 mt-1">{tratamiento.notas}</p>
+                            )}
+                          </div>
+                          {tratamiento.tratamiento.costo && (
+                            <p className="font-semibold text-gray-900">
+                              ${tratamiento.tratamiento.costo.toLocaleString('es-CL')}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Notas clínicas */}
+              {detalleCompleto.notasClinicas && (
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Notas Clínicas</h4>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700 whitespace-pre-wrap">{detalleCompleto.notasClinicas}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Pagos asociados */}
+              {detalleCompleto.pagosAsociados && detalleCompleto.pagosAsociados.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Pagos Asociados</h4>
+                  <div className="space-y-2">
+                    {detalleCompleto.pagosAsociados.map((pago) => (
+                      <div key={pago._id} className="bg-green-50 p-4 rounded-lg flex justify-between items-center">
+                        <div>
+                          <p className="font-medium">${pago.monto.toLocaleString('es-CL')}</p>
+                          <p className="text-sm text-gray-600">
+                            {new Date(pago.fecha).toLocaleDateString('es-ES')} - {pago.metodoPago}
+                          </p>
+                        </div>
+                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                          {pago.estado}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Documentos adjuntos */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-semibold text-gray-900">Documentos Adjuntos</h4>
+                  {onAdjuntarDocumento && (
+                    <button
+                      onClick={() => onAdjuntarDocumento(detalleCompleto._id)}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Adjuntar
+                    </button>
+                  )}
+                </div>
+                {detalleCompleto.documentosAdjuntos && detalleCompleto.documentosAdjuntos.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    {detalleCompleto.documentosAdjuntos.map((doc) => (
+                      <a
+                        key={doc._id}
+                        href={doc.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      >
+                        <FileText className="w-5 h-5 text-blue-600" />
+                        <span className="text-sm text-gray-700 truncate">{doc.nombreArchivo}</span>
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-sm">No hay documentos adjuntos</p>
+                )}
+              </div>
+            </div>
+
+            <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-4 flex justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+

@@ -1,0 +1,260 @@
+import { useState, useEffect } from 'react';
+import { Plus, Save, AlertCircle } from 'lucide-react';
+import { ConductoRadicular, RegistroEndodoncia, obtenerAnatomiaDental } from '../api/endodonciaApi';
+import ConductoRadicularInput from './ConductoRadicularInput';
+import DiagramaRadicular from './DiagramaRadicular';
+
+interface EndodonciaFormProps {
+  tratamientoId: string;
+  pacienteId: string;
+  odontologoId: string;
+  numeroDiente: number;
+  registroExistente?: RegistroEndodoncia;
+  onSave: (registro: RegistroEndodoncia) => void;
+  onError?: (error: string) => void;
+}
+
+export default function EndodonciaForm({
+  tratamientoId,
+  pacienteId,
+  odontologoId,
+  numeroDiente,
+  registroExistente,
+  onSave,
+  onError,
+}: EndodonciaFormProps) {
+  const [conductos, setConductos] = useState<ConductoRadicular[]>([]);
+  const [observacionesGenerales, setObservacionesGenerales] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [cargandoAnatomia, setCargandoAnatomia] = useState(false);
+
+  // Cargar datos existentes o anatomía sugerida
+  useEffect(() => {
+    if (registroExistente) {
+      setConductos(registroExistente.conductos || []);
+      setObservacionesGenerales(registroExistente.observacionesGenerales || '');
+    } else {
+      // Cargar anatomía sugerida
+      cargarAnatomiaSugerida();
+    }
+  }, [registroExistente, numeroDiente]);
+
+  const cargarAnatomiaSugerida = async () => {
+    setCargandoAnatomia(true);
+    try {
+      const anatomía = await obtenerAnatomiaDental(numeroDiente);
+      // Crear conductos iniciales basados en la anatomía sugerida
+      const conductosIniciales: ConductoRadicular[] = anatomía.conductosSugeridos.map((nombre) => ({
+        nombreConducto: nombre as ConductoRadicular['nombreConducto'],
+        longitudTrabajo: 0,
+        instrumentoApical: '',
+        conoMaestro: '',
+      }));
+      setConductos(conductosIniciales);
+    } catch (err) {
+      console.error('Error al cargar anatomía:', err);
+      // Iniciar con un conducto vacío por defecto
+      setConductos([{
+        nombreConducto: 'Vestibular',
+        longitudTrabajo: 0,
+        instrumentoApical: '',
+        conoMaestro: '',
+      }]);
+    } finally {
+      setCargandoAnatomia(false);
+    }
+  };
+
+  const handleAddConducto = () => {
+    setConductos([
+      ...conductos,
+      {
+        nombreConducto: 'Vestibular',
+        longitudTrabajo: 0,
+        instrumentoApical: '',
+        conoMaestro: '',
+      },
+    ]);
+  };
+
+  const handleConductoChange = (index: number, conducto: ConductoRadicular) => {
+    const updated = [...conductos];
+    updated[index] = conducto;
+    setConductos(updated);
+  };
+
+  const handleRemoveConducto = (index: number) => {
+    if (conductos.length > 1) {
+      const updated = conductos.filter((_, i) => i !== index);
+      setConductos(updated);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    // Validación
+    if (conductos.length === 0) {
+      setError('Debe agregar al menos un conducto');
+      setLoading(false);
+      return;
+    }
+
+    for (const conducto of conductos) {
+      if (!conducto.longitudTrabajo || conducto.longitudTrabajo <= 0) {
+        setError('Todos los conductos deben tener una longitud de trabajo válida');
+        setLoading(false);
+        return;
+      }
+      if (!conducto.instrumentoApical || !conducto.conoMaestro) {
+        setError('Todos los conductos deben tener instrumento apical y cono maestro');
+        setLoading(false);
+        return;
+      }
+    }
+
+    try {
+      const registro: RegistroEndodoncia = {
+        tratamientoId,
+        pacienteId,
+        odontologoId,
+        numeroDiente,
+        conductos,
+        observacionesGenerales,
+      };
+
+      if (registroExistente?._id) {
+        registro._id = registroExistente._id;
+      }
+
+      onSave(registro);
+    } catch (err: any) {
+      const errorMessage = err.message || 'Error al guardar el registro';
+      setError(errorMessage);
+      if (onError) {
+        onError(errorMessage);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Información básica */}
+      <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          Información del Tratamiento
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Número de Diente
+            </label>
+            <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 font-semibold">
+              {numeroDiente}
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              ID Tratamiento
+            </label>
+            <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-600 text-sm">
+              {tratamientoId}
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              ID Paciente
+            </label>
+            <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-600 text-sm">
+              {pacienteId}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Diagrama radicular */}
+      <DiagramaRadicular numeroDiente={numeroDiente} conductos={conductos} />
+
+      {/* Conductos */}
+      <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-800">
+            Conductos Radiculares
+          </h3>
+          <button
+            type="button"
+            onClick={handleAddConducto}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            <Plus className="w-4 h-4" />
+            Agregar Conducto
+          </button>
+        </div>
+
+        {cargandoAnatomia ? (
+          <div className="text-center py-8 text-gray-500">
+            Cargando anatomía sugerida...
+          </div>
+        ) : conductos.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">
+            No hay conductos registrados. Haga clic en "Agregar Conducto" para comenzar.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {conductos.map((conducto, index) => (
+              <ConductoRadicularInput
+                key={index}
+                conducto={conducto}
+                index={index}
+                onChange={handleConductoChange}
+                onRemove={handleRemoveConducto}
+                canRemove={conductos.length > 1}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Observaciones generales */}
+      <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+          Observaciones Generales
+        </h3>
+        <textarea
+          value={observacionesGenerales}
+          onChange={(e) => setObservacionesGenerales(e.target.value)}
+          placeholder="Ingrese observaciones generales sobre el tratamiento (complicaciones, hallazgos especiales, etc.)"
+          rows={4}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      {/* Mensaje de error */}
+      {error && (
+        <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <p className="text-red-800 text-sm">{error}</p>
+        </div>
+      )}
+
+      {/* Botones de acción */}
+      <div className="flex justify-end gap-3">
+        <button
+          type="submit"
+          disabled={loading || cargandoAnatomia}
+          className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Save className="w-5 h-5" />
+          {loading ? 'Guardando...' : 'Guardar Registro'}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+
