@@ -16,6 +16,7 @@ export default function PermisosRolesPage() {
   const [error, setError] = useState<string | null>(null);
   const [mostrarModalRol, setMostrarModalRol] = useState(false);
   const [rolEditando, setRolEditando] = useState<Role | null>(null);
+  const [rolIdPendienteSeleccion, setRolIdPendienteSeleccion] = useState<string | null>(null);
 
   const cargarDatos = async () => {
     setLoading(true);
@@ -119,6 +120,24 @@ export default function PermisosRolesPage() {
     cargarDatos();
   }, []);
 
+  // Efecto para seleccionar rol pendiente después de cargar datos
+  useEffect(() => {
+    if (rolIdPendienteSeleccion && roles.length > 0) {
+      const rol = roles.find(r => r._id === rolIdPendienteSeleccion);
+      if (rol) {
+        setRolSeleccionado(rol);
+        setRolIdPendienteSeleccion(null);
+      } else if (rolIdPendienteSeleccion === 'ultimo') {
+        // Si es 'ultimo', seleccionar el último rol
+        const ultimoRol = roles[roles.length - 1];
+        if (ultimoRol?._id) {
+          setRolSeleccionado(ultimoRol);
+          setRolIdPendienteSeleccion(null);
+        }
+      }
+    }
+  }, [roles, rolIdPendienteSeleccion]);
+
   const handleRolSeleccionado = async (rolId: string) => {
     try {
       // Simular delay de API
@@ -196,20 +215,16 @@ export default function PermisosRolesPage() {
   };
 
   const handleRolGuardado = async () => {
+    const rolIdAGuardar = rolEditando?._id;
     await cargarDatos();
-    // Si se creó un nuevo rol, seleccionarlo
-    if (rolEditando === null) {
-      // Esperar a que se carguen los roles
-      await new Promise(resolve => setTimeout(resolve, 100));
-      if (roles.length > 0) {
-        const ultimoRol = roles[roles.length - 1];
-        if (ultimoRol._id) {
-          await handleRolSeleccionado(ultimoRol._id);
-        }
-      }
-    } else if (rolEditando._id) {
+    
+    // Marcar el rol que debe seleccionarse después de que se actualicen los roles
+    if (rolIdAGuardar) {
       // Si se editó un rol, mantenerlo seleccionado
-      await handleRolSeleccionado(rolEditando._id);
+      setRolIdPendienteSeleccion(rolIdAGuardar);
+    } else {
+      // Si se creó un nuevo rol, seleccionar el último
+      setRolIdPendienteSeleccion('ultimo');
     }
   };
 

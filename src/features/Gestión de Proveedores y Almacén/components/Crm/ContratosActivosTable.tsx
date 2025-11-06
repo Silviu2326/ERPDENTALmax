@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import { FileText, AlertTriangle, Calendar, CheckCircle, XCircle } from 'lucide-react';
-import { obtenerContratosPorVencer, Contrato } from '../../api/crmApi';
+import { Contrato } from '../../api/crmApi';
 
 export default function ContratosActivosTable() {
   const [contratos, setContratos] = useState<Contrato[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [diasLimite, setDiasLimite] = useState(60);
+
+  const calcularDiasRestantes = (fechaFin: string) => {
+    const hoy = new Date();
+    const fin = new Date(fechaFin);
+    const diff = Math.ceil((fin.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
+    return diff;
+  };
 
   useEffect(() => {
     cargarContratos();
@@ -82,8 +89,38 @@ export default function ContratosActivosTable() {
           estado: 'Activo',
           diasRestantes: 305,
         },
+        {
+          _id: '7',
+          proveedorId: '9',
+          proveedor: { _id: '9', nombreComercial: 'LabDental Pro' },
+          fechaInicio: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000).toISOString(),
+          fechaFin: new Date(Date.now() + 245 * 24 * 60 * 60 * 1000).toISOString(),
+          terminos: 'Contrato anual para materiales de laboratorio dental. Incluye servicio técnico y asesoramiento.',
+          estado: 'Activo',
+          diasRestantes: 245,
+        },
+        {
+          _id: '8',
+          proveedorId: '11',
+          proveedor: { _id: '11', nombreComercial: 'Radiología Dental Avanzada' },
+          fechaInicio: new Date(Date.now() - 200 * 24 * 60 * 60 * 1000).toISOString(),
+          fechaFin: new Date(Date.now() + 165 * 24 * 60 * 60 * 1000).toISOString(),
+          terminos: 'Contrato para equipos de radiografía digital. Mantenimiento preventivo incluido. Renovación automática.',
+          estado: 'Activo',
+          diasRestantes: 165,
+        },
       ];
-      setContratos(contratosMock);
+      
+      // Filtrar por días límite
+      const contratosFiltrados = contratosMock.filter(c => {
+        const dias = calcularDiasRestantes(c.fechaFin);
+        return dias <= diasLimite;
+      });
+      
+      setContratos(contratosFiltrados);
+    } catch (err) {
+      setError('Error al cargar contratos');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -95,13 +132,6 @@ export default function ContratosActivosTable() {
       month: 'short',
       day: 'numeric',
     });
-  };
-
-  const calcularDiasRestantes = (fechaFin: string) => {
-    const hoy = new Date();
-    const fin = new Date(fechaFin);
-    const diff = Math.ceil((fin.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
-    return diff;
   };
 
   const getEstadoBadge = (contrato: Contrato) => {

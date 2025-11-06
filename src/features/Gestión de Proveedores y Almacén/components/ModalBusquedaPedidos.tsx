@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, X, Package, Calendar, User } from 'lucide-react';
 import {
-  obtenerPedidosParaRecepcion,
   PedidoCompra,
-  FiltrosBusquedaPedidos,
 } from '../api/recepcionApi';
 
 interface ModalBusquedaPedidosProps {
