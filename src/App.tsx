@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { SidebarProvider, useSidebar } from './contexts/SidebarContext';
 import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -73,6 +74,7 @@ import IntegracionesYAPIsPage from './features/Integraciones y APIs/pages/Integr
 function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const pathname = location.pathname;
+  const { isCollapsed } = useSidebar();
 
   // Páginas del Portal del Paciente que no deben mostrar el Sidebar
   const portalPacientePages = ['/portal-paciente-login', '/portal-paciente-verify-email', '/portal-paciente-reset-password'];
@@ -86,9 +88,9 @@ function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <Sidebar />
-      <div className="flex-1">
+      <div className={`flex-1 transition-all duration-300 ${isCollapsed ? 'ml-20' : 'ml-64'}`}>
         {children}
       </div>
     </div>
@@ -639,7 +641,9 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <AppContent />
+        <SidebarProvider>
+          <AppContent />
+        </SidebarProvider>
       </BrowserRouter>
     </AuthProvider>
   );
