@@ -41,30 +41,30 @@ export default function SurgicalSafetyChecklist({ checklistCompletado, onCheckli
   const totalItems = checklistItems.length;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="bg-gradient-to-br from-amber-500 to-orange-500 p-2 rounded-lg">
-          <CheckSquare className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <CheckSquare size={20} className="text-blue-600" />
         </div>
-        <h3 className="text-lg font-bold text-gray-800">Checklist de Seguridad Quirúrgica</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Checklist de Seguridad Quirúrgica</h3>
       </div>
 
       {/* Progreso */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-sm font-medium text-slate-700">
             Progreso: {itemsCompletados} / {totalItems}
           </span>
           {checklistCompletado && (
-            <span className="text-sm font-semibold text-green-600 flex items-center gap-1">
-              <CheckSquare className="w-4 h-4" />
+            <span className="text-sm font-medium text-green-600 flex items-center gap-1">
+              <CheckSquare size={16} />
               Completado
             </span>
           )}
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-slate-200 rounded-full h-2">
           <div
-            className="bg-gradient-to-r from-amber-500 to-orange-500 h-2 rounded-full transition-all duration-300"
+            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${(itemsCompletados / totalItems) * 100}%` }}
           ></div>
         </div>
@@ -75,23 +75,23 @@ export default function SurgicalSafetyChecklist({ checklistCompletado, onCheckli
         {checklistItems.map((item) => (
           <label
             key={item.key}
-            className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
+            className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ring-1 ${
               items[item.key]
-                ? 'bg-green-50 border-2 border-green-200'
-                : 'bg-gray-50 border-2 border-gray-200 hover:border-amber-300'
+                ? 'bg-green-50 ring-green-200'
+                : 'bg-slate-50 ring-slate-200 hover:ring-blue-300'
             }`}
           >
             <input
               type="checkbox"
               checked={items[item.key]}
               onChange={() => handleItemChange(item.key)}
-              className="w-5 h-5 text-amber-600 rounded focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 cursor-pointer"
+              className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
             />
-            <span className={`flex-1 text-sm ${items[item.key] ? 'text-green-800 font-medium' : 'text-gray-700'}`}>
+            <span className={`flex-1 text-sm ${items[item.key] ? 'text-green-800 font-medium' : 'text-slate-700'}`}>
               {item.label}
             </span>
             {items[item.key] && (
-              <CheckSquare className="w-5 h-5 text-green-600" />
+              <CheckSquare size={18} className="text-green-600" />
             )}
           </label>
         ))}
@@ -99,12 +99,12 @@ export default function SurgicalSafetyChecklist({ checklistCompletado, onCheckli
 
       {/* Advertencia si no está completo */}
       {!checklistCompletado && itemsCompletados > 0 && (
-        <div className="mt-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-lg">
+        <div className="mt-6 p-4 bg-yellow-50 ring-1 ring-yellow-200 rounded-xl">
           <div className="flex items-start gap-2">
-            <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <AlertTriangle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-amber-800">Checklist incompleto</p>
-              <p className="text-xs text-amber-700 mt-1">
+              <p className="text-sm font-medium text-yellow-800">Checklist incompleto</p>
+              <p className="text-xs text-yellow-700 mt-1">
                 Complete todos los items antes de iniciar el procedimiento quirúrgico.
               </p>
             </div>
@@ -114,5 +114,6 @@ export default function SurgicalSafetyChecklist({ checklistCompletado, onCheckli
     </div>
   );
 }
+
 
 

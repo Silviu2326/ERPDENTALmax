@@ -59,3 +59,4 @@ export default function IndicadorEstadoImplante({ estado, size = 'md' }: Indicad
 }
 
 
+

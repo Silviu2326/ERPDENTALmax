@@ -129,38 +129,38 @@ export default function RadiographViewerWithIA({
       onMouseLeave={handleMouseUp}
     >
       {/* Controles de zoom */}
-      <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg">
+      <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 bg-white/95 backdrop-blur-sm rounded-xl p-2 shadow-lg ring-1 ring-gray-200/50">
         <button
           onClick={handleZoomIn}
-          className="px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
           disabled={zoom >= 3}
         >
           +
         </button>
         <button
           onClick={handleZoomOut}
-          className="px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
           disabled={zoom <= 0.5}
         >
           −
         </button>
         <button
           onClick={handleReset}
-          className="px-3 py-1.5 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors text-sm font-medium"
+          className="px-3 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors text-sm font-medium"
         >
           Reset
         </button>
         <button
           onClick={toggleFullscreen}
-          className="px-3 py-1.5 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors text-sm font-medium"
+          className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
         >
-          {isFullscreen ? <Minimize2 className="w-4 h-4 mx-auto" /> : <Maximize2 className="w-4 h-4 mx-auto" />}
+          {isFullscreen ? <Minimize2 size={16} className="mx-auto" /> : <Maximize2 size={16} className="mx-auto" />}
         </button>
       </div>
 
       {/* Indicador de zoom */}
-      <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-lg">
-        <span className="text-sm font-semibold text-gray-700">
+      <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 shadow-lg ring-1 ring-gray-200/50">
+        <span className="text-sm font-semibold text-gray-900">
           {Math.round(zoom * 100)}%
         </span>
       </div>
@@ -235,15 +235,15 @@ export default function RadiographViewerWithIA({
 
       {/* Leyenda de hallazgos */}
       {hallazgos.length > 0 && (
-        <div className="absolute bottom-4 left-4 right-4 z-10 bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg max-h-32 overflow-y-auto">
+        <div className="absolute bottom-4 left-4 right-4 z-10 bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg ring-1 ring-gray-200/50 max-h-32 overflow-y-auto">
           <div className="flex flex-wrap gap-2">
             {hallazgos.map((hallazgo, index) => (
               <button
                 key={index}
                 onClick={() => handleHallazgoClick(hallazgo, index)}
-                className={`px-3 py-1.5 rounded text-xs font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   selectedHallazgo === index
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-200'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 style={{
@@ -259,5 +259,6 @@ export default function RadiographViewerWithIA({
     </div>
   );
 }
+
 
 

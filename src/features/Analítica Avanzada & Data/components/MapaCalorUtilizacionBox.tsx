@@ -1,4 +1,5 @@
 import { UtilizacionCalor } from '../api/analiticaApi';
+import { Loader2, Grid3x3 } from 'lucide-react';
 
 interface MapaCalorUtilizacionBoxProps {
   datos: UtilizacionCalor[];
@@ -12,23 +13,6 @@ export default function MapaCalorUtilizacionBox({
   datos,
   loading = false,
 }: MapaCalorUtilizacionBoxProps) {
-  if (loading) {
-    return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="h-96 bg-gray-100 rounded animate-pulse"></div>
-      </div>
-    );
-  }
-
-  if (!datos || datos.length === 0) {
-    return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Mapa de Calor - Utilización de Boxes</h3>
-        <p className="text-gray-500 text-center py-8">No hay datos disponibles</p>
-      </div>
-    );
-  }
-
   // Crear matriz de datos
   const matriz: { [key: string]: UtilizacionCalor } = {};
   datos.forEach((item) => {
@@ -44,16 +28,35 @@ export default function MapaCalorUtilizacionBox({
     return 'bg-red-400';
   };
 
+  if (loading) {
+    return (
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando mapa de calor...</p>
+      </div>
+    );
+  }
+
+  if (!datos || datos.length === 0) {
+    return (
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Grid3x3 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Mapa de Calor - Utilización de Boxes</h3>
+        <p className="text-gray-600">No hay datos disponibles para mostrar</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-4">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Mapa de Calor - Utilización de Boxes</h3>
       <div className="overflow-x-auto">
         <table className="min-w-full">
           <thead>
             <tr>
-              <th className="px-2 py-2 text-xs font-medium text-gray-700"></th>
+              <th className="px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50"></th>
               {FRANJAS_HORARIAS.map((franja) => (
-                <th key={franja} className="px-2 py-2 text-xs font-medium text-gray-700 text-center">
+                <th key={franja} className="px-3 py-2 text-xs font-medium text-gray-700 text-center bg-gray-50">
                   {franja}
                 </th>
               ))}
@@ -62,7 +65,7 @@ export default function MapaCalorUtilizacionBox({
           <tbody>
             {DIAS_SEMANA.map((dia, diaIndex) => (
               <tr key={dia}>
-                <td className="px-2 py-2 text-xs font-medium text-gray-700">{dia}</td>
+                <td className="px-3 py-2 text-xs font-medium text-gray-700 bg-gray-50">{dia}</td>
                 {FRANJAS_HORARIAS.map((franja) => {
                   const key = `${diaIndex}-${franja}`;
                   const item = matriz[key];
@@ -70,7 +73,7 @@ export default function MapaCalorUtilizacionBox({
                   return (
                     <td
                       key={franja}
-                      className={`px-2 py-2 text-center text-xs text-white ${getColor(porcentaje)}`}
+                      className={`px-3 py-2 text-center text-xs text-white font-medium ${getColor(porcentaje)} transition-colors hover:opacity-90`}
                       title={`${dia} ${franja}: ${porcentaje.toFixed(1)}%`}
                     >
                       {porcentaje > 0 ? `${porcentaje.toFixed(0)}%` : '-'}
@@ -82,24 +85,24 @@ export default function MapaCalorUtilizacionBox({
           </tbody>
         </table>
       </div>
-      <div className="mt-4 flex items-center justify-center space-x-4">
-        <div className="flex items-center space-x-2">
+      <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-red-400 rounded"></div>
           <span className="text-xs text-gray-600">0-20%</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-orange-400 rounded"></div>
           <span className="text-xs text-gray-600">20-40%</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-yellow-400 rounded"></div>
           <span className="text-xs text-gray-600">40-60%</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-green-400 rounded"></div>
           <span className="text-xs text-gray-600">60-80%</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-green-600 rounded"></div>
           <span className="text-xs text-gray-600">80-100%</span>
         </div>
@@ -107,5 +110,6 @@ export default function MapaCalorUtilizacionBox({
     </div>
   );
 }
+
 
 

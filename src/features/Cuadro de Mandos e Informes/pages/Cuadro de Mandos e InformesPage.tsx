@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, DollarSign, Users, Calendar, TrendingUp, CalendarCheck, BarChart3, PieChart } from 'lucide-react';
+import { RefreshCw, DollarSign, Users, Calendar, TrendingUp, CalendarCheck, BarChart3, PieChart, Loader2, AlertCircle } from 'lucide-react';
 import { getDashboardSummary, DashboardSummary, DashboardFilters } from '../api/dashboardAPI';
 import KPIWidget from '../components/KPIWidget';
 import DateRangePicker from '../components/DateRangePicker';
@@ -216,10 +216,10 @@ export default function CuadroDeMandosEInformesPage() {
 
   if (loading) {
     return (
-      <div className="p-8">
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
             <p className="text-gray-600">Cargando datos del dashboard...</p>
           </div>
         </div>
@@ -229,15 +229,19 @@ export default function CuadroDeMandosEInformesPage() {
 
   if (error) {
     return (
-      <div className="p-8">
-        <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 text-center">
-          <p className="text-red-800 font-semibold">{error}</p>
-          <button
-            onClick={handleRefresh}
-            className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Reintentar
-          </button>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button
+              onClick={handleRefresh}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Reintentar
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -255,242 +259,263 @@ export default function CuadroDeMandosEInformesPage() {
   ];
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Cuadro de Mandos e Informes
-            </h1>
-            <p className="text-gray-600">
-              Visión panorámica del estado del negocio en tiempo real
-            </p>
-          </div>
-          {activeTab === 'dashboard' && (
-            <button
-              onClick={handleRefresh}
-              disabled={refreshing}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-          )}
-        </div>
-
-        {/* Navegación por pestañas */}
-        <div className="bg-white rounded-xl shadow-md border-2 border-blue-100 mb-6">
-          <div className="flex border-b border-gray-200 overflow-x-auto">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <BarChart3 size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Cuadro de Mandos e Informes
+                  </h1>
+                  <p className="text-gray-600">
+                    Visión panorámica del estado del negocio en tiempo real
+                  </p>
+                </div>
+              </div>
+              {activeTab === 'dashboard' && (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`
-                    flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors
-                    border-b-2 whitespace-nowrap
-                    ${
-                      activeTab === tab.id
-                        ? 'border-blue-600 text-blue-600 bg-blue-50'
-                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }
-                  `}
+                  onClick={handleRefresh}
+                  disabled={refreshing}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Icon className="w-5 h-5" />
-                  {tab.label}
+                  <RefreshCw size={20} className={refreshing ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
                 </button>
-              );
-            })}
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Filtros (solo para dashboard) */}
-        {activeTab === 'dashboard' && (
-          <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-xl shadow-md border-2 border-blue-100">
-            <DateRangePicker
-              fechaInicio={fechaInicio}
-              fechaFin={fechaFin}
-              onCambio={handleCambioFechas}
-            />
-            <ClinicSelector
-              clinicas={clinicas}
-              clinicaSeleccionada={clinicaSeleccionada}
-              onCambio={setClinicaSeleccionada}
-            />
-          </div>
-        )}
       </div>
 
-      {/* Contenido según la pestaña activa */}
-      {activeTab === 'indicadores-facturacion' && (
-        <IndicadoresFacturacionPage />
-      )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Sistema de Tabs */}
+          <div className="bg-white shadow-sm rounded-xl p-0">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Secciones"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                        isActive
+                          ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                      }`}
+                    >
+                      <Icon size={18} className={isActive ? 'opacity-100' : 'opacity-70'} />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
 
-      {activeTab === 'rentabilidad-analisis' && (
-        <RentabilidadAnalisisPage />
-      )}
-
-      {activeTab === 'indicadores-citas' && (
-        <>
-          {/* Filtros para Indicadores de Citas */}
-          <FiltrosIndicadoresPanel
-            filtros={filtrosIndicadores}
-            onFiltrosChange={setFiltrosIndicadores}
-            sedes={sedes}
-            profesionales={profesionales}
-          />
-
-          {/* Tarjetas de KPIs de Citas */}
-          {indicadoresCitas && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <IndicadorCard
-                titulo="Total de Citas"
-                valor={indicadoresCitas.totalCitas}
-                formato="numero"
-                icono={<Calendar className="w-6 h-6 text-white" />}
-                color="blue"
-              />
-              <IndicadorCard
-                titulo="Tasa de Ocupación"
-                valor={indicadoresCitas.tasaOcupacion}
-                formato="porcentaje"
-                icono={<TrendingUp className="w-6 h-6 text-white" />}
-                color="green"
-              />
-              <IndicadorCard
-                titulo="Tasa de No-Show"
-                valor={indicadoresCitas.tasaNoShow}
-                formato="porcentaje"
-                icono={<CalendarCheck className="w-6 h-6 text-white" />}
-                color="orange"
-              />
-              <IndicadorCard
-                titulo="Tasa de Confirmadas"
-                valor={indicadoresCitas.tasaConfirmadas}
-                formato="porcentaje"
-                icono={<CalendarCheck className="w-6 h-6 text-white" />}
-                color="purple"
-              />
+          {/* Filtros (solo para dashboard) */}
+          {activeTab === 'dashboard' && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex flex-wrap items-center gap-4">
+                <DateRangePicker
+                  fechaInicio={fechaInicio}
+                  fechaFin={fechaFin}
+                  onCambio={handleCambioFechas}
+                />
+                <ClinicSelector
+                  clinicas={clinicas}
+                  clinicaSeleccionada={clinicaSeleccionada}
+                  onCambio={setClinicaSeleccionada}
+                />
+              </div>
             </div>
           )}
 
-          {/* Gráficos de Indicadores de Citas */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <GraficoTasaOcupacion
-              datos={evolucionOcupacion}
-              loading={loadingIndicadores}
-            />
-            <GraficoOrigenCitas datos={citasPorOrigen} loading={loadingIndicadores} />
-          </div>
+          {/* Contenido según la pestaña activa */}
+          {activeTab === 'indicadores-facturacion' && (
+            <IndicadoresFacturacionPage />
+          )}
 
-          {/* Tabla de Detalle de Inasistencias */}
-          <div className="mb-8">
-            <TablaDetalleInasistencias
-              inasistencias={[]} // En producción, esto vendría de una API
-              loading={loadingIndicadores}
-            />
-          </div>
-        </>
-      )}
+          {activeTab === 'rentabilidad-analisis' && (
+            <RentabilidadAnalisisPage />
+          )}
 
-      {activeTab === 'dashboard' && (
-        <>
-          {/* KPIs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <KPIWidget
-          titulo="Ingresos Totales"
-          valor={datos.kpis.totalRevenue}
-          formato="moneda"
-          tendencia="up"
-          cambioPorcentual={12.5}
-          icono={<DollarSign className="w-6 h-6 text-white" />}
-          color="green"
-        />
-        <KPIWidget
-          titulo="Pacientes Nuevos"
-          valor={datos.kpis.newPatients}
-          formato="numero"
-          tendencia="up"
-          cambioPorcentual={8.3}
-          icono={<Users className="w-6 h-6 text-white" />}
-          color="blue"
-        />
-        <KPIWidget
-          titulo="Citas Completadas"
-          valor={datos.kpis.completedAppointments}
-          formato="numero"
-          tendencia="up"
-          cambioPorcentual={5.2}
-          icono={<Calendar className="w-6 h-6 text-white" />}
-          color="purple"
-        />
-        <KPIWidget
-          titulo="Tasa de Asistencia"
-          valor={datos.kpis.showRate}
-          formato="porcentaje"
-          tendencia="up"
-          cambioPorcentual={2.1}
-          icono={<TrendingUp className="w-6 h-6 text-white" />}
-          color="orange"
-        />
-      </div>
+          {activeTab === 'indicadores-citas' && (
+            <>
+              {/* Filtros para Indicadores de Citas */}
+              <FiltrosIndicadoresPanel
+                filtros={filtrosIndicadores}
+                onFiltrosChange={setFiltrosIndicadores}
+                sedes={sedes}
+                profesionales={profesionales}
+              />
 
-      {/* Gráficos y Listas */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <RevenueChart datos={datos.chartsData.revenueTimeline} />
-        <AppointmentStatusPieChart datos={datos.chartsData.appointmentStatus} />
-      </div>
+              {/* Tarjetas de KPIs de Citas */}
+              {indicadoresCitas && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <IndicadorCard
+                    titulo="Total de Citas"
+                    valor={indicadoresCitas.totalCitas}
+                    formato="numero"
+                    icono={<Calendar size={20} className="text-white" />}
+                    color="blue"
+                  />
+                  <IndicadorCard
+                    titulo="Tasa de Ocupación"
+                    valor={indicadoresCitas.tasaOcupacion}
+                    formato="porcentaje"
+                    icono={<TrendingUp size={20} className="text-white" />}
+                    color="green"
+                  />
+                  <IndicadorCard
+                    titulo="Tasa de No-Show"
+                    valor={indicadoresCitas.tasaNoShow}
+                    formato="porcentaje"
+                    icono={<CalendarCheck size={20} className="text-white" />}
+                    color="orange"
+                  />
+                  <IndicadorCard
+                    titulo="Tasa de Confirmadas"
+                    valor={indicadoresCitas.tasaConfirmadas}
+                    formato="porcentaje"
+                    icono={<CalendarCheck size={20} className="text-white" />}
+                    color="purple"
+                  />
+                </div>
+              )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <TopTreatmentsList tratamientos={datos.lists.topPerformingTreatments} />
-        
-        {/* Top Professionals */}
-        <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-2 rounded-lg">
-              <Users className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-gray-800">Top Profesionales</h3>
-              <p className="text-sm text-gray-500">Mejor rendimiento del período</p>
-            </div>
-          </div>
+              {/* Gráficos de Indicadores de Citas */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <GraficoTasaOcupacion
+                  datos={evolucionOcupacion}
+                  loading={loadingIndicadores}
+                />
+                <GraficoOrigenCitas datos={citasPorOrigen} loading={loadingIndicadores} />
+              </div>
 
-          <div className="space-y-4">
-            {datos.lists.topProfessionals.map((profesional, index) => (
-              <div
-                key={profesional._id}
-                className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center space-x-4 flex-1">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-bold">
-                    {index + 1}
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800">
-                      {profesional.nombre} {profesional.apellidos}
-                    </h4>
-                    <div className="flex items-center space-x-4 mt-1">
-                      <span className="text-sm text-gray-600">
-                        {profesional.citasCompletadas} citas
-                      </span>
-                      <span className="text-sm font-medium text-green-600">
-                        {new Intl.NumberFormat('es-ES', {
-                          style: 'currency',
-                          currency: 'EUR',
-                        }).format(profesional.ingresos)}
-                      </span>
+              {/* Tabla de Detalle de Inasistencias */}
+              <TablaDetalleInasistencias
+                inasistencias={[]} // En producción, esto vendría de una API
+                loading={loadingIndicadores}
+              />
+            </>
+          )}
+
+          {activeTab === 'dashboard' && (
+            <>
+              {/* KPIs */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <KPIWidget
+                  titulo="Ingresos Totales"
+                  valor={datos.kpis.totalRevenue}
+                  formato="moneda"
+                  tendencia="up"
+                  cambioPorcentual={12.5}
+                  icono={<DollarSign size={20} className="text-white" />}
+                  color="green"
+                />
+                <KPIWidget
+                  titulo="Pacientes Nuevos"
+                  valor={datos.kpis.newPatients}
+                  formato="numero"
+                  tendencia="up"
+                  cambioPorcentual={8.3}
+                  icono={<Users size={20} className="text-white" />}
+                  color="blue"
+                />
+                <KPIWidget
+                  titulo="Citas Completadas"
+                  valor={datos.kpis.completedAppointments}
+                  formato="numero"
+                  tendencia="up"
+                  cambioPorcentual={5.2}
+                  icono={<Calendar size={20} className="text-white" />}
+                  color="purple"
+                />
+                <KPIWidget
+                  titulo="Tasa de Asistencia"
+                  valor={datos.kpis.showRate}
+                  formato="porcentaje"
+                  tendencia="up"
+                  cambioPorcentual={2.1}
+                  icono={<TrendingUp size={20} className="text-white" />}
+                  color="orange"
+                />
+              </div>
+
+              {/* Gráficos y Listas */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <RevenueChart datos={datos.chartsData.revenueTimeline} />
+                <AppointmentStatusPieChart datos={datos.chartsData.appointmentStatus} />
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <TopTreatmentsList tratamientos={datos.lists.topPerformingTreatments} />
+                
+                {/* Top Professionals */}
+                <div className="bg-white shadow-sm rounded-xl p-6">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-2 rounded-lg">
+                      <Users size={20} className="text-white" />
                     </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-800">Top Profesionales</h3>
+                      <p className="text-sm text-gray-500">Mejor rendimiento del período</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    {datos.lists.topProfessionals.map((profesional, index) => (
+                      <div
+                        key={profesional._id}
+                        className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex items-center space-x-4 flex-1">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-gray-800">
+                              {profesional.nombre} {profesional.apellidos}
+                            </h4>
+                            <div className="flex items-center space-x-4 mt-1">
+                              <span className="text-sm text-gray-600">
+                                {profesional.citasCompletadas} citas
+                              </span>
+                              <span className="text-sm font-medium text-green-600">
+                                {new Intl.NumberFormat('es-ES', {
+                                  style: 'currency',
+                                  currency: 'EUR',
+                                }).format(profesional.ingresos)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
       </div>
-      )}
     </div>
   );
 }

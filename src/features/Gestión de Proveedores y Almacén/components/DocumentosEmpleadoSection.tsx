@@ -154,7 +154,7 @@ export default function DocumentosEmpleadoSection({
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
           <FileText className="w-5 h-5 text-blue-600" />
           Documentos del Empleado
         </h3>
@@ -163,7 +163,7 @@ export default function DocumentosEmpleadoSection({
             onClick={() => setMostrarSubida(true)}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            <Upload className="w-4 h-4" />
+            <Upload size={20} className="mr-2" />
             Subir Documento
           </button>
         )}
@@ -182,7 +182,7 @@ export default function DocumentosEmpleadoSection({
       )}
 
       {mostrarSubida && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-4">
+        <div className="bg-white shadow-sm rounded-lg p-4 space-y-4 ring-1 ring-slate-200">
           <div className="flex justify-between items-center">
             <h4 className="font-semibold text-gray-900">Subir Nuevo Documento</h4>
             <button
@@ -194,7 +194,7 @@ export default function DocumentosEmpleadoSection({
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Tipo de Documento
               </label>
               <select
@@ -202,7 +202,7 @@ export default function DocumentosEmpleadoSection({
                 onChange={(e) =>
                   setTipoDocumento(e.target.value as 'Contrato' | 'DNI' | 'Titulacion' | 'Otro')
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               >
                 {tiposDocumento.map((tipo) => (
                   <option key={tipo.valor} value={tipo.valor}>
@@ -212,7 +212,7 @@ export default function DocumentosEmpleadoSection({
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Archivo
               </label>
               <input
@@ -220,7 +220,7 @@ export default function DocumentosEmpleadoSection({
                 type="file"
                 onChange={handleFileSelect}
                 disabled={subiendo}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
               />
             </div>
@@ -232,16 +232,17 @@ export default function DocumentosEmpleadoSection({
       )}
 
       {documentos.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
-          <FileText className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600">No hay documentos subidos para este empleado</p>
+        <div className="bg-white shadow-sm p-8 text-center">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay documentos</h3>
+          <p className="text-gray-600 mb-4">No hay documentos subidos para este empleado</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {documentos.map((documento) => (
             <div
               key={documento._id}
-              className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+              className="bg-white shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow flex flex-col h-full"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -251,7 +252,7 @@ export default function DocumentosEmpleadoSection({
                       {documento.nombre}
                     </h4>
                     <span
-                      className={`inline-block px-2 py-1 rounded text-xs font-medium mt-1 ${getTipoColor(
+                      className={`inline-block px-2 py-1 rounded-full text-xs font-medium mt-1 ${getTipoColor(
                         documento.tipo
                       )}`}
                     >
@@ -263,10 +264,10 @@ export default function DocumentosEmpleadoSection({
               <div className="text-xs text-gray-500 mb-3">
                 Subido: {formatearFecha(documento.fechaSubida)}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
                 <button
                   onClick={() => handleVer(documento)}
-                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition-colors text-sm"
+                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm"
                   title="Ver documento"
                 >
                   <Eye className="w-4 h-4" />
@@ -274,7 +275,7 @@ export default function DocumentosEmpleadoSection({
                 </button>
                 <button
                   onClick={() => handleDescargar(documento)}
-                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-gray-50 text-gray-600 rounded hover:bg-gray-100 transition-colors text-sm"
+                  className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-gray-50 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors text-sm"
                   title="Descargar documento"
                 >
                   <Download className="w-4 h-4" />
@@ -283,7 +284,7 @@ export default function DocumentosEmpleadoSection({
                 <button
                   onClick={() => handleEliminar(documento._id)}
                   disabled={eliminando === documento._id}
-                  className="px-3 py-2 bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors text-sm disabled:opacity-50"
+                  className="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm disabled:opacity-50"
                   title="Eliminar documento"
                 >
                   {eliminando === documento._id ? (

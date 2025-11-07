@@ -13,8 +13,8 @@ export default function FiltroPeriodoTiempo({
   onCambio,
 }: FiltroPeriodoTiempoProps) {
   return (
-    <div className="flex items-center space-x-2">
-      <Calendar className="w-5 h-5 text-blue-600" />
+    <div className="flex items-center gap-2">
+      <Calendar size={18} className="text-slate-600" />
       <DateRangePicker
         fechaInicio={fechaInicio}
         fechaFin={fechaFin}
@@ -23,5 +23,6 @@ export default function FiltroPeriodoTiempo({
     </div>
   );
 }
+
 
 

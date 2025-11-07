@@ -279,25 +279,47 @@ export default function EspecialidadesClinicasPage({
   if (especialidadActiva === 'odontopediatria') {
     if (!pacienteId) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-          <div className="bg-white rounded-lg border-2 border-gray-200 p-8 shadow-lg max-w-md w-full">
-            <div className="text-center">
-              <Baby className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Seleccione un Paciente</h2>
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+          {/* Header */}
+          <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+            <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+              <div className="py-6">
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <Baby size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Odontopediatría
+                    </h1>
+                    <p className="text-gray-600">
+                      Registro y seguimiento de pacientes infantiles
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contenido principal */}
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center max-w-md mx-auto">
+              <Baby size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un Paciente</h3>
               <p className="text-gray-600 mb-4">Para acceder a la ficha pediátrica, necesita seleccionar un paciente primero.</p>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">ID del Paciente</label>
+              <div className="mb-4 text-left">
+                <label className="block text-sm font-medium text-slate-700 mb-2">ID del Paciente</label>
                 <input
                   type="text"
                   value={pacienteId}
                   onChange={(e) => setPacienteId(e.target.value)}
                   placeholder="Ingrese el ID del paciente"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
               <button
                 onClick={() => setEspecialidadActiva(null)}
-                className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors text-sm font-medium"
               >
                 Volver
               </button>
@@ -371,46 +393,57 @@ export default function EspecialidadesClinicasPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Stethoscope className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">Especialidades Clínicas</h1>
-              <p className="text-sm text-gray-600">Planificación y gestión de tratamientos especializados</p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Stethoscope size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Especialidades Clínicas
+                </h1>
+                <p className="text-gray-600">
+                  Planificación y gestión de tratamientos especializados
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Seleccione una especialidad</h2>
-          <p className="text-gray-600">Elija la especialidad clínica para la que desea planificar un tratamiento</p>
-        </div>
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Seleccione una especialidad</h2>
+            <p className="text-gray-600">Elija la especialidad clínica para la que desea planificar un tratamiento</p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {especialidades.map((especialidad) => {
-            const Icono = especialidad.icono;
-            return (
-              <button
-                key={especialidad.id}
-                onClick={() => handleSeleccionarEspecialidad(especialidad.id)}
-                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 p-6 text-left border-2 border-transparent hover:border-blue-300 group"
-              >
-                <div className={`bg-gradient-to-br ${especialidad.color} p-4 rounded-lg w-fit mb-4 group-hover:scale-110 transition-transform`}>
-                  <Icono className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-2">{especialidad.nombre}</h3>
-                <p className="text-sm text-gray-600">{especialidad.descripcion}</p>
-              </button>
-            );
-          })}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {especialidades.map((especialidad) => {
+              const Icono = especialidad.icono;
+              return (
+                <button
+                  key={especialidad.id}
+                  onClick={() => handleSeleccionarEspecialidad(especialidad.id)}
+                  className="bg-white shadow-sm rounded-xl hover:shadow-md transition-all duration-200 p-4 text-left h-full flex flex-col border border-gray-200/60 hover:border-blue-300 group"
+                >
+                  <div className={`bg-gradient-to-br ${especialidad.color} p-3 rounded-lg w-fit mb-4 group-hover:scale-105 transition-transform`}>
+                    <Icono size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{especialidad.nombre}</h3>
+                  <p className="text-sm text-gray-600 flex-grow">{especialidad.descripcion}</p>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

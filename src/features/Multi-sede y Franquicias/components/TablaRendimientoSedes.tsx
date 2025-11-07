@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Table, TrendingUp, TrendingDown, ArrowUpDown } from 'lucide-react';
+import { Table, TrendingUp, TrendingDown, ArrowUpDown, Loader2 } from 'lucide-react';
 import { SedeSummary } from '../api/dashboardSedesApi';
 
 interface TablaRendimientoSedesProps {
@@ -87,12 +87,12 @@ export default function TablaRendimientoSedes({
 
   const IconoOrden = ({ columna }: { columna: ColumnaOrden }) => {
     if (columnaOrden !== columna) {
-      return <ArrowUpDown className="w-4 h-4 text-gray-400" />;
+      return <ArrowUpDown size={16} className="text-slate-400" />;
     }
     return direccionOrden === 'asc' ? (
-      <TrendingUp className="w-4 h-4 text-blue-600" />
+      <TrendingUp size={16} className="text-blue-600" />
     ) : (
-      <TrendingDown className="w-4 h-4 text-blue-600" />
+      <TrendingDown size={16} className="text-blue-600" />
     );
   };
 
@@ -100,108 +100,99 @@ export default function TablaRendimientoSedes({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <Table className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-bold text-gray-800">Rendimiento por Sede</h2>
-        </div>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Cargando datos...</div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center ring-1 ring-slate-200">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando datos de la tabla...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <Table className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-bold text-gray-800">Rendimiento por Sede</h2>
-        </div>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">No hay datos disponibles</div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center ring-1 ring-slate-200">
+        <Table size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600">No se encontraron datos para mostrar la tabla de rendimiento.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-      <div className="flex items-center space-x-2 mb-6">
-        <Table className="w-6 h-6 text-blue-600" />
-        <h2 className="text-xl font-bold text-gray-800">Rendimiento por Sede</h2>
+    <div className="bg-white shadow-sm rounded-xl p-6 ring-1 ring-slate-200">
+      <div className="flex items-center gap-2 mb-6">
+        <Table size={20} className="text-blue-600" />
+        <h2 className="text-xl font-bold text-gray-900">Rendimiento por Sede</h2>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b-2 border-gray-200">
+            <tr className="border-b border-slate-200">
               <th
-                className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-50"
+                className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-50 transition-colors"
                 onClick={() => handleOrdenar('nombre')}
               >
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   <span>Sede</span>
                   <IconoOrden columna="nombre" />
                 </div>
               </th>
               <th
-                className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-50"
+                className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-50 transition-colors"
                 onClick={() => handleOrdenar('ingresos')}
               >
-                <div className="flex items-center justify-end space-x-1">
+                <div className="flex items-center justify-end gap-1">
                   <span>Ingresos</span>
                   <IconoOrden columna="ingresos" />
                 </div>
               </th>
               <th
-                className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-50"
+                className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-50 transition-colors"
                 onClick={() => handleOrdenar('pacientes')}
               >
-                <div className="flex items-center justify-end space-x-1">
+                <div className="flex items-center justify-end gap-1">
                   <span>Nuevos Pacientes</span>
                   <IconoOrden columna="pacientes" />
                 </div>
               </th>
               <th
-                className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-50"
+                className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-50 transition-colors"
                 onClick={() => handleOrdenar('citas')}
               >
-                <div className="flex items-center justify-end space-x-1">
+                <div className="flex items-center justify-end gap-1">
                   <span>Citas Atendidas</span>
                   <IconoOrden columna="citas" />
                 </div>
               </th>
               <th
-                className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-50"
+                className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-50 transition-colors"
                 onClick={() => handleOrdenar('ocupacion')}
               >
-                <div className="flex items-center justify-end space-x-1">
+                <div className="flex items-center justify-end gap-1">
                   <span>Tasa Ocupación</span>
                   <IconoOrden columna="ocupacion" />
                 </div>
               </th>
               <th
-                className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-50"
+                className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-50 transition-colors"
                 onClick={() => handleOrdenar('ticket')}
               >
-                <div className="flex items-center justify-end space-x-1">
+                <div className="flex items-center justify-end gap-1">
                   <span>Ticket Promedio</span>
                   <IconoOrden columna="ticket" />
                 </div>
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tasa Cancelación
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-slate-200">
             {datosOrdenados.map((sede, index) => (
               <tr
                 key={sede.sedeId}
-                className={`hover:bg-blue-50 transition-colors ${
-                  index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                className={`hover:bg-slate-50 transition-colors ${
+                  index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'
                 }`}
               >
                 <td className="px-4 py-4 whitespace-nowrap">
@@ -265,5 +256,6 @@ export default function TablaRendimientoSedes({
     </div>
   );
 }
+
 
 

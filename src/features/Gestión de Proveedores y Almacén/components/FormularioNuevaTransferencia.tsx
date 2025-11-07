@@ -223,7 +223,7 @@ export default function FormularioNuevaTransferencia({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
+        <div className="bg-red-50 ring-1 ring-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-2">
           <AlertCircle className="w-5 h-5" />
           <span>{error}</span>
         </div>
@@ -231,7 +231,7 @@ export default function FormularioNuevaTransferencia({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Almacén de Origen <span className="text-red-500">*</span>
           </label>
           <select
@@ -240,7 +240,7 @@ export default function FormularioNuevaTransferencia({
               setAlmacenOrigenId(e.target.value);
               setProductos([]);
             }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           >
             <option value="">Selecciona un almacén</option>
@@ -253,13 +253,13 @@ export default function FormularioNuevaTransferencia({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Almacén de Destino <span className="text-red-500">*</span>
           </label>
           <select
             value={almacenDestinoId}
             onChange={(e) => setAlmacenDestinoId(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           >
             <option value="">Selecciona un almacén</option>
@@ -275,34 +275,34 @@ export default function FormularioNuevaTransferencia({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Agregar Productos <span className="text-red-500">*</span>
         </label>
         <div className="relative">
           <div className="flex gap-2">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
               <input
                 type="text"
                 value={busquedaProducto}
                 onChange={(e) => setBusquedaProducto(e.target.value)}
                 placeholder="Buscar producto por nombre o SKU..."
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
               />
               {mostrandoResultados && resultadosBusqueda.length > 0 && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                <div className="absolute z-10 w-full mt-1 bg-white ring-1 ring-slate-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                   {resultadosBusqueda.map((producto) => (
                     <button
                       key={producto._id}
                       type="button"
                       onClick={() => agregarProducto(producto)}
-                      className="w-full text-left px-4 py-2 hover:bg-blue-50 flex items-center gap-3"
+                      className="w-full text-left px-4 py-2 hover:bg-blue-50 flex items-center gap-3 transition-colors rounded-lg"
                     >
                       <Package className="w-4 h-4 text-blue-600" />
                       <div>
                         <div className="font-medium text-gray-900">{producto.nombre}</div>
                         {producto.sku && (
-                          <div className="text-xs text-gray-500">SKU: {producto.sku}</div>
+                          <div className="text-xs text-slate-500">SKU: {producto.sku}</div>
                         )}
                       </div>
                     </button>
@@ -316,25 +316,25 @@ export default function FormularioNuevaTransferencia({
 
       {productos.length > 0 && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Productos Seleccionados
           </label>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {productos.map((producto) => (
               <div
                 key={producto.productoId}
-                className="bg-gray-50 border border-gray-200 rounded-lg p-4"
+                className="bg-slate-50 ring-1 ring-slate-200 rounded-xl p-4"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{producto.producto.nombre}</div>
                     {producto.producto.sku && (
-                      <div className="text-xs text-gray-500">SKU: {producto.producto.sku}</div>
+                      <div className="text-xs text-slate-500">SKU: {producto.producto.sku}</div>
                     )}
                     {cargandoStock[producto.productoId] ? (
-                      <div className="text-xs text-gray-500 mt-1">Cargando stock...</div>
+                      <div className="text-xs text-slate-500 mt-1">Cargando stock...</div>
                     ) : (
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-slate-500 mt-1">
                         Stock disponible: <span className="font-medium">{producto.stockDisponible}</span>
                       </div>
                     )}
@@ -342,14 +342,14 @@ export default function FormularioNuevaTransferencia({
                   <button
                     type="button"
                     onClick={() => eliminarProducto(producto.productoId)}
-                    className="p-1 text-red-600 hover:bg-red-100 rounded"
+                    className="p-1 text-red-600 hover:bg-red-100 rounded-xl transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
+                    <label className="block text-xs font-medium text-slate-700 mb-1">
                       Cantidad <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -360,7 +360,7 @@ export default function FormularioNuevaTransferencia({
                       onChange={(e) =>
                         actualizarCantidad(producto.productoId, parseInt(e.target.value) || 1)
                       }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2"
                       required
                     />
                     {producto.cantidad > producto.stockDisponible && (
@@ -370,13 +370,13 @@ export default function FormularioNuevaTransferencia({
                     )}
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">Lote (opcional)</label>
+                    <label className="block text-xs font-medium text-slate-700 mb-1">Lote (opcional)</label>
                     <input
                       type="text"
                       value={producto.lote || ''}
                       onChange={(e) => actualizarLote(producto.productoId, e.target.value)}
                       placeholder="Número de lote"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2"
                     />
                   </div>
                 </div>
@@ -387,28 +387,28 @@ export default function FormularioNuevaTransferencia({
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Notas (opcional)</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Notas (opcional)</label>
         <textarea
           value={notas}
           onChange={(e) => setNotas(e.target.value)}
           rows={3}
           placeholder="Añade notas adicionales sobre esta transferencia..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+      <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
         <button
           type="button"
           onClick={onCancelar}
-          className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-100 ring-1 ring-slate-200"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Guardando...' : 'Crear Transferencia'}
         </button>
@@ -416,5 +416,6 @@ export default function FormularioNuevaTransferencia({
     </form>
   );
 }
+
 
 

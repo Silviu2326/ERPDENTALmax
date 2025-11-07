@@ -52,7 +52,7 @@ export default function TimelineEstadoProtesis({
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Historial de Estados</h3>
       <div className="relative">
         {/* Línea vertical */}
@@ -64,7 +64,7 @@ export default function TimelineEstadoProtesis({
             const esUltimo = index === historialOrdenado.length - 1;
 
             return (
-              <div key={item._id || index} className="relative flex items-start space-x-4">
+              <div key={item._id || index} className="relative flex items-start gap-4">
                 {/* Icono */}
                 <div
                   className={`relative z-10 flex items-center justify-center w-10 h-10 rounded-full ${getEstadoColor(
@@ -77,15 +77,15 @@ export default function TimelineEstadoProtesis({
 
                 {/* Contenido */}
                 <div className="flex-1 pb-4">
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center justify-between mb-2">
                     <h4
                       className={`font-semibold ${
-                        esActual ? 'text-blue-600' : 'text-gray-700'
+                        esActual ? 'text-blue-600' : 'text-slate-700'
                       }`}
                     >
                       {item.estado}
                     </h4>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-600">
                       {new Date(item.fecha).toLocaleDateString('es-ES', {
                         day: '2-digit',
                         month: '2-digit',
@@ -110,5 +110,6 @@ export default function TimelineEstadoProtesis({
     </div>
   );
 }
+
 
 

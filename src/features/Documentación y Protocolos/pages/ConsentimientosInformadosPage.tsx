@@ -177,12 +177,12 @@ export default function ConsentimientosInformadosPage() {
 
   if (vista === 'ver-consentimiento' && consentimientoActual) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="mb-6">
             <button
               onClick={() => setVista('principal')}
-              className="text-blue-600 hover:text-blue-800 flex items-center space-x-2"
+              className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
             >
               ← Volver a la lista
             </button>
@@ -205,32 +205,42 @@ export default function ConsentimientosInformadosPage() {
 
   if (vista === 'gestion-plantillas' || mostrarEditorPlantilla) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                  <Settings className="w-8 h-8 text-white" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <Settings size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Gestión de Plantillas
+                    </h1>
+                    <p className="text-gray-600">
+                      Crear y editar plantillas de consentimiento
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Gestión de Plantillas</h1>
-                  <p className="text-gray-600 mt-1">Crear y editar plantillas de consentimiento</p>
-                </div>
+                <button
+                  onClick={() => {
+                    setVista('principal');
+                    setMostrarEditorPlantilla(false);
+                    setPlantillaEditando(undefined);
+                  }}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  ← Volver
+                </button>
               </div>
-              <button
-                onClick={() => {
-                  setVista('principal');
-                  setMostrarEditorPlantilla(false);
-                  setPlantillaEditando(undefined);
-                }}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800"
-              >
-                ← Volver
-              </button>
             </div>
           </div>
+        </div>
 
+        {/* Contenedor Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
           {mostrarEditorPlantilla ? (
             <EditorPlantillasConsentimiento
               plantilla={plantillaEditando}
@@ -242,14 +252,14 @@ export default function ConsentimientosInformadosPage() {
               loading={loading}
             />
           ) : (
-            <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Plantillas Disponibles</h2>
+                <h2 className="text-xl font-bold text-gray-900">Plantillas Disponibles</h2>
                 <button
                   onClick={handleNuevaPlantilla}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus size={20} />
                   <span>Nueva Plantilla</span>
                 </button>
               </div>
@@ -258,7 +268,7 @@ export default function ConsentimientosInformadosPage() {
                 {plantillas.map((plantilla) => (
                   <div
                     key={plantilla._id}
-                    className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center justify-between"
+                    className="p-4 border border-gray-200 rounded-xl hover:bg-gray-50 flex items-center justify-between transition-colors"
                   >
                     <div>
                       <h3 className="font-semibold text-gray-900">{plantilla.nombre}</h3>
@@ -268,7 +278,7 @@ export default function ConsentimientosInformadosPage() {
                     </div>
                     <button
                       onClick={() => handleEditarPlantilla(plantilla)}
-                      className="px-3 py-1 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
+                      className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-xl transition-colors"
                     >
                       Editar
                     </button>
@@ -283,37 +293,44 @@ export default function ConsentimientosInformadosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileText size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Consentimientos Informados
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona los consentimientos informados de los pacientes
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Consentimientos Informados</h1>
-                <p className="text-gray-600 mt-1">
-                  Gestiona los consentimientos informados de los pacientes
-                </p>
-              </div>
+              {isAdmin && (
+                <button
+                  onClick={() => setVista('gestion-plantillas')}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all"
+                >
+                  <Settings size={20} />
+                  <span>Gestionar Plantillas</span>
+                </button>
+              )}
             </div>
-            {isAdmin && (
-              <button
-                onClick={() => setVista('gestion-plantillas')}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2"
-              >
-                <Settings className="w-5 h-5" />
-                <span>Gestionar Plantillas</span>
-              </button>
-            )}
           </div>
         </div>
+      </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">{error}</p>
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p className="text-sm text-red-800">{error}</p>
           </div>
         )}
 
@@ -321,7 +338,7 @@ export default function ConsentimientosInformadosPage() {
           {/* Panel izquierdo: Selección */}
           <div className="lg:col-span-1 space-y-6">
             {/* Buscador de Paciente */}
-            <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">1. Seleccionar Paciente</h2>
               <BuscadorPacientesConsentimientos
                 pacienteSeleccionado={pacienteSeleccionado}
@@ -330,17 +347,17 @@ export default function ConsentimientosInformadosPage() {
             </div>
 
             {/* Selector de Plantilla */}
-            <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">2. Seleccionar Plantilla</h2>
               <div className="space-y-2">
                 {plantillas.map((plantilla) => (
                   <button
                     key={plantilla._id}
                     onClick={() => setPlantillaSeleccionada(plantilla)}
-                    className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                    className={`w-full text-left p-3 rounded-xl border transition-all ${
                       plantillaSeleccionada?._id === plantilla._id
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-200'
+                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                     }`}
                   >
                     <div className="font-medium text-gray-900">{plantilla.nombre}</div>
@@ -353,20 +370,20 @@ export default function ConsentimientosInformadosPage() {
             </div>
 
             {/* Botón de Generar */}
-            <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <button
                 onClick={handleGenerarConsentimiento}
                 disabled={!plantillaSeleccionada || !pacienteSeleccionado || loading}
-                className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
-                    <RefreshCw className="w-5 h-5 animate-spin" />
+                    <RefreshCw size={20} className="animate-spin" />
                     <span>Generando...</span>
                   </>
                 ) : (
                   <>
-                    <FileText className="w-5 h-5" />
+                    <FileText size={20} />
                     <span>Generar Consentimiento</span>
                   </>
                 )}
@@ -376,7 +393,7 @@ export default function ConsentimientosInformadosPage() {
 
           {/* Panel derecho: Lista de Consentimientos */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Consentimientos del Paciente
                 {pacienteSeleccionado && (
@@ -414,5 +431,6 @@ export default function ConsentimientosInformadosPage() {
     </div>
   );
 }
+
 
 

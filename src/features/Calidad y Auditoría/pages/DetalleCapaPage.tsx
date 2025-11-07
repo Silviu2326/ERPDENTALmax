@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Edit, Save, X, Calendar, User, FileText, AlertCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Edit, Save, X, Calendar, User, FileText, AlertCircle, CheckCircle, Loader2, Shield } from 'lucide-react';
 import {
   obtenerCapaPorId,
   actualizarCapa,
@@ -101,13 +101,11 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Cargando CAPA...</p>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando CAPA...</p>
           </div>
         </div>
       </div>
@@ -116,15 +114,17 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
 
   if (error || !capa) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <p className="text-gray-600 text-lg mb-4">{error || 'CAPA no encontrada'}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error || 'CAPA no encontrada'}</p>
             <button
               onClick={onVolver}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto"
             >
+              <ArrowLeft size={20} />
               Volver
             </button>
           </div>
@@ -134,75 +134,92 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={onVolver}
-            className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Volver
-          </button>
-          <div className="flex items-start justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-gray-900">{capa.titulo}</h1>
-                <span
-                  className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
-                    estadoBadgeClass[capa.estado]
-                  }`}
-                >
-                  {capa.estado}
-                </span>
-                <span
-                  className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
-                    fuenteBadgeClass[capa.fuente]
-                  }`}
-                >
-                  {capa.fuente}
-                </span>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <button
+              onClick={onVolver}
+              className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2 transition-colors"
+            >
+              <ArrowLeft size={20} />
+              <span>Volver</span>
+            </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Shield size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      {capa.titulo}
+                    </h1>
+                    <span
+                      className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
+                        estadoBadgeClass[capa.estado]
+                      }`}
+                    >
+                      {capa.estado}
+                    </span>
+                    <span
+                      className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
+                        fuenteBadgeClass[capa.fuente]
+                      }`}
+                    >
+                      {capa.fuente}
+                    </span>
+                  </div>
+                  <p className="text-gray-600">
+                    ID: <span className="font-mono">{capa.id_capa}</span>
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-600">
-                ID: <span className="font-mono">{capa.id_capa}</span>
-              </p>
+              {!editando && (
+                <button
+                  onClick={() => setEditando(true)}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Edit size={20} />
+                  Editar
+                </button>
+              )}
             </div>
-            {!editando && (
-              <button
-                onClick={() => setEditando(true)}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                <Edit className="w-5 h-5" />
-                Editar
-              </button>
-            )}
           </div>
         </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
 
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
               <p className="text-red-800 text-sm">{error}</p>
             </div>
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Columna Principal */}
           <div className="lg:col-span-2 space-y-6">
             {/* Información General */}
-            <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            <div className="bg-white shadow-sm rounded-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
                 Información General
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Descripción del Incidente
                   </label>
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
                     <p className="text-sm text-gray-900 whitespace-pre-wrap">
                       {capa.descripcion_incidente}
                     </p>
@@ -211,11 +228,11 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <Calendar className="w-4 h-4 inline mr-1" />
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <Calendar size={16} className="inline mr-1" />
                       Fecha de Detección
                     </label>
-                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
                       <p className="text-sm text-gray-900">
                         {new Date(capa.fecha_deteccion).toLocaleDateString('es-ES', {
                           year: 'numeric',
@@ -227,11 +244,11 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <User className="w-4 h-4 inline mr-1" />
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <User size={16} className="inline mr-1" />
                       Responsable de Investigación
                     </label>
-                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
                       <p className="text-sm text-gray-900">
                         {capa.responsable_investigacion
                           ? `${capa.responsable_investigacion.nombre} ${capa.responsable_investigacion.apellidos || ''}`
@@ -268,10 +285,10 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
 
             {/* Verificación de Efectividad */}
             {capa.verificacion_efectividad && (
-              <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+              <div className="bg-white shadow-sm rounded-lg p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="bg-green-100 p-2 rounded-lg">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  <div className="bg-green-100 p-2 rounded-xl ring-1 ring-green-200/70">
+                    <CheckCircle size={24} className="text-green-600" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">
@@ -284,17 +301,17 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Descripción
                     </label>
-                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
                       <p className="text-sm text-gray-900">
                         {capa.verificacion_efectividad.descripcion}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-700">Resultado:</span>
+                    <span className="text-sm font-medium text-slate-700">Resultado:</span>
                     <span
                       className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
                         capa.verificacion_efectividad.resultado === 'Efectiva'
@@ -328,7 +345,7 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
 
         {/* Botones de Acción */}
         {editando && (
-          <div className="mt-6 flex items-center justify-end gap-4 bg-white rounded-lg shadow-md p-4 border border-gray-200">
+          <div className="mt-6 flex items-center justify-end gap-4 bg-white shadow-sm rounded-lg p-4">
             <button
               onClick={() => {
                 setEditando(false);
@@ -337,7 +354,7 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
               className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
               disabled={guardando}
             >
-              <X className="w-5 h-5" />
+              <X size={20} />
               Cancelar
             </button>
             <button
@@ -356,7 +373,7 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               disabled={guardando}
             >
-              <Save className="w-5 h-5" />
+              <Save size={20} />
               {guardando ? 'Guardando...' : 'Guardar Cambios'}
             </button>
           </div>
@@ -365,5 +382,6 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
     </div>
   );
 }
+
 
 

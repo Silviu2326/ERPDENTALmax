@@ -70,9 +70,9 @@ export default function IndicadorCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6 hover:shadow-xl transition-shadow">
+    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-gray-600">{titulo}</h3>
+        <h3 className="text-sm font-medium text-slate-700">{titulo}</h3>
         {icono && (
           <div className={`bg-gradient-to-br ${colorConfig.bg} p-2 rounded-lg`}>{icono}</div>
         )}
@@ -96,11 +96,12 @@ export default function IndicadorCard({
           >
             {Math.abs(cambioPorcentual).toFixed(1)}%
           </span>
-          <span className="text-sm text-gray-500">vs período anterior</span>
+          <span className="text-sm text-slate-500">vs período anterior</span>
         </div>
       )}
     </div>
   );
 }
+
 
 

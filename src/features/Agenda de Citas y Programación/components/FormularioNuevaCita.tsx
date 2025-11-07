@@ -67,8 +67,8 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
   return (
     <div className="space-y-6">
       {/* Paso 1: Seleccionar Paciente */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <div className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Paso 1: Seleccionar Paciente
         </h3>
         <BuscadorPacientes
@@ -77,9 +77,11 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
           onCrearPaciente={() => setMostrarModalPaciente(true)}
         />
         {paciente && (
-          <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2">
-            <AlertCircle className="w-5 h-5 text-green-600" />
-            <span className="text-sm text-green-800">
+          <div className="mt-4 p-3 bg-green-50 rounded-xl ring-1 ring-green-200/70 flex items-center gap-3">
+            <div className="p-1.5 bg-green-100 rounded-lg">
+              <AlertCircle size={16} className="text-green-600" />
+            </div>
+            <span className="text-sm font-medium text-green-900">
               Paciente seleccionado: <strong>{paciente.nombre} {paciente.apellidos}</strong>
             </span>
           </div>
@@ -87,8 +89,8 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
       </div>
 
       {/* Paso 2: Seleccionar Profesional y Tratamiento */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <div className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Paso 2: Seleccionar Profesional y Tratamiento
         </h3>
         <SelectorProfesionalTratamiento
@@ -99,7 +101,7 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
           disabled={!paciente}
         />
         {!paciente && (
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-slate-600">
             Primero debes seleccionar un paciente
           </p>
         )}
@@ -107,8 +109,8 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
 
       {/* Paso 3: Seleccionar Fecha y Hora */}
       {puedeMostrarCalendario && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+        <div className="bg-white shadow-sm rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Paso 3: Seleccionar Fecha y Hora Disponible
           </h3>
           <CalendarioDisponibilidad
@@ -121,9 +123,9 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
 
       {/* Campo de Notas (opcional) */}
       {puedeMostrarCalendario && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-            <FileText className="w-4 h-4" />
+        <div className="bg-white shadow-sm rounded-xl p-6">
+          <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
+            <FileText size={16} />
             <span>Notas (Opcional)</span>
           </label>
           <textarea
@@ -131,18 +133,23 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
             onChange={(e) => setNotas(e.target.value)}
             rows={3}
             placeholder="Notas adicionales sobre la cita..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 transition-all"
           />
         </div>
       )}
 
       {/* Mensaje cuando falta información */}
       {!puedeMostrarCalendario && paciente && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-blue-800">
-            {!profesional && 'Selecciona un profesional para continuar. '}
-            {!tratamiento && 'Selecciona un tratamiento para ver la disponibilidad.'}
-          </p>
+        <div className="bg-white shadow-sm rounded-xl p-4 ring-1 ring-blue-200/70">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <AlertCircle size={18} className="text-blue-600" />
+            </div>
+            <p className="text-sm text-blue-900">
+              {!profesional && 'Selecciona un profesional para continuar. '}
+              {!tratamiento && 'Selecciona un tratamiento para ver la disponibilidad.'}
+            </p>
+          </div>
         </div>
       )}
 
@@ -169,5 +176,6 @@ export default function FormularioNuevaCita({ onConfirmar }: FormularioNuevaCita
     </div>
   );
 }
+
 
 

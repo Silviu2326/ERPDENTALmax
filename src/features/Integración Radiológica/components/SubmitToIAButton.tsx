@@ -58,32 +58,32 @@ export default function SubmitToIAButton({
         onClick={handleSubmit}
         disabled={disabled || loading || success}
         className={`
-          flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium
-          transition-all duration-200 shadow-sm
+          inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
+          transition-all shadow-sm
           ${
             success
               ? 'bg-green-600 text-white cursor-default'
               : loading
-              ? 'bg-blue-500 text-white cursor-wait'
+              ? 'bg-blue-600 text-white cursor-wait'
               : disabled
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 hover:shadow-md active:scale-95'
+              : 'bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.98]'
           }
         `}
       >
         {success ? (
           <>
-            <CheckCircle className="w-5 h-5" />
+            <CheckCircle size={20} />
             <span>Análisis Enviado</span>
           </>
         ) : loading ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 size={20} className="animate-spin" />
             <span>Enviando...</span>
           </>
         ) : (
           <>
-            <Sparkles className="w-5 h-5" />
+            <Sparkles size={20} />
             <span>Analizar con DentIA</span>
           </>
         )}
@@ -96,5 +96,6 @@ export default function SubmitToIAButton({
     </div>
   );
 }
+
 
 

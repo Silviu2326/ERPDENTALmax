@@ -419,173 +419,192 @@ export default function ListasPacientesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Users className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Listas de Pacientes</h1>
-              <p className="text-gray-600 mt-1">
-                Crea y gestiona listas dinámicas de pacientes basadas en criterios avanzados
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setMostrarPanelListas(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
-            >
-              <Bookmark className="w-5 h-5" />
-              Listas Guardadas
-            </button>
-            <button
-              onClick={() => setMostrarModalExportar(true)}
-              disabled={pacientes.length === 0}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Download className="w-5 h-5" />
-              Exportar
-            </button>
-          </div>
-        </div>
-
-        {/* Filtros Avanzados */}
-        <FiltrosAvanzadosPacientes
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-          onLimpiarFiltros={handleLimpiarFiltros}
-        />
-
-        {/* Acciones Masivas */}
-        {pacientesSeleccionados.size > 0 && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-blue-900">
-                {pacientesSeleccionados.size} paciente(s) seleccionado(s)
-              </p>
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Users size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Listas de Pacientes
+                  </h1>
+                  <p className="text-gray-600">
+                    Crea y gestiona listas dinámicas de pacientes basadas en criterios avanzados
+                  </p>
+                </div>
+              </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => handleAccionMasiva('email')}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 text-sm font-medium transition-colors"
+                  onClick={() => setMostrarPanelListas(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200"
                 >
-                  <Mail className="w-4 h-4" />
-                  Enviar Email
+                  <Bookmark size={20} className="mr-2" />
+                  Listas Guardadas
                 </button>
                 <button
-                  onClick={() => handleAccionMasiva('sms')}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 text-sm font-medium transition-colors"
+                  onClick={() => setMostrarModalExportar(true)}
+                  disabled={pacientes.length === 0}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  Enviar SMS
-                </button>
-                <button
-                  onClick={() => handleAccionMasiva('campaña')}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 text-sm font-medium transition-colors"
-                >
-                  <Send className="w-4 h-4" />
-                  Añadir a Campaña
+                  <Download size={20} className="mr-2" />
+                  Exportar
                 </button>
               </div>
             </div>
           </div>
-        )}
-
-        {/* Mensaje de error */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar los pacientes</p>
-            <p className="text-sm mt-1">{error}</p>
-          </div>
-        )}
-
-        {/* Tabla de resultados */}
-        <TablaResultadosPacientes
-          pacientes={pacientes}
-          loading={loading}
-          pacientesSeleccionados={pacientesSeleccionados}
-          onToggleSeleccionar={handleToggleSeleccionar}
-          onToggleSeleccionarTodos={handleToggleSeleccionarTodos}
-          onOrdenar={handleOrdenar}
-          ordenCampo={orden.campo}
-          ordenDireccion={orden.direccion}
-        />
-
-        {/* Paginación */}
-        {!loading && pacientes.length > 0 && (
-          <div className="mt-6 flex items-center justify-between bg-white rounded-lg shadow-md p-4">
-            <div className="text-sm text-gray-600">
-              Mostrando {((paginacion.pagina - 1) * paginacion.limite) + 1} -{' '}
-              {Math.min(paginacion.pagina * paginacion.limite, total)} de {total} pacientes
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handlePageChange(paginacion.pagina - 1)}
-                disabled={paginacion.pagina === 1}
-                className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Anterior
-              </button>
-              <div className="flex items-center gap-1">
-                {Array.from({ length: Math.min(5, totalPaginas) }, (_, i) => {
-                  let paginaNum;
-                  if (totalPaginas <= 5) {
-                    paginaNum = i + 1;
-                  } else if (paginacion.pagina <= 3) {
-                    paginaNum = i + 1;
-                  } else if (paginacion.pagina >= totalPaginas - 2) {
-                    paginaNum = totalPaginas - 4 + i;
-                  } else {
-                    paginaNum = paginacion.pagina - 2 + i;
-                  }
-                  return (
-                    <button
-                      key={paginaNum}
-                      onClick={() => handlePageChange(paginaNum)}
-                      className={`px-3 py-2 rounded-lg transition-colors ${
-                        paginacion.pagina === paginaNum
-                          ? 'bg-blue-600 text-white'
-                          : 'border border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      {paginaNum}
-                    </button>
-                  );
-                })}
-              </div>
-              <button
-                onClick={() => handlePageChange(paginacion.pagina + 1)}
-                disabled={paginacion.pagina >= totalPaginas}
-                className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Modales */}
-        <ModalExportarLista
-          isOpen={mostrarModalExportar}
-          onClose={() => setMostrarModalExportar(false)}
-          totalPacientes={total}
-          pacientesSeleccionados={pacientesSeleccionados.size}
-          onExportar={handleExportar}
-        />
-
-        <PanelListasGuardadas
-          isOpen={mostrarPanelListas}
-          onClose={() => setMostrarPanelListas(false)}
-          onCargarLista={handleCargarLista}
-          onGuardarLista={async (nombre) => {
-            await handleGuardarLista(nombre, filtros);
-          }}
-          filtrosActuales={filtros}
-        />
+        </div>
       </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* Filtros Avanzados */}
+          <FiltrosAvanzadosPacientes
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            onLimpiarFiltros={handleLimpiarFiltros}
+          />
+
+          {/* Acciones Masivas */}
+          {pacientesSeleccionados.size > 0 && (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-blue-900">
+                  {pacientesSeleccionados.size} paciente(s) seleccionado(s)
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleAccionMasiva('email')}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 text-blue-700 rounded-xl hover:bg-blue-50 text-sm font-medium transition-all ring-1 ring-blue-200"
+                  >
+                    <Mail size={16} />
+                    Enviar Email
+                  </button>
+                  <button
+                    onClick={() => handleAccionMasiva('sms')}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 text-blue-700 rounded-xl hover:bg-blue-50 text-sm font-medium transition-all ring-1 ring-blue-200"
+                  >
+                    <MessageSquare size={16} />
+                    Enviar SMS
+                  </button>
+                  <button
+                    onClick={() => handleAccionMasiva('campaña')}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 text-blue-700 rounded-xl hover:bg-blue-50 text-sm font-medium transition-all ring-1 ring-blue-200"
+                  >
+                    <Send size={16} />
+                    Añadir a Campaña
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
+              <div className="flex items-center gap-3">
+                <p className="text-red-700 flex-1 font-medium">Error al cargar los pacientes</p>
+                <p className="text-sm text-red-600">{error}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Tabla de resultados */}
+          <TablaResultadosPacientes
+            pacientes={pacientes}
+            loading={loading}
+            pacientesSeleccionados={pacientesSeleccionados}
+            onToggleSeleccionar={handleToggleSeleccionar}
+            onToggleSeleccionarTodos={handleToggleSeleccionarTodos}
+            onOrdenar={handleOrdenar}
+            ordenCampo={orden.campo}
+            ordenDireccion={orden.direccion}
+          />
+
+          {/* Paginación */}
+          {!loading && pacientes.length > 0 && (
+            <div className="bg-white rounded-xl shadow-sm p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="text-sm text-slate-600">
+                  Mostrando {((paginacion.pagina - 1) * paginacion.limite) + 1} -{' '}
+                  {Math.min(paginacion.pagina * paginacion.limite, total)} de {total} pacientes
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handlePageChange(paginacion.pagina - 1)}
+                    disabled={paginacion.pagina === 1}
+                    className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+                  >
+                    Anterior
+                  </button>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: Math.min(5, totalPaginas) }, (_, i) => {
+                      let paginaNum;
+                      if (totalPaginas <= 5) {
+                        paginaNum = i + 1;
+                      } else if (paginacion.pagina <= 3) {
+                        paginaNum = i + 1;
+                      } else if (paginacion.pagina >= totalPaginas - 2) {
+                        paginaNum = totalPaginas - 4 + i;
+                      } else {
+                        paginaNum = paginacion.pagina - 2 + i;
+                      }
+                      return (
+                        <button
+                          key={paginaNum}
+                          onClick={() => handlePageChange(paginaNum)}
+                          className={`px-3 py-2 rounded-xl transition-all text-sm font-medium ${
+                            paginacion.pagina === paginaNum
+                              ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-600/20'
+                              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 ring-1 ring-slate-200'
+                          }`}
+                        >
+                          {paginaNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    onClick={() => handlePageChange(paginacion.pagina + 1)}
+                    disabled={paginacion.pagina >= totalPaginas}
+                    className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Modales */}
+      <ModalExportarLista
+        isOpen={mostrarModalExportar}
+        onClose={() => setMostrarModalExportar(false)}
+        totalPacientes={total}
+        pacientesSeleccionados={pacientesSeleccionados.size}
+        onExportar={handleExportar}
+      />
+
+      <PanelListasGuardadas
+        isOpen={mostrarPanelListas}
+        onClose={() => setMostrarPanelListas(false)}
+        onCargarLista={handleCargarLista}
+        onGuardarLista={async (nombre) => {
+          await handleGuardarLista(nombre, filtros);
+        }}
+        filtrosActuales={filtros}
+      />
     </div>
   );
 }

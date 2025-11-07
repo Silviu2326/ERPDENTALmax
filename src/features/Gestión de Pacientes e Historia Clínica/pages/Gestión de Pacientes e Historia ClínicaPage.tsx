@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Users } from 'lucide-react';
+import { Users, AlertCircle } from 'lucide-react';
 import { obtenerPacientes, FiltrosBusquedaPacientes, Paciente, RespuestaListadoPacientes } from '../api/pacientesApi';
 import FiltrosBusquedaPacientesComponent from '../components/FiltrosBusquedaPacientes';
 import TablaListadoPacientes from '../components/TablaListadoPacientes';
@@ -106,59 +106,72 @@ export default function GestionPacientesHistoriaClinicaPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Users className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Gestión de Pacientes e Historia Clínica
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Listado y gestión de pacientes de la clínica
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Users size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Gestión de Pacientes e Historia Clínica
+                  </h1>
+                  <p className="text-gray-600">
+                    Listado y gestión de pacientes de la clínica
+                  </p>
+                </div>
+              </div>
+              <BotonNuevoPaciente onClick={handleNuevoPaciente} />
             </div>
           </div>
-          <BotonNuevoPaciente onClick={handleNuevoPaciente} />
         </div>
+      </div>
 
-        {/* Filtros */}
-        <FiltrosBusquedaPacientesComponent
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-        />
-
-        {/* Mensaje de error */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar los pacientes</p>
-            <p className="text-sm mt-1">{error}</p>
-          </div>
-        )}
-
-        {/* Tabla de pacientes */}
-        <TablaListadoPacientes
-          pacientes={pacientes}
-          loading={loading}
-          filtros={filtros}
-          onSortChange={handleSortChange}
-          onVerPaciente={handleVerPaciente}
-          onNuevaCita={handleNuevaCita}
-          onRegistrarPago={handleRegistrarPago}
-          onGenerarPresupuesto={handleGenerarPresupuesto}
-        />
-
-        {/* Paginación */}
-        {!loading && pacientes.length > 0 && (
-          <PaginacionListado
-            paginacion={paginacion}
-            onPageChange={handlePageChange}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosBusquedaPacientesComponent
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
           />
-        )}
+
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+            </div>
+          )}
+
+          {/* Tabla de pacientes */}
+          <TablaListadoPacientes
+            pacientes={pacientes}
+            loading={loading}
+            filtros={filtros}
+            onSortChange={handleSortChange}
+            onVerPaciente={handleVerPaciente}
+            onNuevaCita={handleNuevaCita}
+            onRegistrarPago={handleRegistrarPago}
+            onGenerarPresupuesto={handleGenerarPresupuesto}
+          />
+
+          {/* Paginación */}
+          {!loading && pacientes.length > 0 && (
+            <PaginacionListado
+              paginacion={paginacion}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

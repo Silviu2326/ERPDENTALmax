@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Stethoscope } from 'lucide-react';
+import { ArrowLeft, Stethoscope, Loader2, AlertCircle, Package } from 'lucide-react';
 import {
   obtenerHistoriaMedica,
   actualizarHistoriaMedica,
@@ -50,10 +50,11 @@ export default function AntecedentesMedicosPacientePage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando...</p>
           </div>
         </div>
       </div>
@@ -62,11 +63,12 @@ export default function AntecedentesMedicosPacientePage({
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar la historia médica</p>
-            <p className="text-sm mt-1">{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
           </div>
         </div>
       </div>
@@ -75,10 +77,12 @@ export default function AntecedentesMedicosPacientePage({
 
   if (!historiaMedica) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-lg shadow p-12 text-center">
-            <p className="text-gray-500">No se pudo cargar la historia médica</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Package size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No se pudo cargar la historia médica</h3>
+            <p className="text-gray-600">No se encontró información médica para este paciente</p>
           </div>
         </div>
       </div>
@@ -86,35 +90,39 @@ export default function AntecedentesMedicosPacientePage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Volver
-            </button>
-          )}
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Stethoscope className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Alergias y Antecedentes Médicos
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Gestión de información médica relevante del paciente
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            {onVolver && (
+              <button
+                onClick={onVolver}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+              >
+                <ArrowLeft size={20} />
+                Volver
+              </button>
+            )}
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Stethoscope size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Alergias y Antecedentes Médicos
+                </h1>
+                <p className="text-gray-600">
+                  Gestión de información médica relevante del paciente
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Formulario */}
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         <FormularioAntecedentesMedicos
           pacienteId={pacienteId}
           historiaMedica={historiaMedica}
@@ -124,5 +132,6 @@ export default function AntecedentesMedicosPacientePage({
     </div>
   );
 }
+
 
 

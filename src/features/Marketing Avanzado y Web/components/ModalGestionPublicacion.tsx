@@ -128,23 +128,23 @@ export default function ModalGestionPublicacion({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between z-10">
           <h2 className="text-xl font-bold text-gray-900">
             {publicacion ? 'Editar Publicación' : 'Nueva Publicación'}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-all"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X size={20} className="text-gray-600" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 ring-1 ring-red-200 text-red-700 px-4 py-3 rounded-xl">
               {error}
             </div>
           )}
@@ -152,40 +152,40 @@ export default function ModalGestionPublicacion({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Contenido
                 </label>
                 <textarea
                   value={formData.contenido}
                   onChange={(e) => handleChange('contenido', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   rows={6}
                   placeholder="Escribe el contenido de tu publicación..."
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-slate-500 mt-1">
                   {formData.contenido.length} caracteres
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Imágenes/Media
                 </label>
-                <div className="flex space-x-2 mb-2">
+                <div className="flex gap-2 mb-2">
                   <input
                     type="url"
                     value={urlImagenInput}
                     onChange={(e) => setUrlImagenInput(e.target.value)}
                     placeholder="URL de imagen..."
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   />
                   <button
                     type="button"
                     onClick={agregarImagen}
-                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-slate-600 text-white hover:bg-slate-700 shadow-sm"
                   >
-                    <Image className="w-4 h-4" />
+                    <Image size={18} />
                   </button>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
@@ -194,7 +194,7 @@ export default function ModalGestionPublicacion({
                       <img
                         src={url}
                         alt={`Media ${index + 1}`}
-                        className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                        className="w-full h-24 object-cover rounded-xl ring-1 ring-gray-200"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23ccc" width="100" height="100"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999"%3EImagen%3C/text%3E%3C/svg%3E';
                         }}
@@ -204,7 +204,7 @@ export default function ModalGestionPublicacion({
                         onClick={() => eliminarImagen(index)}
                         className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       >
-                        <X className="w-3 h-3" />
+                        <X size={12} />
                       </button>
                     </div>
                   ))}
@@ -212,7 +212,7 @@ export default function ModalGestionPublicacion({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Plataformas
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -221,10 +221,10 @@ export default function ModalGestionPublicacion({
                       key={plataforma.value}
                       type="button"
                       onClick={() => togglePlataforma(plataforma.value)}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg border-2 transition-colors ${
+                      className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ring-1 ${
                         formData.plataformas.includes(plataforma.value)
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                          ? 'ring-blue-500 bg-blue-50 text-blue-700'
+                          : 'ring-slate-200 bg-white text-slate-700 hover:ring-slate-300'
                       }`}
                     >
                       {plataforma.icon}
@@ -235,13 +235,13 @@ export default function ModalGestionPublicacion({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Estado
                 </label>
                 <select
                   value={formData.estado}
                   onChange={(e) => handleChange('estado', e.target.value as EstadoPublicacion)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 >
                   <option value="borrador">Borrador</option>
                   <option value="programado">Programado</option>
@@ -252,7 +252,7 @@ export default function ModalGestionPublicacion({
 
               {formData.estado === 'programado' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Fecha y Hora de Programación
                   </label>
                   <input
@@ -265,7 +265,7 @@ export default function ModalGestionPublicacion({
                     onChange={(e) =>
                       handleChange('fechaProgramacion', new Date(e.target.value).toISOString())
                     }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   />
                 </div>
               )}
@@ -277,9 +277,9 @@ export default function ModalGestionPublicacion({
                 <button
                   type="button"
                   onClick={() => setMostrarPreview(!mostrarPreview)}
-                  className="flex items-center space-x-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-100"
                 >
-                  <Eye className="w-4 h-4" />
+                  <Eye size={18} />
                   <span>{mostrarPreview ? 'Ocultar' : 'Mostrar'}</span>
                 </button>
               </div>
@@ -295,9 +295,9 @@ export default function ModalGestionPublicacion({
                   ))}
                 </div>
               ) : (
-                <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <Eye className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-500">
+                <div className="bg-gray-50 ring-2 ring-dashed ring-gray-300 rounded-xl p-8 text-center">
+                  <Eye size={48} className="text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600">
                     {mostrarPreview
                       ? 'Selecciona al menos una plataforma para ver la vista previa'
                       : 'Activa la vista previa para ver cómo se verá tu publicación'}
@@ -307,20 +307,20 @@ export default function ModalGestionPublicacion({
             </div>
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 bg-slate-100 hover:bg-slate-200"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
-              <Save className="w-4 h-4" />
+              <Save size={18} />
               <span>{loading ? 'Guardando...' : 'Guardar'}</span>
             </button>
           </div>
@@ -329,5 +329,6 @@ export default function ModalGestionPublicacion({
     </div>
   );
 }
+
 
 

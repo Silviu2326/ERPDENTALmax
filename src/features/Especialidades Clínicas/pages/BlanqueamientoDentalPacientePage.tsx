@@ -98,22 +98,24 @@ export default function BlanqueamientoDentalPacientePage({
   // Si no hay pacienteId, mostrar selector
   if (!pacienteId) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-lg border-2 border-gray-200 p-8 shadow-lg max-w-md w-full">
-          <div className="text-center">
-            <Sparkles className="w-12 h-12 text-pink-600 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Seleccione un Paciente</h2>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center max-w-md mx-auto">
+            <div className="p-2 bg-blue-100 rounded-xl mx-auto mb-4 ring-1 ring-blue-200/70 w-fit">
+              <Sparkles size={48} className="text-blue-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un Paciente</h3>
             <p className="text-gray-600 mb-4">
               Para acceder a los tratamientos de blanqueamiento, necesita seleccionar un paciente primero.
             </p>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">ID del Paciente</label>
+            <div className="mb-4 text-left">
+              <label className="block text-sm font-medium text-slate-700 mb-2">ID del Paciente</label>
               <input
                 type="text"
                 value={pacienteId}
                 onChange={(e) => setPacienteId(e.target.value)}
                 placeholder="Ingrese el ID del paciente"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             {onVolver && (
@@ -131,52 +133,60 @@ export default function BlanqueamientoDentalPacientePage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                  title="Volver"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors mr-3"
+                    title="Volver"
+                  >
+                    <ArrowLeft className="w-5 h-5 text-gray-600" />
+                  </button>
+                )}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Sparkles size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Estética Dental: Blanqueamiento
+                  </h1>
+                  <p className="text-gray-600">
+                    Planificación, ejecución y seguimiento de tratamientos de blanqueamiento
+                  </p>
+                </div>
+              </div>
+              {!mostrarFormulario && (
+                <div className="flex items-center justify-end">
+                  <button
+                    onClick={() => setMostrarFormulario(true)}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                  >
+                    <Plus size={20} />
+                    Nuevo Tratamiento
+                  </button>
+                </div>
               )}
-              <div className="bg-gradient-to-br from-pink-600 to-fuchsia-600 p-3 rounded-xl shadow-lg">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">Estética Dental: Blanqueamiento</h1>
-                <p className="text-sm text-gray-600">
-                  Planificación, ejecución y seguimiento de tratamientos de blanqueamiento
-                </p>
-              </div>
             </div>
-            {!mostrarFormulario && (
-              <button
-                onClick={() => setMostrarFormulario(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors shadow-md"
-              >
-                <Plus className="w-5 h-5" />
-                Nuevo Tratamiento
-              </button>
-            )}
           </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
-            <AlertCircle className="w-5 h-5" />
-            <div>
-              <p className="font-medium">Error</p>
-              <p className="text-sm mt-1">{error}</p>
+          <div className="mb-6 bg-white rounded-lg shadow-sm p-4 border border-red-200">
+            <div className="flex items-center gap-3">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0" />
+              <div>
+                <p className="font-medium text-red-900">Error</p>
+                <p className="text-sm text-red-700 mt-1">{error}</p>
+              </div>
             </div>
           </div>
         )}
@@ -191,8 +201,8 @@ export default function BlanqueamientoDentalPacientePage({
           />
         ) : (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Historial de Tratamientos</h2>
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Historial de Tratamientos</h2>
               <HistorialBlanqueamientos
                 blanqueamientos={blanqueamientos}
                 loading={loading}
@@ -205,5 +215,6 @@ export default function BlanqueamientoDentalPacientePage({
     </div>
   );
 }
+
 
 

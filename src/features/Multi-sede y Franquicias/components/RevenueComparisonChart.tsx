@@ -11,10 +11,10 @@ export default function RevenueComparisonChart({
   const maxRevenue = Math.max(...centersData.map((c) => c.facturacion), 0);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-      <div className="flex items-center space-x-2 mb-6">
-        <BarChart3 className="w-6 h-6 text-blue-600" />
-        <h2 className="text-xl font-bold text-gray-800">Comparación de Facturación por Centro</h2>
+    <div className="bg-white shadow-sm rounded-xl p-4 ring-1 ring-gray-200">
+      <div className="flex items-center gap-2 mb-6">
+        <BarChart3 size={20} className="text-blue-600" />
+        <h2 className="text-xl font-bold text-gray-900">Comparación de Facturación por Centro</h2>
       </div>
 
       <div className="space-y-4">
@@ -27,8 +27,8 @@ export default function RevenueComparisonChart({
             return (
               <div key={center.id} className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-gray-700">{center.nombre}</span>
-                  <span className="text-sm font-bold text-gray-800">
+                  <span className="text-sm font-medium text-gray-700">{center.nombre}</span>
+                  <span className="text-sm font-bold text-gray-900">
                     {new Intl.NumberFormat('es-ES', {
                       style: 'currency',
                       currency: 'EUR',
@@ -55,5 +55,6 @@ export default function RevenueComparisonChart({
     </div>
   );
 }
+
 
 

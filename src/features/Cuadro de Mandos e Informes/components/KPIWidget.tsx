@@ -68,10 +68,10 @@ export default function KPIWidget({
   const colorClasses = colores[color];
 
   return (
-    <div className={`bg-white rounded-xl shadow-lg border-2 ${colorClasses.border} p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
+    <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1">
+          <h3 className="text-sm font-medium text-slate-700 mb-1">
             {titulo}
           </h3>
           <p className={`text-3xl font-bold ${colorClasses.text}`}>
@@ -79,7 +79,7 @@ export default function KPIWidget({
           </p>
         </div>
         {icono && (
-          <div className={`${colorClasses.bg} p-3 rounded-lg shadow-md`}>
+          <div className={`${colorClasses.bg} p-2 rounded-lg`}>
             {icono}
           </div>
         )}
@@ -88,10 +88,10 @@ export default function KPIWidget({
       {tendencia && cambioPorcentual !== undefined && (
         <div className="flex items-center mt-4 pt-4 border-t border-gray-200">
           {tendencia === 'up' && (
-            <TrendingUp className="w-4 h-4 text-green-500 mr-2" />
+            <TrendingUp className="w-4 h-4 text-green-600 mr-2" />
           )}
           {tendencia === 'down' && (
-            <TrendingDown className="w-4 h-4 text-red-500 mr-2" />
+            <TrendingDown className="w-4 h-4 text-red-600 mr-2" />
           )}
           {tendencia === 'neutral' && (
             <Minus className="w-4 h-4 text-gray-400 mr-2" />
@@ -112,5 +112,6 @@ export default function KPIWidget({
     </div>
   );
 }
+
 
 

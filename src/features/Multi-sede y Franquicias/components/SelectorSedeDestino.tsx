@@ -51,7 +51,8 @@ export default function SelectorSedeDestino({
 
   return (
     <div className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
+        <Building2 size={16} className="inline mr-1" />
         Sede de Destino *
       </label>
       <div className="relative">
@@ -59,25 +60,26 @@ export default function SelectorSedeDestino({
           type="button"
           onClick={() => setMostrarLista(!mostrarLista)}
           disabled={loading}
-          className="w-full pl-3 pr-10 py-2 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center justify-between"
+          className="w-full pl-3 pr-10 py-2.5 text-left rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-slate-100 disabled:cursor-not-allowed flex items-center justify-between transition-all"
         >
           <div className="flex items-center space-x-2 min-w-0">
             {loading ? (
               <>
-                <Loader2 className="h-5 w-5 text-gray-400 animate-spin flex-shrink-0" />
-                <span className="text-gray-500">Cargando sedes...</span>
+                <Loader2 size={18} className="text-slate-400 animate-spin flex-shrink-0" />
+                <span className="text-slate-500">Cargando sedes...</span>
               </>
             ) : sedeSeleccionada ? (
               <>
-                <Building2 className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                <Building2 size={18} className="text-blue-600 flex-shrink-0" />
                 <span className="truncate">{sedeSeleccionada.nombre}</span>
               </>
             ) : (
-              <span className="text-gray-500">Seleccione una sede de destino</span>
+              <span className="text-slate-500">Seleccione una sede de destino</span>
             )}
           </div>
           <ChevronDown
-            className={`h-5 w-5 text-gray-400 flex-shrink-0 transition-transform ${
+            size={18}
+            className={`text-slate-400 flex-shrink-0 transition-transform ${
               mostrarLista ? 'transform rotate-180' : ''
             }`}
           />
@@ -90,7 +92,7 @@ export default function SelectorSedeDestino({
               e.stopPropagation();
               handleClear();
             }}
-            className="absolute inset-y-0 right-8 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            className="absolute inset-y-0 right-8 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
           >
             <span className="text-xl">×</span>
           </button>
@@ -99,7 +101,7 @@ export default function SelectorSedeDestino({
 
       {error && (
         <div className="mt-2 flex items-center space-x-2 text-sm text-red-600">
-          <AlertCircle className="h-4 w-4" />
+          <AlertCircle size={16} />
           <span>{error}</span>
         </div>
       )}
@@ -111,9 +113,9 @@ export default function SelectorSedeDestino({
             className="fixed inset-0 z-10"
             onClick={() => setMostrarLista(false)}
           />
-          <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+          <div className="absolute z-20 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg ring-1 ring-slate-200 max-h-60 overflow-y-auto">
             {sedes.length === 0 ? (
-              <div className="p-4 text-center text-sm text-gray-500">
+              <div className="p-4 text-center text-sm text-slate-600">
                 No hay sedes disponibles para transferencia
               </div>
             ) : (
@@ -122,13 +124,13 @@ export default function SelectorSedeDestino({
                   key={sede._id}
                   type="button"
                   onClick={() => handleSelectSede(sede)}
-                  className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0 flex items-center space-x-3"
+                  className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0 flex items-center space-x-3"
                 >
-                  <Building2 className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                  <Building2 size={18} className="text-blue-600 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-gray-900 truncate">{sede.nombre}</p>
                     {sede.direccion && (
-                      <p className="text-xs text-gray-500 truncate mt-1">{sede.direccion}</p>
+                      <p className="text-xs text-slate-600 truncate mt-1">{sede.direccion}</p>
                     )}
                   </div>
                 </button>
@@ -140,5 +142,6 @@ export default function SelectorSedeDestino({
     </div>
   );
 }
+
 
 

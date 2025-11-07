@@ -54,49 +54,52 @@ export default function SelectorPlantillas({
 
   return (
     <div className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
+        <FileText size={16} className="inline mr-1" />
         Seleccionar Plantilla
       </label>
-      <button
-        type="button"
-        onClick={() => setMostrarLista(!mostrarLista)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-      >
-        <div className="flex items-center space-x-3">
-          <FileText className="w-5 h-5 text-gray-400" />
-          <span className={plantillaSeleccionada ? 'text-gray-900' : 'text-gray-500'}>
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <FileText className="h-5 w-5 text-slate-400" />
+        </div>
+        <button
+          type="button"
+          onClick={() => setMostrarLista(!mostrarLista)}
+          className="w-full flex items-center justify-between rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5 transition-all"
+        >
+          <span className={plantillaSeleccionada ? 'text-slate-900' : 'text-slate-400'}>
             {plantillaSeleccionada ? plantillaSeleccionada.nombre : 'Selecciona una plantilla...'}
           </span>
-        </div>
-        {mostrarLista ? (
-          <ChevronUp className="w-5 h-5 text-gray-400" />
-        ) : (
-          <ChevronDown className="w-5 h-5 text-gray-400" />
-        )}
-      </button>
+          {mostrarLista ? (
+            <ChevronUp className="w-5 h-5 text-slate-400" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-slate-400" />
+          )}
+        </button>
+      </div>
 
       {mostrarLista && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-10 w-full mt-1 bg-white ring-1 ring-slate-200 rounded-xl shadow-lg max-h-60 overflow-auto">
           {loading ? (
-            <div className="p-4 text-center text-gray-500">Cargando plantillas...</div>
+            <div className="p-4 text-center text-sm text-slate-500">Cargando plantillas...</div>
           ) : error ? (
-            <div className="p-4 text-center text-red-500">{error}</div>
+            <div className="p-4 text-center text-sm text-red-600">{error}</div>
           ) : plantillas.length === 0 ? (
-            <div className="p-4 text-center text-gray-500">No hay plantillas disponibles</div>
+            <div className="p-4 text-center text-sm text-slate-500">No hay plantillas disponibles</div>
           ) : (
             <ul className="py-1">
               {plantillas.map((plantilla) => (
                 <li
                   key={plantilla._id}
                   onClick={() => handleSeleccionar(plantilla)}
-                  className={`px-4 py-3 cursor-pointer hover:bg-blue-50 transition-colors ${
+                  className={`px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-b-0 ${
                     plantillaSeleccionada?._id === plantilla._id ? 'bg-blue-50' : ''
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <FileText className="w-4 h-4 text-gray-400" />
-                      <span className="font-medium text-gray-900">{plantilla.nombre}</span>
+                      <FileText className="w-4 h-4 text-slate-400" />
+                      <span className="font-medium text-slate-900">{plantilla.nombre}</span>
                     </div>
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${getTipoColor(plantilla.tipo)}`}>
                       {plantilla.tipo}
@@ -110,12 +113,12 @@ export default function SelectorPlantillas({
       )}
 
       {plantillaSeleccionada && (
-        <div className="mt-2 p-3 bg-blue-50 rounded-lg">
-          <p className="text-sm text-gray-600">
+        <div className="mt-2 p-3 bg-blue-50 rounded-xl ring-1 ring-blue-200/70">
+          <p className="text-sm text-slate-700">
             <span className="font-medium">Tipo:</span> {plantillaSeleccionada.tipo}
           </p>
           {plantillaSeleccionada.variables.length > 0 && (
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-slate-600 mt-1">
               <span className="font-medium">Variables disponibles:</span>{' '}
               {plantillaSeleccionada.variables.join(', ')}
             </p>
@@ -125,5 +128,6 @@ export default function SelectorPlantillas({
     </div>
   );
 }
+
 
 

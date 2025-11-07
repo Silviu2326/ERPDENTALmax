@@ -52,13 +52,14 @@ export default function PanelHerramientasPlanificacion({
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200">
-      <div className="p-4 border-b border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+      <div className="px-4 py-3 border-b border-gray-200">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-800">Herramientas</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Herramientas</h3>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 transition-colors"
+            aria-label={expanded ? 'Contraer' : 'Expandir'}
           >
             {expanded ? '▼' : '▲'}
           </button>
@@ -69,7 +70,7 @@ export default function PanelHerramientasPlanificacion({
         <div className="p-4 space-y-4">
           {/* Herramientas de selección */}
           <div>
-            <h4 className="text-sm font-medium text-gray-700 mb-2">Herramientas de Planificación</h4>
+            <h4 className="text-sm font-medium text-slate-700 mb-2">Herramientas de Planificación</h4>
             <div className="grid grid-cols-1 gap-2">
               {herramientas.map((herramienta) => {
                 const Icono = herramienta.icono;
@@ -78,16 +79,16 @@ export default function PanelHerramientasPlanificacion({
                   <button
                     key={herramienta.id}
                     onClick={() => onHerramientaSeleccionada(activa ? null : herramienta.id)}
-                    className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${
+                    className={`flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${
                       activa
-                        ? 'bg-blue-50 border-blue-500 text-blue-700'
-                        : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-50/50'
+                        ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-blue-300 hover:bg-blue-50/50'
                     }`}
                   >
                     <Icono className="w-5 h-5" />
                     <div className="text-left flex-1">
                       <p className="font-medium text-sm">{herramienta.nombre}</p>
-                      <p className="text-xs text-gray-500">{herramienta.descripcion}</p>
+                      <p className="text-xs text-slate-500">{herramienta.descripcion}</p>
                     </div>
                   </button>
                 );
@@ -97,7 +98,7 @@ export default function PanelHerramientasPlanificacion({
 
           {/* Gestión de capas */}
           <div>
-            <h4 className="text-sm font-medium text-gray-700 mb-2">Visibilidad de Capas</h4>
+            <h4 className="text-sm font-medium text-slate-700 mb-2">Visibilidad de Capas</h4>
             <div className="space-y-2">
               {[
                 { id: 'hueso' as const, nombre: 'Hueso', contador: null },
@@ -110,22 +111,22 @@ export default function PanelHerramientasPlanificacion({
                   <button
                     key={capa.id}
                     onClick={() => onToggleCapa(capa.id)}
-                    className={`w-full flex items-center justify-between p-2 rounded-lg border transition-all ${
+                    className={`w-full flex items-center justify-between p-2 rounded-xl border transition-all ${
                       visible
                         ? 'bg-green-50 border-green-300'
-                        : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                        : 'bg-white border-slate-200 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       {visible ? (
                         <Eye className="w-4 h-4 text-green-600" />
                       ) : (
-                        <EyeOff className="w-4 h-4 text-gray-400" />
+                        <EyeOff className="w-4 h-4 text-slate-400" />
                       )}
-                      <span className="text-sm font-medium text-gray-700">{capa.nombre}</span>
+                      <span className="text-sm font-medium text-slate-700">{capa.nombre}</span>
                     </div>
                     {capa.contador !== null && (
-                      <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded-full">
+                      <span className="text-xs text-slate-600 bg-slate-200 px-2 py-1 rounded-full">
                         {capa.contador}
                       </span>
                     )}
@@ -139,14 +140,14 @@ export default function PanelHerramientasPlanificacion({
           <div className="pt-4 border-t border-gray-200 space-y-2">
             <button
               onClick={onGuardar}
-              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-blue-600 hover:bg-blue-700 text-white"
             >
               <Save className="w-4 h-4" />
               Guardar Planificación
             </button>
             <button
               onClick={onReset}
-              className="w-full flex items-center justify-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2.5 px-4 rounded-lg transition-colors"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-gray-200 hover:bg-gray-300 text-gray-700"
             >
               <RotateCcw className="w-4 h-4" />
               Resetear Cambios
@@ -157,5 +158,6 @@ export default function PanelHerramientasPlanificacion({
     </div>
   );
 }
+
 
 

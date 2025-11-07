@@ -220,3 +220,4 @@ export function generateTrackingSnippet(configurations: TrackingConfig[]): strin
 }
 
 
+

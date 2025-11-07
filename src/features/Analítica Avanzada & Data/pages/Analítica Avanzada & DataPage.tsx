@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Users, Calendar, Filter, RefreshCw, FunnelChart as FunnelChartIcon, AlertCircle, Box, DollarSign, Bell } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Calendar, Filter, RefreshCw, FunnelChart as FunnelChartIcon, AlertCircle, Box, DollarSign, Bell, Loader2, Package } from 'lucide-react';
 import { getCohortRetention, CohortRetentionParams, CohortRetentionResponse } from '../api/analiticaApi';
 import EmbudoConversionPage from './EmbudoConversionPage';
 import AnalisisAusenciasPage from './AnalisisAusenciasPage';
@@ -55,234 +55,298 @@ export default function AnaliticaAvanzadaDataPage() {
   }, [activeView, fechaInicio, fechaFin, groupBy, clinicId]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <BarChart3 className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Analítica Avanzada & Data</h1>
-              <p className="text-gray-600 mt-1">Análisis profundo de datos e inteligencia de negocio</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <BarChart3 size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Analítica Avanzada & Data
+                </h1>
+                <p className="text-gray-600">
+                  Análisis profundo de datos e inteligencia de negocio
+                </p>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Tabs de navegación */}
-          <div className="flex space-x-2 border-b border-gray-200">
-            <button
-              onClick={() => setActiveView('dashboard')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'dashboard'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {/* Sistema de Tabs */}
+        <div className="bg-white shadow-sm rounded-lg p-0 mb-6">
+          <div className="px-4 py-3">
+            <div
+              role="tablist"
+              aria-label="Secciones"
+              className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1 overflow-x-auto"
             >
-              <div className="flex items-center space-x-2">
-                <TrendingUp className="w-4 h-4" />
+              <button
+                onClick={() => setActiveView('dashboard')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'dashboard'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <TrendingUp size={18} className={activeView === 'dashboard' ? 'opacity-100' : 'opacity-70'} />
                 <span>Dashboard</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView('cohortes-retencion')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'cohortes-retencion'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Users className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveView('cohortes-retencion')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'cohortes-retencion'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <Users size={18} className={activeView === 'cohortes-retencion' ? 'opacity-100' : 'opacity-70'} />
                 <span>Cohortes de Retención</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView('embudo-conversion')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'embudo-conversion'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <FunnelChartIcon className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveView('embudo-conversion')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'embudo-conversion'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <FunnelChartIcon size={18} className={activeView === 'embudo-conversion' ? 'opacity-100' : 'opacity-70'} />
                 <span>Embudo de Conversión</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView('analisis-ausencias')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'analisis-ausencias'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <AlertCircle className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveView('analisis-ausencias')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'analisis-ausencias'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <AlertCircle size={18} className={activeView === 'analisis-ausencias' ? 'opacity-100' : 'opacity-70'} />
                 <span>Análisis de Ausencias</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView('produccion-box')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'produccion-box'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Box className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveView('produccion-box')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'produccion-box'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <Box size={18} className={activeView === 'produccion-box' ? 'opacity-100' : 'opacity-70'} />
                 <span>Producción por Box</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView('coste-tratamiento-margen')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'coste-tratamiento-margen'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <DollarSign className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveView('coste-tratamiento-margen')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'coste-tratamiento-margen'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <DollarSign size={18} className={activeView === 'coste-tratamiento-margen' ? 'opacity-100' : 'opacity-70'} />
                 <span>Coste y Margen</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setActiveView('alertas-inteligentes')}
-              className={`px-6 py-3 font-semibold transition-all duration-200 border-b-2 ${
-                activeView === 'alertas-inteligentes'
-                  ? 'border-blue-600 text-blue-600 bg-blue-50'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Bell className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setActiveView('alertas-inteligentes')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  activeView === 'alertas-inteligentes'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <Bell size={18} className={activeView === 'alertas-inteligentes' ? 'opacity-100' : 'opacity-70'} />
                 <span>Alertas Inteligentes</span>
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Contenido según la vista activa */}
         {activeView === 'dashboard' && (
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Dashboard de Analítica</h2>
-            <p className="text-gray-600">
-              Esta sección mostrará un dashboard con múltiples análisis y visualizaciones de datos.
-            </p>
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setActiveView('embudo-conversion')}>
+          <div className="space-y-6">
+            <div className="bg-white shadow-sm rounded-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-2">Dashboard de Analítica</h2>
+              <p className="text-gray-600">
+                Esta sección mostrará un dashboard con múltiples análisis y visualizaciones de datos.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div 
+                className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md cursor-pointer"
+                onClick={() => setActiveView('embudo-conversion')}
+              >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Embudo de Conversión</h3>
-                  <FunnelChartIcon className="w-5 h-5 text-blue-600" />
+                  <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                    <FunnelChartIcon className="w-5 h-5 text-blue-600" />
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Embudo de Conversión</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">
                   Visualiza el viaje de tus leads desde el contacto inicial hasta convertirse en pacientes activos
                 </p>
-                <button
-                  onClick={() => setActiveView('embudo-conversion')}
-                  className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1"
-                >
-                  <span>Ver análisis</span>
-                  <TrendingUp className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setActiveView('cohortes-retencion')}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Análisis de Cohortes</h3>
-                  <Users className="w-5 h-5 text-indigo-600" />
+                <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveView('embudo-conversion');
+                    }}
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>Ver análisis</span>
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+              </div>
+              <div 
+                className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md cursor-pointer"
+                onClick={() => setActiveView('cohortes-retencion')}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-indigo-100 rounded-xl ring-1 ring-indigo-200/70">
+                    <Users className="w-5 h-5 text-indigo-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Análisis de Cohortes</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">
                   Análisis de retención de pacientes agrupados por cohortes
                 </p>
-                <button
-                  onClick={() => setActiveView('cohortes-retencion')}
-                  className="text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center space-x-1"
-                >
-                  <span>Ver análisis</span>
-                  <TrendingUp className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setActiveView('coste-tratamiento-margen')}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Coste por Tratamiento y Margen</h3>
-                  <DollarSign className="w-5 h-5 text-green-600" />
+                <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveView('cohortes-retencion');
+                    }}
+                    className="text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>Ver análisis</span>
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+              </div>
+              <div 
+                className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md cursor-pointer"
+                onClick={() => setActiveView('coste-tratamiento-margen')}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-green-100 rounded-xl ring-1 ring-green-200/70">
+                    <DollarSign className="w-5 h-5 text-green-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Coste por Tratamiento y Margen</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">
                   Análisis detallado de costes y márgenes por tratamiento para optimizar la rentabilidad
                 </p>
-                <button
-                  onClick={() => setActiveView('coste-tratamiento-margen')}
-                  className="text-green-600 hover:text-green-700 font-medium text-sm flex items-center space-x-1"
-                >
-                  <span>Ver análisis</span>
-                  <TrendingUp className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Análisis Predictivo</h3>
-                  <BarChart3 className="w-5 h-5 text-purple-600" />
+                <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveView('coste-tratamiento-margen');
+                    }}
+                    className="text-green-600 hover:text-green-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>Ver análisis</span>
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-sm text-gray-600">
+              </div>
+              <div className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-purple-100 rounded-xl ring-1 ring-purple-200/70">
+                    <BarChart3 className="w-5 h-5 text-purple-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Análisis Predictivo</h3>
+                <p className="text-sm text-gray-600 flex-grow">
                   Próximamente: Modelos predictivos y análisis avanzados
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-red-50 to-rose-50 rounded-lg p-6 border border-red-200 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setActiveView('analisis-ausencias')}>
+              <div 
+                className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md cursor-pointer"
+                onClick={() => setActiveView('analisis-ausencias')}
+              >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Análisis de Ausencias</h3>
-                  <AlertCircle className="w-5 h-5 text-red-600" />
+                  <div className="p-2 bg-red-100 rounded-xl ring-1 ring-red-200/70">
+                    <AlertCircle className="w-5 h-5 text-red-600" />
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Análisis de Ausencias</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">
                   Visualiza el impacto de las inasistencias (no-shows) y toma decisiones estratégicas
                 </p>
-                <button
-                  onClick={() => setActiveView('analisis-ausencias')}
-                  className="text-red-600 hover:text-red-700 font-medium text-sm flex items-center space-x-1"
-                >
-                  <span>Ver análisis</span>
-                  <TrendingUp className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 border border-blue-200 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setActiveView('produccion-box')}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Producción por Box</h3>
-                  <Box className="w-5 h-5 text-blue-600" />
+                <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveView('analisis-ausencias');
+                    }}
+                    className="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>Ver análisis</span>
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+              </div>
+              <div 
+                className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md cursor-pointer"
+                onClick={() => setActiveView('produccion-box')}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                    <Box className="w-5 h-5 text-blue-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Producción por Box</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">
                   Análisis detallado de producción por profesional y utilización de boxes
                 </p>
-                <button
-                  onClick={() => setActiveView('produccion-box')}
-                  className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1"
-                >
-                  <span>Ver análisis</span>
-                  <TrendingUp className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-6 border border-orange-200 hover:shadow-lg transition-all duration-200 cursor-pointer"
-                   onClick={() => setActiveView('alertas-inteligentes')}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-700">Alertas Inteligentes KPI</h3>
-                  <Bell className="w-5 h-5 text-orange-600" />
+                <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveView('produccion-box');
+                    }}
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>Ver análisis</span>
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+              </div>
+              <div 
+                className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md cursor-pointer"
+                onClick={() => setActiveView('alertas-inteligentes')}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-orange-100 rounded-xl ring-1 ring-orange-200/70">
+                    <Bell className="w-5 h-5 text-orange-600" />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Alertas Inteligentes KPI</h3>
+                <p className="text-sm text-gray-600 mb-4 flex-grow">
                   Configura umbrales y recibe alertas automáticas cuando los KPIs superen los límites establecidos
                 </p>
-                <button
-                  onClick={() => setActiveView('alertas-inteligentes')}
-                  className="text-orange-600 hover:text-orange-700 font-medium text-sm flex items-center space-x-1"
-                >
-                  <span>Ver alertas</span>
-                  <TrendingUp className="w-4 h-4" />
-                </button>
+                <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveView('alertas-inteligentes');
+                    }}
+                    className="text-orange-600 hover:text-orange-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>Ver alertas</span>
+                    <TrendingUp className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -291,99 +355,113 @@ export default function AnaliticaAvanzadaDataPage() {
         {activeView === 'cohortes-retencion' && (
           <div className="space-y-6">
             {/* Panel de Filtros */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-                  <Filter className="w-5 h-5" />
-                  <span>Filtros de Análisis</span>
-                </h2>
-                <button
-                  onClick={cargarDatosCohortes}
-                  disabled={loading}
-                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                  <span>Actualizar</span>
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Fecha Inicio
-                  </label>
-                  <input
-                    type="date"
-                    value={fechaInicio}
-                    onChange={(e) => setFechaInicio(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Fecha Fin
-                  </label>
-                  <input
-                    type="date"
-                    value={fechaFin}
-                    onChange={(e) => setFechaFin(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Agrupación
-                  </label>
-                  <select
-                    value={groupBy}
-                    onChange={(e) => setGroupBy(e.target.value as 'monthly' | 'quarterly')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="monthly">Mensual</option>
-                    <option value="quarterly">Trimestral</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Sede (Opcional)
-                  </label>
-                  <input
-                    type="text"
-                    value={clinicId || ''}
-                    onChange={(e) => setClinicId(e.target.value || undefined)}
-                    placeholder="ID de Sede"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
+            <div className="bg-white shadow-sm rounded-lg mb-6">
+              <div className="space-y-4 p-6">
+                <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                  <div className="flex gap-4 flex-col md:flex-row">
+                    <div className="flex-1">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <Calendar size={16} className="inline mr-1" />
+                            Fecha Inicio
+                          </label>
+                          <input
+                            type="date"
+                            value={fechaInicio}
+                            onChange={(e) => setFechaInicio(e.target.value)}
+                            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <Calendar size={16} className="inline mr-1" />
+                            Fecha Fin
+                          </label>
+                          <input
+                            type="date"
+                            value={fechaFin}
+                            onChange={(e) => setFechaFin(e.target.value)}
+                            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Agrupación
+                          </label>
+                          <select
+                            value={groupBy}
+                            onChange={(e) => setGroupBy(e.target.value as 'monthly' | 'quarterly')}
+                            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                          >
+                            <option value="monthly">Mensual</option>
+                            <option value="quarterly">Trimestral</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Sede (Opcional)
+                          </label>
+                          <input
+                            type="text"
+                            value={clinicId || ''}
+                            onChange={(e) => setClinicId(e.target.value || undefined)}
+                            placeholder="ID de Sede"
+                            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-end">
+                      <button
+                        onClick={cargarDatosCohortes}
+                        disabled={loading}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
+                      >
+                        <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                        <span>Actualizar</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Resultados */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center space-x-2">
-                <Calendar className="w-5 h-5" />
+            <div className="bg-white shadow-sm rounded-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Calendar size={20} />
                 <span>Análisis de Cohortes de Retención</span>
               </h2>
 
               {loading && (
-                <div className="flex items-center justify-center py-12">
-                  <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
-                  <span className="ml-3 text-gray-600">Cargando datos...</span>
+                <div className="p-8 text-center bg-white">
+                  <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+                  <p className="text-gray-600">Cargando...</p>
                 </div>
               )}
 
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-                  <p className="text-red-800">{error}</p>
+                <div className="p-8 text-center bg-white">
+                  <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+                  <p className="text-gray-600 mb-4">{error}</p>
+                  <button
+                    onClick={cargarDatosCohortes}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                  >
+                    Reintentar
+                  </button>
                 </div>
               )}
 
               {!loading && !error && cohortData && (
                 <div className="space-y-4">
                   {cohortData.cohorts.length === 0 ? (
-                    <div className="text-center py-12 text-gray-500">
-                      <Users className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                      <p>No se encontraron datos de cohortes para el período seleccionado</p>
+                    <div className="p-8 text-center bg-white">
+                      <Users size={48} className="mx-auto text-gray-400 mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+                      <p className="text-gray-600 mb-4">No se encontraron datos de cohortes para el período seleccionado</p>
                     </div>
                   ) : (
                     <div className="overflow-x-auto">
@@ -437,8 +515,10 @@ export default function AnaliticaAvanzadaDataPage() {
               )}
 
               {!loading && !error && !cohortData && (
-                <div className="text-center py-12 text-gray-500">
-                  <p>Selecciona los filtros y haz clic en "Actualizar" para ver los datos</p>
+                <div className="p-8 text-center bg-white">
+                  <Package size={48} className="mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin datos</h3>
+                  <p className="text-gray-600 mb-4">Selecciona los filtros y haz clic en "Actualizar" para ver los datos</p>
                 </div>
               )}
             </div>

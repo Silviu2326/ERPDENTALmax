@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, Save, X } from 'lucide-react';
+import { Plus, Trash2, Save, X, Loader2 } from 'lucide-react';
 import { Proveedor, Producto, ItemOrdenCompra, NuevaOrdenCompra } from '../api/ordenesCompraApi';
 import ModalSeleccionarProveedor from './ModalSeleccionarProveedor';
 import ModalSeleccionarProducto from './ModalSeleccionarProducto';
@@ -145,11 +145,11 @@ export default function FormularioCrearOrdenCompra({
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between border-b pb-4">
-          <h2 className="text-2xl font-bold text-gray-900">Nueva Orden de Compra</h2>
+        <div className="flex items-center justify-between border-b border-gray-200 pb-4">
+          <h2 className="text-xl font-bold text-gray-900">Nueva Orden de Compra</h2>
           <button
             type="button"
             onClick={onCancel}
@@ -161,7 +161,7 @@ export default function FormularioCrearOrdenCompra({
 
         {/* Error */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="bg-red-50 ring-1 ring-red-200 text-red-700 px-4 py-3 rounded-xl">
             {error}
           </div>
         )}
@@ -169,9 +169,9 @@ export default function FormularioCrearOrdenCompra({
         {/* Proveedor y Sucursal */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Proveedor *</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Proveedor *</label>
             {proveedorSeleccionado ? (
-              <div className="flex items-center justify-between p-3 border rounded-lg bg-gray-50">
+              <div className="flex items-center justify-between p-3 ring-1 ring-slate-300 rounded-xl bg-slate-50">
                 <div>
                   <p className="font-medium text-gray-900">{proveedorSeleccionado.nombreComercial}</p>
                   <p className="text-sm text-gray-500">{proveedorSeleccionado.razonSocial}</p>
@@ -179,7 +179,7 @@ export default function FormularioCrearOrdenCompra({
                 <button
                   type="button"
                   onClick={() => setMostrarModalProveedor(true)}
-                  className="text-blue-600 hover:text-blue-800 text-sm"
+                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                 >
                   Cambiar
                 </button>
@@ -188,7 +188,7 @@ export default function FormularioCrearOrdenCompra({
               <button
                 type="button"
                 onClick={() => setMostrarModalProveedor(true)}
-                className="w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                className="w-full px-4 py-2.5 ring-2 ring-dashed ring-slate-300 rounded-xl text-slate-600 hover:ring-blue-400 hover:text-blue-600 transition-colors text-sm font-medium"
               >
                 Seleccionar Proveedor
               </button>
@@ -196,11 +196,11 @@ export default function FormularioCrearOrdenCompra({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Sucursal *</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Sucursal *</label>
             <select
               value={sucursalId}
               onChange={(e) => setSucursalId(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
               required
             >
               <option value="">Seleccione una sucursal</option>
@@ -215,33 +215,33 @@ export default function FormularioCrearOrdenCompra({
 
         {/* Fecha entrega estimada */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Fecha de Entrega Estimada
           </label>
           <input
             type="date"
             value={fechaEntregaEstimada}
             onChange={(e) => setFechaEntregaEstimada(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
           />
         </div>
 
         {/* Items */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <label className="block text-sm font-medium text-gray-700">Productos *</label>
+            <label className="block text-sm font-medium text-slate-700">Productos *</label>
             <button
               type="button"
               onClick={() => setMostrarModalProducto(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={18} />
               Agregar Producto
             </button>
           </div>
 
           {items.length === 0 ? (
-            <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg text-gray-500">
+            <div className="text-center py-8 ring-2 ring-dashed ring-slate-300 rounded-xl text-slate-500">
               No hay productos agregados. Haga clic en "Agregar Producto" para comenzar.
             </div>
           ) : (
@@ -286,7 +286,7 @@ export default function FormularioCrearOrdenCompra({
                             type="text"
                             value={item.descripcion}
                             onChange={(e) => handleActualizarItem(index, 'descripcion', e.target.value)}
-                            className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                            className="w-full px-2 py-1.5 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -297,7 +297,7 @@ export default function FormularioCrearOrdenCompra({
                             onChange={(e) =>
                               handleActualizarItem(index, 'cantidad', parseFloat(e.target.value) || 0)
                             }
-                            className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                            className="w-20 px-2 py-1.5 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -313,7 +313,7 @@ export default function FormularioCrearOrdenCompra({
                                 parseFloat(e.target.value) || 0
                               )
                             }
-                            className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
+                            className="w-24 px-2 py-1.5 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -377,38 +377,38 @@ export default function FormularioCrearOrdenCompra({
 
         {/* Notas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Notas</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
           <textarea
             value={notas}
             onChange={(e) => setNotas(e.target.value)}
             rows={3}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm placeholder-slate-400"
             placeholder="Notas adicionales sobre la orden de compra..."
           />
         </div>
 
         {/* Botones */}
-        <div className="flex justify-end gap-4 pt-4 border-t">
+        <div className="flex justify-end gap-4 pt-4 border-t border-gray-200">
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-6 py-2 text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors text-sm font-medium"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
           >
             {loading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <Loader2 className="w-4 h-4 animate-spin" />
                 Guardando...
               </>
             ) : (
               <>
-                <Save className="w-4 h-4" />
+                <Save size={18} />
                 Guardar Orden
               </>
             )}
@@ -433,5 +433,6 @@ export default function FormularioCrearOrdenCompra({
     </div>
   );
 }
+
 
 

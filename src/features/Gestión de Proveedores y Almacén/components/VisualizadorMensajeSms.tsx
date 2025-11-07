@@ -21,19 +21,19 @@ export default function VisualizadorMensajeSms({
       : 'text-gray-600';
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4">
+    <div className="bg-white rounded-xl ring-1 ring-slate-200 p-4">
       <div className="flex items-center gap-2 mb-3">
-        <MessageSquare className="w-5 h-5 text-blue-600" />
-        <h3 className="font-semibold text-gray-900">Vista Previa del Mensaje</h3>
+        <MessageSquare size={16} className="text-blue-600" />
+        <h3 className="text-lg font-semibold text-gray-900">Vista Previa del Mensaje</h3>
       </div>
 
       {/* Simulación de mensaje SMS */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-3 border border-gray-200">
+      <div className="bg-gray-50 rounded-xl p-4 mb-3 ring-1 ring-gray-200">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           <span className="text-xs text-gray-600 font-medium">Mensaje SMS</span>
         </div>
-        <div className="bg-white rounded p-3 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-xl p-3 shadow-sm ring-1 ring-gray-200">
           <p className="text-sm text-gray-900 whitespace-pre-wrap break-words">{mensaje || 'Tu mensaje aparecerá aquí...'}</p>
         </div>
       </div>
@@ -57,12 +57,13 @@ export default function VisualizadorMensajeSms({
 
       {/* Advertencia si excede recomendación */}
       {caracteresUsados > maxCaracteres && (
-        <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
+        <div className="mt-3 p-2 bg-yellow-50 ring-1 ring-yellow-200 rounded-xl text-xs text-yellow-800">
           ⚠️ El mensaje se dividirá en múltiples SMS. Esto puede aumentar el costo.
         </div>
       )}
     </div>
   );
 }
+
 
 

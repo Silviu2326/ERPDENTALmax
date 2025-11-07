@@ -49,10 +49,10 @@ export default function PlanDeAccionComponent({
   return (
     <div className="space-y-6">
       {/* Acción Correctiva */}
-      <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-red-100 p-2 rounded-lg">
-            <CheckCircle className="w-5 h-5 text-red-600" />
+          <div className="bg-red-100 p-2 rounded-xl ring-1 ring-red-200/70">
+            <CheckCircle size={24} className="text-red-600" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">
@@ -67,10 +67,10 @@ export default function PlanDeAccionComponent({
         {capa.accion_correctiva ? (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Descripción
               </label>
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
                 <p className="text-sm text-gray-900">
                   {capa.accion_correctiva.descripcion}
                 </p>
@@ -79,11 +79,11 @@ export default function PlanDeAccionComponent({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <User className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <User size={16} className="inline mr-1" />
                   Responsable
                 </label>
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
                   <p className="text-sm text-gray-900">
                     {getResponsableNombre(capa.accion_correctiva.id_responsable)}
                   </p>
@@ -91,18 +91,18 @@ export default function PlanDeAccionComponent({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
                   Fecha Límite
                 </label>
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
                   <div className="flex items-center gap-2">
                     <p className="text-sm text-gray-900">
                       {formatFecha(capa.accion_correctiva.fecha_limite)}
                     </p>
                     {isAccionVencida(capa.accion_correctiva.fecha_limite) && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                        <AlertCircle className="w-3 h-3" />
+                        <AlertCircle size={12} />
                         Vencida
                       </span>
                     )}
@@ -110,7 +110,7 @@ export default function PlanDeAccionComponent({
                       capa.accion_correctiva.fecha_completado
                     ) && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                        <CheckCircle className="w-3 h-3" />
+                        <CheckCircle size={12} />
                         Completada
                       </span>
                     )}
@@ -121,10 +121,10 @@ export default function PlanDeAccionComponent({
 
             {capa.accion_correctiva.fecha_completado && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Fecha de Completado
                 </label>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-xl ring-1 ring-green-200 p-3">
                   <p className="text-sm text-green-900">
                     {formatFecha(capa.accion_correctiva.fecha_completado)}
                   </p>
@@ -135,7 +135,7 @@ export default function PlanDeAccionComponent({
         ) : (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm text-yellow-800 font-medium">
                   Acción correctiva no definida
@@ -150,10 +150,10 @@ export default function PlanDeAccionComponent({
       </div>
 
       {/* Acción Preventiva */}
-      <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-blue-100 p-2 rounded-lg">
-            <Clock className="w-5 h-5 text-blue-600" />
+          <div className="bg-blue-100 p-2 rounded-xl ring-1 ring-blue-200/70">
+            <Clock size={24} className="text-blue-600" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">
@@ -168,10 +168,10 @@ export default function PlanDeAccionComponent({
         {capa.accion_preventiva ? (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Descripción
               </label>
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
                 <p className="text-sm text-gray-900">
                   {capa.accion_preventiva.descripcion}
                 </p>
@@ -180,11 +180,11 @@ export default function PlanDeAccionComponent({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <User className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <User size={16} className="inline mr-1" />
                   Responsable
                 </label>
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
                   <p className="text-sm text-gray-900">
                     {getResponsableNombre(capa.accion_preventiva.id_responsable)}
                   </p>
@@ -192,18 +192,18 @@ export default function PlanDeAccionComponent({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
                   Fecha Límite
                 </label>
-                <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
                   <div className="flex items-center gap-2">
                     <p className="text-sm text-gray-900">
                       {formatFecha(capa.accion_preventiva.fecha_limite)}
                     </p>
                     {isAccionVencida(capa.accion_preventiva.fecha_limite) && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                        <AlertCircle className="w-3 h-3" />
+                        <AlertCircle size={12} />
                         Vencida
                       </span>
                     )}
@@ -211,7 +211,7 @@ export default function PlanDeAccionComponent({
                       capa.accion_preventiva.fecha_completado
                     ) && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                        <CheckCircle className="w-3 h-3" />
+                        <CheckCircle size={12} />
                         Completada
                       </span>
                     )}
@@ -222,10 +222,10 @@ export default function PlanDeAccionComponent({
 
             {capa.accion_preventiva.fecha_completado && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Fecha de Completado
                 </label>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-xl ring-1 ring-green-200 p-3">
                   <p className="text-sm text-green-900">
                     {formatFecha(capa.accion_preventiva.fecha_completado)}
                   </p>
@@ -236,7 +236,7 @@ export default function PlanDeAccionComponent({
         ) : (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm text-yellow-800 font-medium">
                   Acción preventiva no definida
@@ -253,5 +253,6 @@ export default function PlanDeAccionComponent({
     </div>
   );
 }
+
 
 

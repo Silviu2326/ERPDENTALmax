@@ -44,9 +44,10 @@ export default function FacturasRecientesTable({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center border border-gray-200">
+        <div className="flex flex-col items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+          <p className="text-gray-600">Cargando...</p>
         </div>
       </div>
     );
@@ -54,19 +55,17 @@ export default function FacturasRecientesTable({
 
   if (facturas.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <FileText className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay facturas recientes</p>
-          <p className="text-sm">Las facturas aparecerán aquí cuando se generen</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center border border-gray-200">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay facturas recientes</h3>
+        <p className="text-gray-600 mb-4">Las facturas aparecerán aquí cuando se generen</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div className="bg-white shadow-sm rounded-xl border border-gray-200 overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
         <h3 className="text-lg font-semibold text-gray-900">Facturas Recientes</h3>
       </div>
       <div className="overflow-x-auto">
@@ -139,9 +138,9 @@ export default function FacturasRecientesTable({
                   {onVerFactura && factura._id && (
                     <button
                       onClick={() => onVerFactura(factura._id!)}
-                      className="text-blue-600 hover:text-blue-900 flex items-center space-x-1 transition-colors"
+                      className="text-blue-600 hover:text-blue-900 flex items-center gap-1 transition-colors"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye size={16} />
                       <span>Ver</span>
                     </button>
                   )}
@@ -154,5 +153,6 @@ export default function FacturasRecientesTable({
     </div>
   );
 }
+
 
 

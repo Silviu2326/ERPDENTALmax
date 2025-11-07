@@ -41,21 +41,21 @@ export default function FormularioAnamnesisPediatrica({
   return (
     <div className="space-y-6">
       {/* Sección: Historia de Nacimiento */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center gap-3 mb-4">
-          <Baby className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-800">Historia de Nacimiento</h3>
+          <Baby size={20} className="text-blue-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Historia de Nacimiento</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Parto
             </label>
             <select
               value={localAnamnesis.tipoParto || ''}
               onChange={(e) => handleChange('tipoParto', e.target.value || undefined)}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
             >
               <option value="">Seleccionar...</option>
               <option value="normal">Normal</option>
@@ -64,7 +64,7 @@ export default function FormularioAnamnesisPediatrica({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Semanas de Gestación
             </label>
             <input
@@ -74,13 +74,13 @@ export default function FormularioAnamnesisPediatrica({
               value={localAnamnesis.semanasGestacion || ''}
               onChange={(e) => handleChange('semanasGestacion', e.target.value ? parseInt(e.target.value) : undefined)}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Ej: 38"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-              <Scale className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Scale size={16} />
               Peso al Nacer (kg)
             </label>
             <input
@@ -91,12 +91,12 @@ export default function FormularioAnamnesisPediatrica({
               value={localAnamnesis.pesoNacimiento || ''}
               onChange={(e) => handleChange('pesoNacimiento', e.target.value ? parseFloat(e.target.value) : undefined)}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Ej: 3.2"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Historia de Nacimiento
             </label>
             <textarea
@@ -104,7 +104,7 @@ export default function FormularioAnamnesisPediatrica({
               onChange={(e) => handleChange('historiaNacimiento', e.target.value)}
               disabled={readonly}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Complicaciones durante el parto, reanimación, etc."
             />
           </div>
@@ -112,21 +112,21 @@ export default function FormularioAnamnesisPediatrica({
       </div>
 
       {/* Sección: Alimentación */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center gap-3 mb-4">
-          <Milk className="w-5 h-5 text-green-600" />
-          <h3 className="text-lg font-semibold text-gray-800">Alimentación</h3>
+          <Milk size={20} className="text-green-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Alimentación</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Lactancia
             </label>
             <select
               value={localAnamnesis.tipoLactancia || ''}
               onChange={(e) => handleChange('tipoLactancia', e.target.value || undefined)}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
             >
               <option value="">Seleccionar...</option>
               <option value="materna">Lactancia Materna</option>
@@ -135,8 +135,8 @@ export default function FormularioAnamnesisPediatrica({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Calendar size={16} />
               Tiempo de Lactancia (meses)
             </label>
             <input
@@ -146,12 +146,12 @@ export default function FormularioAnamnesisPediatrica({
               value={localAnamnesis.tiempoLactancia || ''}
               onChange={(e) => handleChange('tiempoLactancia', e.target.value ? parseInt(e.target.value) : undefined)}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Ej: 6"
             />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Alimentación Actual
             </label>
             <textarea
@@ -159,7 +159,7 @@ export default function FormularioAnamnesisPediatrica({
               onChange={(e) => handleChange('alimentacion', e.target.value)}
               disabled={readonly}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Descripción de la alimentación actual, hábitos alimentarios, etc."
             />
           </div>
@@ -167,14 +167,14 @@ export default function FormularioAnamnesisPediatrica({
       </div>
 
       {/* Sección: Historial Médico */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center gap-3 mb-4">
-          <AlertTriangle className="w-5 h-5 text-orange-600" />
-          <h3 className="text-lg font-semibold text-gray-800">Historial Médico</h3>
+          <AlertTriangle size={20} className="text-orange-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Historial Médico</h3>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Historial Médico General
             </label>
             <textarea
@@ -182,12 +182,12 @@ export default function FormularioAnamnesisPediatrica({
               onChange={(e) => handleChange('historialMedico', e.target.value)}
               disabled={readonly}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Enfermedades, cirugías, hospitalizaciones, etc."
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Enfermedades Infantiles
             </label>
             <div className="flex gap-2 mb-2">
@@ -201,7 +201,7 @@ export default function FormularioAnamnesisPediatrica({
                   }
                 }}
                 disabled={readonly}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                 placeholder="Escriba y presione Enter para agregar"
               />
             </div>
@@ -225,7 +225,7 @@ export default function FormularioAnamnesisPediatrica({
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Alergias
             </label>
             <div className="flex gap-2 mb-2">
@@ -239,7 +239,7 @@ export default function FormularioAnamnesisPediatrica({
                   }
                 }}
                 disabled={readonly}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                 placeholder="Escriba y presione Enter para agregar"
               />
             </div>
@@ -263,8 +263,8 @@ export default function FormularioAnamnesisPediatrica({
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Pill className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Pill size={16} />
               Medicamentos Actuales
             </label>
             <div className="flex gap-2 mb-2">
@@ -278,7 +278,7 @@ export default function FormularioAnamnesisPediatrica({
                   }
                 }}
                 disabled={readonly}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                 placeholder="Escriba y presione Enter para agregar"
               />
             </div>
@@ -302,7 +302,7 @@ export default function FormularioAnamnesisPediatrica({
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Observaciones Adicionales
             </label>
             <textarea
@@ -310,7 +310,7 @@ export default function FormularioAnamnesisPediatrica({
               onChange={(e) => handleChange('observaciones', e.target.value)}
               disabled={readonly}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Observaciones adicionales sobre la anamnesis..."
             />
           </div>
@@ -319,5 +319,6 @@ export default function FormularioAnamnesisPediatrica({
     </div>
   );
 }
+
 
 

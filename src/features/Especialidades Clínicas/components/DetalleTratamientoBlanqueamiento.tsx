@@ -69,61 +69,67 @@ export default function DetalleTratamientoBlanqueamiento({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={onVolver}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                title="Volver"
-              >
-                <ArrowLeft className="w-5 h-5 text-gray-600" />
-              </button>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">Detalle del Tratamiento</h1>
-                <p className="text-sm text-gray-600">
-                  Iniciado el{' '}
-                  {new Date(blanqueamiento.fechaInicio).toLocaleDateString('es-ES', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <button
+                  onClick={onVolver}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors mr-3"
+                  title="Volver"
+                >
+                  <ArrowLeft className="w-5 h-5 text-gray-600" />
+                </button>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Detalle del Tratamiento
+                  </h1>
+                  <p className="text-gray-600">
+                    Iniciado el{' '}
+                    {new Date(blanqueamiento.fechaInicio).toLocaleDateString('es-ES', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-end">
+                {!editando ? (
+                  <button
+                    onClick={() => setEditando(true)}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                  >
+                    <Edit2 size={20} />
+                    Editar
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleGuardar}
+                    disabled={guardando}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors shadow-sm"
+                  >
+                    <Save size={20} />
+                    {guardando ? 'Guardando...' : 'Guardar Cambios'}
+                  </button>
+                )}
               </div>
             </div>
-            {!editando ? (
-              <button
-                onClick={() => setEditando(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <Edit2 className="w-4 h-4" />
-                Editar
-              </button>
-            ) : (
-              <button
-                onClick={handleGuardar}
-                disabled={guardando}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
-              >
-                <Save className="w-4 h-4" />
-                {guardando ? 'Guardando...' : 'Guardar Cambios'}
-              </button>
-            )}
           </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-6">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8 space-y-6">
         {/* Información General */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Información General</h2>
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Información General</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Blanqueamiento</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Blanqueamiento</label>
               {editando ? (
                 <select
                   value={formulario.tipoBlanqueamiento}
@@ -133,7 +139,7 @@ export default function DetalleTratamientoBlanqueamiento({
                       tipoBlanqueamiento: e.target.value as 'En Clínica' | 'En Casa' | 'Combinado',
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 >
                   <option value="En Clínica">En Clínica</option>
                   <option value="En Casa">En Casa</option>
@@ -145,13 +151,13 @@ export default function DetalleTratamientoBlanqueamiento({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Producto Utilizado</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Producto Utilizado</label>
               {editando ? (
                 <input
                   type="text"
                   value={formulario.productoUtilizado}
                   onChange={(e) => setFormulario({ ...formulario, productoUtilizado: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               ) : (
                 <p className="text-gray-900">{blanqueamiento.productoUtilizado}</p>
@@ -159,13 +165,13 @@ export default function DetalleTratamientoBlanqueamiento({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Concentración</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Concentración</label>
               {editando ? (
                 <input
                   type="text"
                   value={formulario.concentracion || ''}
                   onChange={(e) => setFormulario({ ...formulario, concentracion: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               ) : (
                 <p className="text-gray-900">{blanqueamiento.concentracion || 'No especificada'}</p>
@@ -173,12 +179,12 @@ export default function DetalleTratamientoBlanqueamiento({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tono Inicial</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Tono Inicial</label>
               <p className="text-gray-900">{blanqueamiento.tonoInicial}</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tono Final</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Tono Final</label>
               {editando ? (
                 <SelectorTonalidadVita
                   valor={formulario.tonoFinal || ''}
@@ -192,7 +198,7 @@ export default function DetalleTratamientoBlanqueamiento({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Estado</label>
               {editando ? (
                 <select
                   value={formulario.estado}
@@ -202,7 +208,7 @@ export default function DetalleTratamientoBlanqueamiento({
                       estado: e.target.value as 'En Proceso' | 'Completado' | 'Cancelado',
                     })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 >
                   <option value="En Proceso">En Proceso</option>
                   <option value="Completado">Completado</option>
@@ -231,20 +237,20 @@ export default function DetalleTratamientoBlanqueamiento({
                   disabled={!editando}
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-slate-700">
                   Consentimiento informado firmado
                 </span>
               </label>
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Notas Generales</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Notas Generales</label>
               {editando ? (
                 <textarea
                   value={formulario.notasGenerales || ''}
                   onChange={(e) => setFormulario({ ...formulario, notasGenerales: e.target.value })}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               ) : (
                 <p className="text-gray-900 whitespace-pre-wrap">
@@ -255,13 +261,13 @@ export default function DetalleTratamientoBlanqueamiento({
           </div>
 
           {editando && (
-            <div className="flex gap-3 mt-6 pt-6 border-t border-gray-200">
+            <div className="flex gap-2 mt-6 pt-3 border-t border-gray-100">
               <button
                 onClick={handleGuardar}
                 disabled={guardando}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors shadow-sm"
               >
-                <Save className="w-4 h-4" />
+                <Save size={20} />
                 Guardar Cambios
               </button>
               <button
@@ -277,7 +283,7 @@ export default function DetalleTratamientoBlanqueamiento({
                     estado: blanqueamiento.estado,
                   });
                 }}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
               >
                 Cancelar
               </button>
@@ -286,7 +292,7 @@ export default function DetalleTratamientoBlanqueamiento({
         </div>
 
         {/* Seguimiento de Sesiones */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <SeguimientoSesionesBlanqueamiento
             sesiones={blanqueamiento.sesiones}
             onAgregarSesion={handleAgregarSesion}
@@ -296,7 +302,7 @@ export default function DetalleTratamientoBlanqueamiento({
         </div>
 
         {/* Galería de Fotos */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-lg shadow-sm p-6">
           <GaleriaFotosAntesDespues
             fotos={blanqueamiento.fotos}
             onSubirFotos={handleSubirFotos}
@@ -308,5 +314,6 @@ export default function DetalleTratamientoBlanqueamiento({
     </div>
   );
 }
+
 
 

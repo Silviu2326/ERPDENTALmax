@@ -84,12 +84,12 @@ export default function FormularioRecepcionMercancias({
   );
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6">
       {/* Información del pedido */}
-      <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+      <div className="mb-6 p-4 bg-blue-50 rounded-xl ring-1 ring-blue-200/70">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">{pedido.numeroOrden}</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">{pedido.numeroOrden}</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-gray-600">Proveedor:</span>
@@ -116,16 +116,16 @@ export default function FormularioRecepcionMercancias({
         {/* Fecha de recepción y número de albarán */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Calendar className="w-4 h-4 inline mr-2" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Calendar size={16} className="inline mr-1" />
               Fecha de Recepción *
             </label>
             <input
               type="date"
               value={fechaRecepcion}
               onChange={(e) => setFechaRecepcion(e.target.value)}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.fechaRecepcion ? 'border-red-300 bg-red-50' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+                errores.fechaRecepcion ? 'ring-red-300 bg-red-50' : 'ring-slate-300'
               }`}
             />
             {errores.fechaRecepcion && (
@@ -134,8 +134,8 @@ export default function FormularioRecepcionMercancias({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <FileText className="w-4 h-4 inline mr-2" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <FileText size={16} className="inline mr-1" />
               Número de Albarán *
             </label>
             <input
@@ -143,8 +143,8 @@ export default function FormularioRecepcionMercancias({
               value={numeroAlbaran}
               onChange={(e) => setNumeroAlbaran(e.target.value)}
               placeholder="ALB-2024-001"
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.numeroAlbaran ? 'border-red-300 bg-red-50' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+                errores.numeroAlbaran ? 'ring-red-300 bg-red-50' : 'ring-slate-300'
               }`}
             />
             {errores.numeroAlbaran && (
@@ -156,8 +156,8 @@ export default function FormularioRecepcionMercancias({
         {/* Tabla de líneas */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              <Package className="w-4 h-4 inline mr-2" />
+            <label className="block text-sm font-medium text-slate-700">
+              <Package size={16} className="inline mr-1" />
               Artículos a Recibir
             </label>
             {totalArticulosRecibidos > 0 && (
@@ -180,7 +180,7 @@ export default function FormularioRecepcionMercancias({
 
         {/* Notas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Notas (opcional)
           </label>
           <textarea
@@ -188,24 +188,24 @@ export default function FormularioRecepcionMercancias({
             onChange={(e) => setNotas(e.target.value)}
             rows={3}
             placeholder="Observaciones sobre la recepción..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         {/* Botones */}
-        <div className="flex justify-end gap-4 pt-4 border-t border-gray-200">
+        <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
           <button
             onClick={onCancelar}
-            className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 ring-1 ring-slate-300"
           >
-            <X className="w-4 h-4" />
+            <X size={18} />
             Cancelar
           </button>
           <button
             onClick={handleGuardar}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
           >
-            <Save className="w-4 h-4" />
+            <Save size={18} />
             Confirmar Recepción
           </button>
         </div>
@@ -213,5 +213,6 @@ export default function FormularioRecepcionMercancias({
     </div>
   );
 }
+
 
 

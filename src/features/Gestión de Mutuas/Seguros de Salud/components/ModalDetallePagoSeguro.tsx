@@ -74,48 +74,48 @@ export default function ModalDetallePagoSeguro({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-xl flex items-center justify-between">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-white/20 p-2 rounded-lg">
-              <FileText className="w-6 h-6" />
+            <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+              <FileText size={24} className="text-blue-600" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Detalle del Pago</h2>
-              <p className="text-blue-100 text-sm">Información completa del pago de seguro</p>
+              <h2 className="text-2xl font-extrabold tracking-tight text-gray-900">Detalle del Pago</h2>
+              <p className="text-gray-600 text-sm">Información completa del pago de seguro</p>
             </div>
           </div>
           <button
             onClick={onCerrar}
-            className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+            className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-xl transition-all"
           >
-            <X className="w-6 h-6" />
+            <X size={20} />
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6 space-y-6">
           {/* Información General */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-6 border border-gray-200 ring-1 ring-slate-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-blue-600" />
+              <DollarSign size={20} className="text-blue-600" />
               Información General
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium text-gray-500">Monto Total</label>
+                <label className="text-sm font-medium text-slate-700">Monto Total</label>
                 <p className="text-2xl font-bold text-gray-900 mt-1">
                   {formatearMoneda(pago.montoTotal)}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Estado</label>
+                <label className="text-sm font-medium text-slate-700">Estado</label>
                 <div className="mt-1">
                   {getEstadoBadge(pago.estado)}
                 </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                  <Calendar size={16} />
                   Fecha de Pago
                 </label>
                 <p className="text-lg font-medium text-gray-900 mt-1">
@@ -123,8 +123,8 @@ export default function ModalDetallePagoSeguro({
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500 flex items-center gap-2">
-                  <CreditCard className="w-4 h-4" />
+                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                  <CreditCard size={16} />
                   Método de Pago
                 </label>
                 <p className="text-lg font-medium text-gray-900 mt-1">
@@ -132,8 +132,8 @@ export default function ModalDetallePagoSeguro({
                 </p>
               </div>
               <div className="md:col-span-2">
-                <label className="text-sm font-medium text-gray-500">Referencia</label>
-                <p className="text-lg font-mono text-gray-900 mt-1 bg-white px-3 py-2 rounded-lg border border-gray-200">
+                <label className="text-sm font-medium text-slate-700">Referencia</label>
+                <p className="text-lg font-mono text-gray-900 mt-1 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 ring-1 ring-slate-200">
                   {pago.referencia || '-'}
                 </p>
               </div>
@@ -142,25 +142,25 @@ export default function ModalDetallePagoSeguro({
 
           {/* Información de Aseguradora */}
           {pago.aseguradora && (
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+            <div className="bg-white rounded-xl p-6 border border-gray-200 ring-1 ring-slate-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-blue-600" />
+                <Building2 size={20} className="text-blue-600" />
                 Aseguradora
               </h3>
               <div className="space-y-2">
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Nombre Comercial</label>
+                  <label className="text-sm font-medium text-slate-700">Nombre Comercial</label>
                   <p className="text-lg font-medium text-gray-900">{pago.aseguradora.nombreComercial}</p>
                 </div>
                 {pago.aseguradora.razonSocial && (
                   <div>
-                    <label className="text-sm font-medium text-gray-500">Razón Social</label>
+                    <label className="text-sm font-medium text-slate-700">Razón Social</label>
                     <p className="text-lg text-gray-900">{pago.aseguradora.razonSocial}</p>
                   </div>
                 )}
                 {pago.aseguradora.cif && (
                   <div>
-                    <label className="text-sm font-medium text-gray-500">CIF</label>
+                    <label className="text-sm font-medium text-slate-700">CIF</label>
                     <p className="text-lg font-mono text-gray-900">{pago.aseguradora.cif}</p>
                   </div>
                 )}
@@ -169,9 +169,9 @@ export default function ModalDetallePagoSeguro({
           )}
 
           {/* Reclamaciones Cubiertas */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
+          <div className="bg-white rounded-xl p-6 border border-gray-200 ring-1 ring-slate-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Stethoscope className="w-5 h-5 text-blue-600" />
+              <Stethoscope size={20} className="text-blue-600" />
               Reclamaciones Cubiertas ({pago.reclamacionesCubiertas?.length || 0})
             </h3>
             {pago.reclamacionesCubiertas && pago.reclamacionesCubiertas.length > 0 ? (
@@ -183,8 +183,8 @@ export default function ModalDetallePagoSeguro({
                   >
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="text-sm font-medium text-gray-500 flex items-center gap-2">
-                          <User className="w-4 h-4" />
+                        <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                          <User size={16} />
                           Paciente
                         </label>
                         <p className="text-base font-medium text-gray-900 mt-1">
@@ -194,18 +194,18 @@ export default function ModalDetallePagoSeguro({
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-500">Tratamiento</label>
+                        <label className="text-sm font-medium text-slate-700">Tratamiento</label>
                         <p className="text-base text-gray-900 mt-1">
                           {reclamacion.reclamacion?.tratamiento?.nombre || 'N/A'}
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-500">Monto Aplicado</label>
+                        <label className="text-sm font-medium text-slate-700">Monto Aplicado</label>
                         <p className="text-base font-semibold text-gray-900 mt-1">
                           {formatearMoneda(reclamacion.montoAplicado)}
                         </p>
                         {reclamacion.reclamacion && (
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-slate-600 mt-1">
                             Reclamado: {formatearMoneda(reclamacion.reclamacion.montoReclamado)}
                           </p>
                         )}
@@ -213,7 +213,7 @@ export default function ModalDetallePagoSeguro({
                     </div>
                     {reclamacion.reclamacion && (
                       <div className="mt-3 pt-3 border-t border-gray-200">
-                        <label className="text-sm font-medium text-gray-500">Estado de Reclamación</label>
+                        <label className="text-sm font-medium text-slate-700">Estado de Reclamación</label>
                         <div className="mt-1">
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                             {reclamacion.reclamacion.estado}
@@ -246,10 +246,10 @@ export default function ModalDetallePagoSeguro({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-6 rounded-b-xl flex justify-end">
+        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6 rounded-b-xl flex justify-end">
           <button
             onClick={onCerrar}
-            className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl font-semibold"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200"
           >
             Cerrar
           </button>
@@ -258,5 +258,6 @@ export default function ModalDetallePagoSeguro({
     </div>
   );
 }
+
 
 

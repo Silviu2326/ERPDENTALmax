@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Package, Plus, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Package, Plus, AlertCircle, ChevronLeft, ChevronRight, Loader2, Download } from 'lucide-react';
 import {
   Producto,
   FiltrosBusquedaProductos,
@@ -9,6 +9,7 @@ import BarraBusquedaFiltrosProductos from '../components/BarraBusquedaFiltrosPro
 import TablaProductos from '../components/TablaProductos';
 import FormularioProducto from '../components/FormularioProducto';
 import ModalDetalleProducto from '../components/ModalDetalleProducto';
+import MetricCards from '../components/MetricCards';
 
 export default function CatalogoProductosPage() {
   const [productos, setProductos] = useState<Producto[]>([]);
@@ -613,121 +614,158 @@ export default function CatalogoProductosPage() {
   };
 
   return (
-    <div className="p-6">
-      {/* Header con botón de nuevo producto */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-600">
-            <span className="font-semibold text-gray-900">{productos.length}</span> productos en esta página
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={exportarCSV}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
-            >
-              Exportar CSV
-            </button>
-            <button
-              onClick={handleNuevoProducto}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Añadir Producto</span>
-            </button>
-          </div>
-        </div>
-
-        {/* KPIs de inventario */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Valor total inventario</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">${valorInventario.toFixed(2)}</div>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Bajo stock</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{productosBajoStock}</div>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Por caducar (≤ 180 días)</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{productosPorCaducar}</div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Package size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Catálogo de Productos
+                </h1>
+                <p className="text-gray-600">
+                  Gestiona el inventario y catálogo de productos del almacén
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-            <p className="text-red-700">{error}</p>
-            <button
-              onClick={() => setError(null)}
-              className="ml-auto text-red-600 hover:text-red-800"
-            >
-              ×
-            </button>
-          </div>
-        )}
-
-        {/* Filtros de búsqueda */}
-        <BarraBusquedaFiltrosProductos filtros={filtros} onFiltrosChange={handleFiltrosChange} />
-
-        {/* Tabla de productos */}
-        <TablaProductos
-          productos={productos}
-          loading={loading}
-          onEditar={handleEditarProducto}
-          onVerDetalle={handleVerDetalle}
-          onEliminar={handleEliminarProducto}
-        />
-
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="mt-6 flex items-center justify-between bg-white rounded-lg shadow-md p-4">
-            <div className="text-sm text-gray-700">
-              Mostrando {((filtros.page || 1) - 1) * (filtros.limit || 20) + 1} a{' '}
-              {Math.min((filtros.page || 1) * (filtros.limit || 20), paginacion.total)} de{' '}
-              {paginacion.total} productos
-            </div>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar superior */}
+          <div className="flex items-center justify-end">
             <div className="flex items-center gap-2">
               <button
-                onClick={() => handlePageChange((filtros.page || 1) - 1)}
-                disabled={filtros.page === 1 || loading}
-                className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                onClick={exportarCSV}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <Download size={20} />
+                Exportar CSV
               </button>
-              <span className="px-4 py-2 text-gray-700">
-                Página {filtros.page || 1} de {paginacion.totalPages}
-              </span>
               <button
-                onClick={() => handlePageChange((filtros.page || 1) + 1)}
-                disabled={(filtros.page || 1) >= paginacion.totalPages || loading}
-                className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                onClick={handleNuevoProducto}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium"
               >
-                <ChevronRight className="w-4 h-4" />
+                <Plus size={20} />
+                Añadir Producto
               </button>
             </div>
           </div>
-        )}
 
-        {/* Modal de formulario */}
-        {mostrarFormulario && (
-          <FormularioProducto
-            producto={productoEditando || undefined}
-            onGuardar={handleGuardarProducto}
-            onCancelar={handleCancelarFormulario}
-            loading={guardando}
+          {/* KPIs de inventario */}
+          <MetricCards
+            data={[
+              {
+                id: 'valor-inventario',
+                title: 'Valor total inventario',
+                value: valorInventario,
+                color: 'info',
+              },
+              {
+                id: 'bajo-stock',
+                title: 'Bajo stock',
+                value: productosBajoStock,
+                color: 'warning',
+              },
+              {
+                id: 'por-caducar',
+                title: 'Por caducar (≤ 180 días)',
+                value: productosPorCaducar,
+                color: 'danger',
+              },
+            ]}
           />
-        )}
 
-        {/* Modal de detalle */}
-        {productoDetalle && (
-          <ModalDetalleProducto
-            producto={productoDetalle}
-            onCerrar={handleCerrarDetalle}
-            onEditar={handleEditarDesdeDetalle}
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <p className="text-red-700 flex-1">{error}</p>
+                <button
+                  onClick={() => setError(null)}
+                  className="text-red-600 hover:text-red-800 transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros de búsqueda */}
+          <BarraBusquedaFiltrosProductos filtros={filtros} onFiltrosChange={handleFiltrosChange} />
+
+          {/* Tabla de productos */}
+          <TablaProductos
+            productos={productos}
+            loading={loading}
+            onEditar={handleEditarProducto}
+            onVerDetalle={handleVerDetalle}
+            onEliminar={handleEliminarProducto}
           />
-        )}
+
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white rounded-xl shadow-sm p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="text-sm text-slate-600">
+                  Mostrando {((filtros.page || 1) - 1) * (filtros.limit || 20) + 1} a{' '}
+                  {Math.min((filtros.page || 1) * (filtros.limit || 20), paginacion.total)} de{' '}
+                  {paginacion.total} productos
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handlePageChange((filtros.page || 1) - 1)}
+                    disabled={filtros.page === 1 || loading}
+                    className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <span className="px-4 py-2 text-sm text-slate-700">
+                    Página {filtros.page || 1} de {paginacion.totalPages}
+                  </span>
+                  <button
+                    onClick={() => handlePageChange((filtros.page || 1) + 1)}
+                    disabled={(filtros.page || 1) >= paginacion.totalPages || loading}
+                    className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Modal de formulario */}
+      {mostrarFormulario && (
+        <FormularioProducto
+          producto={productoEditando || undefined}
+          onGuardar={handleGuardarProducto}
+          onCancelar={handleCancelarFormulario}
+          loading={guardando}
+        />
+      )}
+
+      {/* Modal de detalle */}
+      {productoDetalle && (
+        <ModalDetalleProducto
+          producto={productoDetalle}
+          onCerrar={handleCerrarDetalle}
+          onEditar={handleEditarDesdeDetalle}
+        />
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { X, FileText, Calendar, User, Building2, Clock, Check, AlertCircle, Download } from 'lucide-react';
 import { Autorizacion } from '../api/autorizacionesApi';
 import SelectorEstadoAutorizacion from './SelectorEstadoAutorizacion';
@@ -73,19 +74,19 @@ export default function ModalDetalleAutorizacion({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-xl">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold mb-1">Detalle de Autorización</h2>
-              <p className="text-blue-100 text-sm">Código: {autorizacion.codigoSolicitud}</p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-1">Detalle de Autorización</h2>
+              <p className="text-slate-600 text-sm">Código: {autorizacion.codigoSolicitud}</p>
             </div>
             <button
               onClick={onCerrar}
               disabled={loading}
-              className="text-white hover:text-gray-200 transition-colors"
+              className="text-gray-400 hover:text-gray-600 transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
@@ -97,10 +98,10 @@ export default function ModalDetalleAutorizacion({
           {/* Información Principal */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Paciente */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
               <div className="flex items-center gap-2 mb-2">
-                <User className="w-5 h-5 text-gray-400" />
-                <h3 className="font-semibold text-gray-700">Paciente</h3>
+                <User size={18} className="text-slate-600" />
+                <h3 className="text-sm font-semibold text-slate-700">Paciente</h3>
               </div>
               <p className="text-gray-900">
                 {autorizacion.paciente.nombre} {autorizacion.paciente.apellidos}
@@ -108,31 +109,31 @@ export default function ModalDetalleAutorizacion({
             </div>
 
             {/* Tratamiento */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
               <div className="flex items-center gap-2 mb-2">
-                <FileText className="w-5 h-5 text-gray-400" />
-                <h3 className="font-semibold text-gray-700">Tratamiento</h3>
+                <FileText size={18} className="text-slate-600" />
+                <h3 className="text-sm font-semibold text-slate-700">Tratamiento</h3>
               </div>
               <p className="text-gray-900">{autorizacion.tratamientoPlanificado.nombre}</p>
               {autorizacion.tratamientoPlanificado.descripcion && (
-                <p className="text-sm text-gray-600 mt-1">{autorizacion.tratamientoPlanificado.descripcion}</p>
+                <p className="text-sm text-slate-600 mt-1">{autorizacion.tratamientoPlanificado.descripcion}</p>
               )}
             </div>
 
             {/* Mutua */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
               <div className="flex items-center gap-2 mb-2">
-                <Building2 className="w-5 h-5 text-gray-400" />
-                <h3 className="font-semibold text-gray-700">Mutua/Seguro</h3>
+                <Building2 size={18} className="text-slate-600" />
+                <h3 className="text-sm font-semibold text-slate-700">Mutua/Seguro</h3>
               </div>
               <p className="text-gray-900">{autorizacion.mutua.nombreComercial}</p>
             </div>
 
             {/* Estado */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
               <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-5 h-5 text-gray-400" />
-                <h3 className="font-semibold text-gray-700">Estado</h3>
+                <Clock size={18} className="text-slate-600" />
+                <h3 className="text-sm font-semibold text-slate-700">Estado</h3>
               </div>
               {onEstadoChange ? (
                 <SelectorEstadoAutorizacion
@@ -173,7 +174,7 @@ export default function ModalDetalleAutorizacion({
           {/* Código de Autorización */}
           {editando && onActualizar ? (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Código de Autorización
               </label>
               <input
@@ -181,7 +182,7 @@ export default function ModalDetalleAutorizacion({
                 value={codigoAutorizacion}
                 onChange={(e) => setCodigoAutorizacion(e.target.value)}
                 placeholder="Ingresa el código proporcionado por la mutua"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 placeholder-slate-400"
               />
             </div>
           ) : (
@@ -199,14 +200,14 @@ export default function ModalDetalleAutorizacion({
           {/* Notas */}
           {editando && onActualizar ? (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Notas
               </label>
               <textarea
                 value={notas}
                 onChange={(e) => setNotas(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 resize-none placeholder-slate-400"
                 placeholder="Añade notas sobre la autorización..."
               />
             </div>
@@ -305,14 +306,14 @@ export default function ModalDetalleAutorizacion({
                       setNotas(autorizacion.notas || '');
                     }}
                     disabled={guardando}
-                    className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                    className="px-6 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-all disabled:opacity-50"
                   >
                     Cancelar
                   </button>
                   <button
                     onClick={handleGuardarCambios}
                     disabled={guardando}
-                    className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50 flex items-center gap-2"
+                    className="px-6 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md disabled:opacity-50 flex items-center gap-2"
                   >
                     {guardando ? (
                       <>
@@ -327,7 +328,7 @@ export default function ModalDetalleAutorizacion({
               ) : (
                 <button
                   onClick={() => setEditando(true)}
-                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all"
+                  className="px-6 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
                 >
                   Editar Información
                 </button>
@@ -339,5 +340,6 @@ export default function ModalDetalleAutorizacion({
     </div>
   );
 }
+
 
 

@@ -72,9 +72,9 @@ export default function ModalGestionBloqueo({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-800">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto ring-1 ring-slate-200">
+        <div className="sticky top-0 bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900">
             {bloqueo ? 'Editar Bloqueo' : 'Crear Bloqueo de Sala/Horario'}
           </h2>
           <button
@@ -87,7 +87,7 @@ export default function ModalGestionBloqueo({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start space-x-2">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-start space-x-2">
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold">Error</p>
@@ -110,25 +110,25 @@ export default function ModalGestionBloqueo({
               <button
                 type="button"
                 onClick={() => setMostrarConfirmarEliminar(true)}
-                className="px-4 py-2 text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition-colors border border-red-200"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-red-700 bg-red-50 hover:bg-red-100 ring-1 ring-red-200"
               >
                 Eliminar
               </button>
             )}
-            <div className="flex justify-end space-x-3 ml-auto">
+            <div className="flex justify-end gap-2 ml-auto">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 bg-white hover:bg-slate-50 ring-1 ring-slate-300"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
                 disabled={loading || !valido}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Save className="w-4 h-4" />
+                <Save size={16} />
                 <span>{loading ? 'Guardando...' : bloqueo ? 'Actualizar' : 'Crear Bloqueo'}</span>
               </button>
             </div>
@@ -138,16 +138,16 @@ export default function ModalGestionBloqueo({
         {/* Modal de confirmación de eliminación */}
         {mostrarConfirmarEliminar && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Confirmar Eliminación</h3>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 ring-1 ring-slate-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Confirmar Eliminación</h3>
               <p className="text-gray-600 mb-6">
                 ¿Está seguro de que desea eliminar este bloqueo? Esta acción no se puede deshacer.
               </p>
-              <div className="flex justify-end space-x-3">
+              <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setMostrarConfirmarEliminar(false)}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 bg-white hover:bg-slate-50 ring-1 ring-slate-300"
                 >
                   Cancelar
                 </button>
@@ -155,7 +155,7 @@ export default function ModalGestionBloqueo({
                   type="button"
                   onClick={handleEliminar}
                   disabled={loading}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-red-600 text-white hover:bg-red-700 shadow-sm disabled:opacity-50"
                 >
                   {loading ? 'Eliminando...' : 'Eliminar'}
                 </button>
@@ -167,5 +167,6 @@ export default function ModalGestionBloqueo({
     </div>
   );
 }
+
 
 

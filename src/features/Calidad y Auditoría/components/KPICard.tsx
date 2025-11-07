@@ -51,15 +51,15 @@ export default function KPICard({
 
   return (
     <div
-      className={`rounded-xl shadow-md p-6 border-l-4 ${colorClasses[color]} transition-all hover:shadow-lg`}
+      className={`bg-white shadow-sm rounded-xl p-4 border-l-4 ${colorClasses[color]} transition-all hover:shadow-md`}
     >
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-gray-600">{title}</h3>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-sm font-medium text-slate-700">{title}</h3>
         {icon && <div className={iconColorClasses[color]}>{icon}</div>}
       </div>
       <div className="flex items-baseline gap-2 mb-2">
         <span className="text-3xl font-bold text-gray-900">{formatValue(value)}</span>
-        {unit && <span className="text-sm text-gray-500">{unit}</span>}
+        {unit && <span className="text-sm text-slate-600">{unit}</span>}
       </div>
       {trend && (
         <div className="flex items-center gap-1 text-sm mt-2">
@@ -76,7 +76,7 @@ export default function KPICard({
                 ? 'text-green-600 font-medium'
                 : trend.percentage < 0
                 ? 'text-red-600 font-medium'
-                : 'text-gray-500'
+                : 'text-slate-600'
             }
           >
             {trend.percentage > 0 ? '+' : ''}
@@ -87,5 +87,6 @@ export default function KPICard({
     </div>
   );
 }
+
 
 

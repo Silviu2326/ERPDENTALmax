@@ -95,10 +95,10 @@ export default function UploaderDocumentosCapa({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="bg-blue-100 p-2 rounded-lg">
-          <File className="w-5 h-5 text-blue-600" />
+        <div className="bg-blue-100 p-2 rounded-xl ring-1 ring-blue-200/70">
+          <File size={24} className="text-blue-600" />
         </div>
         <div>
           <h3 className="text-lg font-semibold text-gray-900">
@@ -113,7 +113,7 @@ export default function UploaderDocumentosCapa({
       {error && (
         <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm text-red-800 font-medium">Error</p>
               <p className="text-sm text-red-700 mt-1">{error}</p>
@@ -129,10 +129,10 @@ export default function UploaderDocumentosCapa({
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
-          className={`border-2 border-dashed rounded-lg p-6 mb-4 transition-colors ${
+          className={`border-2 border-dashed rounded-xl p-6 mb-4 transition-colors ${
             dragActive
               ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 bg-gray-50 hover:border-gray-400'
+              : 'border-slate-300 bg-slate-50 hover:border-slate-400'
           } ${uploading || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
         >
           <input
@@ -145,7 +145,8 @@ export default function UploaderDocumentosCapa({
           />
           <div className="text-center">
             <Upload
-              className={`w-12 h-12 mx-auto mb-3 ${
+              size={48}
+              className={`mx-auto mb-3 ${
                 dragActive ? 'text-blue-600' : 'text-gray-400'
               }`}
             />
@@ -179,10 +180,10 @@ export default function UploaderDocumentosCapa({
           {documentos.map((url, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+              className="flex items-center justify-between p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200 hover:bg-slate-100 transition-colors"
             >
               <div className="flex items-center gap-3 flex-1 min-w-0">
-                <File className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                <File size={20} className="text-gray-500 flex-shrink-0" />
                 <span
                   className="text-sm text-gray-900 truncate cursor-pointer hover:text-blue-600"
                   onClick={() => abrirDocumento(url)}
@@ -197,7 +198,7 @@ export default function UploaderDocumentosCapa({
                   className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
                   title="Abrir documento"
                 >
-                  <File className="w-4 h-4" />
+                  <File size={16} />
                 </button>
                 {!readonly && onEliminarDocumento && (
                   <button
@@ -205,7 +206,7 @@ export default function UploaderDocumentosCapa({
                     className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
                     title="Eliminar documento"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 size={16} />
                   </button>
                 )}
               </div>
@@ -214,12 +215,13 @@ export default function UploaderDocumentosCapa({
         </div>
       ) : (
         <div className="text-center py-8 text-gray-500">
-          <File className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+          <File size={48} className="mx-auto mb-3 text-gray-400" />
           <p className="text-sm">No hay documentos adjuntos</p>
         </div>
       )}
     </div>
   );
 }
+
 
 

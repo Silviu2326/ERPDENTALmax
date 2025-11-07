@@ -145,32 +145,32 @@ export default function EndodonciaForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Información básica */}
-      <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <div className="bg-white shadow-sm rounded-2xl p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Información del Tratamiento
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Número de Diente
             </label>
-            <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 font-semibold">
+            <div className="px-3 py-2.5 bg-slate-50 ring-1 ring-slate-200 rounded-xl text-gray-900 font-semibold">
               {numeroDiente}
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               ID Tratamiento
             </label>
-            <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-600 text-sm">
+            <div className="px-3 py-2.5 bg-slate-50 ring-1 ring-slate-200 rounded-xl text-slate-600 text-sm">
               {tratamientoId}
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               ID Paciente
             </label>
-            <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-600 text-sm">
+            <div className="px-3 py-2.5 bg-slate-50 ring-1 ring-slate-200 rounded-xl text-slate-600 text-sm">
               {pacienteId}
             </div>
           </div>
@@ -181,27 +181,27 @@ export default function EndodonciaForm({
       <DiagramaRadicular numeroDiente={numeroDiente} conductos={conductos} />
 
       {/* Conductos */}
-      <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm">
+      <div className="bg-white shadow-sm rounded-2xl p-4">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-gray-900">
             Conductos Radiculares
           </h3>
           <button
             type="button"
             onClick={handleAddConducto}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             Agregar Conducto
           </button>
         </div>
 
         {cargandoAnatomia ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-600">
             Cargando anatomía sugerida...
           </div>
         ) : conductos.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-600">
             No hay conductos registrados. Haga clic en "Agregar Conducto" para comenzar.
           </div>
         ) : (
@@ -221,8 +221,8 @@ export default function EndodonciaForm({
       </div>
 
       {/* Observaciones generales */}
-      <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <div className="bg-white shadow-sm rounded-2xl p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Observaciones Generales
         </h3>
         <textarea
@@ -230,31 +230,32 @@ export default function EndodonciaForm({
           onChange={(e) => setObservacionesGenerales(e.target.value)}
           placeholder="Ingrese observaciones generales sobre el tratamiento (complicaciones, hallazgos especiales, etc.)"
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
 
       {/* Mensaje de error */}
       {error && (
-        <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 flex items-start gap-3">
+        <div className="bg-red-50 ring-1 ring-red-200 rounded-2xl p-4 flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
           <p className="text-red-800 text-sm">{error}</p>
         </div>
       )}
 
       {/* Botones de acción */}
-      <div className="flex justify-end gap-3">
+      <div className="flex justify-end">
         <button
           type="submit"
           disabled={loading || cargandoAnatomia}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save className="w-5 h-5" />
+          <Save size={20} />
           {loading ? 'Guardando...' : 'Guardar Registro'}
         </button>
       </div>
     </form>
   );
 }
+
 
 

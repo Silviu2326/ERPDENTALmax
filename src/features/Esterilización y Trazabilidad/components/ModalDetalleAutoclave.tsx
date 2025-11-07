@@ -140,18 +140,19 @@ export default function ModalDetalleAutoclave({
         <div className="p-6">
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Cargando detalles...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Cargando detalles...</p>
             </div>
           ) : error ? (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <div className="flex items-start space-x-3">
                 <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm text-red-800">{error}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+                  <p className="text-sm text-red-800 mb-4">{error}</p>
                   <button
                     onClick={cargarDetalles}
-                    className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+                    className="text-sm text-red-600 hover:text-red-800 underline"
                   >
                     Reintentar
                   </button>
@@ -161,7 +162,7 @@ export default function ModalDetalleAutoclave({
           ) : autoclave ? (
             <div className="space-y-6">
               {/* Información General */}
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-white rounded-lg ring-1 ring-slate-200 p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{autoclave.nombre}</h3>
@@ -169,7 +170,7 @@ export default function ModalDetalleAutoclave({
                       {autoclave.marca} {autoclave.modelo}
                     </p>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-2">
                     {getEstadoBadge(autoclave.estado)}
                     {onEditar && (
                       <button
@@ -184,34 +185,34 @@ export default function ModalDetalleAutoclave({
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
                       <Calendar className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Fecha de Instalación</p>
+                      <p className="text-xs text-slate-500 mb-1">Fecha de Instalación</p>
                       <p className="text-sm font-medium text-gray-900">
                         {formatearFecha(autoclave.fechaInstalacion)}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3">
-                    <div className="p-2 bg-green-100 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-green-100 rounded-xl ring-1 ring-green-200/70">
                       <MapPin className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Ubicación</p>
+                      <p className="text-xs text-slate-500 mb-1">Ubicación</p>
                       <p className="text-sm font-medium text-gray-900">{autoclave.ubicacion}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3">
-                    <div className="p-2 bg-purple-100 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-purple-100 rounded-xl ring-1 ring-purple-200/70">
                       <Wrench className="w-5 h-5 text-purple-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Próximo Mantenimiento</p>
+                      <p className="text-xs text-slate-500 mb-1">Próximo Mantenimiento</p>
                       <p className="text-sm font-medium text-gray-900">
                         {formatearFecha(autoclave.proximoMantenimiento)}
                       </p>
@@ -229,12 +230,12 @@ export default function ModalDetalleAutoclave({
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3">
-                    <div className="p-2 bg-gray-100 rounded-lg">
-                      <span className="text-xs font-medium text-gray-600">#</span>
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-slate-100 rounded-xl ring-1 ring-slate-200/70">
+                      <span className="text-xs font-medium text-slate-600">#</span>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Número de Serie</p>
+                      <p className="text-xs text-slate-500 mb-1">Número de Serie</p>
                       <p className="text-sm font-medium text-gray-900 font-mono">
                         {autoclave.numeroSerie}
                       </p>
@@ -257,5 +258,6 @@ export default function ModalDetalleAutoclave({
     </div>
   );
 }
+
 
 

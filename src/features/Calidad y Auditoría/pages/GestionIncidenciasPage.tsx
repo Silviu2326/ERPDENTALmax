@@ -129,24 +129,40 @@ export default function GestionIncidenciasPage({
 
   if (vista === 'nueva' || vista === 'editar') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
-            <button
-              onClick={() => {
-                setVista('lista');
-                setIncidenciaEditando(null);
-              }}
-              className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2"
-            >
-              ← Volver a la lista
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">
-              {vista === 'nueva' ? 'Nueva Incidencia' : 'Editar Incidencia'}
-            </h1>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                <button
+                  onClick={() => {
+                    setVista('lista');
+                    setIncidenciaEditando(null);
+                  }}
+                  className="text-blue-600 hover:text-blue-800 mb-0 mr-6 flex items-center gap-2 text-sm font-medium"
+                >
+                  ← Volver
+                </button>
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <AlertCircle size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {vista === 'nueva' ? 'Nueva Incidencia' : 'Editar Incidencia'}
+                  </h1>
+                  <p className="text-gray-600">
+                    {vista === 'nueva' ? 'Registra una nueva incidencia o no conformidad' : 'Modifica los datos de la incidencia'}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        {/* Contenido Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-xl p-6">
             <IncidenciaForm
               incidencia={incidenciaEditando || undefined}
               onGuardar={handleGuardar}
@@ -164,28 +180,41 @@ export default function GestionIncidenciasPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                <div className="bg-gradient-to-br from-red-600 to-orange-600 p-3 rounded-xl shadow-lg">
-                  <AlertCircle className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <AlertCircle size={24} className="text-blue-600" />
                 </div>
-                No Conformidades e Incidencias
-              </h1>
-              <p className="text-gray-600 text-lg">
-                Gestión sistemática de desviaciones de estándares de calidad y protocolos
-              </p>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    No Conformidades e Incidencias
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión sistemática de desviaciones de estándares de calidad y protocolos
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
+          </div>
+        </div>
+      </div>
+
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex items-center gap-2">
               <button
                 onClick={cargarIncidencias}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors shadow-md hover:shadow-lg"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200"
               >
-                <RefreshCw className="w-5 h-5" />
+                <RefreshCw size={20} className="mr-2" />
                 Actualizar
               </button>
               <button
@@ -193,68 +222,66 @@ export default function GestionIncidenciasPage({
                   setIncidenciaEditando(null);
                   setVista('nueva');
                 }}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
               >
-                <Plus className="w-5 h-5" />
+                <Plus size={20} className="mr-2" />
                 Nueva Incidencia
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Dashboard de Estadísticas */}
-        {estadisticas && (
-          <div className="mb-8">
+          {/* Dashboard de Estadísticas */}
+          {estadisticas && (
             <DashboardIncidencias estadisticas={estadisticas} />
-          </div>
-        )}
+          )}
 
-        {/* Filtros */}
-        <FiltrosIncidencias
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          clinicas={[]} // TODO: Obtener clínicas del contexto o API
-        />
+          {/* Filtros */}
+          <FiltrosIncidencias
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            clinicas={[]} // TODO: Obtener clínicas del contexto o API
+          />
 
-        {/* Tabla de Incidencias */}
-        <IncidenciasDataTable
-          incidencias={incidencias}
-          loading={loading}
-          onVerDetalle={handleVerDetalle}
-          onEditar={(incidencia) => {
-            setIncidenciaEditando(incidencia);
-            setVista('editar');
-          }}
-          onEliminar={handleEliminar}
-        />
+          {/* Tabla de Incidencias */}
+          <IncidenciasDataTable
+            incidencias={incidencias}
+            loading={loading}
+            onVerDetalle={handleVerDetalle}
+            onEditar={(incidencia) => {
+              setIncidenciaEditando(incidencia);
+              setVista('editar');
+            }}
+            onEliminar={handleEliminar}
+          />
 
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="mt-6 flex items-center justify-between">
-            <div className="text-sm text-gray-600">
-              Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} - {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de {paginacion.total} incidencias
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setFiltros({ ...filtros, page: paginacion.page - 1 })}
+                  disabled={paginacion.page === 1}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="px-4 py-2 text-sm text-gray-600">
+                  Página {paginacion.page} de {paginacion.totalPages}
+                </span>
+                <button
+                  onClick={() => setFiltros({ ...filtros, page: paginacion.page + 1 })}
+                  disabled={paginacion.page >= paginacion.totalPages}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Siguiente
+                </button>
+              </div>
+              <div className="text-center mt-4 text-sm text-gray-600">
+                Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} - {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de {paginacion.total} incidencias
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setFiltros({ ...filtros, page: paginacion.page - 1 })}
-                disabled={paginacion.page === 1}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <span className="px-4 py-2 text-sm text-gray-600">
-                Página {paginacion.page} de {paginacion.totalPages}
-              </span>
-              <button
-                onClick={() => setFiltros({ ...filtros, page: paginacion.page + 1 })}
-                disabled={paginacion.page >= paginacion.totalPages}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

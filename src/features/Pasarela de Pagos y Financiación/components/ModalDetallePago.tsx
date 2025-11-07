@@ -111,26 +111,26 @@ export default function ModalDetallePago({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
-          <h2 className="text-2xl font-bold text-gray-900">Detalle del Pago</h2>
+        <div className="sticky top-0 bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between z-10">
+          <h2 className="text-xl font-bold text-gray-900">Detalle del Pago</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-all"
           >
-            <X className="w-6 h-6 text-gray-600" />
+            <X size={20} className="text-gray-600" />
           </button>
         </div>
 
         {/* Contenido */}
         <div className="p-6 space-y-6">
           {/* Estado y Monto Principal */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 ring-1 ring-blue-200/70">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-4">
                 {getEstadoIcon(pago.estado)}
                 <div>
                   <div className="text-sm text-gray-600 mb-1">Estado del Pago</div>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getEstadoColor(pago.estado)}`}>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ring-1 ${getEstadoColor(pago.estado)}`}>
                     {pago.estado.charAt(0).toUpperCase() + pago.estado.slice(1)}
                   </span>
                 </div>
@@ -145,30 +145,30 @@ export default function ModalDetallePago({
           </div>
 
           {/* Información Principal */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Fecha */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center space-x-2 text-gray-600 mb-2">
-                <Calendar className="w-5 h-5" />
-                <span className="font-medium">Fecha del Pago</span>
+            <div className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60">
+              <div className="flex items-center gap-2 text-gray-600 mb-2">
+                <Calendar size={16} />
+                <span className="text-sm font-medium">Fecha del Pago</span>
               </div>
               <p className="text-gray-900">{formatearFecha(pago.fecha)}</p>
             </div>
 
             {/* Método de Pago */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center space-x-2 text-gray-600 mb-2">
-                <CreditCard className="w-5 h-5" />
-                <span className="font-medium">Método de Pago</span>
+            <div className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60">
+              <div className="flex items-center gap-2 text-gray-600 mb-2">
+                <CreditCard size={16} />
+                <span className="text-sm font-medium">Método de Pago</span>
               </div>
               <p className="text-gray-900">{formatearMetodoPago(pago.metodo)}</p>
             </div>
 
             {/* Paciente */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center space-x-2 text-gray-600 mb-2">
-                <User className="w-5 h-5" />
-                <span className="font-medium">Paciente</span>
+            <div className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60">
+              <div className="flex items-center gap-2 text-gray-600 mb-2">
+                <User size={16} />
+                <span className="text-sm font-medium">Paciente</span>
               </div>
               <p className="text-gray-900">
                 {pago.paciente.nombre} {pago.paciente.apellidos}
@@ -182,10 +182,10 @@ export default function ModalDetallePago({
 
             {/* ID de Transacción */}
             {pago.gatewayTransactionId && (
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="flex items-center space-x-2 text-gray-600 mb-2">
-                  <FileText className="w-5 h-5" />
-                  <span className="font-medium">ID de Transacción</span>
+              <div className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60">
+                <div className="flex items-center gap-2 text-gray-600 mb-2">
+                  <FileText size={16} />
+                  <span className="text-sm font-medium">ID de Transacción</span>
                 </div>
                 <p className="text-sm text-gray-900 font-mono break-all">
                   {pago.gatewayTransactionId}
@@ -202,16 +202,16 @@ export default function ModalDetallePago({
                 {pago.tratamientos.map((tratamiento, idx) => (
                   <div
                     key={idx}
-                    className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                    className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60"
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <h4 className="font-medium text-gray-900">{tratamiento.nombre}</h4>
                         {tratamiento.descripcion && (
                           <p className="text-sm text-gray-600 mt-1">{tratamiento.descripcion}</p>
                         )}
                       </div>
-                      <div className="text-right ml-4">
+                      <div className="text-right">
                         <div className="text-sm text-gray-600">Precio</div>
                         <div className="font-semibold text-gray-900">
                           {formatearMoneda(tratamiento.precio, pago.moneda)}
@@ -232,7 +232,7 @@ export default function ModalDetallePago({
                 {pago.facturas.map((factura, idx) => (
                   <div
                     key={idx}
-                    className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                    className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60"
                   >
                     <div className="flex items-start justify-between">
                       <div>
@@ -252,7 +252,7 @@ export default function ModalDetallePago({
           {pago.notas && (
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Notas</h3>
-              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="bg-gray-50 rounded-xl p-4 ring-1 ring-gray-200/60">
                 <p className="text-gray-700 italic">{pago.notas}</p>
               </div>
             </div>
@@ -278,10 +278,10 @@ export default function ModalDetallePago({
         </div>
 
         {/* Footer con Acciones */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 flex items-center justify-end space-x-3">
+        <div className="sticky bottom-0 bg-white border-t border-gray-200/60 px-6 py-4 flex items-center justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all"
           >
             Cerrar
           </button>
@@ -289,16 +289,16 @@ export default function ModalDetallePago({
             <button
               onClick={handleGenerarRecibo}
               disabled={generandoRecibo}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {generandoRecibo ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 size={20} className="animate-spin" />
                   <span>Generando...</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-4 h-4" />
+                  <Download size={20} />
                   <span>Descargar Recibo PDF</span>
                 </>
               )}

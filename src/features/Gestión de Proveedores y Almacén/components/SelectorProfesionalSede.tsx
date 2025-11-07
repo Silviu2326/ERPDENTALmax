@@ -65,8 +65,8 @@ export default function SelectorProfesionalSede({
       )}
 
       <div>
-        <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-          <Building2 className="w-4 h-4" />
+        <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
+          <Building2 size={16} className="inline" />
           <span>Sede {required && '*'}</span>
         </label>
         <select
@@ -74,7 +74,7 @@ export default function SelectorProfesionalSede({
           onChange={(e) => onSedeChange(e.target.value)}
           disabled={disabled || loading}
           required={required}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed"
         >
           <option value="">Seleccionar sede</option>
           {sedesDisponibles.map((sede) => (
@@ -86,8 +86,8 @@ export default function SelectorProfesionalSede({
       </div>
 
       <div>
-        <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-          <Stethoscope className="w-4 h-4" />
+        <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
+          <Stethoscope size={16} className="inline" />
           <span>Profesional {required && '*'}</span>
         </label>
         <select
@@ -95,7 +95,7 @@ export default function SelectorProfesionalSede({
           onChange={(e) => onProfesionalChange(e.target.value)}
           disabled={disabled || loading}
           required={required}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed"
         >
           <option value="">Seleccionar profesional</option>
           {profesionales.map((prof) => (
@@ -108,5 +108,6 @@ export default function SelectorProfesionalSede({
     </div>
   );
 }
+
 
 

@@ -100,14 +100,14 @@ export default function UploaderArchivosDiagnostico({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+        className={`border-2 border-dashed rounded-2xl p-8 text-center transition-colors ${
           isDragging
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 hover:border-gray-400'
+            ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+            : 'border-slate-300 hover:border-slate-400 bg-slate-50'
         }`}
       >
-        <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 mb-2">
+        <Upload size={48} className="text-slate-400 mx-auto mb-4" />
+        <p className="text-slate-600 mb-2">
           Arrastra archivos aquí o{' '}
           <button
             type="button"
@@ -117,7 +117,7 @@ export default function UploaderArchivosDiagnostico({
             selecciona archivos
           </button>
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-slate-500">
           Formatos soportados: JPG, PNG, DICOM, STL, OBJ, PLY
         </p>
         <input
@@ -133,22 +133,22 @@ export default function UploaderArchivosDiagnostico({
       {/* Lista de archivos */}
       {archivos.length > 0 && (
         <div className="space-y-3">
-          <h4 className="font-medium text-gray-700">
+          <h4 className="text-sm font-medium text-slate-700">
             Archivos seleccionados ({archivos.length})
           </h4>
           {archivos.map((archivoConMeta, index) => (
             <div
               key={index}
-              className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3"
+              className="bg-white ring-1 ring-slate-200 rounded-xl p-4 space-y-3"
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
                   {getIconoArchivo(archivoConMeta.tipo)}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">
+                    <p className="text-sm font-medium text-gray-900 truncate">
                       {archivoConMeta.file.name}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-500">
                       {(archivoConMeta.file.size / 1024 / 1024).toFixed(2)} MB
                     </p>
                   </div>
@@ -156,22 +156,22 @@ export default function UploaderArchivosDiagnostico({
                 <button
                   type="button"
                   onClick={() => eliminarArchivo(index)}
-                  className="p-1 hover:bg-red-100 rounded text-red-500 transition-colors"
+                  className="p-1 hover:bg-red-100 rounded-lg text-red-600 transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X size={18} />
                 </button>
               </div>
 
               {/* Selectores de tipo y subtipo */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-slate-700 mb-2">
                     Tipo
                   </label>
                   <select
                     value={archivoConMeta.tipo}
                     onChange={(e) => actualizarMetadata(index, 'tipo', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 text-sm"
                   >
                     {tiposArchivo.map((tipo) => (
                       <option key={tipo} value={tipo}>
@@ -181,13 +181,13 @@ export default function UploaderArchivosDiagnostico({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-slate-700 mb-2">
                     Subtipo
                   </label>
                   <select
                     value={archivoConMeta.subtipo || ''}
                     onChange={(e) => actualizarMetadata(index, 'subtipo', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 text-sm"
                   >
                     {subtiposPorTipo[archivoConMeta.tipo]?.map((subtipo) => (
                       <option key={subtipo} value={subtipo}>
@@ -204,5 +204,6 @@ export default function UploaderArchivosDiagnostico({
     </div>
   );
 }
+
 
 

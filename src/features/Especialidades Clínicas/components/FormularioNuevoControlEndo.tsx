@@ -74,25 +74,25 @@ export default function FormularioNuevoControlEndo({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <FileText className="w-6 h-6 text-blue-600" />
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <FileText size={20} className="text-blue-600" />
           {controlEditar ? 'Editar Control Postoperatorio' : 'Nuevo Control Postoperatorio'}
         </h2>
         <button
           onClick={onCancelar}
           className="text-gray-500 hover:text-gray-700 transition-colors"
         >
-          <X className="w-6 h-6" />
+          <X size={20} />
         </button>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Fecha del control */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            <Calendar className="w-4 h-4 inline mr-2" />
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            <Calendar size={16} className="inline mr-1" />
             Fecha del Control
           </label>
           <input
@@ -100,20 +100,20 @@ export default function FormularioNuevoControlEndo({
             value={fechaControl}
             onChange={(e) => setFechaControl(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
           />
         </div>
 
         {/* Sintomatología */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Sintomatología
           </label>
           <select
             value={sintomatologia}
             onChange={(e) => setSintomatologia(e.target.value as any)}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
           >
             <option value="Asintomático">Asintomático</option>
             <option value="Dolor espontáneo">Dolor espontáneo</option>
@@ -124,14 +124,14 @@ export default function FormularioNuevoControlEndo({
 
         {/* Signos Clínicos */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Signos Clínicos
           </label>
           <select
             value={signosClinicos}
             onChange={(e) => setSignosClinicos(e.target.value as any)}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
           >
             <option value="Ninguno">Ninguno</option>
             <option value="Fístula">Fístula</option>
@@ -142,7 +142,7 @@ export default function FormularioNuevoControlEndo({
 
         {/* Hallazgos Radiográficos */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Hallazgos Radiográficos
           </label>
           <textarea
@@ -150,21 +150,21 @@ export default function FormularioNuevoControlEndo({
             onChange={(e) => setHallazgosRadiograficos(e.target.value)}
             required
             rows={4}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
             placeholder="Describa los hallazgos observados en la radiografía..."
           />
         </div>
 
         {/* Diagnóstico Evolutivo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Diagnóstico Evolutivo
           </label>
           <select
             value={diagnosticoEvolutivo}
             onChange={(e) => setDiagnosticoEvolutivo(e.target.value as any)}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
           >
             <option value="En progreso">En progreso</option>
             <option value="Éxito (curación)">Éxito (curación)</option>
@@ -175,21 +175,21 @@ export default function FormularioNuevoControlEndo({
 
         {/* Observaciones */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Observaciones (Opcional)
           </label>
           <textarea
             value={observaciones}
             onChange={(e) => setObservaciones(e.target.value)}
             rows={3}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
             placeholder="Observaciones adicionales..."
           />
         </div>
 
         {/* Adjuntos */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Radiografías Adjuntas
           </label>
           <div className="flex items-center gap-3">
@@ -222,7 +222,7 @@ export default function FormularioNuevoControlEndo({
         )}
 
         {/* Botones */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-end gap-2 mt-auto pt-3 border-t border-gray-100">
           <button
             type="button"
             onClick={onCancelar}
@@ -235,7 +235,7 @@ export default function FormularioNuevoControlEndo({
             disabled={loading}
             className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
           >
-            <Save className="w-4 h-4" />
+            <Save size={16} />
             {loading ? 'Guardando...' : controlEditar ? 'Actualizar' : 'Guardar'}
           </button>
         </div>
@@ -252,5 +252,6 @@ export default function FormularioNuevoControlEndo({
     </div>
   );
 }
+
 
 

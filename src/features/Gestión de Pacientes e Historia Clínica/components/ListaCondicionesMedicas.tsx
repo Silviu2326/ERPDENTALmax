@@ -67,9 +67,9 @@ export default function ListaCondicionesMedicas({
         {!mostrarFormulario && (
           <button
             onClick={() => setMostrarFormulario(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} className="mr-2" />
             Agregar Condición
           </button>
         )}
@@ -77,9 +77,9 @@ export default function ListaCondicionesMedicas({
 
       {/* Formulario para nuevo antecedente */}
       {mostrarFormulario && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3">
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre de la Condición *
             </label>
             <input
@@ -88,31 +88,31 @@ export default function ListaCondicionesMedicas({
               onChange={(e) =>
                 setNuevoAntecedente({ ...nuevoAntecedente, nombre: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Diabetes, Hipertensión, Cardiopatía..."
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Diagnóstico</label>
             <input
               type="text"
               value={nuevoAntecedente.diagnostico || ''}
               onChange={(e) =>
                 setNuevoAntecedente({ ...nuevoAntecedente, diagnostico: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Diagnóstico específico..."
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
             <textarea
               value={nuevoAntecedente.notas || ''}
               onChange={(e) =>
                 setNuevoAntecedente({ ...nuevoAntecedente, notas: e.target.value })
               }
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Información adicional sobre la condición..."
             />
           </div>
@@ -126,13 +126,13 @@ export default function ListaCondicionesMedicas({
                 }
                 className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
               />
-              <span className="text-sm font-medium text-gray-700">Marcar como crítica</span>
+              <span className="text-sm font-medium text-slate-700">Marcar como crítica</span>
             </label>
           </div>
           <div className="flex gap-2">
             <button
               onClick={handleAgregar}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
             >
               Agregar
             </button>
@@ -146,7 +146,7 @@ export default function ListaCondicionesMedicas({
                   critica: false,
                 });
               }}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-200 text-slate-700 hover:bg-slate-300"
             >
               Cancelar
             </button>
@@ -158,12 +158,12 @@ export default function ListaCondicionesMedicas({
       {antecedentes.length === 0 ? (
         <p className="text-gray-500 text-sm py-4">No hay condiciones médicas registradas</p>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {antecedentes.map((antecedente, index) => (
             <div
               key={index}
-              className={`border rounded-lg p-3 ${
-                antecedente.critica ? 'bg-red-50 border-red-300' : 'bg-white border-gray-200'
+              className={`ring-1 rounded-xl p-3 ${
+                antecedente.critica ? 'bg-red-50 ring-red-300' : 'bg-white ring-slate-200'
               }`}
             >
               {editandoIndex === index ? (
@@ -177,11 +177,11 @@ export default function ListaCondicionesMedicas({
               ) : (
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="font-semibold text-gray-900">{antecedente.nombre}</h4>
                       {antecedente.critica && (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-100 text-red-800 text-xs font-medium rounded">
-                          <AlertCircle className="w-3 h-3" />
+                          <AlertCircle size={12} />
                           Crítica
                         </span>
                       )}
@@ -200,17 +200,17 @@ export default function ListaCondicionesMedicas({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleEditar(index)}
-                      className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                      className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                       aria-label="Editar condición"
                     >
-                      <Edit2 className="w-4 h-4" />
+                      <Edit2 size={16} />
                     </button>
                     <button
                       onClick={() => handleEliminar(index)}
-                      className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors"
+                      className="p-1.5 text-red-600 hover:bg-red-50 rounded-xl transition-all"
                       aria-label="Eliminar condición"
                     >
-                      <X className="w-4 h-4" />
+                      <X size={16} />
                     </button>
                   </div>
                 </div>
@@ -237,32 +237,32 @@ function EditarAntecedente({
   const [editando, setEditando] = useState<AntecedenteMedico>(antecedente);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Nombre *</label>
         <input
           type="text"
           value={editando.nombre}
           onChange={(e) => setEditando({ ...editando, nombre: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Diagnóstico</label>
         <input
           type="text"
           value={editando.diagnostico}
           onChange={(e) => setEditando({ ...editando, diagnostico: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
         <textarea
           value={editando.notas}
           onChange={(e) => setEditando({ ...editando, notas: e.target.value })}
           rows={3}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
       <div className="flex items-center gap-2">
@@ -273,20 +273,20 @@ function EditarAntecedente({
             onChange={(e) => setEditando({ ...editando, critica: e.target.checked })}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
-          <span className="text-sm font-medium text-gray-700">Crítica</span>
+          <span className="text-sm font-medium text-slate-700">Crítica</span>
         </label>
       </div>
       <div className="flex gap-2">
         <button
           onClick={() => onGuardar(editando)}
-          className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
         >
-          <Save className="w-4 h-4" />
+          <Save size={16} />
           Guardar
         </button>
         <button
           onClick={onCancelar}
-          className="px-3 py-1.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium transition-all bg-slate-200 text-slate-700 hover:bg-slate-300"
         >
           Cancelar
         </button>
@@ -294,5 +294,6 @@ function EditarAntecedente({
     </div>
   );
 }
+
 
 

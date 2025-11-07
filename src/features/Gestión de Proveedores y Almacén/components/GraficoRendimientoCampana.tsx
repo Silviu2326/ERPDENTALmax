@@ -57,67 +57,71 @@ export default function GraficoRendimientoCampana({ campanas, tipo }: GraficoRen
     return `${valor.toFixed(1)}${config.unidad}`;
   };
 
-  return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-      <h3 className="text-lg font-bold text-gray-900 mb-4">{config.titulo}</h3>
-      <div className="space-y-4">
-        {config.tipoGrafico === 'bar' ? (
-          // Gráfico de barras
-          <div className="space-y-3">
-            {datosGrafico.map((dato, index) => (
-              <div key={index} className="space-y-1">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium text-gray-700">{dato.nombre}</span>
-                  <span className="font-semibold text-gray-900">{formatearValor(dato.valor)}</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-6 overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-500"
-                    style={{
-                      width: `${(dato.valor / maxValor) * 100}%`,
-                      backgroundColor: config.color,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          // Gráfico de líneas simplificado
-          <div className="relative h-64">
-            <div className="absolute inset-0 flex items-end justify-between">
-              {datosGrafico.map((dato, index) => {
-                const altura = (dato.valor / maxValor) * 100;
-                return (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center flex-1"
-                    style={{ height: '100%' }}
-                  >
-                    <div className="flex-1 flex items-end w-full">
-                      <div
-                        className="w-full rounded-t transition-all duration-500"
-                        style={{
-                          height: `${altura}%`,
-                          backgroundColor: config.color,
-                          minHeight: '2px',
-                        }}
-                      />
-                    </div>
-                    <div className="mt-2 text-xs text-gray-600 text-center px-1 transform -rotate-45 origin-top-left">
-                      {dato.nombre}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 border-t border-gray-300" />
-            <div className="absolute top-0 left-0 right-0 border-b border-gray-300" />
-          </div>
-        )}
+  if (datosGrafico.length === 0) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <p className="text-sm text-slate-600">No hay datos para mostrar</p>
       </div>
-      <div className="mt-4 text-sm text-gray-600 text-center">
-        {datosGrafico.length === 0 && 'No hay datos para mostrar'}
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm p-4">
+      <div className="space-y-4">
+      {config.tipoGrafico === 'bar' ? (
+        // Gráfico de barras
+        <div className="space-y-3">
+          {datosGrafico.map((dato, index) => (
+            <div key={index} className="space-y-1">
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-medium text-slate-700">{dato.nombre}</span>
+                <span className="font-semibold text-gray-900">{formatearValor(dato.valor)}</span>
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-6 overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${(dato.valor / maxValor) * 100}%`,
+                    backgroundColor: config.color,
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Gráfico de líneas simplificado
+        <div className="relative h-64">
+          <div className="absolute inset-0 flex items-end justify-between">
+            {datosGrafico.map((dato, index) => {
+              const altura = (dato.valor / maxValor) * 100;
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center flex-1"
+                  style={{ height: '100%' }}
+                >
+                  <div className="flex-1 flex items-end w-full">
+                    <div
+                      className="w-full rounded-t transition-all duration-500"
+                      style={{
+                        height: `${altura}%`,
+                        backgroundColor: config.color,
+                        minHeight: '2px',
+                      }}
+                    />
+                  </div>
+                  <div className="mt-2 text-xs text-slate-600 text-center px-1 transform -rotate-45 origin-top-left">
+                    {dato.nombre}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 border-t border-slate-300" />
+          <div className="absolute top-0 left-0 right-0 border-b border-slate-300" />
+        </div>
+      )}
       </div>
     </div>
   );

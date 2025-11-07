@@ -77,11 +77,11 @@ export default function FormularioAplicacionFluorSellador({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">Nueva Aplicación Preventiva</h3>
+      <div className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">Nueva Aplicación Preventiva</h3>
 
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
             <p className="font-medium">Error</p>
             <p className="text-sm mt-1">{error}</p>
           </div>
@@ -90,8 +90,8 @@ export default function FormularioAplicacionFluorSellador({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Fecha de Aplicación */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Calendar className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Calendar size={16} className="inline mr-1" />
               Fecha de Aplicación *
             </label>
             <input
@@ -99,13 +99,13 @@ export default function FormularioAplicacionFluorSellador({
               value={fechaAplicacion}
               onChange={(e) => setFechaAplicacion(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           {/* Tipo de Aplicación */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Aplicación *
             </label>
             <select
@@ -116,7 +116,7 @@ export default function FormularioAplicacionFluorSellador({
                 setDientesTratados([]);
               }}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               <option value="Fluor">Flúor</option>
               <option value="Sellador">Sellador</option>
@@ -125,14 +125,14 @@ export default function FormularioAplicacionFluorSellador({
 
           {/* Producto Utilizado */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Producto Utilizado *
             </label>
             <select
               value={productoUtilizado}
               onChange={(e) => setProductoUtilizado(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               <option value="">Seleccione un producto</option>
               {(tipoAplicacion === 'Fluor' ? productosFluor : productosSellador).map(
@@ -149,7 +149,7 @@ export default function FormularioAplicacionFluorSellador({
                 placeholder="Especifique el producto"
                 value={productoUtilizado}
                 onChange={(e) => setProductoUtilizado(e.target.value)}
-                className="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full mt-2 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             )}
           </div>
@@ -166,39 +166,40 @@ export default function FormularioAplicacionFluorSellador({
 
         {/* Notas */}
         <div className="mt-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Notas</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
           <textarea
             value={notas}
             onChange={(e) => setNotas(e.target.value)}
             rows={4}
             placeholder="Observaciones importantes, colaboración del niño, incidencias, etc."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       </div>
 
       {/* Botones de acción */}
-      <div className="flex justify-end gap-3">
+      <div className="flex justify-end gap-2">
         <button
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <X className="w-4 h-4" />
-          Cancelar
+          <X size={18} />
+          <span>Cancelar</span>
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save className="w-4 h-4" />
-          {loading ? 'Guardando...' : 'Guardar Aplicación'}
+          <Save size={18} />
+          <span>{loading ? 'Guardando...' : 'Guardar Aplicación'}</span>
         </button>
       </div>
     </form>
   );
 }
+
 
 

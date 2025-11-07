@@ -1,4 +1,4 @@
-import { Edit, Trash2, Eye, CheckCircle, XCircle } from 'lucide-react';
+import { Edit, Trash2, Eye, CheckCircle, XCircle, Loader2, Package } from 'lucide-react';
 import { Mutua } from '../api/mutuasApi';
 
 interface MutuasTableProps {
@@ -20,14 +20,14 @@ export default function MutuasTable({
     if (activo) {
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-          <CheckCircle className="w-3 h-3" />
+          <CheckCircle size={12} />
           Activa
         </span>
       );
     }
     return (
       <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-        <XCircle className="w-3 h-3" />
+        <XCircle size={12} />
         Inactiva
       </span>
     );
@@ -35,48 +35,45 @@ export default function MutuasTable({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (mutuas.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <CheckCircle className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay mutuas registradas</p>
-          <p className="text-sm">Comienza agregando una nueva mutua o seguro</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay mutuas registradas</h3>
+        <p className="text-gray-600 mb-4">Comienza agregando una nueva mutua o seguro</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Nombre Comercial
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Razón Social
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 CIF
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Contacto
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -120,28 +117,28 @@ export default function MutuasTable({
                     {onVerDetalle && (
                       <button
                         onClick={() => onVerDetalle(mutua)}
-                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition-all"
                         title="Ver detalle"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye size={16} />
                       </button>
                     )}
                     {onEditar && (
                       <button
                         onClick={() => onEditar(mutua)}
-                        className="text-indigo-600 hover:text-indigo-800 p-2 hover:bg-indigo-50 rounded-lg transition-colors"
+                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition-all"
                         title="Editar"
                       >
-                        <Edit className="w-4 h-4" />
+                        <Edit size={16} />
                       </button>
                     )}
                     {onEliminar && (
                       <button
                         onClick={() => onEliminar(mutua)}
-                        className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded-lg transition-colors"
+                        className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded-lg transition-all"
                         title={mutua.activo ? 'Desactivar' : 'Activar'}
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 size={16} />
                       </button>
                     )}
                   </div>
@@ -154,5 +151,6 @@ export default function MutuasTable({
     </div>
   );
 }
+
 
 

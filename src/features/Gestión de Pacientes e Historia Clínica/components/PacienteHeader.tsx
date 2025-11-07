@@ -34,37 +34,37 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
     : 0;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-2xl p-6">
       {/* Header principal */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <div className="flex items-center gap-4 mb-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-4 rounded-xl shadow-lg">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-4 rounded-xl shadow-sm ring-1 ring-blue-200/70">
               <span className="text-white text-2xl font-bold">
                 {paciente.nombre.charAt(0).toUpperCase()}{paciente.apellidos.charAt(0).toUpperCase()}
               </span>
             </div>
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-900">{nombreCompleto}</h1>
+              <h2 className="text-2xl font-bold text-gray-900">{nombreCompleto}</h2>
               <div className="flex items-center gap-4 mt-1 text-gray-600 flex-wrap">
                 {paciente.dni && (
                   <span className="text-sm">
-                    <span className="font-semibold">DNI:</span> {paciente.dni}
+                    <span className="font-medium">DNI:</span> {paciente.dni}
                   </span>
                 )}
                 {edad !== null && (
                   <span className="text-sm">
-                    <span className="font-semibold">Edad:</span> {edad} años
+                    <span className="font-medium">Edad:</span> {edad} años
                   </span>
                 )}
                 {paciente.genero && (
                   <span className="text-sm">
-                    <span className="font-semibold">Género:</span> {paciente.genero}
+                    <span className="font-medium">Género:</span> {paciente.genero}
                   </span>
                 )}
                 {añosComoPaciente > 0 && (
                   <span className="text-sm">
-                    <span className="font-semibold">Paciente desde:</span> {añosComoPaciente} {añosComoPaciente === 1 ? 'año' : 'años'}
+                    <span className="font-medium">Paciente desde:</span> {añosComoPaciente} {añosComoPaciente === 1 ? 'año' : 'años'}
                   </span>
                 )}
               </div>
@@ -74,26 +74,26 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
           {/* Datos de contacto */}
           <div className="flex flex-wrap gap-4 mt-4">
             {paciente.datosContacto?.telefono && (
-              <div className="flex items-center gap-2 text-gray-700">
-                <Phone className="w-4 h-4 text-blue-600" />
+              <div className="flex items-center gap-2 text-slate-700">
+                <Phone size={16} className="text-blue-600" />
                 <span className="text-sm">{paciente.datosContacto.telefono}</span>
               </div>
             )}
             {paciente.datosContacto?.email && (
-              <div className="flex items-center gap-2 text-gray-700">
-                <Mail className="w-4 h-4 text-blue-600" />
+              <div className="flex items-center gap-2 text-slate-700">
+                <Mail size={16} className="text-blue-600" />
                 <span className="text-sm">{paciente.datosContacto.email}</span>
               </div>
             )}
             {paciente.datosContacto?.direccion && (
-              <div className="flex items-center gap-2 text-gray-700">
-                <MapPin className="w-4 h-4 text-blue-600" />
+              <div className="flex items-center gap-2 text-slate-700">
+                <MapPin size={16} className="text-blue-600" />
                 <span className="text-sm">{paciente.datosContacto.direccion}</span>
               </div>
             )}
             {paciente.contactoEmergencia?.nombre && (
-              <div className="flex items-center gap-2 text-gray-700">
-                <Heart className="w-4 h-4 text-red-600" />
+              <div className="flex items-center gap-2 text-slate-700">
+                <Heart size={16} className="text-red-600" />
                 <span className="text-sm">
                   Emergencia: {paciente.contactoEmergencia.nombre} ({paciente.contactoEmergencia.relacion || 'Contacto'})
                 </span>
@@ -106,10 +106,10 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
         <div className="flex flex-col gap-2 ml-4">
           {/* Saldo pendiente */}
           {paciente.saldo !== undefined && paciente.saldo !== 0 && (
-            <div className={`px-4 py-2 rounded-lg font-semibold ${
+            <div className={`px-4 py-2 rounded-xl font-semibold ring-1 ${
               paciente.saldo > 0 
-                ? 'bg-red-50 text-red-700 border border-red-200' 
-                : 'bg-green-50 text-green-700 border border-green-200'
+                ? 'bg-red-50 text-red-700 ring-red-200' 
+                : 'bg-green-50 text-green-700 ring-green-200'
             }`}>
               <span className="text-sm">Saldo:</span>
               <div className="text-lg">{paciente.saldo.toFixed(2)} €</div>
@@ -118,9 +118,9 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
           
           {/* Próxima cita */}
           {proximaCita && (
-            <div className="px-4 py-2 rounded-lg bg-blue-50 border border-blue-200">
+            <div className="px-4 py-2 rounded-xl bg-blue-50 ring-1 ring-blue-200">
               <div className="flex items-center gap-2 text-blue-700">
-                <Calendar className="w-4 h-4" />
+                <Calendar size={16} />
                 <div>
                   <div className="text-xs font-medium">Próxima cita</div>
                   <div className="text-sm font-semibold">
@@ -137,53 +137,53 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
       </div>
 
       {/* Estadísticas rápidas en tarjetas */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-        <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+        <div className="bg-blue-50 rounded-xl p-4 ring-1 ring-blue-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-gray-600">Total Citas</p>
-              <p className="text-xl font-bold text-blue-600">{totalCitas}</p>
+              <p className="text-xs text-slate-600 font-medium">Total Citas</p>
+              <p className="text-xl font-bold text-blue-600 mt-1">{totalCitas}</p>
             </div>
-            <Calendar className="w-5 h-5 text-blue-500 opacity-50" />
+            <Calendar size={20} className="text-blue-500 opacity-50" />
           </div>
-          <p className="text-xs text-gray-500 mt-1">{citasRealizadas} realizadas</p>
+          <p className="text-xs text-slate-500 mt-2">{citasRealizadas} realizadas</p>
         </div>
         
-        <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+        <div className="bg-green-50 rounded-xl p-4 ring-1 ring-green-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-gray-600">Planes Activos</p>
-              <p className="text-xl font-bold text-green-600">{planesActivos}</p>
+              <p className="text-xs text-slate-600 font-medium">Planes Activos</p>
+              <p className="text-xl font-bold text-green-600 mt-1">{planesActivos}</p>
             </div>
-            <FileText className="w-5 h-5 text-green-500 opacity-50" />
+            <FileText size={20} className="text-green-500 opacity-50" />
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-2">
             {paciente.planesTratamiento?.filter(p => p.estado === 'completado').length || 0} completados
           </p>
         </div>
         
-        <div className="bg-purple-50 rounded-lg p-3 border border-purple-200">
+        <div className="bg-purple-50 rounded-xl p-4 ring-1 ring-purple-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-gray-600">Documentos</p>
-              <p className="text-xl font-bold text-purple-600">{totalDocumentos}</p>
+              <p className="text-xs text-slate-600 font-medium">Documentos</p>
+              <p className="text-xl font-bold text-purple-600 mt-1">{totalDocumentos}</p>
             </div>
-            <FileText className="w-5 h-5 text-purple-500 opacity-50" />
+            <FileText size={20} className="text-purple-500 opacity-50" />
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-2">
             {paciente.documentos?.filter(d => d.tipo === 'Radiografía').length || 0} radiografías
           </p>
         </div>
         
-        <div className="bg-orange-50 rounded-lg p-3 border border-orange-200">
+        <div className="bg-orange-50 rounded-xl p-4 ring-1 ring-orange-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-gray-600">Evoluciones</p>
-              <p className="text-xl font-bold text-orange-600">{paciente.historiaClinica?.length || 0}</p>
+              <p className="text-xs text-slate-600 font-medium">Evoluciones</p>
+              <p className="text-xl font-bold text-orange-600 mt-1">{paciente.historiaClinica?.length || 0}</p>
             </div>
-            <TrendingUp className="w-5 h-5 text-orange-500 opacity-50" />
+            <TrendingUp size={20} className="text-orange-500 opacity-50" />
           </div>
-          <p className="text-xs text-gray-500 mt-1">Notas clínicas</p>
+          <p className="text-xs text-slate-500 mt-2">Notas clínicas</p>
         </div>
       </div>
 
@@ -191,29 +191,29 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-gray-200">
         {/* Datos de seguro */}
         {paciente.datosSeguro?.aseguradora && (
-          <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-            <div className="flex items-center gap-2 mb-1">
-              <User className="w-4 h-4 text-gray-600" />
-              <span className="text-sm font-semibold text-gray-700">Seguro Médico</span>
+          <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
+            <div className="flex items-center gap-2 mb-2">
+              <User size={16} className="text-slate-600" />
+              <span className="text-sm font-semibold text-slate-700">Seguro Médico</span>
             </div>
-            <p className="text-sm text-gray-600">{paciente.datosSeguro.aseguradora}</p>
+            <p className="text-sm text-slate-600">{paciente.datosSeguro.aseguradora}</p>
             {paciente.datosSeguro.numeroPoliza && (
-              <p className="text-xs text-gray-500 mt-1">Póliza: {paciente.datosSeguro.numeroPoliza}</p>
+              <p className="text-xs text-slate-500 mt-1">Póliza: {paciente.datosSeguro.numeroPoliza}</p>
             )}
             {paciente.datosSeguro.tipoPlan && (
-              <p className="text-xs text-gray-500">Plan: {paciente.datosSeguro.tipoPlan}</p>
+              <p className="text-xs text-slate-500">Plan: {paciente.datosSeguro.tipoPlan}</p>
             )}
           </div>
         )}
 
         {/* Fecha de alta y última visita */}
-        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+        <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
           <div className="flex items-center gap-2 mb-2">
-            <Calendar className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-semibold text-gray-700">Información de Registro</span>
+            <Calendar size={16} className="text-slate-600" />
+            <span className="text-sm font-semibold text-slate-700">Información de Registro</span>
           </div>
           {paciente.fechaAlta && (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-slate-600">
               <span className="font-medium">Alta:</span>{' '}
               {new Date(paciente.fechaAlta).toLocaleDateString('es-ES', {
                 year: 'numeric',
@@ -223,7 +223,7 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
             </p>
           )}
           {paciente.citas && paciente.citas.length > 0 && (
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-slate-600 mt-1">
               <span className="font-medium">Última visita:</span>{' '}
               {new Date(paciente.citas[0].fecha_hora_inicio).toLocaleDateString('es-ES', {
                 year: 'numeric',
@@ -237,10 +237,10 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
 
       {/* Alertas médicas */}
       {paciente.alertasMedicas && paciente.alertasMedicas.length > 0 && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg mt-4">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-xl mt-4 ring-1 ring-red-200">
           <div className="flex items-center gap-2 mb-2">
-            <AlertTriangle className="w-5 h-5 text-red-600" />
-            <h3 className="font-semibold text-red-900">Alertas Médicas Importantes</h3>
+            <AlertTriangle size={20} className="text-red-600" />
+            <h3 className="text-lg font-semibold text-red-900">Alertas Médicas Importantes</h3>
           </div>
           <ul className="list-disc list-inside space-y-1">
             {paciente.alertasMedicas.map((alerta, index) => (
@@ -252,14 +252,14 @@ export default function PacienteHeader({ paciente }: PacienteHeaderProps) {
 
       {/* Alergias destacadas */}
       {paciente.historialMedico?.alergias && paciente.historialMedico.alergias.length > 0 && (
-        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg mt-4">
+        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl mt-4 ring-1 ring-yellow-200">
           <div className="flex items-center gap-2 mb-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-600" />
-            <h3 className="font-semibold text-yellow-900">Alergias Registradas</h3>
+            <AlertTriangle size={20} className="text-yellow-600" />
+            <h3 className="text-lg font-semibold text-yellow-900">Alergias Registradas</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {paciente.historialMedico.alergias.map((alergia, index) => (
-              <span key={index} className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+              <span key={index} className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium ring-1 ring-yellow-200">
                 {alergia}
               </span>
             ))}

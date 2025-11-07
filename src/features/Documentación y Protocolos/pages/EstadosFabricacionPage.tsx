@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw, FileCode } from 'lucide-react';
+import { Plus, RefreshCw, FileCode, AlertCircle } from 'lucide-react';
 import {
   obtenerOrdenesFabricacion,
   FiltrosFabricacion,
@@ -62,97 +62,116 @@ export default function EstadosFabricacionPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <FileCode className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileCode size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Estados de Fabricación
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión y seguimiento en tiempo real del ciclo de vida de trabajos protésicos
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Estados de Fabricación</h1>
-                <p className="text-gray-600 mt-1">
-                  Gestión y seguimiento en tiempo real del ciclo de vida de trabajos protésicos
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={cargarOrdenes}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2"
-              >
-                <RefreshCw className="w-5 h-5" />
-                <span>Actualizar</span>
-              </button>
-              {onNuevaOrden && (
+              
+              {/* Toolbar */}
+              <div className="flex items-center justify-end gap-2">
                 <button
-                  onClick={onNuevaOrden}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  onClick={cargarOrdenes}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50"
                 >
-                  <Plus className="w-5 h-5" />
-                  <span>Nueva Orden</span>
+                  <RefreshCw size={20} className="mr-2" />
+                  Actualizar
                 </button>
-              )}
+                {onNuevaOrden && (
+                  <button
+                    onClick={onNuevaOrden}
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                  >
+                    <Plus size={20} className="mr-2" />
+                    Nueva Orden
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">{error}</p>
-          </div>
-        )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Mensaje de error */}
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <p className="text-red-700">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="ml-auto text-red-600 hover:text-red-800"
+              >
+                ×
+              </button>
+            </div>
+          )}
 
-        {/* Filtros */}
-        <div className="mb-6">
+          {/* Filtros */}
           <FiltrosBusquedaFabricacion
             filtros={filtros}
             onFiltrosChange={setFiltros}
             onLimpiarFiltros={handleLimpiarFiltros}
           />
-        </div>
 
-        {/* Tabla de Órdenes */}
-        <div className="mb-6">
+          {/* Tabla de Órdenes */}
           <TablaOrdenesFabricacion
             ordenes={ordenes}
             loading={loading}
             onVerDetalle={onVerDetalle}
           />
-        </div>
 
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="flex items-center justify-between bg-white rounded-lg shadow-md p-4 border border-gray-200">
-            <div className="text-sm text-gray-700">
-              Mostrando {ordenes.length} de {paginacion.total} órdenes
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="p-4 bg-white shadow-sm rounded-lg">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => handlePageChange(paginacion.page - 1)}
+                  disabled={paginacion.page === 1}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-all rounded-lg bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="px-4 py-2 text-sm text-gray-700">
+                  Página {paginacion.page} de {paginacion.totalPages}
+                </span>
+                <button
+                  onClick={() => handlePageChange(paginacion.page + 1)}
+                  disabled={paginacion.page === paginacion.totalPages}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-all rounded-lg bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Siguiente
+                </button>
+              </div>
+              <div className="mt-2 text-center text-sm text-gray-600">
+                Mostrando {ordenes.length} de {paginacion.total} órdenes
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => handlePageChange(paginacion.page - 1)}
-                disabled={paginacion.page === 1}
-                className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <span className="text-sm text-gray-700">
-                Página {paginacion.page} de {paginacion.totalPages}
-              </span>
-              <button
-                onClick={() => handlePageChange(paginacion.page + 1)}
-                disabled={paginacion.page === paginacion.totalPages}
-                className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

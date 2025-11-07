@@ -79,7 +79,7 @@ export default function FormularioPlanRetencion({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Fecha de inicio */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Fecha de Inicio del Plan de Retención *
         </label>
         <input
@@ -87,28 +87,28 @@ export default function FormularioPlanRetencion({
           value={fechaInicio}
           onChange={(e) => setFechaInicio(e.target.value)}
           required
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
         />
       </div>
 
       {/* Retenedores */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-slate-700">
             Retenedores *
           </label>
           <button
             type="button"
             onClick={agregarRetenedor}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white rounded-xl hover:bg-blue-700"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} className="mr-0" />
             Agregar Retenedor
           </button>
         </div>
 
         {retenedores.length === 0 ? (
-          <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg text-gray-500">
+          <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 bg-gray-50">
             No hay retenedores agregados. Haga clic en "Agregar Retenedor" para comenzar.
           </div>
         ) : (
@@ -116,24 +116,24 @@ export default function FormularioPlanRetencion({
             {retenedores.map((retenedor, index) => (
               <div
                 key={index}
-                className="p-4 border border-gray-300 rounded-lg bg-gray-50"
+                className="p-4 border border-gray-200 rounded-xl bg-white ring-1 ring-slate-200"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <h4 className="font-semibold text-gray-800">
+                  <h4 className="text-lg font-semibold text-gray-900">
                     Retenedor {index + 1}
                   </h4>
                   <button
                     type="button"
                     onClick={() => eliminarRetenedor(index)}
-                    className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                    className="p-1 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 size={16} className="w-4 h-4" />
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Tipo *
                     </label>
                     <select
@@ -142,7 +142,7 @@ export default function FormularioPlanRetencion({
                         actualizarRetenedor(index, 'tipo', e.target.value)
                       }
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
                     >
                       {tiposRetenedores.map((tipo) => (
                         <option key={tipo} value={tipo}>
@@ -153,7 +153,7 @@ export default function FormularioPlanRetencion({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Arcada *
                     </label>
                     <select
@@ -162,7 +162,7 @@ export default function FormularioPlanRetencion({
                         actualizarRetenedor(index, 'arcada', e.target.value)
                       }
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
                     >
                       {arcadas.map((arcada) => (
                         <option key={arcada} value={arcada}>
@@ -173,7 +173,7 @@ export default function FormularioPlanRetencion({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Material *
                     </label>
                     <input
@@ -184,12 +184,12 @@ export default function FormularioPlanRetencion({
                       }
                       placeholder="Ej: Alambre, Acrílico, etc."
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Fecha de Colocación *
                     </label>
                     <input
@@ -199,12 +199,12 @@ export default function FormularioPlanRetencion({
                         actualizarRetenedor(index, 'fechaColocacion', e.target.value)
                       }
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
                     />
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Instrucciones para el Paciente *
                     </label>
                     <textarea
@@ -215,7 +215,7 @@ export default function FormularioPlanRetencion({
                       placeholder="Ej: Usar 12 horas al día, mantener limpio, etc."
                       required
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     />
                   </div>
                 </div>
@@ -227,7 +227,7 @@ export default function FormularioPlanRetencion({
 
       {/* Notas generales */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Notas Generales
         </label>
         <textarea
@@ -235,18 +235,18 @@ export default function FormularioPlanRetencion({
           onChange={(e) => setNotasGenerales(e.target.value)}
           placeholder="Observaciones adicionales sobre el plan de retención..."
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
         />
       </div>
 
       {/* Botones */}
-      <div className="flex gap-4 justify-end pt-4 border-t border-gray-200">
+      <div className="flex gap-2 justify-end pt-4 border-t border-gray-100">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
             disabled={loading}
-            className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-2 text-sm font-medium transition-all rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50"
           >
             Cancelar
           </button>
@@ -254,14 +254,15 @@ export default function FormularioPlanRetencion({
         <button
           type="submit"
           disabled={loading || retenedores.length === 0}
-          className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-6 py-2 text-sm font-medium transition-all bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save className="w-4 h-4" />
+          <Save size={20} className="mr-0" />
           {loading ? 'Guardando...' : 'Guardar Plan de Retención'}
         </button>
       </div>
     </form>
   );
 }
+
 
 

@@ -53,82 +53,85 @@ export default function PaginacionListado({ paginacion, onPageChange }: Paginaci
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 px-4">
-      <div className="text-sm text-gray-600">
-        Mostrando {startItem} - {endItem} de {total} pacientes
-      </div>
-
-      <div className="flex items-center gap-2">
-        {/* Botón primera página */}
-        <button
-          onClick={() => onPageChange(1)}
-          disabled={page === 1}
-          className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
-          aria-label="Primera página"
-        >
-          <ChevronsLeft className="w-4 h-4" />
-        </button>
-
-        {/* Botón página anterior */}
-        <button
-          onClick={() => onPageChange(page - 1)}
-          disabled={page === 1}
-          className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
-          aria-label="Página anterior"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-
-        {/* Números de página */}
-        <div className="flex gap-1">
-          {getPageNumbers().map((pageNum, index) => {
-            if (pageNum === '...') {
-              return (
-                <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">
-                  ...
-                </span>
-              );
-            }
-
-            const pageNumber = pageNum as number;
-            return (
-              <button
-                key={pageNumber}
-                onClick={() => onPageChange(pageNumber)}
-                className={`px-4 py-2 rounded-lg border transition-colors ${
-                  page === pageNumber
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {pageNumber}
-              </button>
-            );
-          })}
+    <div className="bg-white shadow-sm rounded-lg p-4">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="text-sm text-slate-600">
+          Mostrando {startItem} - {endItem} de {total} resultados
         </div>
 
-        {/* Botón página siguiente */}
-        <button
-          onClick={() => onPageChange(page + 1)}
-          disabled={page === totalPages}
-          className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
-          aria-label="Página siguiente"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
+        <div className="flex items-center justify-center gap-2">
+          {/* Botón primera página */}
+          <button
+            onClick={() => onPageChange(1)}
+            disabled={page === 1}
+            className="p-2 rounded-xl ring-1 ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors text-slate-700"
+            aria-label="Primera página"
+          >
+            <ChevronsLeft className="w-4 h-4" />
+          </button>
 
-        {/* Botón última página */}
-        <button
-          onClick={() => onPageChange(totalPages)}
-          disabled={page === totalPages}
-          className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
-          aria-label="Última página"
-        >
-          <ChevronsRight className="w-4 h-4" />
-        </button>
+          {/* Botón página anterior */}
+          <button
+            onClick={() => onPageChange(page - 1)}
+            disabled={page === 1}
+            className="p-2 rounded-xl ring-1 ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors text-slate-700"
+            aria-label="Página anterior"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          {/* Números de página */}
+          <div className="flex gap-2">
+            {getPageNumbers().map((pageNum, index) => {
+              if (pageNum === '...') {
+                return (
+                  <span key={`ellipsis-${index}`} className="px-3 py-2 text-slate-500">
+                    ...
+                  </span>
+                );
+              }
+
+              const pageNumber = pageNum as number;
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => onPageChange(pageNumber)}
+                  className={`px-4 py-2 rounded-xl ring-1 transition-colors text-sm ${
+                    page === pageNumber
+                      ? 'bg-blue-600 text-white ring-blue-600'
+                      : 'ring-slate-300 text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Botón página siguiente */}
+          <button
+            onClick={() => onPageChange(page + 1)}
+            disabled={page === totalPages}
+            className="p-2 rounded-xl ring-1 ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors text-slate-700"
+            aria-label="Página siguiente"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+
+          {/* Botón última página */}
+          <button
+            onClick={() => onPageChange(totalPages)}
+            disabled={page === totalPages}
+            className="p-2 rounded-xl ring-1 ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors text-slate-700"
+            aria-label="Última página"
+          >
+            <ChevronsRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+
 
 

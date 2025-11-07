@@ -132,30 +132,30 @@ export default function DisponibilidadCalendarView({
   const nombreMes = fechaActual.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-          <CalendarIcon className="w-5 h-5" />
+          <CalendarIcon size={20} />
           <span>Vista de Disponibilidad</span>
         </h3>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => navegarMes('anterior')}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft size={20} />
           </button>
           <button
             onClick={irHoy}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-colors"
           >
             Hoy
           </button>
           <button
             onClick={() => navegarMes('siguiente')}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight size={20} />
           </button>
         </div>
       </div>
@@ -169,7 +169,7 @@ export default function DisponibilidadCalendarView({
           <thead>
             <tr>
               {DIAS_SEMANA.map((dia) => (
-                <th key={dia} className="border border-gray-200 p-2 text-center text-sm font-medium text-gray-700 bg-gray-50">
+                <th key={dia} className="border border-gray-200 p-2 text-center text-sm font-medium text-slate-700 bg-slate-50">
                   {dia}
                 </th>
               ))}
@@ -217,7 +217,7 @@ export default function DisponibilidadCalendarView({
         </table>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-4 text-xs">
+      <div className="mt-4 flex flex-wrap gap-4 text-xs text-gray-600">
         <div className="flex items-center space-x-2">
           <div className="w-4 h-4 bg-green-100 border border-green-300 rounded"></div>
           <span>Disponible</span>
@@ -238,5 +238,6 @@ export default function DisponibilidadCalendarView({
     </div>
   );
 }
+
 
 

@@ -33,40 +33,40 @@ export default function VitalSignsMonitor({ signosVitales, onAgregarSignoVital }
   const ultimoSigno = signosVitales[signosVitales.length - 1];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="bg-gradient-to-br from-red-500 to-pink-500 p-2 rounded-lg">
-          <Heart className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <Heart size={20} className="text-blue-600" />
         </div>
-        <h3 className="text-lg font-bold text-gray-800">Monitor de Signos Vitales</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Monitor de Signos Vitales</h3>
       </div>
 
       {/* Valores actuales */}
       {ultimoSigno && (
-        <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gradient-to-br from-red-50 to-pink-50 rounded-lg">
+        <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-slate-50 rounded-xl ring-1 ring-slate-200">
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Activity className="w-4 h-4 text-red-600" />
-              <span className="text-xs font-medium text-gray-600">Presión Arterial</span>
+              <Activity size={16} className="text-blue-600" />
+              <span className="text-xs font-medium text-slate-700">Presión Arterial</span>
             </div>
-            <p className="text-xl font-bold text-red-700">{ultimoSigno.presionArterial}</p>
-            <p className="text-xs text-gray-500">mmHg</p>
+            <p className="text-xl font-bold text-gray-900">{ultimoSigno.presionArterial}</p>
+            <p className="text-xs text-gray-600">mmHg</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Heart className="w-4 h-4 text-red-600" />
-              <span className="text-xs font-medium text-gray-600">Frecuencia Cardíaca</span>
+              <Heart size={16} className="text-blue-600" />
+              <span className="text-xs font-medium text-slate-700">Frecuencia Cardíaca</span>
             </div>
-            <p className="text-xl font-bold text-red-700">{ultimoSigno.frecuenciaCardiaca}</p>
-            <p className="text-xs text-gray-500">lpm</p>
+            <p className="text-xl font-bold text-gray-900">{ultimoSigno.frecuenciaCardiaca}</p>
+            <p className="text-xs text-gray-600">lpm</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Droplet className="w-4 h-4 text-red-600" />
-              <span className="text-xs font-medium text-gray-600">SpO2</span>
+              <Droplet size={16} className="text-blue-600" />
+              <span className="text-xs font-medium text-slate-700">SpO2</span>
             </div>
-            <p className="text-xl font-bold text-red-700">{ultimoSigno.spo2}</p>
-            <p className="text-xs text-gray-500">%</p>
+            <p className="text-xl font-bold text-gray-900">{ultimoSigno.spo2}</p>
+            <p className="text-xs text-gray-600">%</p>
           </div>
         </div>
       )}
@@ -74,27 +74,27 @@ export default function VitalSignsMonitor({ signosVitales, onAgregarSignoVital }
       {/* Formulario para agregar signos vitales */}
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Presión Arterial</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Presión Arterial</label>
           <input
             type="text"
             value={presionArterial}
             onChange={(e) => setPresionArterial(e.target.value)}
             placeholder="120/80"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Frecuencia Cardíaca</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Frecuencia Cardíaca</label>
           <input
             type="number"
             value={frecuenciaCardiaca}
             onChange={(e) => setFrecuenciaCardiaca(e.target.value)}
             placeholder="70"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">SpO2 (%)</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">SpO2 (%)</label>
           <input
             type="number"
             value={spo2}
@@ -102,14 +102,14 @@ export default function VitalSignsMonitor({ signosVitales, onAgregarSignoVital }
             placeholder="98"
             min="0"
             max="100"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       </div>
 
       <button
         onClick={handleAgregar}
-        className="w-full bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold py-2 rounded-lg hover:from-red-700 hover:to-pink-700 transition-all duration-200 shadow-md hover:shadow-lg"
+        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-medium shadow-sm"
       >
         Registrar Signos Vitales
       </button>
@@ -117,10 +117,10 @@ export default function VitalSignsMonitor({ signosVitales, onAgregarSignoVital }
       {/* Historial */}
       {signosVitales.length > 1 && (
         <div className="mt-6 pt-6 border-t border-gray-200">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Historial</h4>
+          <h4 className="text-sm font-medium text-slate-700 mb-3">Historial</h4>
           <div className="space-y-2 max-h-40 overflow-y-auto">
             {signosVitales.slice(0, -1).reverse().map((signo, index) => (
-              <div key={index} className="flex justify-between items-center text-sm bg-gray-50 p-2 rounded">
+              <div key={index} className="flex justify-between items-center text-sm bg-slate-50 p-3 rounded-xl ring-1 ring-slate-200">
                 <span className="text-gray-600">
                   {new Date(signo.hora).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
                 </span>
@@ -137,5 +137,6 @@ export default function VitalSignsMonitor({ signosVitales, onAgregarSignoVital }
     </div>
   );
 }
+
 
 

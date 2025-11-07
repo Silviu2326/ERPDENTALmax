@@ -104,7 +104,7 @@ export default function ModalFirmaDigital({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -115,19 +115,19 @@ export default function ModalFirmaDigital({
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50"
               disabled={loading}
             >
-              <X className="w-6 h-6" />
+              <X size={24} />
             </button>
           </div>
         </div>
 
         <div className="p-6">
           {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
-              <AlertCircle className="w-5 h-5 text-red-600" />
-              <p className="text-red-800">{error}</p>
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2">
+              <AlertCircle size={20} className="text-red-600" />
+              <p className="text-sm text-red-800">{error}</p>
             </div>
           )}
 
@@ -136,12 +136,12 @@ export default function ModalFirmaDigital({
               Por favor, firma en el área inferior usando el ratón o el dedo (en dispositivos
               táctiles).
             </p>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50">
+            <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50">
               <canvas
                 ref={canvasRef}
                 width={600}
                 height={200}
-                className="w-full border border-gray-300 rounded bg-white cursor-crosshair touch-none"
+                className="w-full border border-gray-300 rounded-xl bg-white cursor-crosshair touch-none"
                 onMouseDown={startDrawing}
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
@@ -157,24 +157,24 @@ export default function ModalFirmaDigital({
             <button
               onClick={limpiarFirma}
               disabled={loading || !hasSignature}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw size={20} />
               <span>Limpiar</span>
             </button>
 
-            <div className="flex space-x-3">
+            <div className="flex gap-2">
               <button
                 onClick={onClose}
                 disabled={loading}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleFirmar}
                 disabled={loading || !hasSignature}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                className="inline-flex items-center gap-2 px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -183,7 +183,7 @@ export default function ModalFirmaDigital({
                   </>
                 ) : (
                   <>
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 size={20} />
                     <span>Confirmar Firma</span>
                   </>
                 )}
@@ -195,5 +195,6 @@ export default function ModalFirmaDigital({
     </div>
   );
 }
+
 
 

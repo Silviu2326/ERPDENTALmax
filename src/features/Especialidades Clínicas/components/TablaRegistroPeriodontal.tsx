@@ -116,7 +116,7 @@ export default function TablaRegistroPeriodontal({
                 const valor = parseFloat(e.target.value) || 0;
                 actualizarMedicion(diente, 'profundidadSondaje', valor, idx);
               }}
-              className="w-12 px-1 py-1 text-center text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-12 px-1 py-1 text-center text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               tabIndex={idx + 1}
             />
           </td>
@@ -161,7 +161,7 @@ export default function TablaRegistroPeriodontal({
           <select
             value={medicion.movilidad || 0}
             onChange={(e) => actualizarMedicion(diente, 'movilidad', parseInt(e.target.value))}
-            className="w-16 px-2 py-1 text-center text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-16 px-2 py-1 text-center text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value={0}>0</option>
             <option value={1}>I</option>
@@ -175,7 +175,7 @@ export default function TablaRegistroPeriodontal({
           <select
             value={medicion.afectacionFurca || ''}
             onChange={(e) => actualizarMedicion(diente, 'afectacionFurca', e.target.value)}
-            className="w-20 px-2 py-1 text-center text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-20 px-2 py-1 text-center text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">-</option>
             <option value="I">I</option>
@@ -188,9 +188,9 @@ export default function TablaRegistroPeriodontal({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-x-auto">
-      <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <h3 className="text-lg font-bold text-gray-800">Registro de Mediciones Periodontales</h3>
+    <div className="bg-white shadow-sm rounded-lg overflow-x-auto">
+      <div className="p-4 border-b border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900">Registro de Mediciones Periodontales</h3>
         <p className="text-sm text-gray-600 mt-1">
           Complete las mediciones para cada diente. Use las teclas Tab para navegar rápidamente.
         </p>
@@ -266,18 +266,18 @@ export default function TablaRegistroPeriodontal({
         </table>
       </div>
 
-      <div className="p-4 border-t border-gray-200 bg-gray-50">
-        <div className="flex items-center gap-4 text-xs text-gray-600">
+      <div className="p-4 border-t border-gray-200 bg-slate-50">
+        <div className="flex items-center gap-4 text-xs text-slate-600">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-red-400 bg-red-50"></div>
+            <div className="w-4 h-4 ring-1 ring-red-400 bg-red-50 rounded"></div>
             <span>Sangrado presente</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-yellow-400 bg-yellow-50"></div>
+            <div className="w-4 h-4 ring-1 ring-yellow-400 bg-yellow-50 rounded"></div>
             <span>Placa presente</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-blue-400 bg-blue-50"></div>
+            <div className="w-4 h-4 ring-1 ring-blue-400 bg-blue-50 rounded"></div>
             <span>Datos registrados</span>
           </div>
         </div>
@@ -285,5 +285,6 @@ export default function TablaRegistroPeriodontal({
     </div>
   );
 }
+
 
 

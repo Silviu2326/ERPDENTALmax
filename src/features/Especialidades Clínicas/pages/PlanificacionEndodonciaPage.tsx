@@ -60,56 +60,62 @@ export default function PlanificacionEndodonciaPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                  aria-label="Volver"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
-              )}
-              <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                  <FileText className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-800">Endodoncia: Planificación</h1>
-                  <p className="text-sm text-gray-600">Planificación de tratamientos de conducto radicular</p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 rounded-xl hover:bg-gray-100 transition-all"
+                    aria-label="Volver"
+                  >
+                    <ArrowLeft size={20} className="text-gray-600" />
+                  </button>
+                )}
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <FileText size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Endodoncia: Planificación
+                    </h1>
+                    <p className="text-gray-600">
+                      Planificación de tratamientos de conducto radicular
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              {pacienteId && tratamientoId && numeroDiente && onRegistroEndodoncia && (
-                <button
-                  onClick={() => onRegistroEndodoncia(tratamientoId, pacienteId, numeroDiente)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
-                >
-                  <ClipboardList className="w-4 h-4" />
-                  Registro de Conductos
-                </button>
-              )}
-              {pacienteId && (
-                <button
-                  onClick={() => setMostrarHistorial(!mostrarHistorial)}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
-                >
-                  {mostrarHistorial ? 'Nuevo Plan' : 'Historial'}
-                </button>
-              )}
+              <div className="flex items-center gap-3">
+                {pacienteId && tratamientoId && diente && onRegistroEndodoncia && (
+                  <button
+                    onClick={() => onRegistroEndodoncia(tratamientoId, pacienteId, diente)}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                  >
+                    <ClipboardList size={20} />
+                    Registro de Conductos
+                  </button>
+                )}
+                {pacienteId && (
+                  <button
+                    onClick={() => setMostrarHistorial(!mostrarHistorial)}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 bg-slate-100"
+                  >
+                    {mostrarHistorial ? 'Nuevo Plan' : 'Historial'}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {mostrarHistorial && pacienteId ? (
           <HistorialPlanesEndoPaciente
             pacienteId={pacienteId}

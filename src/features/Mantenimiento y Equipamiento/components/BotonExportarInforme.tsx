@@ -56,29 +56,30 @@ export default function BotonExportarInforme({
       <button
         onClick={handleExportarPDF}
         disabled={exportando !== null}
-        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
       >
         {exportando === 'pdf' ? (
-          <Loader2 className="w-4 h-4 animate-spin" />
+          <Loader2 size={20} className="animate-spin" />
         ) : (
-          <FileText className="w-4 h-4" />
+          <FileText size={20} />
         )}
         <span>Exportar PDF</span>
       </button>
       <button
         onClick={handleExportarCSV}
         disabled={exportando !== null}
-        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
       >
         {exportando === 'csv' ? (
-          <Loader2 className="w-4 h-4 animate-spin" />
+          <Loader2 size={20} className="animate-spin" />
         ) : (
-          <FileSpreadsheet className="w-4 h-4" />
+          <FileSpreadsheet size={20} />
         )}
         <span>Exportar CSV</span>
       </button>
     </div>
   );
 }
+
 
 

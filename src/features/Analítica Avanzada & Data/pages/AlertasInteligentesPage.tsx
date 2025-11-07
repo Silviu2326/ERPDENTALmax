@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertTriangle, Plus, Settings, Bell, CheckCircle, XCircle, Filter, RefreshCw, TrendingUp, TrendingDown } from 'lucide-react';
+import { AlertTriangle, Plus, Settings, Bell, Filter, RefreshCw, TrendingUp, Loader2, AlertCircle } from 'lucide-react';
 import {
   obtenerThresholds,
   obtenerAlertas,
@@ -35,6 +35,7 @@ export default function AlertasInteligentesPage() {
   const [filtros, setFiltros] = useState<FiltrosAlertas>({
     estado: 'activa',
   });
+  const [tabActivo, setTabActivo] = useState<'alertas' | 'thresholds'>('alertas');
 
   useEffect(() => {
     cargarDatos();
@@ -130,209 +131,231 @@ export default function AlertasInteligentesPage() {
     }
   };
 
-  const getSeveridadColor = (severidad: string) => {
-    switch (severidad) {
-      case 'critica':
-        return 'bg-red-100 text-red-800 border-red-300';
-      case 'advertencia':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-      case 'info':
-        return 'bg-blue-100 text-blue-800 border-blue-300';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-300';
-    }
-  };
-
-  const getSeveridadIcon = (severidad: string) => {
-    switch (severidad) {
-      case 'critica':
-        return <XCircle className="w-5 h-5 text-red-600" />;
-      case 'advertencia':
-        return <AlertTriangle className="w-5 h-5 text-yellow-600" />;
-      case 'info':
-        return <Bell className="w-5 h-5 text-blue-600" />;
-      default:
-        return <Bell className="w-5 h-5 text-gray-600" />;
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-orange-600 to-red-600 p-3 rounded-xl shadow-lg">
-                <Bell className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Bell size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Alertas Inteligentes KPI
+                  </h1>
+                  <p className="text-gray-600">
+                    Configura umbrales y recibe alertas automáticas cuando los KPIs superen los límites
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Alertas Inteligentes KPI</h1>
-                <p className="text-gray-600 mt-1">Configura umbrales y recibe alertas automáticas cuando los KPIs superen los límites</p>
-              </div>
+              <button
+                onClick={handleNuevoThreshold}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+              >
+                <Plus size={20} className="mr-2" />
+                Nuevo Threshold
+              </button>
             </div>
-            <button
-              onClick={handleNuevoThreshold}
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Nuevo Threshold</span>
-            </button>
           </div>
+        </div>
+      </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-              <p className="text-red-800">{error}</p>
+            <div className="rounded-2xl bg-red-50 ring-1 ring-red-200 p-4">
+              <div className="flex items-center gap-2">
+                <AlertCircle size={20} className="text-red-600" />
+                <p className="text-red-800 text-sm">{error}</p>
+              </div>
             </div>
           )}
 
           {/* Resumen de Alertas */}
           <ResumenAlertas resumen={resumen} />
-        </div>
 
-        {/* Filtros */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-              <Filter className="w-5 h-5" />
-              <span>Filtros</span>
-            </h2>
-            <button
-              onClick={cargarDatos}
-              disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-              <select
-                value={filtros.estado || ''}
-                onChange={(e) => setFiltros({ ...filtros, estado: e.target.value as any || undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Todos</option>
-                <option value="activa">Activas</option>
-                <option value="revisada">Revisadas</option>
-                <option value="resuelta">Resueltas</option>
-              </select>
+          {/* Filtros */}
+          <div className="bg-white shadow-sm rounded-2xl p-0">
+            <div className="px-4 py-3 border-b border-gray-200/60">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                  <Filter size={18} className="text-slate-600" />
+                  <span>Filtros</span>
+                </h2>
+                <button
+                  onClick={cargarDatos}
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                >
+                  <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Severidad</label>
-              <select
-                value={filtros.severidad || ''}
-                onChange={(e) => setFiltros({ ...filtros, severidad: e.target.value as any || undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Todas</option>
-                <option value="critica">Crítica</option>
-                <option value="advertencia">Advertencia</option>
-                <option value="info">Info</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Métrica</label>
-              <select
-                value={filtros.metrica || ''}
-                onChange={(e) => setFiltros({ ...filtros, metrica: e.target.value || undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Todas</option>
-                {metricasDisponibles.map((m) => (
-                  <option key={m.valor} value={m.valor}>
-                    {m.etiqueta}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Fecha Inicio</label>
-              <input
-                type="date"
-                value={filtros.fechaInicio || ''}
-                onChange={(e) => setFiltros({ ...filtros, fechaInicio: e.target.value || undefined })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="bg-white rounded-xl shadow-lg">
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-8 px-6" aria-label="Tabs">
-              <button
-                className="py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600"
-              >
-                Alertas ({resumen.activas})
-              </button>
-              <button
-                className="py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                onClick={() => {
-                  // Cambiar a vista de thresholds
-                  const thresholdsSection = document.getElementById('thresholds-section');
-                  const alertasSection = document.getElementById('alertas-section');
-                  if (thresholdsSection && alertasSection) {
-                    alertasSection.style.display = 'none';
-                    thresholdsSection.style.display = 'block';
-                  }
-                }}
-              >
-                Thresholds ({thresholds.length})
-              </button>
-            </nav>
-          </div>
-
-          <div className="p-6">
-            {/* Sección de Alertas */}
-            <div id="alertas-section">
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
-                  <span className="ml-3 text-gray-600">Cargando alertas...</span>
+            <div className="p-4">
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <Filter size={16} className="inline mr-1" />
+                      Estado
+                    </label>
+                    <select
+                      value={filtros.estado || ''}
+                      onChange={(e) => setFiltros({ ...filtros, estado: e.target.value as any || undefined })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                    >
+                      <option value="">Todos</option>
+                      <option value="activa">Activas</option>
+                      <option value="revisada">Revisadas</option>
+                      <option value="resuelta">Resueltas</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <AlertTriangle size={16} className="inline mr-1" />
+                      Severidad
+                    </label>
+                    <select
+                      value={filtros.severidad || ''}
+                      onChange={(e) => setFiltros({ ...filtros, severidad: e.target.value as any || undefined })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                    >
+                      <option value="">Todas</option>
+                      <option value="critica">Crítica</option>
+                      <option value="advertencia">Advertencia</option>
+                      <option value="info">Info</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <TrendingUp size={16} className="inline mr-1" />
+                      Métrica
+                    </label>
+                    <select
+                      value={filtros.metrica || ''}
+                      onChange={(e) => setFiltros({ ...filtros, metrica: e.target.value || undefined })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                    >
+                      <option value="">Todas</option>
+                      {metricasDisponibles.map((m) => (
+                        <option key={m.valor} value={m.valor}>
+                          {m.etiqueta}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <Settings size={16} className="inline mr-1" />
+                      Fecha Inicio
+                    </label>
+                    <input
+                      type="date"
+                      value={filtros.fechaInicio || ''}
+                      onChange={(e) => setFiltros({ ...filtros, fechaInicio: e.target.value || undefined })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                    />
+                  </div>
                 </div>
-              ) : (
-                <ListaAlertas
-                  alertas={alertas}
-                  onMarcarRevisada={handleMarcarRevisada}
-                  onMarcarResuelta={handleMarcarResuelta}
-                />
+              </div>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div className="bg-white shadow-sm rounded-2xl p-0">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Secciones"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                <button
+                  onClick={() => setTabActivo('alertas')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    tabActivo === 'alertas'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Bell size={18} className={tabActivo === 'alertas' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Alertas ({resumen.activas})</span>
+                </button>
+                <button
+                  onClick={() => setTabActivo('thresholds')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    tabActivo === 'thresholds'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Settings size={18} className={tabActivo === 'thresholds' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Thresholds ({thresholds.length})</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="px-4 pb-4">
+              {/* Sección de Alertas */}
+              {tabActivo === 'alertas' && (
+                <div className="mt-6">
+                  {loading ? (
+                    <div className="bg-white shadow-sm rounded-2xl p-8 text-center">
+                      <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+                      <p className="text-gray-600">Cargando alertas...</p>
+                    </div>
+                  ) : (
+                    <ListaAlertas
+                      alertas={alertas}
+                      onMarcarRevisada={handleMarcarRevisada}
+                      onMarcarResuelta={handleMarcarResuelta}
+                    />
+                  )}
+                </div>
+              )}
+
+              {/* Sección de Thresholds */}
+              {tabActivo === 'thresholds' && (
+                <div className="mt-6">
+                  <ListaThresholds
+                    thresholds={thresholds}
+                    onEditar={handleEditarThreshold}
+                    onEliminar={handleEliminarThreshold}
+                    onToggleActivo={async (thresholdId, activa) => {
+                      await handleActualizarThreshold(thresholdId, { activa });
+                    }}
+                  />
+                </div>
               )}
             </div>
-
-            {/* Sección de Thresholds */}
-            <div id="thresholds-section" style={{ display: 'none' }}>
-              <ListaThresholds
-                thresholds={thresholds}
-                onEditar={handleEditarThreshold}
-                onEliminar={handleEliminarThreshold}
-                onToggleActivo={async (thresholdId, activa) => {
-                  await handleActualizarThreshold(thresholdId, { activa });
-                }}
-              />
-            </div>
           </div>
         </div>
-
-        {/* Modal de Gestión de Threshold */}
-        {mostrarModalThreshold && (
-          <ModalGestionThreshold
-            threshold={thresholdEditando}
-            metricasDisponibles={metricasDisponibles}
-            onGuardar={thresholdEditando ? (data) => handleActualizarThreshold(thresholdEditando._id!, data) : handleCrearThreshold}
-            onCerrar={() => {
-              setMostrarModalThreshold(false);
-              setThresholdEditando(null);
-            }}
-          />
-        )}
       </div>
+
+      {/* Modal de Gestión de Threshold */}
+      {mostrarModalThreshold && (
+        <ModalGestionThreshold
+          threshold={thresholdEditando}
+          metricasDisponibles={metricasDisponibles}
+          onGuardar={thresholdEditando ? (data) => handleActualizarThreshold(thresholdEditando._id!, data) : handleCrearThreshold}
+          onCerrar={() => {
+            setMostrarModalThreshold(false);
+            setThresholdEditando(null);
+          }}
+        />
+      )}
     </div>
   );
 }
+
 
 

@@ -75,8 +75,8 @@ export default function FormularioRegistroControl({
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-6">
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">
           Registrar Nuevo Control de Esterilización
         </h3>
 
@@ -91,7 +91,7 @@ export default function FormularioRegistroControl({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Tipo de Control */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Tipo de Control *
               </label>
               <select
@@ -103,7 +103,7 @@ export default function FormularioRegistroControl({
                     setResultado('negativo');
                   }
                 }}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               >
                 <option value="quimico">Químico</option>
                 <option value="biologico">Biológico</option>
@@ -120,28 +120,28 @@ export default function FormularioRegistroControl({
 
             {/* Fecha de Registro */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Fecha de Registro *
               </label>
               <input
                 type="date"
                 value={fechaRegistro}
                 onChange={(e) => setFechaRegistro(e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 required
               />
             </div>
 
             {/* Resultado */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Resultado *
               </label>
               <select
                 value={resultado}
                 onChange={(e) => setResultado(e.target.value as ResultadoControl)}
                 disabled={tipoControl === 'quimico'}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 required
               >
                 {tipoControl === 'biologico' && (
@@ -160,7 +160,7 @@ export default function FormularioRegistroControl({
 
             {/* Lote del Indicador */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Lote del Indicador *
               </label>
               <input
@@ -168,14 +168,14 @@ export default function FormularioRegistroControl({
                 value={loteIndicador}
                 onChange={(e) => setLoteIndicador(e.target.value)}
                 placeholder="Ej: LOTE-2024-001"
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 required
               />
             </div>
 
             {/* Fecha de Vencimiento del Indicador */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Fecha de Vencimiento del Indicador *
               </label>
               <input
@@ -183,7 +183,7 @@ export default function FormularioRegistroControl({
                 value={fechaVencimientoIndicador}
                 onChange={(e) => setFechaVencimientoIndicador(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 required
               />
             </div>
@@ -191,7 +191,7 @@ export default function FormularioRegistroControl({
 
           {/* Observaciones */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Observaciones
             </label>
             <textarea
@@ -199,23 +199,23 @@ export default function FormularioRegistroControl({
               onChange={(e) => setObservaciones(e.target.value)}
               rows={4}
               placeholder="Observaciones adicionales sobre el control..."
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           {/* Botones */}
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
             <button
               type="button"
               onClick={onCancelar}
-              className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
             >
               <X className="w-5 h-5" />
               <span>Cancelar</span>
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
             >
               <Save className="w-5 h-5" />
               <span>Guardar Control</span>

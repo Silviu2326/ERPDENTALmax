@@ -73,7 +73,7 @@ export default function SeccionAnamnesis({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
         Historia Médica (Anamnesis)
       </h3>
@@ -81,7 +81,7 @@ export default function SeccionAnamnesis({
       <div className="space-y-6">
         {/* Alergias */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Alergias
           </label>
           <div className="flex gap-2 mb-2">
@@ -95,15 +95,15 @@ export default function SeccionAnamnesis({
                   handleAddAlergia();
                 }
               }}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Penicilina, Ibuprofeno..."
             />
             <button
               type="button"
               onClick={handleAddAlergia}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={20} />
               Agregar
             </button>
           </div>
@@ -131,7 +131,7 @@ export default function SeccionAnamnesis({
 
         {/* Enfermedades Crónicas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Enfermedades Crónicas
           </label>
           <div className="flex gap-2 mb-2">
@@ -145,15 +145,15 @@ export default function SeccionAnamnesis({
                   handleAddEnfermedad();
                 }
               }}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Diabetes, Hipertensión..."
             />
             <button
               type="button"
               onClick={handleAddEnfermedad}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={20} />
               Agregar
             </button>
           </div>
@@ -181,7 +181,7 @@ export default function SeccionAnamnesis({
 
         {/* Medicación Actual */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Medicación Actual
           </label>
           <div className="flex gap-2 mb-2">
@@ -195,15 +195,15 @@ export default function SeccionAnamnesis({
                   handleAddMedicacion();
                 }
               }}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Aspirina 100mg, Metformina..."
             />
             <button
               type="button"
               onClick={handleAddMedicacion}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={20} />
               Agregar
             </button>
           </div>
@@ -231,14 +231,14 @@ export default function SeccionAnamnesis({
 
         {/* Notas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Notas Adicionales
           </label>
           <textarea
             value={datos.notas || ''}
             onChange={(e) => onChange({ ...datos, notas: e.target.value })}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             placeholder="Información médica adicional relevante..."
           />
         </div>
@@ -246,5 +246,6 @@ export default function SeccionAnamnesis({
     </div>
   );
 }
+
 
 

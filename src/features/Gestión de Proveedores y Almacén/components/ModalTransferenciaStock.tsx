@@ -169,10 +169,10 @@ export default function ModalTransferenciaStock({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-xl flex items-center justify-between">
+        <div className="sticky top-0 bg-blue-600 text-white p-6 rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-white/20 p-2 rounded-lg">
-              <ArrowRightLeft className="w-6 h-6" />
+              <ArrowRightLeft size={24} />
             </div>
             <div>
               <h2 className="text-2xl font-bold">Transferir Stock</h2>
@@ -186,7 +186,7 @@ export default function ModalTransferenciaStock({
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
             aria-label="Cerrar"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         </div>
 
@@ -200,7 +200,7 @@ export default function ModalTransferenciaStock({
 
           {/* Almacén Destino */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Almacén de Destino <span className="text-red-500">*</span>
             </label>
             <select
@@ -215,9 +215,9 @@ export default function ModalTransferenciaStock({
                   });
                 }
               }}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.almacenDestino ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 ring-1 ${
+                errors.almacenDestino ? 'ring-red-300' : 'ring-slate-300'
+              } focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5`}
             >
               <option value="">Seleccionar almacén de destino</option>
               {almacenesDisponibles.map((almacen) => (
@@ -234,11 +234,11 @@ export default function ModalTransferenciaStock({
 
           {/* Buscar y Agregar Productos */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Agregar Productos
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
               <input
                 type="text"
                 value={busquedaProducto}
@@ -248,7 +248,7 @@ export default function ModalTransferenciaStock({
                 }}
                 onFocus={() => setMostrarListaProductos(true)}
                 placeholder="Buscar producto por nombre, SKU o categoría..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
               />
               {mostrarListaProductos && productosFiltrados.length > 0 && (
                 <>
@@ -256,26 +256,26 @@ export default function ModalTransferenciaStock({
                     className="fixed inset-0 z-10"
                     onClick={() => setMostrarListaProductos(false)}
                   />
-                  <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute z-20 w-full mt-1 bg-white ring-1 ring-slate-300 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                     {productosFiltrados.map((producto) => (
                       <button
                         key={producto._id}
                         type="button"
                         onClick={() => handleAgregarProducto(producto)}
-                        className="w-full px-4 py-2 text-left hover:bg-blue-50 transition-colors flex items-center justify-between"
+                        className="w-full px-4 py-2 text-left hover:bg-slate-50 transition-colors flex items-center justify-between"
                       >
                         <div>
                           <div className="font-medium text-gray-900">{producto.nombre}</div>
                           {producto.sku && (
-                            <div className="text-sm text-gray-500">SKU: {producto.sku}</div>
+                            <div className="text-sm text-slate-600">SKU: {producto.sku}</div>
                           )}
                           {producto.stockDisponible !== undefined && (
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-slate-500">
                               Stock disponible: {producto.stockDisponible}
                             </div>
                           )}
                         </div>
-                        <Plus className="w-4 h-4 text-blue-600" />
+                        <Plus size={16} className="text-blue-600" />
                       </button>
                     ))}
                   </div>
@@ -300,21 +300,21 @@ export default function ModalTransferenciaStock({
                 {productosTransferencia.map((prod, index) => (
                   <div
                     key={prod.productoId}
-                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200"
+                    className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl ring-1 ring-slate-200"
                   >
                     <div className="flex-1">
                       <div className="font-medium text-gray-900">{prod.producto.nombre}</div>
                       {prod.producto.sku && (
-                        <div className="text-sm text-gray-500">SKU: {prod.producto.sku}</div>
+                        <div className="text-sm text-slate-600">SKU: {prod.producto.sku}</div>
                       )}
                       {prod.producto.stockDisponible !== undefined && (
-                        <div className="text-xs text-gray-400">
+                        <div className="text-xs text-slate-500">
                           Stock disponible: {prod.producto.stockDisponible}
                         </div>
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      <label className="text-sm text-gray-700">Cantidad:</label>
+                      <label className="text-sm text-slate-700">Cantidad:</label>
                       <input
                         type="number"
                         min="1"
@@ -323,9 +323,9 @@ export default function ModalTransferenciaStock({
                         onChange={(e) =>
                           handleCambiarCantidad(prod.productoId, parseInt(e.target.value) || 1)
                         }
-                        className={`w-24 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                          errors[`cantidad_${index}`] ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`w-24 rounded-xl bg-white text-slate-900 ring-1 ${
+                          errors[`cantidad_${index}`] ? 'ring-red-300' : 'ring-slate-300'
+                        } focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2`}
                       />
                     </div>
                     <button
@@ -334,7 +334,7 @@ export default function ModalTransferenciaStock({
                       className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       aria-label="Eliminar producto"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 ))}
@@ -343,11 +343,11 @@ export default function ModalTransferenciaStock({
           )}
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors text-sm font-medium"
               disabled={loading}
             >
               Cancelar
@@ -355,9 +355,9 @@ export default function ModalTransferenciaStock({
             <button
               type="submit"
               disabled={loading || productosTransferencia.length === 0}
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
             >
-              <Save className="w-4 h-4" />
+              <Save size={20} />
               {loading ? 'Transferiendo...' : 'Realizar Transferencia'}
             </button>
           </div>
@@ -366,5 +366,6 @@ export default function ModalTransferenciaStock({
     </div>
   );
 }
+
 
 

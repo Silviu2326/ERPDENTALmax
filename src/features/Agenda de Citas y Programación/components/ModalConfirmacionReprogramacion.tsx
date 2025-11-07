@@ -29,15 +29,15 @@ export default function ModalConfirmacionReprogramacion({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto ring-1 ring-slate-200">
+        <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-900">Confirmar Reprogramación Masiva</h2>
           <button
             onClick={onCerrar}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-slate-400 hover:text-slate-600 transition-colors"
             disabled={loading}
           >
-            <X className="w-6 h-6" />
+            <X size={24} />
           </button>
         </div>
 
@@ -45,9 +45,9 @@ export default function ModalConfirmacionReprogramacion({
           {resultado ? (
             <div className="space-y-4">
               {resultado.success ? (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-600" />
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle size={24} className="text-green-600" />
                     <div>
                       <h3 className="font-semibold text-green-900">Reprogramación completada</h3>
                       <p className="text-sm text-green-700 mt-1">
@@ -57,9 +57,9 @@ export default function ModalConfirmacionReprogramacion({
                   </div>
                 </div>
               ) : (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <div className="flex items-center space-x-3">
-                    <AlertTriangle className="w-6 h-6 text-red-600" />
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                  <div className="flex items-center gap-3">
+                    <AlertTriangle size={24} className="text-red-600" />
                     <div>
                       <h3 className="font-semibold text-red-900">Error en la reprogramación</h3>
                       <p className="text-sm text-red-700 mt-1">
@@ -71,7 +71,7 @@ export default function ModalConfirmacionReprogramacion({
               )}
 
               {resultado.errores > 0 && resultado.detallesErrores.length > 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                   <h4 className="font-semibold text-yellow-900 mb-2">Errores ({resultado.errores}):</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm text-yellow-800">
                     {resultado.detallesErrores.map((error, index) => (
@@ -83,10 +83,10 @@ export default function ModalConfirmacionReprogramacion({
                 </div>
               )}
 
-              <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+              <div className="flex justify-end gap-2 pt-4 border-t border-slate-200">
                 <button
                   onClick={onCerrar}
-                  className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                  className="inline-flex items-center px-6 py-2 bg-slate-200 text-slate-800 rounded-xl hover:bg-slate-300 transition-all font-medium"
                 >
                   Cerrar
                 </button>
@@ -94,9 +94,9 @@ export default function ModalConfirmacionReprogramacion({
             </div>
           ) : (
             <>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <div className="flex items-start space-x-3">
-                  <AlertTriangle className="w-5 h-5 text-blue-600 mt-0.5" />
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle size={20} className="text-blue-600 mt-0.5" />
                   <div>
                     <h3 className="font-semibold text-blue-900">Reprogramación masiva</h3>
                     <p className="text-sm text-blue-700 mt-1">
@@ -109,18 +109,18 @@ export default function ModalConfirmacionReprogramacion({
 
               <SelectorDeAccionMasiva datos={datos} onDatosChange={onDatosChange} />
 
-              <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200 mt-6">
+              <div className="flex justify-end gap-2 pt-6 border-t border-slate-200 mt-6">
                 <button
                   onClick={onCerrar}
                   disabled={loading}
-                  className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center px-6 py-2 bg-slate-200 text-slate-800 rounded-xl hover:bg-slate-300 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={onConfirmar}
                   disabled={!esValido || loading}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
@@ -139,5 +139,6 @@ export default function ModalConfirmacionReprogramacion({
     </div>
   );
 }
+
 
 

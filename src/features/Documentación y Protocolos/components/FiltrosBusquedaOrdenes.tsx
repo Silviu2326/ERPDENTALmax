@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Filter, X } from 'lucide-react';
+import { Filter, X, ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { EstadoOrden, FiltrosOrdenes } from '../api/ordenesLaboratorioApi';
 
 interface FiltrosBusquedaOrdenesProps {
@@ -42,142 +42,188 @@ export default function FiltrosBusquedaOrdenes({
   const tieneFiltrosActivos =
     filtros.estado || filtros.pacienteId || filtros.laboratorioId || filtros.fechaDesde || filtros.fechaHasta;
 
+  const filtrosActivosCount = [
+    filtros.estado,
+    filtros.pacienteId,
+    filtros.laboratorioId,
+    filtros.fechaDesde,
+    filtros.fechaHasta,
+  ].filter(Boolean).length;
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
-      <div className="flex items-center justify-between mb-4">
-        <button
-          onClick={() => setMostrarFiltros(!mostrarFiltros)}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Filter className="w-5 h-5" />
-          <span>Filtros</span>
-        </button>
+    <div className="bg-white shadow-sm rounded-xl">
+      <div className="space-y-4 p-4">
+        {/* Barra de búsqueda */}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-4">
+            {/* Input de búsqueda - placeholder para futura implementación */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="text"
+                placeholder="Buscar órdenes..."
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5 text-sm"
+                disabled
+              />
+            </div>
+            
+            {/* Botón de filtros */}
+            <button
+              onClick={() => setMostrarFiltros(!mostrarFiltros)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300"
+            >
+              <Filter size={18} />
+              <span>Filtros</span>
+              {filtrosActivosCount > 0 && (
+                <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-blue-600 rounded-full">
+                  {filtrosActivosCount}
+                </span>
+              )}
+              {mostrarFiltros ? (
+                <ChevronUp size={18} className="opacity-70" />
+              ) : (
+                <ChevronDown size={18} className="opacity-70" />
+              )}
+            </button>
+
+            {/* Botón limpiar */}
+            {tieneFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 ring-1 ring-slate-300"
+              >
+                <X size={18} />
+                <span>Limpiar</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Panel de filtros avanzados */}
+        {mostrarFiltros && (
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Filtro por Estado */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Estado
+                </label>
+                <select
+                  value={filtros.estado || ''}
+                  onChange={(e) => handleChange('estado', e.target.value || null)}
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                >
+                  <option value="">Todos</option>
+                  {ESTADOS.map((estado) => (
+                    <option key={estado} value={estado}>
+                      {estado}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Filtro por Fecha Desde */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Fecha Desde
+                </label>
+                <input
+                  type="date"
+                  value={filtros.fechaDesde || ''}
+                  onChange={(e) => handleChange('fechaDesde', e.target.value || null)}
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                />
+              </div>
+
+              {/* Filtro por Fecha Hasta */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Fecha Hasta
+                </label>
+                <input
+                  type="date"
+                  value={filtros.fechaHasta || ''}
+                  onChange={(e) => handleChange('fechaHasta', e.target.value || null)}
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Filtro por Laboratorio */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  ID Laboratorio
+                </label>
+                <input
+                  type="text"
+                  value={filtros.laboratorioId || ''}
+                  onChange={(e) => handleChange('laboratorioId', e.target.value || null)}
+                  placeholder="ID del laboratorio"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Resumen de resultados */}
         {tieneFiltrosActivos && (
-          <button
-            onClick={limpiarFiltros}
-            className="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-          >
-            <X className="w-4 h-4" />
-            <span>Limpiar</span>
-          </button>
+          <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+            <span>{filtrosActivosCount} filtro{filtrosActivosCount !== 1 ? 's' : ''} aplicado{filtrosActivosCount !== 1 ? 's' : ''}</span>
+            <div className="flex flex-wrap gap-2">
+              {filtros.estado && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Estado: {filtros.estado}
+                  <button
+                    onClick={() => handleChange('estado', null)}
+                    className="text-blue-600 hover:text-blue-800 transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              )}
+              {filtros.fechaDesde && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Desde: {new Date(filtros.fechaDesde).toLocaleDateString()}
+                  <button
+                    onClick={() => handleChange('fechaDesde', null)}
+                    className="text-green-600 hover:text-green-800 transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              )}
+              {filtros.fechaHasta && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Hasta: {new Date(filtros.fechaHasta).toLocaleDateString()}
+                  <button
+                    onClick={() => handleChange('fechaHasta', null)}
+                    className="text-green-600 hover:text-green-800 transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              )}
+              {filtros.laboratorioId && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                  Lab: {filtros.laboratorioId}
+                  <button
+                    onClick={() => handleChange('laboratorioId', null)}
+                    className="text-purple-600 hover:text-purple-800 transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              )}
+            </div>
+          </div>
         )}
       </div>
-
-      {mostrarFiltros && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
-          {/* Filtro por Estado */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Estado
-            </label>
-            <select
-              value={filtros.estado || ''}
-              onChange={(e) => handleChange('estado', e.target.value || null)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Todos</option>
-              {ESTADOS.map((estado) => (
-                <option key={estado} value={estado}>
-                  {estado}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Filtro por Fecha Desde */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Fecha Desde
-            </label>
-            <input
-              type="date"
-              value={filtros.fechaDesde || ''}
-              onChange={(e) => handleChange('fechaDesde', e.target.value || null)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-
-          {/* Filtro por Fecha Hasta */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Fecha Hasta
-            </label>
-            <input
-              type="date"
-              value={filtros.fechaHasta || ''}
-              onChange={(e) => handleChange('fechaHasta', e.target.value || null)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-
-          {/* Filtro por Laboratorio */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              ID Laboratorio
-            </label>
-            <input
-              type="text"
-              value={filtros.laboratorioId || ''}
-              onChange={(e) => handleChange('laboratorioId', e.target.value || null)}
-              placeholder="ID del laboratorio"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-        </div>
-      )}
-
-      {tieneFiltrosActivos && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <div className="flex flex-wrap gap-2">
-            {filtros.estado && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                Estado: {filtros.estado}
-                <button
-                  onClick={() => handleChange('estado', null)}
-                  className="ml-2 text-blue-600 hover:text-blue-800"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {filtros.fechaDesde && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Desde: {new Date(filtros.fechaDesde).toLocaleDateString()}
-                <button
-                  onClick={() => handleChange('fechaDesde', null)}
-                  className="ml-2 text-green-600 hover:text-green-800"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {filtros.fechaHasta && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                Hasta: {new Date(filtros.fechaHasta).toLocaleDateString()}
-                <button
-                  onClick={() => handleChange('fechaHasta', null)}
-                  className="ml-2 text-green-600 hover:text-green-800"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-            {filtros.laboratorioId && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                Lab: {filtros.laboratorioId}
-                <button
-                  onClick={() => handleChange('laboratorioId', null)}
-                  className="ml-2 text-purple-600 hover:text-purple-800"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </span>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
+
 
 

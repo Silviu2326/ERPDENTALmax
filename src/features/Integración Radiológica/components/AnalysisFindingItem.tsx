@@ -43,46 +43,49 @@ export default function AnalysisFindingItem({
 
   return (
     <div
-      className={`p-4 rounded-lg border-2 transition-all hover:shadow-md cursor-pointer ${
-        onCentrarVista ? 'hover:border-blue-400' : ''
+      className={`bg-white shadow-sm rounded-lg p-4 border transition-all ${
+        onCentrarVista ? 'hover:shadow-md cursor-pointer hover:ring-1 hover:ring-blue-200' : ''
       } border-gray-200`}
       onClick={handleClick}
     >
       <div className="flex items-start justify-between mb-2">
         <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
             <span
-              className={`px-2 py-1 rounded text-xs font-semibold ${tipoInfo.color}`}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${tipoInfo.color}`}
             >
               {tipoInfo.label}
             </span>
             <AnalysisConfidenceIndicator confianza={hallazgo.confianza} size="sm" />
           </div>
           {hallazgo.dienteAfectado && (
-            <div className="flex items-center gap-1 text-sm text-gray-600 mb-1">
-              <Tooth className="w-4 h-4" />
+            <div className="flex items-center gap-1.5 text-sm text-slate-700 mb-2">
+              <Tooth size={16} />
               <span className="font-medium">Diente: {hallazgo.dienteAfectado}</span>
             </div>
           )}
           {hallazgo.descripcion && (
-            <p className="text-sm text-gray-700 mt-2">{hallazgo.descripcion}</p>
+            <p className="text-sm text-gray-600 mt-2">{hallazgo.descripcion}</p>
           )}
         </div>
       </div>
       {onCentrarVista && (
-        <button
-          className="mt-2 text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClick();
-          }}
-        >
-          <MapPin className="w-3 h-3" />
-          <span>Centrar vista</span>
-        </button>
+        <div className="mt-3 pt-3 border-t border-gray-100">
+          <button
+            className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition-colors font-medium"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick();
+            }}
+          >
+            <MapPin size={14} />
+            <span>Centrar vista</span>
+          </button>
+        </div>
       )}
     </div>
   );
 }
+
 
 

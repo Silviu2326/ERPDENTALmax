@@ -24,27 +24,27 @@ export default function CenterSummaryCard({
   return (
     <div
       onClick={handleClick}
-      className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+      className="bg-white shadow-sm rounded-xl p-4 ring-1 ring-gray-200 hover:shadow-md transition-all cursor-pointer h-full flex flex-col"
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-lg">
-            <Building2 className="w-6 h-6 text-white" />
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <Building2 size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">{nombre}</h3>
-            <p className="text-sm text-gray-500">ID: {id.slice(0, 8)}...</p>
+            <h3 className="text-lg font-semibold text-gray-900">{nombre}</h3>
+            <p className="text-xs text-gray-500">ID: {id.slice(0, 8)}...</p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        <div className="bg-blue-50 rounded-lg p-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <DollarSign className="w-4 h-4 text-blue-600" />
-            <span className="text-xs font-semibold text-blue-600 uppercase">Facturación</span>
+      <div className="grid grid-cols-2 gap-4 mt-auto">
+        <div className="bg-blue-50 rounded-xl p-3 ring-1 ring-blue-200/50">
+          <div className="flex items-center gap-2 mb-2">
+            <DollarSign size={16} className="text-blue-600" />
+            <span className="text-xs font-medium text-blue-600">Facturación</span>
           </div>
-          <p className="text-xl font-bold text-gray-800">
+          <p className="text-lg font-bold text-gray-900">
             {new Intl.NumberFormat('es-ES', {
               style: 'currency',
               currency: 'EUR',
@@ -52,12 +52,12 @@ export default function CenterSummaryCard({
           </p>
         </div>
 
-        <div className="bg-green-50 rounded-lg p-4">
-          <div className="flex items-center space-x-2 mb-2">
-            <Users className="w-4 h-4 text-green-600" />
-            <span className="text-xs font-semibold text-green-600 uppercase">Pacientes Nuevos</span>
+        <div className="bg-green-50 rounded-xl p-3 ring-1 ring-green-200/50">
+          <div className="flex items-center gap-2 mb-2">
+            <Users size={16} className="text-green-600" />
+            <span className="text-xs font-medium text-green-600">Pacientes Nuevos</span>
           </div>
-          <p className="text-xl font-bold text-gray-800">{pacientesNuevos}</p>
+          <p className="text-lg font-bold text-gray-900">{pacientesNuevos}</p>
         </div>
       </div>
     </div>

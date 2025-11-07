@@ -129,17 +129,11 @@ export default function FormularioOrdenProtesis({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
-          {orden ? 'Editar Orden de Prótesis' : 'Nueva Orden de Prótesis'}
-        </h2>
-      </div>
-
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="space-y-6">
         {/* Paciente */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Paciente <span className="text-red-500">*</span>
           </label>
           <BuscadorPacientes
@@ -150,7 +144,7 @@ export default function FormularioOrdenProtesis({
 
         {/* Tratamiento */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tratamiento Asociado <span className="text-red-500">*</span>
           </label>
           <input
@@ -158,17 +152,17 @@ export default function FormularioOrdenProtesis({
             value={tratamientoId}
             onChange={(e) => setTratamientoId(e.target.value)}
             placeholder="ID del tratamiento"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             En producción, esto sería un selector de tratamientos del paciente
           </p>
         </div>
 
         {/* Laboratorio */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Laboratorio <span className="text-red-500">*</span>
           </label>
           <SelectorLaboratorio
@@ -179,13 +173,13 @@ export default function FormularioOrdenProtesis({
 
         {/* Tipo de Prótesis */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tipo de Prótesis <span className="text-red-500">*</span>
           </label>
           <select
             value={tipoProtesis}
             onChange={(e) => setTipoProtesis(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           >
             <option value="">Seleccionar tipo...</option>
@@ -199,13 +193,13 @@ export default function FormularioOrdenProtesis({
 
         {/* Material */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Material <span className="text-red-500">*</span>
           </label>
           <select
             value={material}
             onChange={(e) => setMaterial(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           >
             <option value="">Seleccionar material...</option>
@@ -219,13 +213,13 @@ export default function FormularioOrdenProtesis({
 
         {/* Color */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Color <span className="text-red-500">*</span>
           </label>
           <select
             value={color}
             onChange={(e) => setColor(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           >
             <option value="">Seleccionar color...</option>
@@ -239,20 +233,20 @@ export default function FormularioOrdenProtesis({
 
         {/* Fecha Prevista Entrega */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Fecha Prevista de Entrega
           </label>
           <input
             type="date"
             value={fechaPrevistaEntrega}
             onChange={(e) => setFechaPrevistaEntrega(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         {/* Notas Clínica */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Notas para Clínica
           </label>
           <textarea
@@ -260,14 +254,14 @@ export default function FormularioOrdenProtesis({
             onChange={(e) => setNotasClinica(e.target.value)}
             rows={4}
             placeholder="Instrucciones especiales o notas adicionales..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         {/* Archivos Adjuntos */}
         {orden?._id && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Archivos Adjuntos
             </label>
             <UploaderArchivosAdjuntos
@@ -280,25 +274,26 @@ export default function FormularioOrdenProtesis({
       </div>
 
       {/* Botones de acción */}
-      <div className="flex justify-end space-x-3 mt-6 pt-6 border-t border-gray-200">
+      <div className="flex justify-end gap-2 mt-6 pt-6 border-t border-gray-100">
         <button
           onClick={onCancelar}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50 ring-1 ring-slate-300"
         >
-          <X className="w-5 h-5" />
+          <X size={20} />
           <span>Cancelar</span>
         </button>
         <button
           onClick={handleGuardar}
           disabled={loading || !paciente || !laboratorio || !tipoProtesis || !material || !color}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         >
-          <Save className="w-5 h-5" />
+          <Save size={20} />
           <span>{loading ? 'Guardando...' : 'Guardar Orden'}</span>
         </button>
       </div>
     </div>
   );
 }
+
 
 

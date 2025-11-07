@@ -118,7 +118,7 @@ export default function GestionCategoriasModal({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Gestión de Categorías</h2>
+          <h2 className="text-xl font-bold text-gray-900">Gestión de Categorías</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -147,40 +147,40 @@ export default function GestionCategoriasModal({
                 setCategoriaEditando(null);
                 setFormData({ nombre: '', descripcion: '' });
               }}
-              className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
             >
-              <Plus className="w-5 h-5" />
+              <Plus size={20} />
               <span>Añadir Categoría</span>
             </button>
           )}
 
           {/* Formulario de categoría */}
           {mostrarFormulario && (
-            <form onSubmit={handleSubmit} className="bg-gray-50 p-4 rounded-lg space-y-4">
-              <h3 className="font-semibold text-gray-900">
+            <form onSubmit={handleSubmit} className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {categoriaEditando ? 'Editar Categoría' : 'Nueva Categoría'}
               </h3>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Nombre <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={formData.nombre}
                   onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   disabled={loading}
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Descripción
                 </label>
                 <textarea
                   value={formData.descripcion}
                   onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   rows={3}
                   disabled={loading}
                 />
@@ -189,7 +189,7 @@ export default function GestionCategoriasModal({
                 <button
                   type="button"
                   onClick={handleCancelar}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 bg-white hover:bg-slate-50 ring-1 ring-slate-200"
                   disabled={loading}
                 >
                   Cancelar
@@ -197,7 +197,7 @@ export default function GestionCategoriasModal({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Guardando...' : categoriaEditando ? 'Actualizar' : 'Crear'}
                 </button>
@@ -207,19 +207,22 @@ export default function GestionCategoriasModal({
 
           {/* Lista de categorías */}
           {loading && !categorias.length ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Cargando...</p>
             </div>
           ) : (
             <div className="space-y-2">
-              <h3 className="font-semibold text-gray-900 mb-3">Categorías Existentes</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Categorías Existentes</h3>
               {categorias.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">No hay categorías creadas</p>
+                <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+                  <p className="text-gray-600">No hay categorías creadas</p>
+                </div>
               ) : (
                 categorias.map((categoria) => (
                   <div
                     key={categoria._id}
-                    className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+                    className="flex items-center justify-between p-4 bg-white shadow-sm ring-1 ring-slate-200 rounded-xl hover:shadow-md transition-shadow"
                   >
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-900">{categoria.nombre}</h4>
@@ -241,14 +244,14 @@ export default function GestionCategoriasModal({
                           <span className="text-sm text-red-600">¿Eliminar?</span>
                           <button
                             onClick={() => categoria._id && handleEliminar(categoria._id)}
-                            className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
+                            className="px-3 py-1 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700 transition-colors"
                             disabled={loading}
                           >
                             Sí
                           </button>
                           <button
                             onClick={() => setMostrarConfirmarEliminar(null)}
-                            className="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300"
+                            className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition-colors"
                             disabled={loading}
                           >
                             No
@@ -275,5 +278,6 @@ export default function GestionCategoriasModal({
     </div>
   );
 }
+
 
 

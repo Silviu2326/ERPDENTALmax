@@ -74,20 +74,20 @@ export default function ModalVistaPreviaMensaje({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200/60">
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg ${getTipoColor()}`}>{getTipoIcon()}</div>
+            <div className={`p-2 rounded-xl ring-1 ${getTipoColor()}`}>{getTipoIcon()}</div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Vista Previa del Mensaje</h3>
-              <p className="text-sm text-gray-500">{plantilla.nombre}</p>
+              <p className="text-sm text-gray-600">{plantilla.nombre}</p>
             </div>
           </div>
           <button
             onClick={onCerrar}
-            className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
+            className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -97,14 +97,14 @@ export default function ModalVistaPreviaMensaje({
         <div className="p-6 space-y-6">
           {/* Simulación del mensaje según el tipo */}
           {plantilla.tipo === 'SMS' && (
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
-              <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
-                <div className="text-sm text-gray-500 mb-2">De: Clínica Dental</div>
+            <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+              <div className="bg-white rounded-xl shadow-sm p-4 ring-1 ring-slate-200">
+                <div className="text-sm text-slate-600 mb-2">De: Clínica Dental</div>
                 {asuntoProcesado && (
                   <div className="text-sm font-semibold text-gray-900 mb-2">{asuntoProcesado}</div>
                 )}
                 <div className="text-sm text-gray-900 whitespace-pre-wrap">{cuerpoProcesado}</div>
-                <div className="text-xs text-gray-400 mt-4 text-right">
+                <div className="text-xs text-slate-500 mt-4 text-right">
                   {cuerpoProcesado.length} caracteres
                 </div>
               </div>
@@ -112,11 +112,11 @@ export default function ModalVistaPreviaMensaje({
           )}
 
           {plantilla.tipo === 'Email' && (
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
-              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
                 <div className="mb-4">
-                  <div className="text-xs text-gray-500 mb-1">De: Clínica Dental</div>
-                  <div className="text-xs text-gray-500 mb-1">Para: {datos.nombre_paciente} {datos.apellidos_paciente}</div>
+                  <div className="text-xs text-slate-600 mb-1">De: Clínica Dental</div>
+                  <div className="text-xs text-slate-600 mb-1">Para: {datos.nombre_paciente} {datos.apellidos_paciente}</div>
                   {asuntoProcesado && (
                     <div className="text-sm font-semibold text-gray-900 mt-2">
                       Asunto: {asuntoProcesado}
@@ -131,10 +131,10 @@ export default function ModalVistaPreviaMensaje({
           )}
 
           {plantilla.tipo === 'WhatsApp' && (
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
-              <div className="bg-[#dcf8c6] rounded-lg shadow-sm p-4 border border-gray-200 max-w-[80%] ml-auto">
+            <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+              <div className="bg-[#dcf8c6] rounded-xl shadow-sm p-4 ring-1 ring-slate-200 max-w-[80%] ml-auto">
                 <div className="text-sm text-gray-900 whitespace-pre-wrap">{cuerpoProcesado}</div>
-                <div className="text-xs text-gray-500 mt-2 text-right">
+                <div className="text-xs text-slate-500 mt-2 text-right">
                   {new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
@@ -142,33 +142,33 @@ export default function ModalVistaPreviaMensaje({
           )}
 
           {/* Información de la plantilla */}
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
             <h4 className="text-sm font-semibold text-gray-900 mb-3">Información de la Plantilla</h4>
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
               <div>
-                <span className="text-gray-600">Tipo:</span>
+                <span className="text-slate-600">Tipo:</span>
                 <span className="ml-2 font-medium text-gray-900">{plantilla.tipo}</span>
               </div>
               <div>
-                <span className="text-gray-600">Estado:</span>
-                <span className={`ml-2 font-medium ${plantilla.activo ? 'text-green-600' : 'text-gray-600'}`}>
+                <span className="text-slate-600">Estado:</span>
+                <span className={`ml-2 font-medium ${plantilla.activo ? 'text-green-600' : 'text-slate-600'}`}>
                   {plantilla.activo ? 'Activa' : 'Inactiva'}
                 </span>
               </div>
-              <div className="col-span-2">
-                <span className="text-gray-600">Variables utilizadas:</span>
+              <div className="col-span-1 md:col-span-2">
+                <span className="text-slate-600">Variables utilizadas:</span>
                 <div className="mt-1 flex flex-wrap gap-2">
                   {plantilla.variables && plantilla.variables.length > 0 ? (
                     plantilla.variables.map((variable, index) => (
                       <code
                         key={index}
-                        className="px-2 py-1 bg-white border border-gray-300 rounded text-xs font-mono"
+                        className="px-2 py-1 bg-white rounded-lg ring-1 ring-slate-200 text-xs font-mono text-slate-700"
                       >
                         {variable}
                       </code>
                     ))
                   ) : (
-                    <span className="text-gray-400 text-xs">Ninguna</span>
+                    <span className="text-slate-400 text-xs">Ninguna</span>
                   )}
                 </div>
               </div>
@@ -177,10 +177,10 @@ export default function ModalVistaPreviaMensaje({
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end p-6 border-t border-gray-200">
+        <div className="flex justify-end p-6 border-t border-gray-200/60">
           <button
             onClick={onCerrar}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
           >
             Cerrar
           </button>
@@ -189,5 +189,6 @@ export default function ModalVistaPreviaMensaje({
     </div>
   );
 }
+
 
 

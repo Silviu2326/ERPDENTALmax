@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Liquidacion, obtenerHistorialLiquidaciones, FiltrosHistorialLiquidaciones } from '../api/liquidacionesApi';
-import { FileText, Eye, CheckCircle2, Clock, Send, AlertCircle } from 'lucide-react';
+import { FileText, Eye, CheckCircle2, Clock, Send, AlertCircle, Loader2, Package } from 'lucide-react';
 
 interface HistorialLiquidacionesProps {
   onVerDetalle: (liquidacionId: string) => void;
@@ -165,26 +165,20 @@ export default function HistorialLiquidaciones({
 
   if (loading && liquidaciones.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-200 rounded w-1/4"></div>
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 bg-gray-200 rounded"></div>
-            ))}
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <div className="p-4 bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
+      <div className="p-4 bg-gray-50 border-b border-gray-200">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <FileText className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-semibold text-gray-800">Historial de Liquidaciones</h3>
+          <div className="flex items-center gap-2">
+            <FileText size={20} className="text-gray-600" />
+            <h3 className="text-lg font-semibold text-gray-900">Historial de Liquidaciones</h3>
           </div>
         </div>
       </div>
@@ -196,10 +190,10 @@ export default function HistorialLiquidaciones({
       )}
 
       {liquidaciones.length === 0 ? (
-        <div className="p-12 text-center">
-          <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">No hay liquidaciones</h3>
-          <p className="text-gray-500">Aún no se han generado liquidaciones.</p>
+        <div className="p-8 text-center">
+          <Package size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay liquidaciones</h3>
+          <p className="text-gray-600 mb-4">Aún no se han generado liquidaciones.</p>
         </div>
       ) : (
         <>
@@ -247,18 +241,18 @@ export default function HistorialLiquidaciones({
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center space-x-2 ml-4">
+                  <div className="flex items-center gap-2 ml-4">
                     <button
                       onClick={() => onVerDetalle(liquidacion._id)}
-                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center space-x-1"
+                      className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-1 shadow-sm"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye size={16} />
                       <span>Ver</span>
                     </button>
                     {liquidacion.estado !== 'conciliada' && onConciliarPago && (
                       <button
                         onClick={() => onConciliarPago(liquidacion._id)}
-                        className="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                        className="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium shadow-sm"
                       >
                         Conciliar
                       </button>
@@ -271,21 +265,21 @@ export default function HistorialLiquidaciones({
 
           {/* Paginación */}
           {totalPages > 1 && (
-            <div className="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+            <div className="p-4 bg-white shadow-sm border-t border-gray-200 flex items-center justify-center gap-2">
               <button
                 onClick={() => setFiltros({ ...filtros, page: page - 1 })}
                 disabled={page === 1 || loading}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
               >
                 Anterior
               </button>
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-gray-700 font-medium">
                 Página {page} de {totalPages}
               </span>
               <button
                 onClick={() => setFiltros({ ...filtros, page: page + 1 })}
                 disabled={page === totalPages || loading}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
               >
                 Siguiente
               </button>

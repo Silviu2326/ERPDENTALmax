@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Package, RefreshCw, Plus, TrendingUp, AlertTriangle, DollarSign, BarChart3 } from 'lucide-react';
+import { Package, RefreshCw, Plus, AlertCircle } from 'lucide-react';
 import {
   obtenerMateriales,
   FiltrosMateriales,
@@ -9,6 +9,7 @@ import {
 import TablaMateriales from '../components/TablaMateriales';
 import FiltrosMaterialesComponent from '../components/FiltrosMateriales';
 import PaginacionTabla from '../components/PaginacionTabla';
+import MetricCards from '../components/MetricCards';
 
 interface ListadoMaterialesPageProps {
   onNuevoMaterial?: () => void;
@@ -40,7 +41,7 @@ export default function ListadoMaterialesPage({ onNuevoMaterial }: ListadoMateri
     { _id: '8', nombre: 'Ortodoncia' },
   ];
 
-  // Calcular estadísticas
+  // Calcular estadísticas para KPIs
   const estadisticas = useMemo(() => {
     const totalMateriales = todosLosMateriales.length;
     const valorTotalInventario = todosLosMateriales.reduce(
@@ -48,22 +49,17 @@ export default function ListadoMaterialesPage({ onNuevoMaterial }: ListadoMateri
       0
     );
     const materialesBajoStock = todosLosMateriales.filter(
-      (m) => m.stockActual < m.stockMinimo
+      (m) => m.stockActual < m.stockMinimo && m.stockActual > 0
     ).length;
     const materialesAgotados = todosLosMateriales.filter((m) => m.stockActual === 0).length;
-    const materialesPorCategoria = categorias.map((cat) => ({
-      categoria: cat.nombre,
-      cantidad: todosLosMateriales.filter((m) => m.categoria?._id === cat._id).length,
-    }));
 
     return {
       totalMateriales,
       valorTotalInventario,
       materialesBajoStock,
       materialesAgotados,
-      materialesPorCategoria,
     };
-  }, [todosLosMateriales, categorias]);
+  }, [todosLosMateriales]);
 
   const cargarMateriales = async () => {
     setLoading(true);
@@ -1142,210 +1138,130 @@ export default function ListadoMaterialesPage({ onNuevoMaterial }: ListadoMateri
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
-              <Package className="w-8 h-8 text-blue-600" />
-              <span>Listado de Materiales Dentales</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Gestiona y visualiza todos los materiales e insumos del inventario
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Package size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Listado de Materiales Dentales
+                </h1>
+                <p className="text-gray-600">
+                  Gestiona y visualiza todos los materiales e insumos del inventario
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={cargarMateriales}
-              disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300 disabled:opacity-50"
-            >
-              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-            {onNuevoMaterial && (
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex items-center gap-2">
               <button
-                onClick={onNuevoMaterial}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                onClick={cargarMateriales}
+                disabled={loading}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Plus className="w-5 h-5" />
-                <span>Nuevo Material</span>
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                Actualizar
               </button>
-            )}
+              {onNuevoMaterial && (
+                <button
+                  onClick={onNuevoMaterial}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium"
+                >
+                  <Plus size={20} />
+                  Nuevo Material
+                </button>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Estadísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Materiales</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{estadisticas.totalMateriales}</p>
-              </div>
-              <Package className="w-12 h-12 text-blue-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Valor Total Inventario</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
-                  ${estadisticas.valorTotalInventario.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                </p>
-              </div>
-              <DollarSign className="w-12 h-12 text-green-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Bajo Stock</p>
-                <p className="text-3xl font-bold text-orange-600 mt-2">{estadisticas.materialesBajoStock}</p>
-              </div>
-              <TrendingUp className="w-12 h-12 text-orange-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Agotados</p>
-                <p className="text-3xl font-bold text-red-600 mt-2">{estadisticas.materialesAgotados}</p>
-              </div>
-              <AlertTriangle className="w-12 h-12 text-red-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-
-        {/* Gráfico de distribución por categoría */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <BarChart3 className="w-6 h-6 text-blue-600" />
-              <h2 className="text-xl font-bold text-gray-900">Distribución por Categoría</h2>
-            </div>
-            <div className="text-sm text-gray-500">
-              Total: {estadisticas.totalMateriales} materiales
-            </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-            {estadisticas.materialesPorCategoria
-              .filter((item) => item.cantidad > 0)
-              .sort((a, b) => b.cantidad - a.cantidad)
-              .map((item, index) => {
-                const porcentaje = estadisticas.totalMateriales > 0 
-                  ? (item.cantidad / estadisticas.totalMateriales) * 100 
-                  : 0;
-                const colores = [
-                  'bg-blue-600',
-                  'bg-green-600',
-                  'bg-purple-600',
-                  'bg-orange-600',
-                  'bg-red-600',
-                  'bg-indigo-600',
-                  'bg-pink-600',
-                  'bg-yellow-600',
-                ];
-                return (
-                  <div key={index} className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <p className="text-sm font-medium text-gray-700 mb-3 truncate">{item.categoria}</p>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-gray-900">{item.cantidad}</span>
-                        <span className="text-xs text-gray-500">{porcentaje.toFixed(1)}%</span>
-                      </div>
-                      <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
-                        <div
-                          className={`${colores[index % colores.length]} h-3 rounded-full transition-all duration-500`}
-                          style={{ width: `${porcentaje}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-
-        {/* Estadísticas adicionales */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-indigo-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Valor Promedio por Material</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">
-                  ${estadisticas.totalMateriales > 0 
-                    ? (estadisticas.valorTotalInventario / estadisticas.totalMateriales).toLocaleString('es-ES', { minimumFractionDigits: 2 })
-                    : '0.00'}
-                </p>
-              </div>
-              <TrendingUp className="w-10 h-10 text-indigo-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-cyan-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Stock Promedio</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">
-                  {todosLosMateriales.length > 0
-                    ? Math.round(todosLosMateriales.reduce((sum, m) => sum + m.stockActual, 0) / todosLosMateriales.length)
-                    : 0}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Unidades promedio</p>
-              </div>
-              <Package className="w-10 h-10 text-cyan-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-teal-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Tasa de Rotación</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">
-                  {estadisticas.materialesBajoStock > 0
-                    ? ((estadisticas.materialesBajoStock / estadisticas.totalMateriales) * 100).toFixed(1)
-                    : '0.0'}%
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Materiales bajo stock</p>
-              </div>
-              <BarChart3 className="w-10 h-10 text-teal-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-
-        {/* Filtros */}
-        <FiltrosMaterialesComponent
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-          categorias={categorias}
-        />
-
-        {/* Error */}
-        {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        {/* Tabla */}
-        <TablaMateriales
-          materiales={materiales}
-          loading={loading}
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-          onMaterialEliminado={handleMaterialEliminado}
-        />
-
-        {/* Paginación */}
-        {!loading && materiales.length > 0 && (
-          <PaginacionTabla
-            page={filtros.page || 1}
-            totalPages={totalPages}
-            total={total}
-            limit={filtros.limit || 20}
-            onPageChange={handlePageChange}
+          {/* KPIs/Métricas */}
+          <MetricCards
+            data={[
+              {
+                id: 'total-materiales',
+                title: 'Total Materiales',
+                value: estadisticas.totalMateriales,
+                color: 'info',
+              },
+              {
+                id: 'valor-inventario',
+                title: 'Valor Total Inventario',
+                value: `$${estadisticas.valorTotalInventario.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'success',
+              },
+              {
+                id: 'bajo-stock',
+                title: 'Bajo Stock',
+                value: estadisticas.materialesBajoStock,
+                color: 'warning',
+              },
+              {
+                id: 'agotados',
+                title: 'Agotados',
+                value: estadisticas.materialesAgotados,
+                color: 'danger',
+              },
+            ]}
           />
-        )}
+
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <p className="text-red-700 flex-1">{error}</p>
+                <button
+                  onClick={() => setError(null)}
+                  className="text-red-600 hover:text-red-800 transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros */}
+          <FiltrosMaterialesComponent
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            categorias={categorias}
+          />
+
+          {/* Tabla */}
+          <TablaMateriales
+            materiales={materiales}
+            loading={loading}
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            onMaterialEliminado={handleMaterialEliminado}
+          />
+
+          {/* Paginación */}
+          {!loading && materiales.length > 0 && (
+            <PaginacionTabla
+              page={filtros.page || 1}
+              totalPages={totalPages}
+              total={total}
+              limit={filtros.limit || 20}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

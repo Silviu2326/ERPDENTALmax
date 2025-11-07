@@ -82,12 +82,13 @@ export default function BuscadorPacientesGlobal({
 
   return (
     <div className="relative" ref={contenedorRef}>
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
+        <Search size={16} className="inline mr-1" />
         Buscar Paciente (Todas las Sedes) *
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
+          <Search size={18} className="text-slate-400" />
         </div>
         <input
           type="text"
@@ -104,17 +105,17 @@ export default function BuscadorPacientesGlobal({
             }
           }}
           placeholder="Buscar por nombre, apellidos, DNI o teléfono..."
-          className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-10 py-2.5"
         />
         {loading && (
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-            <Loader2 className="h-5 w-5 text-gray-400 animate-spin" />
+            <Loader2 size={18} className="text-slate-400 animate-spin" />
           </div>
         )}
         {pacienteSeleccionado && !loading && (
           <button
             onClick={handleClear}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
           >
             <span className="text-xl">×</span>
           </button>
@@ -127,20 +128,20 @@ export default function BuscadorPacientesGlobal({
 
       {/* Lista de resultados */}
       {mostrarResultados && resultados.length > 0 && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+        <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg ring-1 ring-slate-200 max-h-60 overflow-y-auto">
           {resultados.map((paciente) => (
             <button
               key={paciente._id}
               onClick={() => handleSelectPaciente(paciente)}
-              className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0"
+              className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
             >
               <div className="flex items-center space-x-3">
-                <User className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                <User size={18} className="text-slate-400 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-900 truncate">
                     {paciente.nombre} {paciente.apellidos}
                   </p>
-                  <div className="flex items-center space-x-4 mt-1 text-sm text-gray-500">
+                  <div className="flex items-center space-x-4 mt-1 text-sm text-slate-600">
                     {paciente.documentoIdentidad && (
                       <span>DNI: {paciente.documentoIdentidad}</span>
                     )}
@@ -149,7 +150,7 @@ export default function BuscadorPacientesGlobal({
                     )}
                   </div>
                   <div className="flex items-center space-x-2 mt-1">
-                    <Building2 className="h-4 w-4 text-blue-500" />
+                    <Building2 size={16} className="text-blue-600" />
                     <span className="text-xs text-blue-600 font-medium">
                       Sede actual: {paciente.sede_actual.nombre}
                     </span>
@@ -163,8 +164,8 @@ export default function BuscadorPacientesGlobal({
 
       {/* Mensaje cuando no hay resultados */}
       {mostrarResultados && !loading && query.length >= 2 && resultados.length === 0 && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4">
-          <p className="text-sm text-gray-600">
+        <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg ring-1 ring-slate-200 p-4">
+          <p className="text-sm text-slate-600">
             No se encontraron pacientes con ese criterio en ninguna sede.
           </p>
         </div>
@@ -172,5 +173,6 @@ export default function BuscadorPacientesGlobal({
     </div>
   );
 }
+
 
 

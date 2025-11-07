@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { AlertTriangle, RefreshCw, Package, TrendingDown, Clock, CheckCircle } from 'lucide-react';
+import { AlertTriangle, RefreshCw, Package, TrendingDown, Clock, CheckCircle, Loader2 } from 'lucide-react';
 import {
   AlertaReabastecimiento,
   FiltrosAlertas,
@@ -10,6 +10,7 @@ import TablaAlertasReabastecimiento from '../components/TablaAlertasReabastecimi
 import FiltrosAlertas from '../components/FiltrosAlertas';
 import ModalAccionAlerta from '../components/ModalAccionAlerta';
 import PaginacionTabla from '../components/PaginacionTabla';
+import MetricCards from '../components/MetricCards';
 
 export default function AlertasReabastecimientoPage() {
   const [alertas, setAlertas] = useState<AlertaReabastecimiento[]>([]);
@@ -496,187 +497,189 @@ export default function AlertasReabastecimientoPage() {
   }, [alertas]);
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
-              <AlertTriangle className="w-8 h-8 text-red-600" />
-              <span>Alertas de Reabastecimiento</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Monitorea los productos que han alcanzado su nivel mínimo de stock y gestiona su reabastecimiento
-            </p>
-          </div>
-          <button
-            onClick={cargarAlertas}
-            disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300 disabled:opacity-50"
-          >
-            <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-            <span>Actualizar</span>
-          </button>
-        </div>
-
-        {/* Estadísticas de alertas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Alertas Nuevas</p>
-                <p className="text-3xl font-bold text-red-600 mt-2">{estadisticas.nuevas}</p>
-                <p className="text-xs text-gray-500 mt-1">Requieren atención</p>
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <AlertTriangle size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Alertas de Reabastecimiento
+                  </h1>
+                  <p className="text-gray-600">
+                    Monitorea los productos que han alcanzado su nivel mínimo de stock y gestiona su reabastecimiento
+                  </p>
+                </div>
               </div>
-              <AlertTriangle className="w-12 h-12 text-red-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">En Revisión</p>
-                <p className="text-3xl font-bold text-yellow-600 mt-2">{estadisticas.revisadas}</p>
-                <p className="text-xs text-gray-500 mt-1">Pendientes de acción</p>
-              </div>
-              <Clock className="w-12 h-12 text-yellow-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Resueltas</p>
-                <p className="text-3xl font-bold text-green-600 mt-2">{estadisticas.resueltas}</p>
-                <p className="text-xs text-gray-500 mt-1">Completadas</p>
-              </div>
-              <CheckCircle className="w-12 h-12 text-green-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Cantidad Sugerida</p>
-                <p className="text-3xl font-bold text-blue-600 mt-2">{estadisticas.cantidadSugeridaTotal}</p>
-                <p className="text-xs text-gray-500 mt-1">Total a pedir</p>
-              </div>
-              <Package className="w-12 h-12 text-blue-500 opacity-50" />
+              <button
+                onClick={cargarAlertas}
+                disabled={loading}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 shadow-sm ring-1 ring-slate-200 disabled:opacity-50"
+              >
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                <span>Actualizar</span>
+              </button>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Estadísticas adicionales de criticidad */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-lg shadow-md p-6 border-l-4 border-red-500">
-            <div className="flex items-center gap-3 mb-4">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
-              <h3 className="text-lg font-bold text-gray-900">Alertas Críticas</h3>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Productos Agotados</p>
-                <p className="text-3xl font-bold text-red-600">{estadisticas.alertasCriticas}</p>
-                <p className="text-xs text-gray-500 mt-1">Stock en cero</p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* KPIs/Métricas */}
+          <MetricCards
+            data={[
+              {
+                id: 'nuevas',
+                title: 'Alertas Nuevas',
+                value: estadisticas.nuevas,
+                color: 'danger',
+              },
+              {
+                id: 'revisadas',
+                title: 'En Revisión',
+                value: estadisticas.revisadas,
+                color: 'warning',
+              },
+              {
+                id: 'resueltas',
+                title: 'Resueltas',
+                value: estadisticas.resueltas,
+                color: 'success',
+              },
+              {
+                id: 'cantidad-sugerida',
+                title: 'Cantidad Sugerida',
+                value: estadisticas.cantidadSugeridaTotal,
+                color: 'info',
+              },
+            ]}
+          />
+
+          {/* Estadísticas adicionales de criticidad */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-red-200">
+              <div className="flex items-center gap-3 mb-4">
+                <AlertTriangle size={20} className="text-red-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Alertas Críticas</h3>
               </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Alertas Urgentes</p>
-                <p className="text-2xl font-bold text-orange-600">{estadisticas.alertasUrgentes}</p>
-                <p className="text-xs text-gray-500 mt-1">Stock &lt; 50% del mínimo</p>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-slate-700 mb-1">Productos Agotados</p>
+                  <p className="text-3xl font-bold text-red-600">{estadisticas.alertasCriticas}</p>
+                  <p className="text-xs text-slate-500 mt-1">Stock en cero</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700 mb-1">Alertas Urgentes</p>
+                  <p className="text-2xl font-bold text-orange-600">{estadisticas.alertasUrgentes}</p>
+                  <p className="text-xs text-slate-500 mt-1">Stock &lt; 50% del mínimo</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-200">
+              <div className="flex items-center gap-3 mb-4">
+                <TrendingDown size={20} className="text-orange-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Resumen de Stock Bajo</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-slate-700 mb-1">Stock Actual Total</p>
+                  <p className="text-2xl font-bold text-gray-900">{estadisticas.stockTotalBajo}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700 mb-1">Stock Mínimo Total</p>
+                  <p className="text-2xl font-bold text-orange-600">{estadisticas.stockMinimoTotal}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700 mb-1">Déficit Total</p>
+                  <p className="text-2xl font-bold text-red-600">{estadisticas.deficitTotal}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700 mb-1">% Déficit</p>
+                  <p className="text-2xl font-bold text-red-600">{estadisticas.porcentajeDeficit.toFixed(1)}%</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg shadow-md p-6 border-l-4 border-orange-500">
-            <div className="flex items-center gap-3 mb-4">
-              <TrendingDown className="w-6 h-6 text-orange-600" />
-              <h3 className="text-lg font-bold text-gray-900">Resumen de Stock Bajo</h3>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Stock Actual Total</p>
-                <p className="text-2xl font-bold text-gray-900">{estadisticas.stockTotalBajo}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Stock Mínimo Total</p>
-                <p className="text-2xl font-bold text-orange-600">{estadisticas.stockMinimoTotal}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Déficit Total</p>
-                <p className="text-2xl font-bold text-red-600">{estadisticas.deficitTotal}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">% Déficit</p>
-                <p className="text-2xl font-bold text-red-600">{estadisticas.porcentajeDeficit.toFixed(1)}%</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Distribución por categoría */}
-        {Object.keys(estadisticas.alertasPorCategoria).length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Package className="w-6 h-6 text-blue-600" />
-              <h3 className="text-lg font-bold text-gray-900">Alertas por Categoría</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {Object.entries(estadisticas.alertasPorCategoria).map(([categoria, datos]) => (
-                <div key={categoria} className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-200">
-                  <p className="text-sm font-medium text-gray-700 mb-3 truncate">{categoria}</p>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-gray-900">{datos.total}</span>
-                      <span className="text-xs text-gray-500">Total alertas</span>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-red-600">Nuevas: {datos.nuevas}</span>
-                        <span className="text-yellow-600">Revisadas: {datos.revisadas}</span>
-                        <span className="text-green-600">Resueltas: {datos.resueltas}</span>
+          {/* Distribución por categoría */}
+          {Object.keys(estadisticas.alertasPorCategoria).length > 0 && (
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Package size={20} className="text-blue-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Alertas por Categoría</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {Object.entries(estadisticas.alertasPorCategoria).map(([categoria, datos]) => (
+                  <div key={categoria} className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <p className="text-sm font-medium text-slate-700 mb-3 truncate">{categoria}</p>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-gray-900">{datos.total}</span>
+                        <span className="text-xs text-slate-500">Total alertas</span>
                       </div>
-                      <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                        <div className="flex h-2">
-                          <div
-                            className="bg-red-500 h-2"
-                            style={{ width: `${(datos.nuevas / datos.total) * 100}%` }}
-                          ></div>
-                          <div
-                            className="bg-yellow-500 h-2"
-                            style={{ width: `${(datos.revisadas / datos.total) * 100}%` }}
-                          ></div>
-                          <div
-                            className="bg-green-500 h-2"
-                            style={{ width: `${(datos.resueltas / datos.total) * 100}%` }}
-                          ></div>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-red-600">Nuevas: {datos.nuevas}</span>
+                          <span className="text-yellow-600">Revisadas: {datos.revisadas}</span>
+                          <span className="text-green-600">Resueltas: {datos.resueltas}</span>
+                        </div>
+                        <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                          <div className="flex h-2">
+                            <div
+                              className="bg-red-500 h-2"
+                              style={{ width: `${(datos.nuevas / datos.total) * 100}%` }}
+                            ></div>
+                            <div
+                              className="bg-yellow-500 h-2"
+                              style={{ width: `${(datos.revisadas / datos.total) * 100}%` }}
+                            ></div>
+                            <div
+                              className="bg-green-500 h-2"
+                              style={{ width: `${(datos.resueltas / datos.total) * 100}%` }}
+                            ></div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Filtros */}
-        <FiltrosAlertas filtros={filtros} onFiltrosChange={handleFiltrosChange} sedes={sedes} />
+          {/* Filtros */}
+          <FiltrosAlertas filtros={filtros} onFiltrosChange={handleFiltrosChange} sedes={sedes} />
 
-        {/* Error */}
-        {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        )}
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+              {error}
+            </div>
+          )}
 
-        {/* Tabla de Alertas */}
-        <TablaAlertasReabastecimiento
-          alertas={alertas}
-          loading={loading}
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-          onAccion={handleAccion}
-          onRefresh={cargarAlertas}
-        />
+          {/* Tabla de Alertas */}
+          <TablaAlertasReabastecimiento
+            alertas={alertas}
+            loading={loading}
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            onAccion={handleAccion}
+            onRefresh={cargarAlertas}
+          />
 
-        {/* Paginación */}
-        {totalPaginas > 1 && (
-          <div className="mt-4">
+          {/* Paginación */}
+          {totalPaginas > 1 && (
             <PaginacionTabla
               page={filtros.page || 1}
               totalPages={totalPaginas}
@@ -684,16 +687,16 @@ export default function AlertasReabastecimientoPage() {
               limit={filtros.limit || 10}
               onPageChange={handlePageChange}
             />
-          </div>
-        )}
+          )}
 
-        {/* Modal de Acción */}
-        <ModalAccionAlerta
-          alerta={alertaSeleccionada}
-          accion={accionModal}
-          onClose={handleCerrarModal}
-          onSuccess={handleSuccess}
-        />
+          {/* Modal de Acción */}
+          <ModalAccionAlerta
+            alerta={alertaSeleccionada}
+            accion={accionModal}
+            onClose={handleCerrarModal}
+            onSuccess={handleSuccess}
+          />
+        </div>
       </div>
     </div>
   );

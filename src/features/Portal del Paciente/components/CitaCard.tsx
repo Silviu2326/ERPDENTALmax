@@ -138,3 +138,4 @@ export default function CitaCard({ cita, esProxima = false, onCancelar }: CitaCa
 }
 
 
+

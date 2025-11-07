@@ -1,4 +1,4 @@
-import { FileText, Eye, Download, CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { FileText, Eye, Download, CheckCircle2, Clock, XCircle, Loader2 } from 'lucide-react';
 import { ConsentimientoPaciente } from '../api/consentimientosApi';
 
 interface TablaConsentimientosProps {
@@ -18,22 +18,22 @@ export default function TablaConsentimientos({
     switch (estado) {
       case 'firmado':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-            <CheckCircle2 className="w-3 h-3 mr-1" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            <CheckCircle2 size={12} />
             Firmado
           </span>
         );
       case 'pendiente':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-            <Clock className="w-3 h-3 mr-1" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+            <Clock size={12} />
             Pendiente
           </span>
         );
       case 'revocado':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-            <XCircle className="w-3 h-3 mr-1" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+            <XCircle size={12} />
             Revocado
           </span>
         );
@@ -58,17 +58,19 @@ export default function TablaConsentimientos({
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="p-8 text-center bg-white shadow-sm rounded-lg">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (consentimientos.length === 0) {
     return (
-      <div className="text-center py-12 bg-gray-50 rounded-lg">
-        <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-500">No hay consentimientos registrados</p>
+      <div className="p-8 text-center bg-white shadow-sm rounded-lg">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay consentimientos registrados</h3>
+        <p className="text-gray-600">Selecciona un paciente para ver sus consentimientos</p>
       </div>
     );
   }
@@ -100,7 +102,7 @@ export default function TablaConsentimientos({
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {consentimientos.map((consentimiento) => (
-            <tr key={consentimiento._id} className="hover:bg-gray-50">
+            <tr key={consentimiento._id} className="hover:bg-gray-50 transition-colors">
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm font-medium text-gray-900">
                   {consentimiento.plantilla_origen?.nombre || 'N/A'}
@@ -112,28 +114,28 @@ export default function TablaConsentimientos({
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">{getEstadoBadge(consentimiento.estado)}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                 {formatearFecha(consentimiento.fecha_generacion)}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                 {consentimiento.fecha_firma ? formatearFecha(consentimiento.fecha_firma) : '-'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div className="flex justify-end space-x-2">
+                <div className="flex justify-end gap-2">
                   <button
                     onClick={() => onVerConsentimiento(consentimiento._id!)}
-                    className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50"
+                    className="p-2 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-xl transition-colors"
                     title="Ver consentimiento"
                   >
-                    <Eye className="w-5 h-5" />
+                    <Eye size={20} />
                   </button>
                   {consentimiento.estado === 'firmado' && onDescargarPDF && (
                     <button
                       onClick={() => onDescargarPDF(consentimiento._id!)}
-                      className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50"
+                      className="p-2 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-xl transition-colors"
                       title="Descargar PDF"
                     >
-                      <Download className="w-5 h-5" />
+                      <Download size={20} />
                     </button>
                   )}
                 </div>

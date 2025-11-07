@@ -1,4 +1,4 @@
-import { BarChart3, TrendingUp } from 'lucide-react';
+import { BarChart3, TrendingUp, Loader2 } from 'lucide-react';
 import { SourceBreakdown } from '../api/funnelApi';
 
 export interface LeadSourceBreakdownChartProps {
@@ -12,20 +12,21 @@ export default function LeadSourceBreakdownChart({
 }: LeadSourceBreakdownChartProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-12 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando desglose por origen...</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando desglose por origen...</p>
       </div>
     );
   }
 
   if (sourceBreakdown.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-12 text-center border border-gray-200">
-        <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 text-lg font-medium">
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <BarChart3 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          No hay datos disponibles
+        </h3>
+        <p className="text-gray-600">
           No hay datos de origen disponibles
         </p>
       </div>
@@ -50,10 +51,10 @@ export default function LeadSourceBreakdownChart({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
-          <TrendingUp className="w-6 h-6 text-blue-600" />
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <TrendingUp size={24} className="text-blue-600" />
           <span>Desglose por Origen del Lead</span>
         </h2>
       </div>
@@ -66,13 +67,13 @@ export default function LeadSourceBreakdownChart({
           return (
             <div key={index} className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center gap-3">
                   <div
                     className={`w-4 h-4 rounded ${getColorForSource(index)}`}
                   />
                   <span className="font-medium text-gray-900">{item.source}</span>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center gap-4">
                   <span className="text-sm text-gray-600">
                     {percentage.toFixed(1)}%
                   </span>
@@ -104,5 +105,6 @@ export default function LeadSourceBreakdownChart({
     </div>
   );
 }
+
 
 

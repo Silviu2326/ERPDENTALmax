@@ -1,4 +1,4 @@
-import { X, Calendar, Clock, FileText, AlertCircle } from 'lucide-react';
+import { X, Calendar, Clock, FileText, AlertCircle, Loader2 } from 'lucide-react';
 import { ExcepcionDisponibilidad } from '../api/disponibilidadApi';
 
 interface ListaBloqueosHorariosProps {
@@ -14,17 +14,19 @@ export default function ListaBloqueosHorarios({
 }: ListaBloqueosHorariosProps) {
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (excepciones.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
-        <Calendar className="w-12 h-12 mx-auto mb-2 text-gray-400" />
-        <p>No hay excepciones o bloqueos registrados</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay excepciones o bloqueos</h3>
+        <p className="text-gray-600">No hay excepciones o bloqueos registrados</p>
       </div>
     );
   }
@@ -65,12 +67,12 @@ export default function ListaBloqueosHorarios({
         return (
           <div
             key={excepcion._id}
-            className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+            className="bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition-shadow ring-1 ring-gray-200"
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Calendar className="w-4 h-4 text-blue-600" />
+                  <Calendar size={16} className="text-blue-600" />
                   <span className="font-semibold text-gray-900">
                     {excepcion.diaCompleto
                       ? formatearFecha(fechaInicio)
@@ -80,8 +82,8 @@ export default function ListaBloqueosHorarios({
 
                 {!excepcion.diaCompleto && (
                   <div className="flex items-center space-x-2 mb-2 text-gray-600">
-                    <Clock className="w-4 h-4" />
-                    <span>
+                    <Clock size={16} />
+                    <span className="text-sm">
                       {formatearHora(fechaInicio)} - {formatearHora(fechaFin)}
                     </span>
                   </div>
@@ -89,7 +91,7 @@ export default function ListaBloqueosHorarios({
 
                 {excepcion.motivo && (
                   <div className="flex items-start space-x-2 text-gray-700">
-                    <FileText className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                    <FileText size={16} className="mt-0.5 flex-shrink-0" />
                     <span className="text-sm">{excepcion.motivo}</span>
                   </div>
                 )}
@@ -103,10 +105,10 @@ export default function ListaBloqueosHorarios({
 
               <button
                 onClick={() => excepcion._id && onEliminar(excepcion._id)}
-                className="ml-4 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="ml-4 p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                 title="Eliminar excepción"
               >
-                <X className="w-5 h-5" />
+                <X size={20} />
               </button>
             </div>
           </div>

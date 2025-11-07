@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, User, Search, AlertCircle } from 'lucide-react';
+import { Save, User, Search, AlertCircle, Loader2 } from 'lucide-react';
 import DienteEndoSelector from './DienteEndoSelector';
 import ConductometriaInputGroup from './ConductometriaInputGroup';
 import { crearPlanEndodoncia, actualizarPlanEndodoncia, obtenerPlanPorId, PlanEndodoncia, Conductometria } from '../api/planEndodonciaApi';
@@ -148,50 +148,50 @@ export default function EndoPlanForm({
 
   if (cargando) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
         <p className="text-gray-600">Cargando plan de endodoncia...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
-          <AlertCircle className="w-5 h-5" />
+        <div className="p-4 bg-red-50 ring-1 ring-red-200 rounded-xl flex items-center gap-2 text-red-700">
+          <AlertCircle size={20} className="text-red-600" />
           <span>{error}</span>
         </div>
       )}
 
       {/* Selección de paciente */}
-      <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <User className="w-5 h-5 text-gray-600" />
+            <User size={20} className="text-slate-600" />
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-1">
                 Paciente
               </label>
               {pacienteId ? (
                 <span className="text-gray-900 font-medium">ID: {pacienteId}</span>
               ) : (
-                <span className="text-gray-500 text-sm">No seleccionado</span>
+                <span className="text-slate-500 text-sm">No seleccionado</span>
               )}
             </div>
           </div>
           <button
             onClick={handleBuscarPaciente}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
           >
-            <Search className="w-4 h-4" />
+            <Search size={20} />
             <span>Buscar Paciente</span>
           </button>
         </div>
       </div>
 
       {/* Selector de diente */}
-      <div className="mb-6">
+      <div>
         <DienteEndoSelector
           dienteSeleccionado={dienteSeleccionado}
           onDienteSeleccionado={setDienteSeleccionado}
@@ -199,47 +199,47 @@ export default function EndoPlanForm({
       </div>
 
       {/* Diagnósticos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Diagnóstico Pulpar
           </label>
           <input
             type="text"
             value={diagnosticoPulpar}
             onChange={(e) => setDiagnosticoPulpar(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
             placeholder="Ej: Pulpitis irreversible"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Diagnóstico Periapical
           </label>
           <input
             type="text"
             value={diagnosticoPeriapical}
             onChange={(e) => setDiagnosticoPeriapical(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
             placeholder="Ej: Periodontitis apical aguda"
           />
         </div>
       </div>
 
       {/* Conductometría */}
-      <div className="mb-6">
+      <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">Conductometría</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Conductometría</h3>
           <button
             onClick={handleAgregarConducto}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm"
           >
             + Agregar Conducto
           </button>
         </div>
         {conductometria.length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-            <p className="text-gray-500">No hay conductos agregados. Haga clic en "Agregar Conducto" para comenzar.</p>
+          <div className="text-center py-8 bg-slate-50 rounded-2xl ring-1 ring-slate-200 border-2 border-dashed border-slate-300">
+            <p className="text-slate-600">No hay conductos agregados. Haga clic en "Agregar Conducto" para comenzar.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -257,15 +257,15 @@ export default function EndoPlanForm({
       </div>
 
       {/* Técnicas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Técnica de Instrumentación
           </label>
           <select
             value={tecnicaInstrumentacion}
             onChange={(e) => setTecnicaInstrumentacion(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
           >
             <option value="">Seleccione una técnica</option>
             <option value="manual">Manual</option>
@@ -274,13 +274,13 @@ export default function EndoPlanForm({
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Técnica de Obturación
           </label>
           <select
             value={tecnicaObturacion}
             onChange={(e) => setTecnicaObturacion(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
           >
             <option value="">Seleccione una técnica</option>
             <option value="condensacion-lateral">Condensación Lateral</option>
@@ -291,28 +291,28 @@ export default function EndoPlanForm({
       </div>
 
       {/* Medicación */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Medicación Intraconducto
         </label>
         <input
           type="text"
           value={medicacionIntraconducto}
           onChange={(e) => setMedicacionIntraconducto(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
           placeholder="Ej: Hidróxido de calcio"
         />
       </div>
 
       {/* Estado */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Estado del Plan
         </label>
         <select
           value={estado}
           onChange={(e) => setEstado(e.target.value as any)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
         >
           <option value="Planificado">Planificado</option>
           <option value="En Progreso">En Progreso</option>
@@ -321,15 +321,15 @@ export default function EndoPlanForm({
       </div>
 
       {/* Notas */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Notas Clínicas
         </label>
         <textarea
           value={notas}
           onChange={(e) => setNotas(e.target.value)}
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
           placeholder="Ingrese notas adicionales sobre el tratamiento..."
         />
       </div>
@@ -339,14 +339,15 @@ export default function EndoPlanForm({
         <button
           onClick={handleGuardar}
           disabled={guardando || !pacienteId || !dienteSeleccionado}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          <Save className="w-5 h-5" />
+          <Save size={20} />
           <span>{guardando ? 'Guardando...' : planId ? 'Actualizar Plan' : 'Guardar Plan'}</span>
         </button>
       </div>
     </div>
   );
 }
+
 
 

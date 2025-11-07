@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Clock, Loader2 } from 'lucide-react';
 import { HorarioProfesional, obtenerHorarios, FiltrosHorarios } from '../api/horariosApi';
 
 interface CalendarioHorariosProfesionalProps {
@@ -173,18 +173,19 @@ export default function CalendarioHorariosProfesional({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 p-6">
       {/* Header del calendario */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navegarFecha('anterior')}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
+            aria-label="Fecha anterior"
           >
-            <ChevronLeft className="w-5 h-5 text-gray-600" />
+            <ChevronLeft size={20} className="text-slate-600" />
           </button>
           <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-blue-600" />
+            <Calendar size={20} className="text-blue-600" />
             <h3 className="text-lg font-semibold text-gray-900">
               {vista === 'semana'
                 ? `Semana del ${dias[0].getDate()} de ${nombreMeses[dias[0].getMonth()]}`
@@ -193,14 +194,15 @@ export default function CalendarioHorariosProfesional({
           </div>
           <button
             onClick={() => navegarFecha('siguiente')}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
+            aria-label="Fecha siguiente"
           >
-            <ChevronRight className="w-5 h-5 text-gray-600" />
+            <ChevronRight size={20} className="text-slate-600" />
           </button>
         </div>
         <button
           onClick={irHoy}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
         >
           Hoy
         </button>
@@ -208,8 +210,9 @@ export default function CalendarioHorariosProfesional({
 
       {/* Calendario */}
       {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando...</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
@@ -233,18 +236,18 @@ export default function CalendarioHorariosProfesional({
                 return (
                   <div
                     key={index}
-                    className={`min-h-[120px] border rounded-lg p-2 ${
+                    className={`min-h-[120px] ring-1 rounded-xl p-2 transition-colors ${
                       esHoyDia
-                        ? 'bg-blue-50 border-blue-300'
+                        ? 'bg-blue-50 ring-blue-300'
                         : esMesActualDia
-                        ? 'bg-white border-gray-200'
-                        : 'bg-gray-50 border-gray-100'
-                    } ${onSlotClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
+                        ? 'bg-white ring-slate-200'
+                        : 'bg-slate-50 ring-slate-100'
+                    } ${onSlotClick ? 'cursor-pointer hover:bg-slate-50' : ''}`}
                     onClick={() => onSlotClick && onSlotClick(dia)}
                   >
                     <div
                       className={`text-sm font-medium mb-2 ${
-                        esHoyDia ? 'text-blue-700' : esMesActualDia ? 'text-gray-900' : 'text-gray-400'
+                        esHoyDia ? 'text-blue-700' : esMesActualDia ? 'text-gray-900' : 'text-slate-400'
                       }`}
                     >
                       {dia.getDate()}
@@ -257,11 +260,11 @@ export default function CalendarioHorariosProfesional({
                             e.stopPropagation();
                             onHorarioClick && onHorarioClick(horario);
                           }}
-                          className={`${getColorPorTipo(horario.tipo)} text-white text-xs px-2 py-1 rounded cursor-pointer transition-colors`}
+                          className={`${getColorPorTipo(horario.tipo)} text-white text-xs px-2 py-1 rounded-lg cursor-pointer transition-colors`}
                           title={`${getLabelPorTipo(horario.tipo)} - ${horario.profesional.nombre} ${horario.profesional.apellidos}`}
                         >
                           <div className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
+                            <Clock size={12} />
                             <span className="truncate">{getLabelPorTipo(horario.tipo)}</span>
                           </div>
                           {horario.notas && (
@@ -279,26 +282,27 @@ export default function CalendarioHorariosProfesional({
       )}
 
       {/* Leyenda */}
-      <div className="mt-6 flex flex-wrap gap-4 items-center justify-center pt-4 border-t border-gray-200">
+      <div className="mt-6 flex flex-wrap gap-4 items-center justify-center pt-4 border-t border-slate-200">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-blue-500 rounded"></div>
-          <span className="text-sm text-gray-600">Trabajo</span>
+          <div className="w-4 h-4 bg-blue-500 rounded-lg"></div>
+          <span className="text-sm text-slate-600">Trabajo</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-yellow-500 rounded"></div>
-          <span className="text-sm text-gray-600">Ausencia</span>
+          <div className="w-4 h-4 bg-yellow-500 rounded-lg"></div>
+          <span className="text-sm text-slate-600">Ausencia</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-green-500 rounded"></div>
-          <span className="text-sm text-gray-600">Vacaciones</span>
+          <div className="w-4 h-4 bg-green-500 rounded-lg"></div>
+          <span className="text-sm text-slate-600">Vacaciones</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-red-500 rounded"></div>
-          <span className="text-sm text-gray-600">Bloqueo</span>
+          <div className="w-4 h-4 bg-red-500 rounded-lg"></div>
+          <span className="text-sm text-slate-600">Bloqueo</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 

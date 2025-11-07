@@ -161,99 +161,117 @@ export default function GestionDisponibilidadPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
-            <Calendar className="w-6 h-6" />
-            <span>Gestión de Disponibilidad de Profesionales</span>
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Configure los horarios de trabajo recurrentes y gestione las excepciones (vacaciones, bajas, etc.)
-          </p>
-        </div>
-        {profesionalId && sedeId && (
-          <button
-            onClick={cargarDisponibilidad}
-            disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            <span>Actualizar</span>
-          </button>
-        )}
-      </div>
-
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="h-5 w-5" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <SelectorProfesionalSede
-          profesionalId={profesionalId}
-          sedeId={sedeId}
-          onProfesionalChange={setProfesionalId}
-          onSedeChange={setSedeId}
-        />
-      </div>
-
-      {profesionalId && sedeId && (
-        <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Formulario de Horarios Recurrentes */}
-            <div>
-              <FormularioHorarioProfesional
-                profesionalId={profesionalId}
-                sedeId={sedeId}
-                horariosExistentes={horariosRecurrentes}
-                onGuardar={handleGuardarHorario}
-                loading={loading}
-              />
-            </div>
-
-            {/* Vista de Calendario */}
-            <div>
-              <DisponibilidadCalendarView
-                horariosRecurrentes={horariosRecurrentes}
-                excepciones={excepciones}
-              />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Calendar size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Gestión de Disponibilidad de Profesionales
+                  </h1>
+                  <p className="text-gray-600">
+                    Configure los horarios de trabajo recurrentes y gestione las excepciones (vacaciones, bajas, etc.)
+                  </p>
+                </div>
+              </div>
+              {profesionalId && sedeId && (
+                <button
+                  onClick={cargarDisponibilidad}
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+              )}
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Gestión de Excepciones */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Excepciones y Bloqueos</h2>
-              <button
-                onClick={handleNuevaExcepcion}
-                disabled={loading}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Nueva Excepción</span>
-              </button>
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center space-x-2">
+              <AlertCircle size={20} />
+              <span>{error}</span>
             </div>
+          )}
 
-            <ListaBloqueosHorarios
-              excepciones={excepciones}
-              onEliminar={handleEliminarExcepcion}
-              loading={loading}
+          <div className="bg-white shadow-sm rounded-xl p-6">
+            <SelectorProfesionalSede
+              profesionalId={profesionalId}
+              sedeId={sedeId}
+              onProfesionalChange={setProfesionalId}
+              onSedeChange={setSedeId}
             />
           </div>
-        </>
-      )}
 
-      {!profesionalId || !sedeId ? (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
-          <Calendar className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-          <p className="text-gray-600 text-lg">
-            Seleccione un profesional y una sede para comenzar a gestionar la disponibilidad
-          </p>
+          {profesionalId && sedeId ? (
+            <>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Formulario de Horarios Recurrentes */}
+                <div>
+                  <FormularioHorarioProfesional
+                    profesionalId={profesionalId}
+                    sedeId={sedeId}
+                    horariosExistentes={horariosRecurrentes}
+                    onGuardar={handleGuardarHorario}
+                    loading={loading}
+                  />
+                </div>
+
+                {/* Vista de Calendario */}
+                <div>
+                  <DisponibilidadCalendarView
+                    horariosRecurrentes={horariosRecurrentes}
+                    excepciones={excepciones}
+                  />
+                </div>
+              </div>
+
+              {/* Gestión de Excepciones */}
+              <div className="bg-white shadow-sm rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-gray-900">Excepciones y Bloqueos</h2>
+                  <button
+                    onClick={handleNuevaExcepcion}
+                    disabled={loading}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Plus size={20} />
+                    <span>Nueva Excepción</span>
+                  </button>
+                </div>
+
+                <ListaBloqueosHorarios
+                  excepciones={excepciones}
+                  onEliminar={handleEliminarExcepcion}
+                  loading={loading}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un profesional y una sede</h3>
+              <p className="text-gray-600">
+                Para comenzar a gestionar la disponibilidad, seleccione un profesional y una sede
+              </p>
+            </div>
+          )}
         </div>
-      ) : null}
+      </div>
 
       {/* Modal de Gestión de Excepciones */}
       <ModalGestionExcepcion

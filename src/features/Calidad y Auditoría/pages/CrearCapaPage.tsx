@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { useAuth } from '../../../contexts/AuthContext';
+import { ArrowLeft, FileText } from 'lucide-react';
 import { crearCapa, NuevaCapa } from '../api/capasApi';
 import FormularioCapa from '../components/FormularioCapa';
 
@@ -13,7 +12,6 @@ export default function CrearCapaPage({
   onCapaCreada,
   onVolver,
 }: CrearCapaPageProps) {
-  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [clinicas, setClinicas] = useState<Array<{ _id: string; nombre: string }>>([]);
   const [responsables, setResponsables] = useState<
@@ -50,25 +48,45 @@ export default function CrearCapaPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Volver
-            </button>
-          )}
-          <h1 className="text-3xl font-bold text-gray-900">Nueva CAPA</h1>
-          <p className="text-gray-600 mt-2">
-            Crea un nuevo registro de Acción Correctiva y Preventiva
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div className="flex-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Nueva CAPA
+                </h1>
+                <p className="text-gray-600">
+                  Crea un nuevo registro de Acción Correctiva y Preventiva
+                </p>
+              </div>
 
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+              {/* Botón Volver */}
+              {onVolver && (
+                <button
+                  onClick={onVolver}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                >
+                  <ArrowLeft size={20} />
+                  <span>Volver</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="bg-white shadow-sm rounded-2xl p-6">
           <FormularioCapa
             onGuardar={handleGuardar}
             onCancelar={onVolver || (() => {})}

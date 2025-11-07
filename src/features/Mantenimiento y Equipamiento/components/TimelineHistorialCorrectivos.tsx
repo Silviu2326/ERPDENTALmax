@@ -29,18 +29,17 @@ export default function TimelineHistorialCorrectivos({
 
   if (correctivos.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="text-center text-gray-500 py-8">
-          <Wrench className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p className="text-sm">No hay acciones correctivas registradas</p>
-        </div>
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+        <Wrench size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay acciones correctivas</h3>
+        <p className="text-gray-600">No se han registrado acciones correctivas para este parte de avería</p>
       </div>
     );
   }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <h3 className="text-lg font-semibold text-gray-900 mb-6">
         Historial de Acciones Correctivas
       </h3>
       <div className="relative">
@@ -53,18 +52,18 @@ export default function TimelineHistorialCorrectivos({
             return (
               <div key={correctivo._id || index} className="relative pl-12">
                 {/* Punto del timeline */}
-                <div className="absolute left-0 top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-sm"></div>
+                <div className="absolute left-0 top-1 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-sm ring-1 ring-blue-200"></div>
 
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
                   <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Clock className="w-4 h-4" />
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
+                      <Clock size={16} className="opacity-70" />
                       <span>{fecha}</span>
-                      {hora && <span className="text-gray-400">• {hora}</span>}
+                      {hora && <span className="text-slate-400">• {hora}</span>}
                     </div>
                     {correctivo.realizadoPor && (
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <User className="w-4 h-4" />
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <User size={16} className="opacity-70" />
                         <span>{correctivo.realizadoPor}</span>
                       </div>
                     )}
@@ -77,10 +76,10 @@ export default function TimelineHistorialCorrectivos({
                   </div>
 
                   {(correctivo.costeMateriales || correctivo.horasTrabajo) && (
-                    <div className="flex flex-wrap gap-4 text-xs text-gray-600 pt-3 border-t border-gray-200">
+                    <div className="flex flex-wrap gap-4 text-xs text-slate-600 pt-3 border-t border-slate-200">
                       {correctivo.costeMateriales !== undefined && (
                         <div className="flex items-center gap-1">
-                          <DollarSign className="w-3 h-3" />
+                          <DollarSign size={12} className="opacity-70" />
                           <span>
                             Materiales: <span className="font-medium text-gray-900">€{correctivo.costeMateriales.toFixed(2)}</span>
                           </span>
@@ -88,7 +87,7 @@ export default function TimelineHistorialCorrectivos({
                       )}
                       {correctivo.horasTrabajo !== undefined && (
                         <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Clock size={12} className="opacity-70" />
                           <span>
                             Horas: <span className="font-medium text-gray-900">{correctivo.horasTrabajo}h</span>
                           </span>
@@ -105,5 +104,6 @@ export default function TimelineHistorialCorrectivos({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,6 @@
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { VisualizationType } from './VisualizationSelector';
+import { Loader2 } from 'lucide-react';
 
 interface ReportChartRendererProps {
   data: any[];
@@ -20,20 +21,18 @@ export default function ReportChartRenderer({
 }: ReportChartRendererProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-md border-2 border-blue-100 p-6">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md border-2 border-blue-100 p-6">
-        <div className="text-center py-12 text-gray-500">
-          <p>No hay datos para visualizar</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos para visualizar</h3>
+        <p className="text-gray-600">No se encontraron datos para generar el gráfico</p>
       </div>
     );
   }
@@ -105,8 +104,9 @@ export default function ReportChartRenderer({
       case 'pie':
         if (aggregation.length === 0) {
           return (
-            <div className="text-center py-12 text-gray-500">
-              <p>Los gráficos circulares requieren cálculos agregados</p>
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Configuración requerida</h3>
+              <p className="text-gray-600">Los gráficos circulares requieren cálculos agregados</p>
             </div>
           );
         }
@@ -144,26 +144,30 @@ export default function ReportChartRenderer({
 
       default:
         return (
-          <div className="text-center py-12 text-gray-500">
-            <p>Tipo de visualización no soportado</p>
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Tipo no soportado</h3>
+            <p className="text-gray-600">Tipo de visualización no soportado</p>
           </div>
         );
     }
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md border-2 border-blue-100 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-4">
       <div className="mb-4">
-        <h3 className="text-lg font-bold text-gray-800">Visualización</h3>
-        <p className="text-sm text-gray-500">
+        <h3 className="text-lg font-semibold text-gray-900">Visualización</h3>
+        <p className="text-sm text-gray-600">
           {visualizationType === 'bar' && 'Gráfico de Barras'}
           {visualizationType === 'line' && 'Gráfico de Líneas'}
           {visualizationType === 'pie' && 'Gráfico Circular'}
         </p>
       </div>
-      {renderChart()}
+      <div className="p-4">
+        {renderChart()}
+      </div>
     </div>
   );
 }
+
 
 

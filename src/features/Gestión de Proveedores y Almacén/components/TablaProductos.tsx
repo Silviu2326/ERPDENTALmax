@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Package, MoreVertical, Edit, Eye, Trash2, AlertTriangle } from 'lucide-react';
+import { Package, MoreVertical, Edit, Eye, Trash2, AlertTriangle, Loader2 } from 'lucide-react';
 import { Producto } from '../api/productosApi';
 
 interface TablaProductosProps {
@@ -47,8 +47,8 @@ function FilaProducto({
 
   return (
     <tr
-      className={`border-b border-gray-200 hover:bg-blue-50 transition-colors ${
-        stockBajo ? 'bg-red-50 hover:bg-red-100' : ''
+      className={`border-b border-slate-200 hover:bg-slate-50 transition-colors ${
+        stockBajo ? 'bg-red-50/50 hover:bg-red-50' : ''
       }`}
     >
       <td className="px-4 py-3">
@@ -57,45 +57,45 @@ function FilaProducto({
           <div className="flex flex-col">
             <button
               onClick={() => onVerDetalle(producto)}
-              className="text-left font-medium text-blue-600 hover:text-blue-800 hover:underline"
+              className="text-left font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
             >
               {producto.nombre}
             </button>
-            <span className="text-xs text-gray-500">SKU: {producto.sku}</span>
+            <span className="text-xs text-slate-500">SKU: {producto.sku}</span>
           </div>
         </div>
       </td>
       <td className="px-4 py-3">
         {getCategoriaBadge(producto.categoria)}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         {producto.proveedor?.nombreComercial || '-'}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-700 font-medium">
+      <td className="px-4 py-3 text-sm text-slate-700 font-medium">
         ${producto.costoUnitario.toFixed(2)}
       </td>
       <td className="px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className={`text-sm font-medium ${stockBajo ? 'text-red-600' : 'text-gray-700'}`}>
+          <span className={`text-sm font-medium ${stockBajo ? 'text-red-600' : 'text-slate-700'}`}>
             {producto.stockActual}
           </span>
-          <span className="text-xs text-gray-500">{producto.unidadMedida}</span>
+          <span className="text-xs text-slate-500">{producto.unidadMedida}</span>
           {stockBajo && (
             <AlertTriangle className="w-4 h-4 text-red-600" />
           )}
         </div>
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         {producto.stockMinimo} {producto.unidadMedida}
       </td>
       <td className="px-4 py-3">
         <div className="relative">
           <button
             onClick={() => setMostrarMenu(!mostrarMenu)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
             aria-label="Menú de acciones"
           >
-            <MoreVertical className="w-4 h-4 text-gray-600" />
+            <MoreVertical className="w-4 h-4 text-slate-600" />
           </button>
 
           {mostrarMenu && (
@@ -104,13 +104,13 @@ function FilaProducto({
                 className="fixed inset-0 z-10"
                 onClick={() => setMostrarMenu(false)}
               />
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20 py-1">
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg ring-1 ring-slate-200 z-20 py-1">
                 <button
                   onClick={() => {
                     onVerDetalle(producto);
                     setMostrarMenu(false);
                   }}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
                 >
                   <Eye className="w-4 h-4" />
                   Ver detalle
@@ -120,12 +120,12 @@ function FilaProducto({
                     onEditar(producto);
                     setMostrarMenu(false);
                   }}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
                 >
                   <Edit className="w-4 h-4" />
                   Editar
                 </button>
-                <div className="border-t border-gray-200 my-1" />
+                <div className="border-t border-slate-200 my-1" />
                 <button
                   onClick={() => {
                     if (producto._id && window.confirm(`¿Está seguro de que desea eliminar el producto "${producto.nombre}"?`)) {
@@ -133,7 +133,7 @@ function FilaProducto({
                     }
                     setMostrarMenu(false);
                   }}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                   Eliminar
@@ -156,35 +156,36 @@ export default function TablaProductos({
 }: TablaProductosProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <p className="mt-4 text-gray-600">Cargando productos...</p>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando productos...</p>
       </div>
     );
   }
 
   if (productos.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600">No se encontraron productos</p>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron productos</h3>
+        <p className="text-gray-600">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Producto</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Categoría</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Proveedor</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Costo Unitario</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Stock Actual</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Stock Mínimo</th>
-              <th className="px-4 py-3 text-center text-sm font-semibold">Acciones</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Producto</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Categoría</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Proveedor</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Costo Unitario</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Stock Actual</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Stock Mínimo</th>
+              <th className="px-4 py-3 text-center text-sm font-semibold text-slate-700">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -203,5 +204,6 @@ export default function TablaProductos({
     </div>
   );
 }
+
 
 

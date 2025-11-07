@@ -62,16 +62,16 @@ export default function ConductoRadicularInput({
   };
 
   return (
-    <div className="bg-white rounded-lg border-2 border-gray-200 p-5 shadow-sm hover:border-blue-300 transition-colors">
+    <div className="bg-white shadow-sm rounded-2xl p-4 ring-1 ring-slate-200 hover:ring-blue-300 transition-all">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="font-semibold text-gray-800">
+        <h4 className="text-lg font-semibold text-gray-900">
           Conducto {index + 1}
         </h4>
         {canRemove && (
           <button
             type="button"
             onClick={() => onRemove(index)}
-            className="p-1.5 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
+            className="p-1.5 rounded-xl hover:bg-red-50 text-red-600 transition-colors"
             aria-label="Eliminar conducto"
           >
             <Trash2 className="w-4 h-4" />
@@ -82,13 +82,13 @@ export default function ConductoRadicularInput({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Nombre del conducto */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre del Conducto <span className="text-red-500">*</span>
           </label>
           <select
             value={conducto.nombreConducto}
             onChange={(e) => handleChange('nombreConducto', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           >
             {OPCIONES_CONDUCTO.map((opcion) => (
@@ -106,14 +106,14 @@ export default function ConductoRadicularInput({
                 // Aquí podrías guardar el valor personalizado si lo necesitas
               }}
               placeholder="Especificar nombre del conducto"
-              className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           )}
         </div>
 
         {/* Longitud de trabajo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Longitud de Trabajo (mm) <span className="text-red-500">*</span>
           </label>
           <input
@@ -123,14 +123,14 @@ export default function ConductoRadicularInput({
             max="50"
             value={conducto.longitudTrabajo || ''}
             onChange={(e) => handleChange('longitudTrabajo', parseFloat(e.target.value) || 0)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           />
         </div>
 
         {/* Instrumento apical */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Instrumento Apical (Última Lima) <span className="text-red-500">*</span>
           </label>
           <input
@@ -138,14 +138,14 @@ export default function ConductoRadicularInput({
             value={conducto.instrumentoApical || ''}
             onChange={(e) => handleChange('instrumentoApical', e.target.value)}
             placeholder="Ej: K-File 25, ProTaper F2"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           />
         </div>
 
         {/* Cono maestro */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Cono Maestro <span className="text-red-500">*</span>
           </label>
           <input
@@ -153,20 +153,20 @@ export default function ConductoRadicularInput({
             value={conducto.conoMaestro || ''}
             onChange={(e) => handleChange('conoMaestro', e.target.value)}
             placeholder="Ej: 25, 30, 35"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           />
         </div>
 
         {/* Técnica de obturación */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Técnica de Obturación
           </label>
           <select
             value={conducto.tecnicaObturacion || ''}
             onChange={(e) => handleChange('tecnicaObturacion', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           >
             <option value="">Seleccionar...</option>
             {TECNICAS_OBTURACION.map((tecnica) => (
@@ -183,20 +183,20 @@ export default function ConductoRadicularInput({
                 setTecnicaOtro(e.target.value);
               }}
               placeholder="Especificar técnica"
-              className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           )}
         </div>
 
         {/* Sellador */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Sellador
           </label>
           <select
             value={conducto.sellador || ''}
             onChange={(e) => handleChange('sellador', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           >
             <option value="">Seleccionar...</option>
             {SELLADORES.map((sellador) => (
@@ -213,14 +213,14 @@ export default function ConductoRadicularInput({
                 setSelladorOtro(e.target.value);
               }}
               placeholder="Especificar sellador"
-              className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           )}
         </div>
 
         {/* Observaciones del conducto */}
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Observaciones del Conducto
           </label>
           <textarea
@@ -228,12 +228,13 @@ export default function ConductoRadicularInput({
             onChange={(e) => handleChange('observacionesConducto', e.target.value)}
             placeholder="Ej: Conducto calcificado, curvatura pronunciada, perforación, etc."
             rows={2}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       </div>
     </div>
   );
 }
+
 
 

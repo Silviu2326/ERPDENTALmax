@@ -51,8 +51,8 @@ export default function FaseProtesicaTimeline({
     <div className="space-y-6">
       {/* Timeline del historial */}
       {historial.length > 0 && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Historial del Protocolo</h3>
+        <div className="bg-white shadow-sm rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Historial del Protocolo</h3>
           <div className="space-y-4">
             {historial.map((accion, index) => (
               <div key={index} className="flex items-start gap-4">
@@ -78,37 +78,37 @@ export default function FaseProtesicaTimeline({
       )}
 
       {/* Formulario de fase protésica */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Fase Protésica</h3>
+      <form onSubmit={handleSubmit} className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Fase Protésica</h3>
 
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="fechaColocacion" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="fechaColocacion" className="block text-sm font-medium text-slate-700 mb-2">
                 Fecha de Colocación
               </label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
                 <input
                   type="date"
                   id="fechaColocacion"
                   value={fechaColocacion}
                   onChange={(e) => setFechaColocacion(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="tipoProtesis" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="tipoProtesis" className="block text-sm font-medium text-slate-700 mb-2">
                 Tipo de Prótesis
               </label>
               <select
                 id="tipoProtesis"
                 value={tipoProtesis}
                 onChange={(e) => setTipoProtesis(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 pr-3 py-2.5 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               >
                 <option value="">Seleccione...</option>
@@ -120,7 +120,7 @@ export default function FaseProtesicaTimeline({
           </div>
 
           <div>
-            <label htmlFor="material" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="material" className="block text-sm font-medium text-slate-700 mb-2">
               Material
             </label>
             <input
@@ -128,14 +128,14 @@ export default function FaseProtesicaTimeline({
               id="material"
               value={material}
               onChange={(e) => setMaterial(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
               placeholder="Ej: Zirconia, Acrílico, PMMA..."
               required
             />
           </div>
 
           <div>
-            <label htmlFor="notas" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="notas" className="block text-sm font-medium text-slate-700 mb-2">
               Notas y Ajustes
             </label>
             <textarea
@@ -143,16 +143,16 @@ export default function FaseProtesicaTimeline({
               value={notas}
               onChange={(e) => setNotas(e.target.value)}
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
               placeholder="Registre ajustes realizados, oclusión, estética, y cualquier observación relevante..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Archivos (Fotos, Escaneos, Diseños)
             </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+            <div className="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors bg-slate-50">
               <input
                 type="file"
                 id="archivos-protesica"
@@ -177,7 +177,7 @@ export default function FaseProtesicaTimeline({
                 {archivosPreview.map((url, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between bg-blue-50 p-3 rounded-lg"
+                    className="flex items-center justify-between bg-blue-50 p-3 rounded-xl ring-1 ring-blue-200"
                   >
                     <div className="flex items-center gap-2">
                       <FileText className="w-4 h-4 text-blue-500" />
@@ -186,7 +186,7 @@ export default function FaseProtesicaTimeline({
                     <button
                       type="button"
                       onClick={() => handleEliminarArchivoPreview(index)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 hover:text-red-700 transition-colors"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -197,21 +197,21 @@ export default function FaseProtesicaTimeline({
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="flex justify-end gap-2 mt-6">
           {onCancelar && (
             <button
               type="button"
               onClick={onCancelar}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="px-4 py-2 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all"
             >
               Cancelar
             </button>
           )}
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm"
           >
-            <CheckCircle className="w-4 h-4" />
+            <CheckCircle size={18} />
             Finalizar Fase Protésica
           </button>
         </div>

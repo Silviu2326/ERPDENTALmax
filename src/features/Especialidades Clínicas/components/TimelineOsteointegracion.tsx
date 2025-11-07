@@ -49,18 +49,18 @@ export default function TimelineOsteointegracion({ mediciones }: TimelineOsteoin
 
   if (medicionesOrdenadas.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Historial de Mediciones</h3>
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Historial de Mediciones</h3>
         <div className="flex items-center justify-center h-32 text-gray-500">
-          <p>No hay mediciones registradas</p>
+          <p className="text-gray-600">No hay mediciones registradas</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-6">Historial de Mediciones</h3>
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-6">Historial de Mediciones</h3>
       <div className="relative">
         {/* Línea vertical */}
         <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
@@ -79,19 +79,19 @@ export default function TimelineOsteointegracion({ mediciones }: TimelineOsteoin
 
                 {/* Contenido */}
                 <div className="flex-1 pb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="bg-gray-50 rounded-xl ring-1 ring-gray-200 p-4">
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${colorClass}`}>
+                          <span className={`px-2 py-1 rounded-lg text-xs font-medium ${colorClass}`}>
                             {medicion.tipoMedicion}
                           </span>
-                          <span className="text-sm font-semibold text-gray-800">
+                          <span className="text-sm font-semibold text-gray-900">
                             Valor: {medicion.valor}
                           </span>
                         </div>
                         <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
-                          <Calendar className="w-3 h-3" />
+                          <Calendar size={16} className="inline mr-1" />
                           {formatearFecha(medicion.fecha)}
                         </div>
                       </div>
@@ -111,5 +111,6 @@ export default function TimelineOsteointegracion({ mediciones }: TimelineOsteoin
     </div>
   );
 }
+
 
 

@@ -124,12 +124,12 @@ export default function FormularioProcesarPago({
   const cambio = calcularCambio();
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 space-y-6">
+    <div className="bg-white shadow-sm rounded-xl p-6 space-y-6">
       <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-        <h3 className="text-xl font-semibold text-gray-900">Procesar Pago</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Procesar Pago</h3>
         <button
           onClick={onCancelar}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           disabled={loading}
         >
           <X className="w-5 h-5 text-gray-500" />
@@ -137,7 +137,7 @@ export default function FormularioProcesarPago({
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3">
           <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-red-800">{error}</p>
         </div>
@@ -153,7 +153,7 @@ export default function FormularioProcesarPago({
 
         {/* Monto */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Monto a Pagar (€) *
           </label>
           <input
@@ -163,7 +163,7 @@ export default function FormularioProcesarPago({
             value={montoManual}
             onChange={(e) => setMontoManual(e.target.value)}
             disabled={loading || !metodoPago}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-gray-100 disabled:cursor-not-allowed"
             placeholder="0.00"
           />
           {totalSeleccionado > 0 && (
@@ -176,7 +176,7 @@ export default function FormularioProcesarPago({
         {/* Monto recibido (solo para efectivo) */}
         {metodoPago === 'Efectivo' && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Monto Recibido (€) *
             </label>
             <input
@@ -186,7 +186,7 @@ export default function FormularioProcesarPago({
               value={montoRecibido}
               onChange={(e) => setMontoRecibido(e.target.value)}
               disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-gray-100 disabled:cursor-not-allowed"
               placeholder="0.00"
             />
             {cambio > 0 && (
@@ -201,7 +201,7 @@ export default function FormularioProcesarPago({
         {metodoPago === 'Tarjeta' && (
           <div>
             {creandoIntent ? (
-              <div className="bg-gray-50 rounded-lg p-6 flex items-center justify-center">
+              <div className="bg-slate-50 rounded-xl p-6 flex items-center justify-center">
                 <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
                 <span className="ml-2 text-gray-600">Inicializando pasarela de pago...</span>
               </div>
@@ -214,7 +214,7 @@ export default function FormularioProcesarPago({
                 currency="EUR"
               />
             ) : (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                 <p className="text-sm text-yellow-800">
                   Por favor, ingresa un monto válido para continuar con el pago con tarjeta.
                 </p>
@@ -225,7 +225,7 @@ export default function FormularioProcesarPago({
 
         {/* Notas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Notas (opcional)
           </label>
           <textarea
@@ -233,25 +233,25 @@ export default function FormularioProcesarPago({
             onChange={(e) => setNotas(e.target.value)}
             disabled={loading}
             rows={3}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-gray-100 disabled:cursor-not-allowed"
             placeholder="Notas adicionales sobre el pago..."
           />
         </div>
 
         {/* Botones de acción */}
         {metodoPago !== 'Tarjeta' && (
-          <div className="flex space-x-3 pt-4 border-t border-gray-200">
+          <div className="flex gap-2 pt-4 border-t border-gray-100">
             <button
               onClick={onCancelar}
               disabled={loading}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
               Cancelar
             </button>
             <button
               onClick={() => handleProcesarPago()}
               disabled={loading || !metodoPago || !pacienteId || tratamientosSeleccionados.length === 0}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-sm"
             >
               {loading ? (
                 <>
@@ -271,5 +271,6 @@ export default function FormularioProcesarPago({
     </div>
   );
 }
+
 
 

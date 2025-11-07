@@ -476,90 +476,103 @@ export default function NominasSalariosPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <DollarSign className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Nóminas y Salarios</h1>
-              <p className="text-gray-600 mt-1">
-                Gestión y cálculo de nóminas para empleados de la clínica
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <DollarSign size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Nóminas y Salarios
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión y cálculo de nóminas para empleados de la clínica
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={cargarNominas}
+                disabled={loading}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-blue-600/20 font-medium"
+              >
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                <span>Actualizar</span>
+              </button>
             </div>
           </div>
-          <button
-            onClick={cargarNominas}
-            disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            <span>Actualizar</span>
-          </button>
         </div>
+      </div>
 
-        {/* Panel de Control */}
-        <PanelControlNominas onCalcularCompletado={handleActualizarDespuesCambio} />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Panel de Control */}
+          <PanelControlNominas onCalcularCompletado={handleActualizarDespuesCambio} />
 
-        {/* Filtros */}
-        <FiltroPeriodoNomina
-          mes={filtros.mes}
-          anio={filtros.anio}
-          empleadoId={filtros.empleadoId}
-          estado={filtros.estado}
-          onMesChange={(mes) => handleFiltroChange({ mes })}
-          onAnioChange={(anio) => handleFiltroChange({ anio })}
-          onEmpleadoChange={(empleadoId) => handleFiltroChange({ empleadoId })}
-          onEstadoChange={(estado) => handleFiltroChange({ estado })}
-          empleados={empleados}
-        />
+          {/* Filtros */}
+          <FiltroPeriodoNomina
+            mes={filtros.mes}
+            anio={filtros.anio}
+            empleadoId={filtros.empleadoId}
+            estado={filtros.estado}
+            onMesChange={(mes) => handleFiltroChange({ mes })}
+            onAnioChange={(anio) => handleFiltroChange({ anio })}
+            onEmpleadoChange={(empleadoId) => handleFiltroChange({ empleadoId })}
+            onEstadoChange={(estado) => handleFiltroChange({ estado })}
+            empleados={empleados}
+          />
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar los datos</p>
-            <p className="text-sm">{error}</p>
-          </div>
-        )}
-
-        {/* Tabla de Nóminas */}
-        <TablaNominas nominas={nominas} loading={loading} onVerDetalle={handleVerDetalle} />
-
-        {/* Paginación */}
-        {paginacion.totalPaginas > 1 && (
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 flex items-center justify-between">
-            <div className="text-sm text-gray-600">
-              Mostrando página {paginacion.paginaActual} de {paginacion.totalPaginas} (
-              {paginacion.totalResultados} resultados)
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+              <p className="font-medium">Error al cargar los datos</p>
+              <p className="text-sm">{error}</p>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handlePageChange(paginacion.paginaActual - 1)}
-                disabled={paginacion.paginaActual === 1}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <button
-                onClick={() => handlePageChange(paginacion.paginaActual + 1)}
-                disabled={paginacion.paginaActual === paginacion.totalPaginas}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* Modal de Detalle */}
-        <ModalDetalleNomina
-          nomina={nominaSeleccionada}
-          onClose={handleCerrarModal}
-          onActualizar={handleActualizarDespuesCambio}
-        />
+          {/* Tabla de Nóminas */}
+          <TablaNominas nominas={nominas} loading={loading} onVerDetalle={handleVerDetalle} />
+
+          {/* Paginación */}
+          {paginacion.totalPaginas > 1 && (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => handlePageChange(paginacion.paginaActual - 1)}
+                  disabled={paginacion.paginaActual === 1}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="text-sm text-slate-600 px-4">
+                  Página {paginacion.paginaActual} de {paginacion.totalPaginas} ({paginacion.totalResultados} resultados)
+                </span>
+                <button
+                  onClick={() => handlePageChange(paginacion.paginaActual + 1)}
+                  disabled={paginacion.paginaActual === paginacion.totalPaginas}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Modal de Detalle */}
+          <ModalDetalleNomina
+            nomina={nominaSeleccionada}
+            onClose={handleCerrarModal}
+            onActualizar={handleActualizarDespuesCambio}
+          />
+        </div>
       </div>
     </div>
   );

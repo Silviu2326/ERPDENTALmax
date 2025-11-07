@@ -102,3 +102,4 @@ export async function obtenerCartasPorPaciente(pacienteId: string): Promise<Cart
 }
 
 
+

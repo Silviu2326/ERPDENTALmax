@@ -78,14 +78,14 @@ export default function ModalDetalleControl({
         {/* Modal */}
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+          <div className="px-6 py-4 border-b border-gray-200">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">
+              <h3 className="text-xl font-bold text-gray-900">
                 Detalle del Control de Esterilización
               </h3>
               <button
                 onClick={onCerrar}
-                className="text-white hover:text-gray-200 transition-colors"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -93,10 +93,10 @@ export default function ModalDetalleControl({
           </div>
 
           {/* Content */}
-          <div className="px-6 py-6 bg-gray-50">
+          <div className="px-6 py-6">
             <div className="space-y-6">
               {/* Resultado destacado */}
-              <div className="bg-white rounded-lg p-6 border-2 border-gray-200">
+              <div className="bg-gray-50 rounded-lg p-6 ring-1 ring-gray-200">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-500 mb-2">Resultado</p>
@@ -118,8 +118,8 @@ export default function ModalDetalleControl({
               </div>
 
               {/* Información del Control */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h4 className="text-md font-semibold text-gray-900 mb-4">Información del Control</h4>
+              <div className="bg-white rounded-lg p-6 ring-1 ring-gray-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Información del Control</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-500">Fecha de Registro</p>
@@ -150,8 +150,8 @@ export default function ModalDetalleControl({
               </div>
 
               {/* Información del Indicador */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h4 className="text-md font-semibold text-gray-900 mb-4">Información del Indicador</h4>
+              <div className="bg-white rounded-lg p-6 ring-1 ring-gray-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Información del Indicador</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-500">Lote del Indicador</p>
@@ -167,8 +167,8 @@ export default function ModalDetalleControl({
               </div>
 
               {/* Responsables */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h4 className="text-md font-semibold text-gray-900 mb-4">Responsables</h4>
+              <div className="bg-white rounded-lg p-6 ring-1 ring-gray-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Responsables</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-500">Registrado por</p>
@@ -189,8 +189,8 @@ export default function ModalDetalleControl({
 
               {/* Observaciones */}
               {control.observaciones && (
-                <div className="bg-white rounded-lg p-6 border border-gray-200">
-                  <h4 className="text-md font-semibold text-gray-900 mb-4">Observaciones</h4>
+                <div className="bg-white rounded-lg p-6 ring-1 ring-gray-200">
+                  <h4 className="text-lg font-semibold text-gray-900 mb-4">Observaciones</h4>
                   <p className="text-sm text-gray-700 whitespace-pre-wrap">{control.observaciones}</p>
                 </div>
               )}
@@ -215,21 +215,21 @@ export default function ModalDetalleControl({
           </div>
 
           {/* Footer */}
-          <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+          <div className="px-6 py-4 border-t border-gray-200 flex justify-end gap-2">
             {onEditar && (control.resultado === 'pendiente' || control.tipoControl === 'biologico') && (
               <button
                 onClick={() => {
                   onEditar(control);
                   onCerrar();
                 }}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
               >
                 Actualizar Resultado
               </button>
             )}
             <button
               onClick={onCerrar}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
             >
               Cerrar
             </button>
@@ -239,5 +239,6 @@ export default function ModalDetalleControl({
     </div>
   );
 }
+
 
 

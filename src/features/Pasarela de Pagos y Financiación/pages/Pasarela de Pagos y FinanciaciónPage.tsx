@@ -148,257 +148,272 @@ export default function PasarelaDePagosYFinanciacionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl">
-                <CreditCard className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <CreditCard size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Pasarela de Pagos y Financiación
+                  </h1>
+                  <p className="text-gray-600">
+                    Procesa pagos de pacientes y gestiona sus saldos pendientes
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Pasarela de Pagos y Financiación</h1>
-                <p className="text-sm text-gray-600 mt-1">
-                  Procesa pagos de pacientes y gestiona sus saldos pendientes
-                </p>
-              </div>
+              {pacienteSeleccionado && (
+                <button
+                  onClick={() => {
+                    setPacienteSeleccionado(null);
+                    setQuery('');
+                    setTratamientosSeleccionados([]);
+                    setMostrarFormularioPago(false);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                >
+                  Limpiar Selección
+                </button>
+              )}
             </div>
-            {pacienteSeleccionado && (
-              <button
-                onClick={() => {
-                  setPacienteSeleccionado(null);
-                  setQuery('');
-                  setTratamientosSeleccionados([]);
-                  setMostrarFormularioPago(false);
-                }}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
-              >
-                Limpiar Selección
-              </button>
-            )}
-          </div>
-
-          {/* Navegación por pestañas */}
-          <div className="flex items-center space-x-2 border-b border-gray-200">
-            <button
-              onClick={() => setVista('pagos')}
-              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-                vista === 'pagos'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <CreditCard className="w-4 h-4" />
-                <span>Procesar Pagos</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setVista('historial-pagos')}
-              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-                vista === 'historial-pagos'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <History className="w-4 h-4" />
-                <span>Historial de Pagos</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setVista('asignar-plan')}
-              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-                vista === 'asignar-plan'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Wallet className="w-4 h-4" />
-                <span>Asignar Plan de Financiación</span>
-              </div>
-            </button>
-            <button
-              onClick={() => setVista('gestion-planes')}
-              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-                vista === 'gestion-planes'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Settings className="w-4 h-4" />
-                <span>Gestionar Planes</span>
-              </div>
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* Buscador de Pacientes */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Buscar Paciente
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                if (pacienteSeleccionado) {
-                  setPacienteSeleccionado(null);
-                }
-              }}
-              onFocus={() => {
-                if (resultados.length > 0) {
-                  setMostrarResultados(true);
-                }
-              }}
-              placeholder="Buscar por nombre, apellidos, DNI o teléfono..."
-              className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-            {loading && (
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                <Loader2 className="h-5 w-5 text-gray-400 animate-spin" />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Sistema de Tabs */}
+          <div className="bg-white shadow-sm p-0 rounded-xl">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Secciones"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                <button
+                  onClick={() => setVista('pagos')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'pagos'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <CreditCard size={18} className={vista === 'pagos' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Procesar Pagos</span>
+                </button>
+                <button
+                  onClick={() => setVista('historial-pagos')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'historial-pagos'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <History size={18} className={vista === 'historial-pagos' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Historial de Pagos</span>
+                </button>
+                <button
+                  onClick={() => setVista('asignar-plan')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'asignar-plan'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Wallet size={18} className={vista === 'asignar-plan' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Asignar Plan de Financiación</span>
+                </button>
+                <button
+                  onClick={() => setVista('gestion-planes')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'gestion-planes'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Settings size={18} className={vista === 'gestion-planes' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Gestionar Planes</span>
+                </button>
               </div>
-            )}
+            </div>
           </div>
 
-          {/* Resultados de búsqueda */}
-          {mostrarResultados && resultados.length > 0 && (
-            <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10">
-              {resultados.map((paciente) => (
-                <button
-                  key={paciente._id}
-                  onClick={() => handleSeleccionarPaciente(paciente)}
-                  className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0"
-                >
+          {/* Buscador de Pacientes */}
+          <div className="bg-white shadow-sm rounded-xl">
+            <div className="p-4">
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="flex gap-4">
+                  <div className="relative flex-1">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Search className="h-5 w-5 text-slate-400" />
+                    </div>
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                        if (pacienteSeleccionado) {
+                          setPacienteSeleccionado(null);
+                        }
+                      }}
+                      onFocus={() => {
+                        if (resultados.length > 0) {
+                          setMostrarResultados(true);
+                        }
+                      }}
+                      placeholder="Buscar por nombre, apellidos, DNI o teléfono..."
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-10 py-2.5"
+                    />
+                    {loading && (
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <Loader2 className="h-5 w-5 text-slate-400 animate-spin" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Resultados de búsqueda */}
+              {mostrarResultados && resultados.length > 0 && (
+                <div className="mt-2 bg-white border border-slate-200 rounded-xl shadow-lg max-h-60 overflow-y-auto z-10">
+                  {resultados.map((paciente) => (
+                    <button
+                      key={paciente._id}
+                      onClick={() => handleSeleccionarPaciente(paciente)}
+                      className="w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <User className="w-5 h-5 text-slate-400" />
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {paciente.nombre} {paciente.apellidos}
+                          </p>
+                          {paciente.documentoIdentidad && (
+                            <p className="text-sm text-slate-600">{paciente.documentoIdentidad}</p>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {pacienteSeleccionado && (
+                <div className="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
                   <div className="flex items-center space-x-3">
-                    <User className="w-5 h-5 text-gray-400" />
+                    <User className="w-5 h-5 text-blue-600" />
                     <div>
-                      <p className="font-medium text-gray-900">
-                        {paciente.nombre} {paciente.apellidos}
+                      <p className="font-semibold text-blue-900">
+                        {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
                       </p>
-                      {paciente.documentoIdentidad && (
-                        <p className="text-sm text-gray-500">{paciente.documentoIdentidad}</p>
+                      {pacienteSeleccionado.documentoIdentidad && (
+                        <p className="text-sm text-blue-700">{pacienteSeleccionado.documentoIdentidad}</p>
                       )}
                     </div>
                   </div>
-                </button>
-              ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-red-800">{error}</p>
             </div>
           )}
 
+          {/* Contenido Principal */}
           {pacienteSeleccionado && (
-            <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="flex items-center space-x-3">
-                <User className="w-5 h-5 text-blue-600" />
-                <div>
-                  <p className="font-semibold text-blue-900">
-                    {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
-                  </p>
-                  {pacienteSeleccionado.documentoIdentidad && (
-                    <p className="text-sm text-blue-700">{pacienteSeleccionado.documentoIdentidad}</p>
-                  )}
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Columna izquierda: Deuda y Tratamientos */}
+              <div className="lg:col-span-2 space-y-6">
+                <ResumenDeudaPaciente
+                  deuda={deuda}
+                  loading={loadingDeuda}
+                  tratamientosSeleccionados={tratamientosSeleccionados}
+                  onTratamientoToggle={handleTratamientoToggle}
+                />
+
+                {tratamientosSeleccionados.length > 0 && !mostrarFormularioPago && (
+                  <div className="bg-white shadow-sm rounded-xl p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Total Seleccionado: €{getTotalSeleccionado().toFixed(2)}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {tratamientosSeleccionados.length}{' '}
+                          {tratamientosSeleccionados.length === 1 ? 'tratamiento' : 'tratamientos'} seleccionado
+                          {tratamientosSeleccionados.length > 1 ? 's' : ''}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setMostrarFormularioPago(true)}
+                        className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2 shadow-sm"
+                      >
+                        <CreditCard className="w-5 h-5" />
+                        <span>Procesar Pago</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {mostrarFormularioPago && (
+                  <FormularioProcesarPago
+                    pacienteId={pacienteSeleccionado._id}
+                    tratamientosSeleccionados={getTratamientosSeleccionados()}
+                    totalSeleccionado={getTotalSeleccionado()}
+                    onPagoExitoso={handlePagoExitoso}
+                    onCancelar={() => setMostrarFormularioPago(false)}
+                  />
+                )}
+              </div>
+
+              {/* Columna derecha: Historial de Pagos */}
+              <div>
+                <HistorialPagosMiniatura
+                  pagos={pagos}
+                  loading={loadingPagos}
+                  onVerDetalle={(pagoId) => {
+                    // TODO: Implementar vista de detalle
+                    console.log('Ver detalle pago:', pagoId);
+                  }}
+                />
+                {pacienteSeleccionado && (
+                  <button
+                    onClick={() => cargarDeudaYPagos(pacienteSeleccionado._id)}
+                    className="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2 shadow-sm"
+                  >
+                    <RefreshCw className="w-4 h-4" />
+                    <span>Actualizar</span>
+                  </button>
+                )}
               </div>
             </div>
           )}
+
+          {!pacienteSeleccionado && (
+            <div className="bg-white shadow-sm rounded-xl p-12 text-center">
+              <CreditCard size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Selecciona un Paciente
+              </h3>
+              <p className="text-gray-600">
+                Busca y selecciona un paciente para ver su deuda y procesar pagos
+              </p>
+            </div>
+          )}
         </div>
-
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
-          </div>
-        )}
-
-        {/* Contenido Principal */}
-        {pacienteSeleccionado && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Columna izquierda: Deuda y Tratamientos */}
-            <div className="lg:col-span-2 space-y-6">
-              <ResumenDeudaPaciente
-                deuda={deuda}
-                loading={loadingDeuda}
-                tratamientosSeleccionados={tratamientosSeleccionados}
-                onTratamientoToggle={handleTratamientoToggle}
-              />
-
-              {tratamientosSeleccionados.length > 0 && !mostrarFormularioPago && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900">
-                        Total Seleccionado: €{getTotalSeleccionado().toFixed(2)}
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {tratamientosSeleccionados.length}{' '}
-                        {tratamientosSeleccionados.length === 1 ? 'tratamiento' : 'tratamientos'} seleccionado
-                        {tratamientosSeleccionados.length > 1 ? 's' : ''}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setMostrarFormularioPago(true)}
-                      className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                    >
-                      <CreditCard className="w-5 h-5" />
-                      <span>Procesar Pago</span>
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {mostrarFormularioPago && (
-                <FormularioProcesarPago
-                  pacienteId={pacienteSeleccionado._id}
-                  tratamientosSeleccionados={getTratamientosSeleccionados()}
-                  totalSeleccionado={getTotalSeleccionado()}
-                  onPagoExitoso={handlePagoExitoso}
-                  onCancelar={() => setMostrarFormularioPago(false)}
-                />
-              )}
-            </div>
-
-            {/* Columna derecha: Historial de Pagos */}
-            <div>
-              <HistorialPagosMiniatura
-                pagos={pagos}
-                loading={loadingPagos}
-                onVerDetalle={(pagoId) => {
-                  // TODO: Implementar vista de detalle
-                  console.log('Ver detalle pago:', pagoId);
-                }}
-              />
-              {pacienteSeleccionado && (
-                <button
-                  onClick={() => cargarDeudaYPagos(pacienteSeleccionado._id)}
-                  className="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  <span>Actualizar</span>
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {!pacienteSeleccionado && (
-          <div className="bg-white rounded-xl shadow-lg p-12 border border-gray-200 text-center">
-            <CreditCard className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Selecciona un Paciente
-            </h3>
-            <p className="text-gray-600">
-              Busca y selecciona un paciente para ver su deuda y procesar pagos
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

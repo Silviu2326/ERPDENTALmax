@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Brain, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Brain, ArrowLeft, RefreshCw, AlertCircle, Loader2 } from 'lucide-react';
 import { obtenerDetalleEstudio } from '../api/radiologiaApi';
 import { solicitarAnalisisIA, listarAnalisisPorPaciente, AnalisisRadiograficoIA } from '../api/dentiaApi';
 import RadiographViewerWithIA from '../components/RadiographViewerWithIA';
@@ -103,10 +103,12 @@ export default function DentiaAnalysisPage({
 
   if (loading && !imagenUrl) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <RefreshCw className="w-12 h-12 mx-auto mb-4 text-blue-600 animate-spin" />
-          <p className="text-gray-600">Cargando radiografía...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando radiografía...</p>
+          </div>
         </div>
       </div>
     );
@@ -114,18 +116,16 @@ export default function DentiaAnalysisPage({
 
   if (error && !imagenUrl) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-8 h-8 text-red-600" />
-            </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Error</h2>
-            <p className="text-gray-600 mb-6">{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
             {onVolver && (
               <button
                 onClick={onVolver}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 Volver
               </button>
@@ -137,26 +137,33 @@ export default function DentiaAnalysisPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
               {onVolver && (
                 <button
                   onClick={onVolver}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors mr-4"
                 >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
+                  <ArrowLeft size={20} className="text-gray-600" />
                 </button>
               )}
-              <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-3 rounded-xl shadow-lg">
-                <Brain className="w-6 h-6 text-white" />
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Brain size={24} className="text-blue-600" />
               </div>
+              
+              {/* Título y descripción */}
               <div>
-                <h1 className="text-2xl font-bold text-gray-800">Análisis DentIA</h1>
-                <p className="text-sm text-gray-600">Análisis de radiografías con Inteligencia Artificial</p>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Análisis DentIA
+                </h1>
+                <p className="text-gray-600">
+                  Análisis de radiografías con Inteligencia Artificial
+                </p>
               </div>
             </div>
           </div>
@@ -164,11 +171,11 @@ export default function DentiaAnalysisPage({
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="grid grid-cols-12 gap-6">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Panel izquierdo - Visor de radiografía */}
-          <div className="col-span-8">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="lg:col-span-8">
+            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
               {imagenUrl ? (
                 <RadiographViewerWithIA
                   imagenUrl={imagenUrl}
@@ -179,8 +186,9 @@ export default function DentiaAnalysisPage({
               ) : (
                 <div className="h-[600px] flex items-center justify-center bg-gray-100">
                   <div className="text-center">
-                    <Brain className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                    <p className="text-gray-600">No hay imagen disponible</p>
+                    <Brain size={48} className="mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay imagen disponible</h3>
+                    <p className="text-gray-600">Seleccione una radiografía para comenzar el análisis.</p>
                   </div>
                 </div>
               )}
@@ -188,10 +196,10 @@ export default function DentiaAnalysisPage({
 
             {/* Botón de análisis */}
             {radiografiaId && pacienteId && (
-              <div className="mt-4 bg-white rounded-lg shadow-lg p-4">
-                <div className="flex items-center justify-between">
+              <div className="mt-6 bg-white shadow-sm rounded-lg p-4">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div>
-                    <h3 className="font-semibold text-gray-800 mb-1">Análisis con IA</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Análisis con IA</h3>
                     <p className="text-sm text-gray-600">
                       Solicite un análisis de IA para detectar posibles patologías en esta radiografía
                     </p>
@@ -207,7 +215,7 @@ export default function DentiaAnalysisPage({
           </div>
 
           {/* Panel derecho - Resultados del análisis */}
-          <div className="col-span-4">
+          <div className="lg:col-span-4 space-y-6">
             {analisisActual ? (
               <AnalysisResultsPanel
                 analisisId={analisisActual._id}
@@ -215,25 +223,23 @@ export default function DentiaAnalysisPage({
                 autoRefresh={analisisActual.status !== 'completado' && analisisActual.status !== 'error'}
               />
             ) : (
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="text-center py-8">
-                  <Brain className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                    No hay análisis disponible
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {radiografiaId && pacienteId
-                      ? 'Utilice el botón "Analizar con DentIA" para iniciar un nuevo análisis.'
-                      : 'Seleccione una radiografía para comenzar el análisis.'}
-                  </p>
-                </div>
+              <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                <Brain size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No hay análisis disponible
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {radiografiaId && pacienteId
+                    ? 'Utilice el botón "Analizar con DentIA" para iniciar un nuevo análisis.'
+                    : 'Seleccione una radiografía para comenzar el análisis.'}
+                </p>
               </div>
             )}
 
             {/* Historial de análisis */}
             {historialAnalisis.length > 0 && (
-              <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-                <h3 className="font-semibold text-gray-800 mb-4">Historial de Análisis</h3>
+              <div className="bg-white shadow-sm rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Historial de Análisis</h3>
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {historialAnalisis.map((analisis) => (
                     <button
@@ -244,18 +250,18 @@ export default function DentiaAnalysisPage({
                           setRadiografiaId(analisis.radiografiaId);
                         }
                       }}
-                      className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                      className={`w-full text-left p-3 rounded-xl border transition-all ${
                         analisisActual?._id === analisis._id
-                          ? 'bg-blue-50 border-blue-300'
+                          ? 'bg-blue-50 border-blue-300 ring-1 ring-blue-200'
                           : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-gray-700">
+                        <span className="text-sm font-medium text-slate-700">
                           {new Date(analisis.createdAt).toLocaleDateString()}
                         </span>
                         <span
-                          className={`text-xs px-2 py-1 rounded ${
+                          className={`text-xs px-2 py-1 rounded-full font-medium ${
                             analisis.status === 'completado'
                               ? 'bg-green-100 text-green-700'
                               : analisis.status === 'procesando'

@@ -203,76 +203,92 @@ export default function FacturacionCobrosYContabilidadPage({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <DollarSign className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <DollarSign size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Facturación, Cobros y Contabilidad
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión financiera y contable de la clínica
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {activeTab === 'panel' && onNuevaFactura && (
+                  <button
+                    onClick={onNuevaFactura}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all text-sm font-medium shadow-sm"
+                  >
+                    <Plus size={20} />
+                    <span>Nueva Factura</span>
+                  </button>
+                )}
+                {activeTab === 'panel' && (
+                  <button
+                    onClick={cargarDatos}
+                    disabled={loading}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
+                  >
+                    <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                    <span>Actualizar</span>
+                  </button>
+                )}
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Facturación, Cobros y Contabilidad
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Gestión financiera y contable de la clínica
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            {activeTab === 'panel' && onNuevaFactura && (
-              <button
-                onClick={onNuevaFactura}
-                className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Nueva Factura</span>
-              </button>
-            )}
-            {activeTab === 'panel' && (
-              <button
-                onClick={cargarDatos}
-                disabled={loading}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
-              >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                <span>Actualizar</span>
-              </button>
-            )}
           </div>
         </div>
+      </div>
 
-        {/* Navegación por pestañas */}
-        <div className="bg-white rounded-xl shadow-md border-2 border-blue-100 mb-6">
-          <div className="flex border-b border-gray-200 overflow-x-auto">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`
-                    flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors
-                    border-b-2 whitespace-nowrap
-                    ${
-                      activeTab === tab.id
-                        ? 'border-blue-600 text-blue-600 bg-blue-50'
-                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                    }
-                  `}
-                >
-                  <Icon className="w-5 h-5" />
-                  {tab.label}
-                </button>
-              );
-            })}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {/* Sistema de Tabs */}
+        <div className="bg-white shadow-sm rounded-xl p-0 mb-6">
+          <div className="px-4 py-3">
+            <div
+              role="tablist"
+              aria-label="Secciones"
+              className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1 overflow-x-auto"
+            >
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`
+                      inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all whitespace-nowrap
+                      ${
+                        isActive
+                          ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                      }
+                    `}
+                  >
+                    <Icon size={18} className={isActive ? 'opacity-100' : 'opacity-70'} />
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Contenido según la pestaña activa */}
         {activeTab === 'panel' && (
-          <>
+          <div className="space-y-6">
             {/* Filtros */}
             <FiltroFechaDashboard
               filtros={filtros}
@@ -294,7 +310,7 @@ export default function FacturacionCobrosYContabilidadPage({
             {loading && !kpis ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <div key={i} className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 animate-pulse">
+                  <div key={i} className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 animate-pulse">
                     <div className="h-12 bg-gray-200 rounded mb-4"></div>
                     <div className="h-8 bg-gray-200 rounded mb-2"></div>
                     <div className="h-6 bg-gray-200 rounded"></div>
@@ -405,9 +421,9 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Morosidad y Tendencias */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Análisis de Morosidad */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Morosidad</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200">
@@ -461,7 +477,7 @@ export default function FacturacionCobrosYContabilidadPage({
                 </div>
 
                 {/* Análisis de Tendencias */}
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Tendencias del Período</h3>
                   <div className="space-y-4">
                     <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
@@ -527,7 +543,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Distribución por Días de la Semana */}
             {!loading && ingresos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Rendimiento por Día de la Semana</h3>
                 <div className="grid grid-cols-7 gap-2">
                   {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((dia, index) => {
@@ -556,7 +572,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Tipo de Tratamiento */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Tipo de Tratamiento</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -597,7 +613,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Método de Pago */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Método de Pago</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                   {(() => {
@@ -631,7 +647,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis Comparativo Mensual */}
             {!loading && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Comparativa de Últimos 6 Meses</h3>
                 <div className="space-y-4">
                   {(() => {
@@ -707,7 +723,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Top 10 Pacientes por Facturación */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Pacientes por Facturación</h3>
                 <div className="space-y-2">
                   {(() => {
@@ -761,7 +777,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Profesional */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Facturación por Profesional</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -798,7 +814,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Hora del Día */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Facturación por Hora del Día</h3>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   {(() => {
@@ -835,7 +851,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturas por Rango de Importe */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Facturas por Rango de Importe</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                   {(() => {
@@ -878,7 +894,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Descuentos Aplicados */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Descuentos Aplicados</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200">
@@ -913,7 +929,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Predicción de Ingresos */}
             {!loading && ingresos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Predicción de Ingresos - Próximo Mes</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
@@ -947,7 +963,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Comparativa con Período Anterior */}
             {!loading && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Comparativa con Período Anterior</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -1017,7 +1033,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Sede */}
             {!loading && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Facturación por Sede</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {(() => {
@@ -1064,7 +1080,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Estado de Pago */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Facturación por Estado de Pago</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -1105,7 +1121,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Eficiencia de Cobro por Mes */}
             {!loading && ingresos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Eficiencia de Cobro - Últimos 6 Meses</h3>
                 <div className="space-y-4">
                   {(() => {
@@ -1165,7 +1181,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Rango de Edad de Pacientes */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Facturación por Rango de Edad de Pacientes</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                   {(() => {
@@ -1203,7 +1219,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Día del Mes */}
             {!loading && ingresos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Facturación por Día del Mes</h3>
                 <div className="grid grid-cols-7 md:grid-cols-10 lg:grid-cols-15 gap-2">
                   {(() => {
@@ -1241,7 +1257,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación Recurrente vs Nueva */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Facturación: Pacientes Recurrentes vs Nuevos</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
@@ -1276,7 +1292,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Canal de Entrada */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Facturación por Canal de Entrada</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -1309,7 +1325,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Facturación por Estacionalidad */}
             {!loading && ingresos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Estacionalidad - Últimos 12 Meses</h3>
                 <div className="space-y-3">
                   {(() => {
@@ -1373,7 +1389,7 @@ export default function FacturacionCobrosYContabilidadPage({
 
             {/* Análisis de Rentabilidad por Tratamiento */}
             {!loading && facturasRecientes.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Rentabilidad por Tipo de Tratamiento</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -1419,7 +1435,7 @@ export default function FacturacionCobrosYContabilidadPage({
               loading={loading}
               onVerFactura={handleVerFactura}
             />
-          </>
+          </div>
         )}
 
         {activeTab === 'recibos' && <RecibosPagosPage />}

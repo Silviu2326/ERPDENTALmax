@@ -24,42 +24,34 @@ export default function TimelineControlesEndo({
 
   if (controlesOrdenados.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
-        <div className="text-center">
-          <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            No hay controles registrados
-          </h3>
-          <p className="text-gray-600 mb-6">
-            Comience registrando el primer control postoperatorio para este tratamiento.
-          </p>
-          <button
-            onClick={onNuevoControl}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            Registrar Primer Control
-          </button>
-        </div>
+      <div className="bg-white shadow-sm p-8 text-center">
+        <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          No hay controles registrados
+        </h3>
+        <p className="text-gray-600 mb-4">
+          Comience registrando el primer control postoperatorio para este tratamiento.
+        </p>
+        <button
+          onClick={onNuevoControl}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          <Plus size={20} className="mr-2" />
+          Registrar Primer Control
+        </button>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Header con botón de nuevo control */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-bold text-gray-800">Controles Postoperatorios</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            {controlesOrdenados.length} control(es) registrado(s)
-          </p>
-        </div>
+      {/* Toolbar superior */}
+      <div className="flex items-center justify-end">
         <button
           onClick={onNuevoControl}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
-          <Plus className="w-5 h-5" />
+          <Plus size={20} className="mr-2" />
           Nuevo Control
         </button>
       </div>
@@ -95,7 +87,7 @@ export default function TimelineControlesEndo({
                   />
 
                   {/* Información adicional del timeline */}
-                  <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
+                  <div className="mt-2 flex items-center gap-4 text-sm text-slate-600">
                     <span>{fechaFormateada}</span>
                     {tiempoTranscurrido > 0 && (
                       <span>
@@ -113,7 +105,7 @@ export default function TimelineControlesEndo({
                         onClick={() => onVerDetalle(control)}
                         className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 transition-colors"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye size={16} />
                         Ver detalles
                       </button>
                     )}
@@ -127,5 +119,6 @@ export default function TimelineControlesEndo({
     </div>
   );
 }
+
 
 

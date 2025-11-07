@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Trash2, Eye, Download, Calendar, User, Pill } from 'lucide-react';
+import { FileText, Trash2, Eye, Download, Calendar, User, Pill, AlertCircle } from 'lucide-react';
 import { obtenerRecetasPorPaciente, anularReceta, Receta } from '../api/recetasApi';
 import ModalVistaPreviaPDF from './ModalVistaPreviaPDF';
 
@@ -80,53 +80,50 @@ export default function ListaHistorialRecetas({
 
   if (loading && recetas.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-3 text-gray-600">Cargando historial de recetas...</span>
-        </div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <p className="text-gray-600">Cargando historial de recetas...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-red-800">{error}</p>
-          <button
-            onClick={cargarRecetas}
-            className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
-          >
-            Intentar de nuevo
-          </button>
-        </div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
+        <button
+          onClick={cargarRecetas}
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+        >
+          Reintentar
+        </button>
       </div>
     );
   }
 
   if (recetas.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="text-center py-8">
-          <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">No hay recetas registradas para este paciente</p>
-          <p className="text-gray-500 text-sm mt-2">Las recetas que se creen aparecerán aquí</p>
-        </div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay recetas registradas</h3>
+        <p className="text-gray-600 mb-4">No hay recetas registradas para este paciente</p>
+        <p className="text-sm text-gray-500">Las recetas que se creen aparecerán aquí</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-gray-900">Historial de Recetas</h3>
           <button
             onClick={cargarRecetas}
-            className="text-sm text-blue-600 hover:text-blue-800 flex items-center space-x-1"
+            className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           >
-            <Calendar className="w-4 h-4" />
+            <Calendar size={16} />
             <span>Actualizar</span>
           </button>
         </div>
@@ -135,10 +132,10 @@ export default function ListaHistorialRecetas({
           {recetas.map((receta) => (
             <div
               key={receta._id}
-              className={`border rounded-lg p-4 hover:shadow-md transition-shadow ${
+              className={`rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow ring-1 ${
                 receta.estado === 'Anulada'
-                  ? 'bg-gray-50 border-gray-300 opacity-75'
-                  : 'bg-white border-gray-200'
+                  ? 'bg-gray-50 ring-gray-200 opacity-75'
+                  : 'bg-white ring-gray-200'
               }`}
             >
               <div className="flex items-start justify-between">
@@ -196,14 +193,14 @@ export default function ListaHistorialRecetas({
 
                   {receta.estado === 'Anulada' && (
                     <div className="mt-3">
-                      <span className="inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full">
+                      <span className="inline-flex items-center px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full ring-1 ring-red-200/70">
                         Anulada
                       </span>
                     </div>
                   )}
                 </div>
 
-                <div className="flex items-center space-x-2 ml-4">
+                <div className="flex items-center gap-2 ml-4">
                   {receta.estado === 'Activa' && (
                     <>
                       <button
@@ -211,14 +208,14 @@ export default function ListaHistorialRecetas({
                         className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Ver receta"
                       >
-                        <Eye className="w-5 h-5" />
+                        <Eye size={20} />
                       </button>
                       <button
                         onClick={() => handleAnularReceta(receta._id!)}
                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         title="Anular receta"
                       >
-                        <Trash2 className="w-5 h-5" />
+                        <Trash2 size={20} />
                       </button>
                     </>
                   )}
@@ -228,7 +225,7 @@ export default function ListaHistorialRecetas({
                       className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
                       title="Ver receta anulada"
                     >
-                      <Eye className="w-5 h-5" />
+                      <Eye size={20} />
                     </button>
                   )}
                 </div>
@@ -250,5 +247,6 @@ export default function ListaHistorialRecetas({
     </>
   );
 }
+
 
 

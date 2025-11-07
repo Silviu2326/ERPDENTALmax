@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, Phone, Mail, FileText, Calendar, DollarSign, MoreVertical, Eye, CalendarPlus, CreditCard, FileEdit } from 'lucide-react';
+import { User, Phone, Mail, FileText, Calendar, DollarSign, MoreVertical, Eye, CalendarPlus, CreditCard, FileEdit, Loader2 } from 'lucide-react';
 import { Paciente, FiltrosBusquedaPacientes } from '../api/pacientesApi';
 
 interface TablaListadoPacientesProps {
@@ -53,9 +53,9 @@ function FilaPaciente({
 
   const getStatusBadge = (status: string) => {
     const styles = {
-      activo: 'bg-green-100 text-green-800',
-      inactivo: 'bg-yellow-100 text-yellow-800',
-      archivado: 'bg-gray-100 text-gray-800',
+      activo: 'bg-green-100 text-green-800 ring-1 ring-green-200',
+      inactivo: 'bg-yellow-100 text-yellow-800 ring-1 ring-yellow-200',
+      archivado: 'bg-slate-100 text-slate-800 ring-1 ring-slate-200',
     };
 
     return (
@@ -70,43 +70,43 @@ function FilaPaciente({
   };
 
   return (
-    <tr className="border-b border-gray-200 hover:bg-blue-50 transition-colors">
+    <tr className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
       <td className="px-4 py-3">
         <button
           onClick={() => onVerPaciente(paciente._id || '')}
-          className="text-left font-medium text-blue-600 hover:text-blue-800 hover:underline"
+          className="text-left font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
         >
           {paciente.nombre} {paciente.apellidos}
         </button>
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         {paciente.DNI || '-'}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         {paciente.numeroHistoriaClinica || '-'}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         <div className="flex flex-col gap-1">
           {paciente.telefonos && paciente.telefonos.length > 0 ? (
             paciente.telefonos.map((tel, idx) => (
               <div key={idx} className="flex items-center gap-1">
-                <Phone className="w-3 h-3 text-gray-400" />
+                <Phone className="w-3 h-3 text-slate-400" />
                 <span>{tel}</span>
               </div>
             ))
           ) : (
-            <span className="text-gray-400">-</span>
+            <span className="text-slate-400">-</span>
           )}
         </div>
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         {paciente.email || '-'}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-600">
+      <td className="px-4 py-3 text-sm text-slate-600">
         {formatearFecha(paciente.ultimaVisita)}
       </td>
       <td className="px-4 py-3 text-sm">
-        <span className={paciente.saldoPendiente && paciente.saldoPendiente > 0 ? 'text-red-600 font-medium' : 'text-gray-600'}>
+        <span className={paciente.saldoPendiente && paciente.saldoPendiente > 0 ? 'text-red-600 font-medium' : 'text-slate-600'}>
           {formatearSaldo(paciente.saldoPendiente)}
         </span>
       </td>
@@ -117,10 +117,10 @@ function FilaPaciente({
         <div className="relative">
           <button
             onClick={() => setMostrarMenu(!mostrarMenu)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
             aria-label="Menú de acciones"
           >
-            <MoreVertical className="w-4 h-4 text-gray-600" />
+            <MoreVertical className="w-4 h-4 text-slate-600" />
           </button>
 
           {mostrarMenu && (
@@ -129,13 +129,13 @@ function FilaPaciente({
                 className="fixed inset-0 z-10"
                 onClick={() => setMostrarMenu(false)}
               />
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20 py-1">
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg ring-1 ring-slate-200 z-20 py-1">
                 <button
                   onClick={() => {
                     onVerPaciente(paciente._id || '');
                     setMostrarMenu(false);
                   }}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 flex items-center gap-2 transition-colors"
                 >
                   <Eye className="w-4 h-4" />
                   Ver ficha completa
@@ -146,7 +146,7 @@ function FilaPaciente({
                       onNuevaCita(paciente._id || '');
                       setMostrarMenu(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 flex items-center gap-2 transition-colors"
                   >
                     <CalendarPlus className="w-4 h-4" />
                     Nueva cita
@@ -158,7 +158,7 @@ function FilaPaciente({
                       onRegistrarPago(paciente._id || '');
                       setMostrarMenu(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 flex items-center gap-2 transition-colors"
                   >
                     <CreditCard className="w-4 h-4" />
                     Registrar pago
@@ -170,7 +170,7 @@ function FilaPaciente({
                       onGenerarPresupuesto(paciente._id || '');
                       setMostrarMenu(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 flex items-center gap-2 transition-colors"
                   >
                     <FileEdit className="w-4 h-4" />
                     Generar presupuesto
@@ -218,33 +218,30 @@ export default function TablaListadoPacientes({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <div className="animate-pulse space-y-4">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-12 bg-gray-200 rounded"></div>
-          ))}
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (pacientes.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-12 text-center">
-        <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 text-lg mb-2">No se encontraron pacientes</p>
-        <p className="text-gray-500 text-sm">Intenta ajustar los filtros de búsqueda</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <User size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron pacientes</h3>
+        <p className="text-gray-600 mb-4">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 <button
                   onClick={() => handleSort('apellidos')}
                   className="flex items-center hover:text-blue-600 transition-colors"
@@ -253,7 +250,7 @@ export default function TablaListadoPacientes({
                   <SortIcon campo="apellidos" />
                 </button>
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 <button
                   onClick={() => handleSort('DNI')}
                   className="flex items-center hover:text-blue-600 transition-colors"
@@ -262,7 +259,7 @@ export default function TablaListadoPacientes({
                   <SortIcon campo="DNI" />
                 </button>
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 <button
                   onClick={() => handleSort('numeroHistoriaClinica')}
                   className="flex items-center hover:text-blue-600 transition-colors"
@@ -271,13 +268,13 @@ export default function TablaListadoPacientes({
                   <SortIcon campo="numeroHistoriaClinica" />
                 </button>
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 Teléfono
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 Email
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 <button
                   onClick={() => handleSort('ultimaVisita')}
                   className="flex items-center hover:text-blue-600 transition-colors"
@@ -286,7 +283,7 @@ export default function TablaListadoPacientes({
                   <SortIcon campo="ultimaVisita" />
                 </button>
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 <button
                   onClick={() => handleSort('saldoPendiente')}
                   className="flex items-center hover:text-blue-600 transition-colors"
@@ -295,15 +292,15 @@ export default function TablaListadoPacientes({
                   <SortIcon campo="saldoPendiente" />
                 </button>
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-slate-200">
             {pacientes.map((paciente) => (
               <FilaPaciente
                 key={paciente._id}
@@ -320,5 +317,6 @@ export default function TablaListadoPacientes({
     </div>
   );
 }
+
 
 

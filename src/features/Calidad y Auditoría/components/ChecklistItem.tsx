@@ -78,7 +78,7 @@ export default function ChecklistItem({
               ) : (
                 <Circle className="w-6 h-6 text-gray-400" />
               )}
-              <span className="text-gray-700 font-medium">{item.label}</span>
+              <span className="text-slate-700 font-medium">{item.label}</span>
               {item.isRequired && <span className="text-red-500">*</span>}
             </button>
           </div>
@@ -87,7 +87,7 @@ export default function ChecklistItem({
       case 'text':
         return (
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               {item.label}
               {item.isRequired && <span className="text-red-500 ml-1">*</span>}
             </label>
@@ -96,7 +96,7 @@ export default function ChecklistItem({
               onChange={(e) => !disabled && handleValueChange(e.target.value)}
               disabled={disabled}
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed"
               placeholder="Ingrese su respuesta..."
             />
           </div>
@@ -105,7 +105,7 @@ export default function ChecklistItem({
       case 'select':
         return (
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               {item.label}
               {item.isRequired && <span className="text-red-500 ml-1">*</span>}
             </label>
@@ -113,7 +113,7 @@ export default function ChecklistItem({
               value={answer?.value || ''}
               onChange={(e) => !disabled && handleValueChange(e.target.value)}
               disabled={disabled}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed"
             >
               <option value="">Seleccione una opción</option>
               {item.options?.map((option) => (
@@ -128,19 +128,19 @@ export default function ChecklistItem({
       case 'file':
         return (
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               {item.label}
               {item.isRequired && <span className="text-red-500 ml-1">*</span>}
             </label>
             <div className="flex items-center gap-4">
               <label
-                className={`flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-colors ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl cursor-pointer hover:bg-blue-700 transition-all ${
                   disabled || fileUploading
                     ? 'opacity-50 cursor-not-allowed'
                     : ''
                 }`}
               >
-                <Upload className="w-4 h-4" />
+                <Upload size={20} />
                 {fileUploading ? 'Subiendo...' : 'Subir archivo'}
                 <input
                   type="file"
@@ -154,9 +154,9 @@ export default function ChecklistItem({
                   href={answer.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700"
                 >
-                  <FileText className="w-4 h-4" />
+                  <FileText size={20} />
                   Ver archivo
                 </a>
               )}
@@ -170,12 +170,12 @@ export default function ChecklistItem({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-3">
+    <div className="bg-white rounded-xl ring-1 ring-slate-200 shadow-sm p-4 space-y-4">
       {renderInput()}
       
       {/* Campo de notas adicionales (opcional para todos los tipos) */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-600">
+        <label className="block text-sm font-medium text-slate-600 mb-2">
           Notas adicionales (opcional)
         </label>
         <textarea
@@ -183,12 +183,13 @@ export default function ChecklistItem({
           onChange={(e) => !disabled && handleNotesChange(e.target.value)}
           disabled={disabled}
           rows={2}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed text-sm"
           placeholder="Agregar notas o comentarios..."
         />
       </div>
     </div>
   );
 }
+
 
 

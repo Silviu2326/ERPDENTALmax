@@ -123,10 +123,10 @@ export default function ModalCrearEditarAlmacen({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-xl flex items-center justify-between">
+        <div className="sticky top-0 bg-blue-600 text-white p-6 rounded-t-xl flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-white/20 p-2 rounded-lg">
-              <Building2 className="w-6 h-6" />
+              <Building2 size={24} />
             </div>
             <h2 className="text-2xl font-bold">
               {almacen ? 'Editar Almacén' : 'Nuevo Almacén'}
@@ -137,7 +137,7 @@ export default function ModalCrearEditarAlmacen({
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
             aria-label="Cerrar"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         </div>
 
@@ -151,12 +151,12 @@ export default function ModalCrearEditarAlmacen({
 
           {/* Información General */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-900 border-b border-slate-200 pb-2">
               Información General
             </h3>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Nombre del Almacén <span className="text-red-500">*</span>
               </label>
               <input
@@ -172,9 +172,9 @@ export default function ModalCrearEditarAlmacen({
                     });
                   }
                 }}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.nombre ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                  errors.nombre ? 'ring-red-300' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5`}
                 placeholder="Ej: Almacén Principal - Clínica Centro"
               />
               {errors.nombre && (
@@ -192,7 +192,7 @@ export default function ModalCrearEditarAlmacen({
                 }
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="esPrincipal" className="text-sm font-medium text-gray-700">
+              <label htmlFor="esPrincipal" className="text-sm font-medium text-slate-700">
                 Marcar como almacén principal
               </label>
             </div>
@@ -200,21 +200,21 @@ export default function ModalCrearEditarAlmacen({
 
           {/* Dirección */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-900 border-b border-slate-200 pb-2">
               Dirección
             </h3>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Calle y Número <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={formData.direccion.calle}
                 onChange={(e) => handleDireccionChange('calle', e.target.value)}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.calle ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                  errors.calle ? 'ring-red-300' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5`}
                 placeholder="Ej: Av. Principal 123"
               />
               {errors.calle && (
@@ -224,16 +224,16 @@ export default function ModalCrearEditarAlmacen({
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Ciudad <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={formData.direccion.ciudad}
                   onChange={(e) => handleDireccionChange('ciudad', e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    errors.ciudad ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                    errors.ciudad ? 'ring-red-300' : 'ring-slate-300'
+                  } focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5`}
                   placeholder="Ej: Madrid"
                 />
                 {errors.ciudad && (
@@ -242,16 +242,16 @@ export default function ModalCrearEditarAlmacen({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Código Postal <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={formData.direccion.codigoPostal}
                   onChange={(e) => handleDireccionChange('codigoPostal', e.target.value)}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    errors.codigoPostal ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                    errors.codigoPostal ? 'ring-red-300' : 'ring-slate-300'
+                  } focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5`}
                   placeholder="Ej: 28001"
                 />
                 {errors.codigoPostal && (
@@ -263,13 +263,13 @@ export default function ModalCrearEditarAlmacen({
 
           {/* Asociaciones */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">
+            <h3 className="text-lg font-semibold text-gray-900 border-b border-slate-200 pb-2">
               Asociaciones
             </h3>
 
             {clinicas.length > 0 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Clínica Asociada
                 </label>
                 <select
@@ -277,7 +277,7 @@ export default function ModalCrearEditarAlmacen({
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, clinicaAsociadaId: e.target.value }))
                   }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 >
                   <option value="">Seleccionar clínica (opcional)</option>
                   {clinicas.map((clinica) => (
@@ -291,7 +291,7 @@ export default function ModalCrearEditarAlmacen({
 
             {responsables.length > 0 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Responsable
                 </label>
                 <select
@@ -299,7 +299,7 @@ export default function ModalCrearEditarAlmacen({
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, responsableId: e.target.value }))
                   }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 >
                   <option value="">Seleccionar responsable (opcional)</option>
                   {responsables.map((responsable) => (
@@ -313,11 +313,11 @@ export default function ModalCrearEditarAlmacen({
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors text-sm font-medium"
               disabled={loading}
             >
               Cancelar
@@ -325,9 +325,9 @@ export default function ModalCrearEditarAlmacen({
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
             >
-              <Save className="w-4 h-4" />
+              <Save size={20} />
               {loading ? 'Guardando...' : almacen ? 'Actualizar' : 'Crear'}
             </button>
           </div>
@@ -336,5 +336,6 @@ export default function ModalCrearEditarAlmacen({
     </div>
   );
 }
+
 
 

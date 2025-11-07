@@ -56,9 +56,9 @@ export default function VistaImpresionOrdenCompra({
         <div className="mb-6 print:hidden flex justify-end">
           <button
             onClick={onImprimir}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700"
           >
-            <Printer className="w-4 h-4" />
+            <Printer size={20} />
             Imprimir
           </button>
         </div>
@@ -197,5 +197,6 @@ export default function VistaImpresionOrdenCompra({
     </div>
   );
 }
+
 
 

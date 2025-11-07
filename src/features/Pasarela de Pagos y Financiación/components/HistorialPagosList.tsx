@@ -61,15 +61,15 @@ export default function HistorialPagosList({
   const getEstadoIcon = (estado: Pago['estado']) => {
     switch (estado) {
       case 'completado':
-        return <CheckCircle2 className="w-5 h-5 text-green-600" />;
+        return <CheckCircle2 size={20} className="text-green-600" />;
       case 'fallido':
-        return <XCircle className="w-5 h-5 text-red-600" />;
+        return <XCircle size={20} className="text-red-600" />;
       case 'pendiente':
-        return <Clock className="w-5 h-5 text-yellow-600" />;
+        return <Clock size={20} className="text-yellow-600" />;
       case 'reembolsado':
-        return <XCircle className="w-5 h-5 text-orange-600" />;
+        return <XCircle size={20} className="text-orange-600" />;
       default:
-        return <Clock className="w-5 h-5 text-gray-600" />;
+        return <Clock size={20} className="text-gray-600" />;
     }
   };
 
@@ -112,44 +112,36 @@ export default function HistorialPagosList({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-        <div className="flex items-center justify-center space-x-3 py-8">
-          <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
-          <span className="text-gray-600">Cargando historial de pagos...</span>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando historial de pagos...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm text-red-800 font-medium">Error al cargar historial</p>
-            <p className="text-sm text-red-600 mt-1">{error}</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar historial</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
       </div>
     );
   }
 
   if (pagos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-        <div className="text-center py-8">
-          <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600 font-medium">No hay pagos registrados</p>
-          <p className="text-sm text-gray-500 mt-1">El historial de pagos aparecerá aquí</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <CreditCard size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay pagos registrados</h3>
+        <p className="text-gray-600">El historial de pagos aparecerá aquí</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-      <div className="p-6 border-b border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl">
+      <div className="px-4 py-3 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">Historial de Pagos</h3>
         <p className="text-sm text-gray-600 mt-1">{pagos.length} {pagos.length === 1 ? 'pago' : 'pagos'} registrado{pagos.length > 1 ? 's' : ''}</p>
       </div>
@@ -158,7 +150,7 @@ export default function HistorialPagosList({
         {pagos.map((pago) => (
           <div
             key={pago._id}
-            className={`p-6 hover:bg-gray-50 transition-colors ${compact ? 'p-4' : ''}`}
+            className={`p-4 hover:bg-gray-50 transition-colors ${compact ? 'p-3' : ''}`}
           >
             <div className="flex items-start justify-between">
               <div className="flex items-start space-x-4 flex-1">
@@ -168,13 +160,13 @@ export default function HistorialPagosList({
                     <span className={`px-2.5 py-1 rounded-full text-xs font-medium border ${getEstadoColor(pago.estado)}`}>
                       {pago.estado.charAt(0).toUpperCase() + pago.estado.slice(1)}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-slate-600">
                       {formatearMetodoPago(pago.metodo)}
                     </span>
                   </div>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
+                  <div className="flex items-center space-x-4 text-sm text-slate-600 mb-2">
                     <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
+                      <Calendar size={16} className="text-slate-600" />
                       <span>{formatearFecha(pago.fecha)}</span>
                     </div>
                     {pago.gatewayTransactionId && (
@@ -204,13 +196,13 @@ export default function HistorialPagosList({
                 <button
                   onClick={() => pago._id && handleVerDetalle(pago._id)}
                   disabled={cargandoDetalle}
-                  className="ml-4 p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="ml-4 p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   title="Ver detalle"
                 >
                   {cargandoDetalle && pagoSeleccionado?._id === pago._id ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 size={20} className="animate-spin" />
                   ) : (
-                    <Eye className="w-5 h-5" />
+                    <Eye size={20} />
                   )}
                 </button>
               )}
@@ -221,5 +213,6 @@ export default function HistorialPagosList({
     </div>
   );
 }
+
 
 

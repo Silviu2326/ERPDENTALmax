@@ -44,18 +44,23 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onClick={onCerrar} />
+        <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 backdrop-blur-sm" onClick={onCerrar} />
 
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
-          <div className="bg-white px-6 pt-6 pb-4">
+        <div className="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+          <div className="bg-white px-6 pt-6 pb-4 border-b border-gray-200">
             <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900">Detalle del Lote</h3>
-                <p className="text-sm text-gray-500 mt-1">ID: {lote.loteId}</p>
+              <div className="flex items-center gap-4">
+                <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                  <Package size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">Detalle del Lote</h3>
+                  <p className="text-sm text-gray-600 mt-1">ID: {lote.loteId}</p>
+                </div>
               </div>
               <button
                 onClick={onCerrar}
-                className="text-gray-400 hover:text-gray-500 transition-colors p-2 hover:bg-gray-100 rounded-lg"
+                className="text-gray-400 hover:text-gray-500 transition-colors p-2 hover:bg-gray-100 rounded-xl"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -65,32 +70,32 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
 
           <div className="px-6 pb-6 space-y-6 max-h-[70vh] overflow-y-auto">
             {/* Información General */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">Información General</h4>
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">Información General</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start space-x-3">
-                  <Building2 className="w-5 h-5 text-gray-400 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <Building2 className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-gray-500">Autoclave</p>
+                    <p className="text-sm text-slate-600 mb-1">Autoclave</p>
                     <p className="font-medium text-gray-900">{lote.autoclave.nombre}</p>
                     {lote.autoclave.modelo && (
-                      <p className="text-xs text-gray-500">{lote.autoclave.modelo}</p>
+                      <p className="text-xs text-slate-500 mt-1">{lote.autoclave.modelo}</p>
                     )}
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <User className="w-5 h-5 text-gray-400 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <User className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-gray-500">Operador</p>
+                    <p className="text-sm text-slate-600 mb-1">Operador</p>
                     <p className="font-medium text-gray-900">
                       {lote.operador.nombre} {lote.operador.apellidos}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <Building2 className="w-5 h-5 text-gray-400 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <Building2 className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-gray-500">Sede</p>
+                    <p className="text-sm text-slate-600 mb-1">Sede</p>
                     <p className="font-medium text-gray-900">{lote.sede.nombre}</p>
                   </div>
                 </div>
@@ -98,23 +103,23 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
             </div>
 
             {/* Fechas */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">Fechas del Ciclo</h4>
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">Fechas del Ciclo</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start space-x-3">
-                  <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <Calendar className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-gray-500">Fecha de Inicio</p>
+                    <p className="text-sm text-slate-600 mb-1">Fecha de Inicio</p>
                     <p className="font-medium text-gray-900">
                       {format(new Date(lote.fechaInicio), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
                     </p>
                   </div>
                 </div>
                 {lote.fechaFin && (
-                  <div className="flex items-start space-x-3">
-                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <div className="flex items-start gap-3">
+                    <Calendar className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm text-gray-500">Fecha de Fin</p>
+                      <p className="text-sm text-slate-600 mb-1">Fecha de Fin</p>
                       <p className="font-medium text-gray-900">
                         {format(new Date(lote.fechaFin), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
                       </p>
@@ -126,27 +131,27 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
 
             {/* Parámetros del Ciclo */}
             {lote.parametrosCiclo && (
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-lg font-semibold text-gray-800 mb-4">Parámetros del Ciclo</h4>
+              <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Parámetros del Ciclo</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="flex items-start space-x-3">
-                    <Thermometer className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <div className="flex items-start gap-3">
+                    <Thermometer className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm text-gray-500">Temperatura</p>
+                      <p className="text-sm text-slate-600 mb-1">Temperatura</p>
                       <p className="font-medium text-gray-900">{lote.parametrosCiclo.temperatura}°C</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <Gauge className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <div className="flex items-start gap-3">
+                    <Gauge className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm text-gray-500">Presión</p>
+                      <p className="text-sm text-slate-600 mb-1">Presión</p>
                       <p className="font-medium text-gray-900">{lote.parametrosCiclo.presion} bar</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3">
-                    <Timer className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <div className="flex items-start gap-3">
+                    <Timer className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm text-gray-500">Tiempo</p>
+                      <p className="text-sm text-slate-600 mb-1">Tiempo</p>
                       <p className="font-medium text-gray-900">{lote.parametrosCiclo.tiempo} min</p>
                     </div>
                   </div>
@@ -155,13 +160,13 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
             )}
 
             {/* Indicadores */}
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">Indicadores</h4>
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">Indicadores</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {lote.indicadorQuimico && (
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Indicador Químico</p>
-                    <div className="flex items-center space-x-2">
+                    <p className="text-sm text-slate-600 mb-2">Indicador Químico</p>
+                    <div className="flex items-center gap-2">
                       <span className="font-medium text-gray-900">{lote.indicadorQuimico.tipo}</span>
                       {lote.indicadorQuimico.resultado === 'correcto' ? (
                         <CheckCircle className="w-5 h-5 text-green-600" />
@@ -180,8 +185,8 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
                 )}
                 {lote.indicadorBiologico && (
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Indicador Biológico</p>
-                    <div className="flex items-center space-x-2">
+                    <p className="text-sm text-slate-600 mb-2">Indicador Biológico</p>
+                    <div className="flex items-center gap-2">
                       <span className="font-medium text-gray-900">{lote.indicadorBiologico.tipo}</span>
                       {lote.indicadorBiologico.resultado === 'negativo' ? (
                         <CheckCircle className="w-5 h-5 text-green-600" />
@@ -197,7 +202,7 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
                       </span>
                     </div>
                     {lote.indicadorBiologico.fechaLectura && (
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-slate-500 mt-2">
                         Lectura: {format(new Date(lote.indicadorBiologico.fechaLectura), 'dd/MM/yyyy HH:mm', { locale: es })}
                       </p>
                     )}
@@ -207,37 +212,37 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
             </div>
 
             {/* Paquetes */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="text-lg font-semibold text-gray-800">Paquetes de Instrumental</h4>
-                <div className="flex items-center space-x-2">
-                  <Package className="w-5 h-5 text-gray-400" />
-                  <span className="text-sm text-gray-500">{lote.paquetes.length} paquetes</span>
+                <h4 className="text-lg font-semibold text-gray-900">Paquetes de Instrumental</h4>
+                <div className="flex items-center gap-2">
+                  <Package className="w-5 h-5 text-slate-400" />
+                  <span className="text-sm text-slate-600">{lote.paquetes.length} paquetes</span>
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {lote.paquetes.map((paquete, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200"
+                    className="flex items-center justify-between p-3 bg-white rounded-xl border border-slate-200"
                   >
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">{paquete.paqueteId}</p>
-                      <p className="text-sm text-gray-500">{paquete.contenido}</p>
+                      <p className="text-sm text-slate-600 mt-1">{paquete.contenido}</p>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-3">
                       {paquete.utilizado ? (
-                        <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded">
+                        <span className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
                           Utilizado
                         </span>
                       ) : (
-                        <span className="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded">
+                        <span className="px-3 py-1 text-xs font-medium bg-slate-100 text-slate-800 rounded-full">
                           Disponible
                         </span>
                       )}
                       {paquete.paciente && (
                         <div className="text-right">
-                          <p className="text-xs text-gray-500">Paciente:</p>
+                          <p className="text-xs text-slate-600">Paciente:</p>
                           <p className="text-sm font-medium text-gray-900">
                             {paquete.paciente.nombre} {paquete.paciente.apellidos}
                           </p>
@@ -251,28 +256,28 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
 
             {/* Notas */}
             {lote.notas && (
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="text-lg font-semibold text-gray-800 mb-2">Notas</h4>
+              <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Notas</h4>
                 <p className="text-sm text-gray-700 whitespace-pre-wrap">{lote.notas}</p>
               </div>
             )}
           </div>
 
-          <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3">
+          <div className="bg-slate-50 px-6 py-4 flex justify-end gap-3 border-t border-slate-200">
             {onEditar && lote.estado === 'en_proceso' && (
               <button
                 onClick={() => {
                   onEditar(lote);
                   onCerrar();
                 }}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-sm"
               >
                 Editar Lote
               </button>
             )}
             <button
               onClick={onCerrar}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-all"
             >
               Cerrar
             </button>
@@ -282,5 +287,6 @@ export default function ModalDetalleLote({ lote, onCerrar, onEditar }: ModalDeta
     </div>
   );
 }
+
 
 

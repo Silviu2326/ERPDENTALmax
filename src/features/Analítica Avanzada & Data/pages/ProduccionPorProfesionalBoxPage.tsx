@@ -78,63 +78,74 @@ export default function ProduccionPorProfesionalBoxPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <BarChart3 className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Producción por Profesional (Box)</h1>
-              <p className="text-gray-600 mt-1">
-                Análisis detallado de producción por profesional y utilización de boxes
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <BarChart3 size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Producción por Profesional (Box)
+                </h1>
+                <p className="text-gray-600">
+                  Análisis detallado de producción por profesional y utilización de boxes
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <FiltrosProduccionBoxComponent
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          onAplicarFiltros={handleAplicarFiltros}
-          loading={loading}
-        />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosProduccionBoxComponent
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            onAplicarFiltros={handleAplicarFiltros}
+            loading={loading}
+          />
 
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-            <p className="text-sm text-red-800">{error}</p>
-            <button
-              onClick={cargarDatos}
-              className="ml-auto flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-              <RefreshCw className="w-4 h-4" />
-              <span>Reintentar</span>
-            </button>
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={cargarDatos}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <span>Reintentar</span>
+              </button>
+            </div>
+          )}
+
+          {/* Indicadores KPIs */}
+          <IndicadoresProduccionBox kpis={kpis} loading={loading} />
+
+          {/* Gráficos */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <GraficoComparativoProfesionales datos={comparativa} loading={loading} />
+            <GraficoProduccionPorBox datos={boxes} loading={loading} />
           </div>
-        )}
 
-        {/* Indicadores KPIs */}
-        <IndicadoresProduccionBox kpis={kpis} loading={loading} />
+          {/* Tabla de Detalle */}
+          <TablaDetalleProduccionBox datos={profesionales} loading={loading} />
 
-        {/* Gráficos */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <GraficoComparativoProfesionales datos={comparativa} loading={loading} />
-          <GraficoProduccionPorBox datos={boxes} loading={loading} />
+          {/* Mapa de Calor */}
+          <MapaCalorUtilizacionBox datos={utilizacionCalor} loading={loading} />
         </div>
-
-        {/* Tabla de Detalle */}
-        <TablaDetalleProduccionBox datos={profesionales} loading={loading} />
-
-        {/* Mapa de Calor */}
-        <MapaCalorUtilizacionBox datos={utilizacionCalor} loading={loading} />
       </div>
     </div>
   );
 }
+
 
 

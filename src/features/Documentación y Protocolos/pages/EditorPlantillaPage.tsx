@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, FileText, Loader2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import FormularioDetallePlantilla from '../components/FormularioDetallePlantilla';
 import {
@@ -86,13 +86,11 @@ export default function EditorPlantillaPage({
 
   if (cargando) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-2 text-gray-600">Cargando plantilla...</p>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando plantilla...</p>
           </div>
         </div>
       </div>
@@ -101,21 +99,19 @@ export default function EditorPlantillaPage({
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="text-center py-8">
-              <p className="text-red-600 font-semibold">
-                No tienes permisos para acceder a esta página
-              </p>
-              <button
-                onClick={onVolver}
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 mx-auto"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Volver</span>
-              </button>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error de permisos</h3>
+            <p className="text-gray-600 mb-4">No tienes permisos para acceder a esta página</p>
+            <button
+              onClick={onVolver}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <ArrowLeft size={20} />
+              <span>Volver</span>
+            </button>
           </div>
         </div>
       </div>
@@ -123,29 +119,46 @@ export default function EditorPlantillaPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={onVolver}
-            className="mb-4 flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            <span>Volver a Gestión de Plantillas</span>
-          </button>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {plantillaId ? 'Editar Plantilla' : 'Nueva Plantilla'}
-          </h1>
-          <p className="text-gray-600 mt-1">
-            {plantillaId
-              ? 'Modifica los detalles de la plantilla'
-              : 'Crea una nueva plantilla de documento'}
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div className="flex-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  {plantillaId ? 'Editar Plantilla' : 'Nueva Plantilla'}
+                </h1>
+                <p className="text-gray-600">
+                  {plantillaId
+                    ? 'Modifica los detalles de la plantilla'
+                    : 'Crea una nueva plantilla de documento'}
+                </p>
+              </div>
 
+              {/* Botón volver */}
+              <button
+                onClick={onVolver}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/70 rounded-xl transition-all"
+              >
+                <ArrowLeft size={18} />
+                <span>Volver</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-800">{error}</p>
           </div>
         )}
@@ -161,5 +174,6 @@ export default function EditorPlantillaPage({
     </div>
   );
 }
+
 
 

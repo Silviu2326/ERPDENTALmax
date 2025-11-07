@@ -1,4 +1,4 @@
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, FileText } from 'lucide-react';
 import PresupuestoDetailView from '../components/PresupuestoDetailView';
 import { PresupuestoPaciente } from '../api/presupuestosApi';
 
@@ -14,38 +14,51 @@ export default function DetallePresupuestoPage({
   onPresupuestoActualizado,
 }: DetallePresupuestoPageProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={onVolver}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Volver"
-            >
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Detalle del Presupuesto</h1>
-              <p className="text-sm text-gray-600">
-                Revisa los detalles completos del presupuesto
-              </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Botón volver */}
+              <button
+                onClick={onVolver}
+                className="p-2 hover:bg-gray-100 rounded-xl mr-4 transition-all"
+                aria-label="Volver"
+              >
+                <ArrowLeft size={24} className="text-gray-600" />
+              </button>
+              
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Detalle del Presupuesto
+                </h1>
+                <p className="text-gray-600">
+                  Revisa los detalles completos del presupuesto
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         <PresupuestoDetailView
           presupuestoId={presupuestoId}
           onVolver={onVolver}
           onPresupuestoActualizado={onPresupuestoActualizado}
         />
-      </main>
+      </div>
     </div>
   );
 }
+
 
 

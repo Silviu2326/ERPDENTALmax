@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Warehouse, MapPin, User, MoreVertical, Edit, Eye, Trash2, ArrowRightLeft, CheckCircle, XCircle, Star } from 'lucide-react';
+import { Warehouse, MapPin, User, MoreVertical, Edit, Eye, Trash2, ArrowRightLeft, CheckCircle, XCircle, Star, Loader2 } from 'lucide-react';
 import { Almacen } from '../api/almacenesApi';
 
 interface AlmacenesDataTableProps {
@@ -164,18 +164,19 @@ export default function AlmacenesDataTable({
 }: AlmacenesDataTableProps) {
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-gray-500">Cargando almacenes...</div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (almacenes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <Warehouse className="w-16 h-16 text-gray-300 mb-4" />
-        <p className="text-gray-500 text-lg font-medium">No hay almacenes registrados</p>
-        <p className="text-gray-400 text-sm mt-2">Crea tu primer almacén para comenzar</p>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Warehouse size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay almacenes registrados</h3>
+        <p className="text-gray-600 mb-4">Crea tu primer almacén para comenzar</p>
       </div>
     );
   }
@@ -221,5 +222,6 @@ export default function AlmacenesDataTable({
     </div>
   );
 }
+
 
 

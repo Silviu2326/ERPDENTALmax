@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Plus, Edit, Trash2, Eye, Settings, Save } from 'lucide-react';
+import { FileText, Plus, Edit, Trash2, Eye, Settings, Save, Loader2, Package, AlertCircle } from 'lucide-react';
 import {
   RecordatorioPlantilla,
   ConfiguracionRecordatorio,
@@ -262,175 +262,199 @@ export default function ConfiguracionPlantillasPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-            <Settings className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Configuración de Plantillas</h2>
-            <p className="text-gray-600 text-sm mt-1">
-              Gestiona las plantillas de mensajes y la automatización de recordatorios
-            </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Settings size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Configuración de Plantillas
+                </h1>
+                <p className="text-gray-600">
+                  Gestiona las plantillas de mensajes y la automatización de recordatorios
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="border-b border-gray-200 bg-gray-50">
-          <div className="flex">
-            <button
-              onClick={() => setVistaActiva('plantillas')}
-              className={`flex items-center gap-2 px-6 py-4 font-medium text-sm border-b-2 transition-colors ${
-                vistaActiva === 'plantillas'
-                  ? 'border-blue-600 text-blue-600 bg-white'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-              }`}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {/* Tabs */}
+        <div className="bg-white shadow-sm p-0 rounded-lg">
+          <div className="px-4 py-3">
+            <div
+              role="tablist"
+              aria-label="Secciones"
+              className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
             >
-              <FileText className="w-5 h-5" />
-              Plantillas de Mensajes
-            </button>
-            <button
-              onClick={() => setVistaActiva('configuracion')}
-              className={`flex items-center gap-2 px-6 py-4 font-medium text-sm border-b-2 transition-colors ${
-                vistaActiva === 'configuracion'
-                  ? 'border-blue-600 text-blue-600 bg-white'
-                  : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-              }`}
-            >
-              <Settings className="w-5 h-5" />
-              Configuración de Automatización
-            </button>
-          </div>
-        </div>
-
-        <div className="p-6">
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-              {error}
+              <button
+                onClick={() => setVistaActiva('plantillas')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  vistaActiva === 'plantillas'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <FileText size={18} className={vistaActiva === 'plantillas' ? 'opacity-100' : 'opacity-70'} />
+                <span>Plantillas de Mensajes</span>
+              </button>
+              <button
+                onClick={() => setVistaActiva('configuracion')}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  vistaActiva === 'configuracion'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                <Settings size={18} className={vistaActiva === 'configuracion' ? 'opacity-100' : 'opacity-70'} />
+                <span>Configuración de Automatización</span>
+              </button>
             </div>
-          )}
+          </div>
 
-          {vistaActiva === 'plantillas' && (
-            <div className="space-y-6">
-              {mostrarEditor ? (
-                <EditorPlantillasMensajes
-                  plantilla={plantillaEditando}
-                  onGuardar={handleGuardarPlantilla}
-                  onCancelar={() => {
-                    setMostrarEditor(false);
-                    setPlantillaEditando(undefined);
-                  }}
-                />
-              ) : (
-                <>
-                  <div className="flex justify-end">
-                    <button
-                      onClick={handleCrearPlantilla}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      <Plus className="w-4 h-4" />
-                      Nueva Plantilla
-                    </button>
-                  </div>
+          <div className="px-4 pb-6">
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                {error}
+              </div>
+            )}
 
-                  {loading ? (
-                    <div className="flex justify-center items-center py-12">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                    </div>
-                  ) : plantillas.length === 0 ? (
-                    <div className="text-center py-12 text-gray-500">
-                      <FileText className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                      <p>No hay plantillas creadas</p>
+            {vistaActiva === 'plantillas' && (
+              <div className="mt-6 space-y-6">
+                {mostrarEditor ? (
+                  <EditorPlantillasMensajes
+                    plantilla={plantillaEditando}
+                    onGuardar={handleGuardarPlantilla}
+                    onCancelar={() => {
+                      setMostrarEditor(false);
+                      setPlantillaEditando(undefined);
+                    }}
+                  />
+                ) : (
+                  <>
+                    {/* Toolbar */}
+                    <div className="flex items-center justify-end">
                       <button
                         onClick={handleCrearPlantilla}
-                        className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                       >
-                        Crear la primera plantilla
+                        <Plus size={20} />
+                        Nueva Plantilla
                       </button>
                     </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {plantillas.map((plantilla) => (
-                        <div
-                          key={plantilla._id}
-                          className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
-                        >
-                          <div className="flex items-start justify-between mb-4">
-                            <div>
-                              <h3 className="font-semibold text-gray-900">{plantilla.nombre}</h3>
-                              <div className="mt-2">{getTipoBadge(plantilla.tipo)}</div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => setPlantillaVistaPrevia(plantilla)}
-                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                              >
-                                <Eye className="w-4 h-4" />
-                              </button>
-                              <button
-                                onClick={() => handleEditarPlantilla(plantilla)}
-                                className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-                              >
-                                <Edit className="w-4 h-4" />
-                              </button>
-                              <button
-                                onClick={() => plantilla._id && handleEliminarPlantilla(plantilla._id)}
-                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-600 line-clamp-3 mb-4">
-                            {plantilla.cuerpo.substring(0, 100)}
-                            {plantilla.cuerpo.length > 100 ? '...' : ''}
-                          </p>
-                          <div className="flex items-center justify-between text-xs text-gray-500">
-                            <span
-                              className={`px-2 py-1 rounded ${
-                                plantilla.activo
-                                  ? 'bg-green-100 text-green-800'
-                                  : 'bg-gray-100 text-gray-800'
-                              }`}
-                            >
-                              {plantilla.activo ? 'Activa' : 'Inactiva'}
-                            </span>
-                            <span>
-                              {plantilla.variables?.length || 0} variables
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          )}
 
-          {vistaActiva === 'configuracion' && (
-            <div>
-              {loading ? (
-                <div className="flex justify-center items-center py-12">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                </div>
-              ) : configuracion ? (
-                <FormularioConfiguracionAutomatizacion
-                  configuracion={configuracion}
-                  plantillas={plantillas.filter((p) => p.activo)}
-                  onGuardar={handleGuardarConfiguracion}
-                />
-              ) : (
-                <div className="text-center py-12 text-gray-500">
-                  <p>No se pudo cargar la configuración</p>
-                </div>
-              )}
-            </div>
-          )}
+                    {/* Estados de carga y vacío */}
+                    {loading ? (
+                      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+                        <p className="text-gray-600">Cargando...</p>
+                      </div>
+                    ) : plantillas.length === 0 ? (
+                      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay plantillas creadas</h3>
+                        <p className="text-gray-600 mb-4">Comienza creando tu primera plantilla de mensaje</p>
+                        <button
+                          onClick={handleCrearPlantilla}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                        >
+                          <Plus size={20} />
+                          Crear la primera plantilla
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {plantillas.map((plantilla) => (
+                          <div
+                            key={plantilla._id}
+                            className="bg-white shadow-sm rounded-lg p-4 h-full flex flex-col transition-shadow hover:shadow-md overflow-hidden"
+                          >
+                            <div className="flex items-start justify-between mb-4">
+                              <div className="flex-1">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-2">{plantilla.nombre}</h3>
+                                <div>{getTipoBadge(plantilla.tipo)}</div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => setPlantillaVistaPrevia(plantilla)}
+                                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                  aria-label="Vista previa"
+                                >
+                                  <Eye size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleEditarPlantilla(plantilla)}
+                                  className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                                  aria-label="Editar"
+                                >
+                                  <Edit size={16} />
+                                </button>
+                                <button
+                                  onClick={() => plantilla._id && handleEliminarPlantilla(plantilla._id)}
+                                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                  aria-label="Eliminar"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            </div>
+                            <p className="text-sm text-gray-600 line-clamp-3 mb-4 flex-1">
+                              {plantilla.cuerpo.substring(0, 100)}
+                              {plantilla.cuerpo.length > 100 ? '...' : ''}
+                            </p>
+                            <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-100">
+                              <span
+                                className={`px-2 py-1 rounded-full font-medium ${
+                                  plantilla.activo
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}
+                              >
+                                {plantilla.activo ? 'Activa' : 'Inactiva'}
+                              </span>
+                              <span>
+                                {plantilla.variables?.length || 0} variables
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+
+            {vistaActiva === 'configuracion' && (
+              <div className="mt-6">
+                {loading ? (
+                  <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                    <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+                    <p className="text-gray-600">Cargando...</p>
+                  </div>
+                ) : configuracion ? (
+                  <FormularioConfiguracionAutomatizacion
+                    configuracion={configuracion}
+                    plantillas={plantillas.filter((p) => p.activo)}
+                    onGuardar={handleGuardarConfiguracion}
+                  />
+                ) : (
+                  <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                    <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+                    <p className="text-gray-600 mb-4">No se pudo cargar la configuración</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

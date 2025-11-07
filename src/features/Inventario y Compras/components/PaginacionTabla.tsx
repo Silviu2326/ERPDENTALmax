@@ -19,66 +19,69 @@ export default function PaginacionTabla({
   const endItem = Math.min(page * limit, total);
 
   return (
-    <div className="flex items-center justify-between bg-white px-4 py-3 border-t border-gray-200 rounded-b-lg">
-      <div className="flex items-center text-sm text-gray-700">
-        <span>
-          Mostrando {startItem} a {endItem} de {total} resultados
-        </span>
-      </div>
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={() => onPageChange(page - 1)}
-          disabled={page === 1}
-          className={`px-3 py-2 rounded-lg border transition-colors ${
-            page === 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
-              : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
-          }`}
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-        <div className="flex items-center space-x-1">
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-            let pageNum;
-            if (totalPages <= 5) {
-              pageNum = i + 1;
-            } else if (page <= 3) {
-              pageNum = i + 1;
-            } else if (page >= totalPages - 2) {
-              pageNum = totalPages - 4 + i;
-            } else {
-              pageNum = page - 2 + i;
-            }
-
-            return (
-              <button
-                key={pageNum}
-                onClick={() => onPageChange(pageNum)}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  page === pageNum
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
-                }`}
-              >
-                {pageNum}
-              </button>
-            );
-          })}
+    <div className="bg-white shadow-sm rounded-xl p-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="text-sm text-slate-600">
+          <span>
+            Mostrando {startItem} a {endItem} de {total} resultados
+          </span>
         </div>
-        <button
-          onClick={() => onPageChange(page + 1)}
-          disabled={page >= totalPages}
-          className={`px-3 py-2 rounded-lg border transition-colors ${
-            page >= totalPages
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
-              : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
-          }`}
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
+        <div className="flex justify-center items-center gap-2">
+          <button
+            onClick={() => onPageChange(page - 1)}
+            disabled={page === 1}
+            className={`inline-flex items-center justify-center px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+              page === 1
+                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 shadow-sm ring-1 ring-slate-200'
+            }`}
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <div className="flex items-center gap-1">
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (page <= 3) {
+                pageNum = i + 1;
+              } else if (page >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = page - 2 + i;
+              }
+
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => onPageChange(pageNum)}
+                  className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                    page === pageNum
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 shadow-sm ring-1 ring-slate-200'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+          </div>
+          <button
+            onClick={() => onPageChange(page + 1)}
+            disabled={page >= totalPages}
+            className={`inline-flex items-center justify-center px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+              page >= totalPages
+                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 shadow-sm ring-1 ring-slate-200'
+            }`}
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+
 
 

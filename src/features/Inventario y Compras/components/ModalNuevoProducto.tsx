@@ -69,23 +69,25 @@ export default function ModalNuevoProducto({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Plus className="w-6 h-6 text-blue-600" />
+            <div className="p-2 bg-blue-100 rounded-xl">
+              <Plus className="w-5 h-5 text-blue-600" />
+            </div>
             <h2 className="text-xl font-bold text-gray-900">Nuevo Producto</h2>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-slate-100"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="p-6">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-red-600" />
               <span className="text-sm text-red-700">{error}</span>
             </div>
@@ -95,7 +97,7 @@ export default function ModalNuevoProducto({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Nombre */}
               <div className="md:col-span-2">
-                <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="nombre" className="block text-sm font-medium text-slate-700 mb-2">
                   Nombre del Producto *
                 </label>
                 <input
@@ -104,14 +106,14 @@ export default function ModalNuevoProducto({
                   name="nombre"
                   value={formData.nombre}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
 
               {/* SKU */}
               <div>
-                <label htmlFor="sku" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="sku" className="block text-sm font-medium text-slate-700 mb-2">
                   SKU (Código) *
                 </label>
                 <input
@@ -120,14 +122,14 @@ export default function ModalNuevoProducto({
                   name="sku"
                   value={formData.sku}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
 
               {/* Categoría */}
               <div>
-                <label htmlFor="categoria" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="categoria" className="block text-sm font-medium text-slate-700 mb-2">
                   Categoría *
                 </label>
                 <select
@@ -135,7 +137,7 @@ export default function ModalNuevoProducto({
                   name="categoria"
                   value={formData.categoria}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 >
                   {categorias.map((cat) => (
@@ -148,7 +150,7 @@ export default function ModalNuevoProducto({
 
               {/* Proveedor */}
               <div>
-                <label htmlFor="proveedor" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="proveedor" className="block text-sm font-medium text-slate-700 mb-2">
                   Proveedor *
                 </label>
                 <select
@@ -156,7 +158,7 @@ export default function ModalNuevoProducto({
                   name="proveedor"
                   value={formData.proveedor}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 >
                   <option value="">Seleccione un proveedor</option>
@@ -170,7 +172,7 @@ export default function ModalNuevoProducto({
 
               {/* Sede */}
               <div>
-                <label htmlFor="sedeId" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="sedeId" className="block text-sm font-medium text-slate-700 mb-2">
                   Sede *
                 </label>
                 <select
@@ -178,7 +180,7 @@ export default function ModalNuevoProducto({
                   name="sedeId"
                   value={formData.sedeId}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 >
                   {sedes.map((sede) => (
@@ -191,7 +193,7 @@ export default function ModalNuevoProducto({
 
               {/* Unidad de Medida */}
               <div>
-                <label htmlFor="unidadMedida" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="unidadMedida" className="block text-sm font-medium text-slate-700 mb-2">
                   Unidad de Medida *
                 </label>
                 <select
@@ -199,7 +201,7 @@ export default function ModalNuevoProducto({
                   name="unidadMedida"
                   value={formData.unidadMedida}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 >
                   {unidadesMedida.map((unidad) => (
@@ -212,7 +214,7 @@ export default function ModalNuevoProducto({
 
               {/* Cantidad Inicial */}
               <div>
-                <label htmlFor="cantidadInicial" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="cantidadInicial" className="block text-sm font-medium text-slate-700 mb-2">
                   Cantidad Inicial *
                 </label>
                 <input
@@ -223,14 +225,14 @@ export default function ModalNuevoProducto({
                   onChange={handleChange}
                   min="0"
                   step="0.01"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
 
               {/* Punto de Reorden */}
               <div>
-                <label htmlFor="puntoReorden" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="puntoReorden" className="block text-sm font-medium text-slate-700 mb-2">
                   Punto de Reorden *
                 </label>
                 <input
@@ -241,14 +243,14 @@ export default function ModalNuevoProducto({
                   onChange={handleChange}
                   min="0"
                   step="0.01"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
 
               {/* Costo Unitario */}
               <div>
-                <label htmlFor="costoUnitario" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="costoUnitario" className="block text-sm font-medium text-slate-700 mb-2">
                   Costo Unitario *
                 </label>
                 <input
@@ -259,14 +261,14 @@ export default function ModalNuevoProducto({
                   onChange={handleChange}
                   min="0"
                   step="0.01"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
 
               {/* Fecha de Caducidad */}
               <div>
-                <label htmlFor="fechaCaducidad" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="fechaCaducidad" className="block text-sm font-medium text-slate-700 mb-2">
                   Fecha de Caducidad
                 </label>
                 <input
@@ -275,13 +277,13 @@ export default function ModalNuevoProducto({
                   name="fechaCaducidad"
                   value={formData.fechaCaducidad}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
 
               {/* Ubicación */}
               <div>
-                <label htmlFor="ubicacion" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="ubicacion" className="block text-sm font-medium text-slate-700 mb-2">
                   Ubicación
                 </label>
                 <input
@@ -290,14 +292,14 @@ export default function ModalNuevoProducto({
                   name="ubicacion"
                   value={formData.ubicacion}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   placeholder="Ej: Almacén A, Estante 3"
                 />
               </div>
 
               {/* Descripción */}
               <div className="md:col-span-2">
-                <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="descripcion" className="block text-sm font-medium text-slate-700 mb-2">
                   Descripción
                 </label>
                 <textarea
@@ -306,7 +308,7 @@ export default function ModalNuevoProducto({
                   value={formData.descripcion}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
             </div>
@@ -315,14 +317,14 @@ export default function ModalNuevoProducto({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 Cancelar
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 {loading ? 'Creando...' : 'Crear Producto'}
@@ -334,5 +336,6 @@ export default function ModalNuevoProducto({
     </div>
   );
 }
+
 
 

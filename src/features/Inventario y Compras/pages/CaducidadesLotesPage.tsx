@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Plus, AlertTriangle, RefreshCw, Calendar, Package, Clock } from 'lucide-react';
+import { Plus, AlertTriangle, RefreshCw, Calendar, Package, Clock, AlertCircle, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   LoteProducto,
   FiltrosLotes,
@@ -12,6 +12,7 @@ import TablaLotesCaducidad from '../components/TablaLotesCaducidad';
 import FiltrosCaducidad from '../components/FiltrosCaducidad';
 import ModalRegistroLote from '../components/ModalRegistroLote';
 import AlertaCaducidadBadge from '../components/AlertaCaducidadBadge';
+import MetricCards from '../components/MetricCards';
 
 export default function CaducidadesLotesPage() {
   const [lotes, setLotes] = useState<LoteProducto[]>([]);
@@ -513,302 +514,287 @@ export default function CaducidadesLotesPage() {
   }, [lotes]);
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Encabezado */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Caducidades y Lotes</h1>
-          <p className="text-sm text-gray-600 mt-1">
-            Gestión y monitoreo de lotes de productos con control de caducidades
-          </p>
-        </div>
-        <button
-          onClick={() => setMostrarModalRegistro(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-        >
-          <Plus className="w-5 h-5" />
-          Registrar Nuevo Lote
-        </button>
-      </div>
-
-      {/* Estadísticas de lotes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Lotes Activos</p>
-              <p className="text-3xl font-bold text-green-600 mt-2">{estadisticas.activos}</p>
-              <p className="text-xs text-gray-500 mt-1">En buen estado</p>
-            </div>
-            <Package className="w-12 h-12 text-green-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Por Caducar</p>
-              <p className="text-3xl font-bold text-yellow-600 mt-2">{estadisticas.porCaducar}</p>
-              <p className="text-xs text-gray-500 mt-1">Próximos 30 días</p>
-            </div>
-            <Clock className="w-12 h-12 text-yellow-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Caducados</p>
-              <p className="text-3xl font-bold text-red-600 mt-2">{estadisticas.caducados}</p>
-              <p className="text-xs text-gray-500 mt-1">Requieren acción</p>
-            </div>
-            <AlertTriangle className="w-12 h-12 text-red-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Stock Total</p>
-              <p className="text-3xl font-bold text-blue-600 mt-2">{estadisticas.cantidadTotal}</p>
-              <p className="text-xs text-gray-500 mt-1">Unidades disponibles</p>
-            </div>
-            <Package className="w-12 h-12 text-blue-500 opacity-50" />
-          </div>
-        </div>
-      </div>
-
-      {/* Estadísticas adicionales de caducidad */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Próximos 7 días</p>
-              <p className="text-3xl font-bold text-yellow-600 mt-2">{estadisticas.lotesProximos7Dias}</p>
-              <p className="text-xs text-gray-500 mt-1">Caducan esta semana</p>
-            </div>
-            <Clock className="w-12 h-12 text-yellow-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Próximos 30 días</p>
-              <p className="text-3xl font-bold text-orange-600 mt-2">{estadisticas.lotesProximos30Dias}</p>
-              <p className="text-xs text-gray-500 mt-1">Caducan este mes</p>
-            </div>
-            <Calendar className="w-12 h-12 text-orange-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Valor Caducado</p>
-              <p className="text-3xl font-bold text-red-600 mt-2">
-                ${estadisticas.valorCaducados.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">Pérdida estimada</p>
-            </div>
-            <AlertTriangle className="w-12 h-12 text-red-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Días Promedio</p>
-              <p className="text-3xl font-bold text-blue-600 mt-2">
-                {Math.round(estadisticas.diasPromedioCaducidad)}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">Hasta caducidad</p>
-            </div>
-            <Package className="w-12 h-12 text-blue-500 opacity-50" />
-          </div>
-        </div>
-      </div>
-
-      {/* Resumen de uso */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 mb-6 border-l-4 border-blue-500">
-        <div className="flex items-center gap-3 mb-4">
-          <Calendar className="w-6 h-6 text-blue-600" />
-          <h3 className="text-lg font-bold text-gray-900">Resumen de Inventario</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <p className="text-sm text-gray-600 mb-1">Cantidad Inicial Total</p>
-            <p className="text-2xl font-bold text-gray-900">{estadisticas.cantidadInicialTotal}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600 mb-1">Cantidad Actual Total</p>
-            <p className="text-2xl font-bold text-blue-600">{estadisticas.cantidadTotal}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600 mb-1">Porcentaje de Uso</p>
-            <p className="text-2xl font-bold text-indigo-600">{estadisticas.porcentajeUso.toFixed(1)}%</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Distribución por producto */}
-      {Object.keys(estadisticas.lotesPorProducto).length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Package className="w-6 h-6 text-indigo-600" />
-            <h3 className="text-lg font-bold text-gray-900">Lotes por Producto</h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(estadisticas.lotesPorProducto)
-              .sort((a, b) => b[1].total - a[1].total)
-              .slice(0, 6)
-              .map(([producto, datos]) => (
-                <div key={producto} className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-200">
-                  <p className="text-sm font-medium text-gray-700 mb-3 truncate">{producto}</p>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl font-bold text-gray-900">{datos.total}</span>
-                      <span className="text-xs text-gray-500">Total lotes</span>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-green-600">Activos: {datos.activos}</span>
-                        <span className="text-yellow-600">Por caducar: {datos.porCaducar}</span>
-                        <span className="text-red-600">Caducados: {datos.caducados}</span>
-                      </div>
-                      <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                        <div className="flex h-2">
-                          <div
-                            className="bg-green-500 h-2"
-                            style={{ width: `${(datos.activos / datos.total) * 100}%` }}
-                          ></div>
-                          <div
-                            className="bg-yellow-500 h-2"
-                            style={{ width: `${(datos.porCaducar / datos.total) * 100}%` }}
-                          ></div>
-                          <div
-                            className="bg-red-500 h-2"
-                            style={{ width: `${(datos.caducados / datos.total) * 100}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Package size={24} className="text-blue-600" />
                 </div>
-              ))}
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Caducidades y Lotes
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión y monitoreo de lotes de productos con control de caducidades
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setMostrarModalRegistro(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium"
+              >
+                <Plus size={20} />
+                Registrar Nuevo Lote
+              </button>
+            </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Alertas de Caducidad */}
-      {alertas && (alertas.caducados.length > 0 || alertas.porCaducar.length > 0) && (
-        <div className="bg-gradient-to-r from-yellow-50 to-red-50 border-l-4 border-yellow-400 rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-2">Alertas de Caducidad</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {alertas.caducados.length > 0 && (
-                  <div>
-                    <p className="text-sm font-medium text-red-800 mb-1">
-                      {alertas.caducados.length} Lote(s) Caducado(s)
-                    </p>
-                    <div className="space-y-1">
-                      {alertas.caducados.slice(0, 3).map((lote) => (
-                        <div key={lote._id} className="text-xs text-red-700">
-                          • {lote.producto.nombre} - Lote {lote.numeroLote}
-                        </div>
-                      ))}
-                      {alertas.caducados.length > 3 && (
-                        <div className="text-xs text-red-600 font-medium">
-                          +{alertas.caducados.length - 3} más
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-                {alertas.porCaducar.length > 0 && (
-                  <div>
-                    <p className="text-sm font-medium text-yellow-800 mb-1">
-                      {alertas.porCaducar.length} Lote(s) Por Caducar (próximos 30 días)
-                    </p>
-                    <div className="space-y-1">
-                      {alertas.porCaducar.slice(0, 3).map((lote) => (
-                        <div key={lote._id} className="text-xs text-yellow-700">
-                          • {lote.producto.nombre} - Lote {lote.numeroLote}
-                        </div>
-                      ))}
-                      {alertas.porCaducar.length > 3 && (
-                        <div className="text-xs text-yellow-600 font-medium">
-                          +{alertas.porCaducar.length - 3} más
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* KPIs de lotes */}
+          <MetricCards
+            data={[
+              {
+                id: 'lotes-activos',
+                title: 'Lotes Activos',
+                value: estadisticas.activos,
+                color: 'success',
+              },
+              {
+                id: 'por-caducar',
+                title: 'Por Caducar',
+                value: estadisticas.porCaducar,
+                color: 'warning',
+              },
+              {
+                id: 'caducados',
+                title: 'Caducados',
+                value: estadisticas.caducados,
+                color: 'danger',
+              },
+              {
+                id: 'stock-total',
+                title: 'Stock Total',
+                value: estadisticas.cantidadTotal,
+                color: 'info',
+              },
+              {
+                id: 'proximos-7-dias',
+                title: 'Próximos 7 días',
+                value: estadisticas.lotesProximos7Dias,
+                color: 'warning',
+              },
+              {
+                id: 'proximos-30-dias',
+                title: 'Próximos 30 días',
+                value: estadisticas.lotesProximos30Dias,
+                color: 'warning',
+              },
+              {
+                id: 'valor-caducado',
+                title: 'Valor Caducado',
+                value: `$${estadisticas.valorCaducados.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'danger',
+              },
+              {
+                id: 'dias-promedio',
+                title: 'Días Promedio',
+                value: Math.round(estadisticas.diasPromedioCaducidad),
+                color: 'info',
+              },
+            ]}
+          />
+
+          {/* Resumen de uso */}
+          <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+            <div className="flex items-center gap-3 mb-4">
+              <Calendar className="w-6 h-6 text-blue-600" />
+              <h3 className="text-lg font-semibold text-gray-900">Resumen de Inventario</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <p className="text-sm font-medium text-slate-700 mb-1">Cantidad Inicial Total</p>
+                <p className="text-2xl font-bold text-gray-900">{estadisticas.cantidadInicialTotal}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-700 mb-1">Cantidad Actual Total</p>
+                <p className="text-2xl font-bold text-blue-600">{estadisticas.cantidadTotal}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-700 mb-1">Porcentaje de Uso</p>
+                <p className="text-2xl font-bold text-indigo-600">{estadisticas.porcentajeUso.toFixed(1)}%</p>
               </div>
             </div>
           </div>
+
+          {/* Distribución por producto */}
+          {Object.keys(estadisticas.lotesPorProducto).length > 0 && (
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Package className="w-6 h-6 text-indigo-600" />
+                <h3 className="text-lg font-semibold text-gray-900">Lotes por Producto</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {Object.entries(estadisticas.lotesPorProducto)
+                  .sort((a, b) => b[1].total - a[1].total)
+                  .slice(0, 6)
+                  .map(([producto, datos]) => (
+                    <div key={producto} className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                      <p className="text-sm font-medium text-slate-700 mb-3 truncate">{producto}</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-2xl font-bold text-gray-900">{datos.total}</span>
+                          <span className="text-xs text-slate-500">Total lotes</span>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-green-600">Activos: {datos.activos}</span>
+                            <span className="text-yellow-600">Por caducar: {datos.porCaducar}</span>
+                            <span className="text-red-600">Caducados: {datos.caducados}</span>
+                          </div>
+                          <div className="flex-1 bg-slate-200 rounded-full h-2 overflow-hidden">
+                            <div className="flex h-2">
+                              <div
+                                className="bg-green-500 h-2"
+                                style={{ width: `${(datos.activos / datos.total) * 100}%` }}
+                              ></div>
+                              <div
+                                className="bg-yellow-500 h-2"
+                                style={{ width: `${(datos.porCaducar / datos.total) * 100}%` }}
+                              ></div>
+                              <div
+                                className="bg-red-500 h-2"
+                                style={{ width: `${(datos.caducados / datos.total) * 100}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* Alertas de Caducidad */}
+          {alertas && (alertas.caducados.length > 0 || alertas.porCaducar.length > 0) && (
+            <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-400">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Alertas de Caducidad</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {alertas.caducados.length > 0 && (
+                      <div>
+                        <p className="text-sm font-medium text-red-800 mb-1">
+                          {alertas.caducados.length} Lote(s) Caducado(s)
+                        </p>
+                        <div className="space-y-1">
+                          {alertas.caducados.slice(0, 3).map((lote) => (
+                            <div key={lote._id} className="text-xs text-red-700">
+                              • {lote.producto.nombre} - Lote {lote.numeroLote}
+                            </div>
+                          ))}
+                          {alertas.caducados.length > 3 && (
+                            <div className="text-xs text-red-600 font-medium">
+                              +{alertas.caducados.length - 3} más
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {alertas.porCaducar.length > 0 && (
+                      <div>
+                        <p className="text-sm font-medium text-yellow-800 mb-1">
+                          {alertas.porCaducar.length} Lote(s) Por Caducar (próximos 30 días)
+                        </p>
+                        <div className="space-y-1">
+                          {alertas.porCaducar.slice(0, 3).map((lote) => (
+                            <div key={lote._id} className="text-xs text-yellow-700">
+                              • {lote.producto.nombre} - Lote {lote.numeroLote}
+                            </div>
+                          ))}
+                          {alertas.porCaducar.length > 3 && (
+                            <div className="text-xs text-yellow-600 font-medium">
+                              +{alertas.porCaducar.length - 3} más
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros */}
+          <FiltrosCaducidad
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            productos={productos}
+          />
+
+          {/* Error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <p className="text-red-700 flex-1">{error}</p>
+                <button
+                  onClick={cargarLotes}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-600 text-white rounded-xl hover:bg-red-700 text-sm font-medium transition-all"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Reintentar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Tabla de Lotes */}
+          <TablaLotesCaducidad
+            lotes={lotes}
+            loading={loading}
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            onLoteActualizado={cargarLotes}
+          />
+
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white rounded-xl shadow-sm p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="text-sm text-slate-600">
+                  Mostrando {(paginacion.page - 1) * paginacion.limit + 1} a{' '}
+                  {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
+                  {paginacion.total} lotes
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handleCambiarPagina(paginacion.page - 1)}
+                    disabled={paginacion.page === 1}
+                    className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <span className="px-4 py-2 text-sm text-slate-700">
+                    Página {paginacion.page} de {paginacion.totalPages}
+                  </span>
+                  <button
+                    onClick={() => handleCambiarPagina(paginacion.page + 1)}
+                    disabled={paginacion.page >= paginacion.totalPages}
+                    className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-
-      {/* Filtros */}
-      <FiltrosCaducidad
-        filtros={filtros}
-        onFiltrosChange={setFiltros}
-        productos={productos}
-      />
-
-      {/* Error */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <AlertTriangle className="w-5 h-5 text-red-600" />
-          <div>
-            <p className="text-sm font-medium text-red-800">Error</p>
-            <p className="text-sm text-red-700">{error}</p>
-          </div>
-          <button
-            onClick={cargarLotes}
-            className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Reintentar
-          </button>
-        </div>
-      )}
-
-      {/* Tabla de Lotes */}
-      <TablaLotesCaducidad
-        lotes={lotes}
-        loading={loading}
-        filtros={filtros}
-        onFiltrosChange={setFiltros}
-        onLoteActualizado={cargarLotes}
-      />
-
-      {/* Paginación */}
-      {paginacion.totalPages > 1 && (
-        <div className="flex items-center justify-between bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-4">
-          <div className="text-sm text-gray-700">
-            Mostrando {(paginacion.page - 1) * paginacion.limit + 1} a{' '}
-            {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
-            {paginacion.total} lotes
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => handleCambiarPagina(paginacion.page - 1)}
-              disabled={paginacion.page === 1}
-              className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Anterior
-            </button>
-            <span className="text-sm text-gray-700">
-              Página {paginacion.page} de {paginacion.totalPages}
-            </span>
-            <button
-              onClick={() => handleCambiarPagina(paginacion.page + 1)}
-              disabled={paginacion.page >= paginacion.totalPages}
-              className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Siguiente
-            </button>
-          </div>
-        </div>
-      )}
+      </div>
 
       {/* Modal de Registro */}
       {mostrarModalRegistro && (

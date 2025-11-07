@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { Download, ArrowUpDown, ArrowUp, ArrowDown, Loader2, BarChart3 } from 'lucide-react';
 import { ProductividadProfesional } from '../api/reportesProductividadApi';
 
 interface ProductividadDataTableProps {
@@ -115,29 +115,27 @@ export default function ProductividadDataTable({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando datos...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p className="text-lg font-medium">No hay datos disponibles</p>
-          <p className="text-sm">Seleccione un rango de fechas para ver los datos</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <BarChart3 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600 mb-4">Seleccione un rango de fechas para ver los datos</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
+      <div className="p-4 border-b border-slate-200">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Detalle por Profesional</h3>
             <p className="text-sm text-gray-600 mt-1">
@@ -146,9 +144,9 @@ export default function ProductividadDataTable({
           </div>
           <button
             onClick={exportarCSV}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm"
           >
-            <Download className="w-4 h-4" />
+            <Download size={20} />
             Exportar CSV
           </button>
         </div>
@@ -156,10 +154,10 @@ export default function ProductividadDataTable({
 
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('nombreCompleto')}
               >
                 <div className="flex items-center gap-2">
@@ -168,7 +166,7 @@ export default function ProductividadDataTable({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('ingresosTotales')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -177,7 +175,7 @@ export default function ProductividadDataTable({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('numeroTratamientos')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -186,7 +184,7 @@ export default function ProductividadDataTable({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('horasSillon')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -195,7 +193,7 @@ export default function ProductividadDataTable({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('costeMateriales')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -204,7 +202,7 @@ export default function ProductividadDataTable({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('rentabilidad')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -213,7 +211,7 @@ export default function ProductividadDataTable({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => manejarOrden('productividadPorHora')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -223,9 +221,9 @@ export default function ProductividadDataTable({
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-slate-200">
             {datosOrdenados.map((dato, index) => (
-              <tr key={dato.profesionalId} className="hover:bg-gray-50">
+              <tr key={dato.profesionalId} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{dato.nombreCompleto}</div>
                 </td>
@@ -246,14 +244,14 @@ export default function ProductividadDataTable({
                 <td className="px-6 py-4 whitespace-nowrap text-right">
                   <div
                     className={`text-sm font-semibold ${
-                      dato.rentabilidad >= 0 ? 'text-emerald-600' : 'text-red-600'
+                      dato.rentabilidad >= 0 ? 'text-green-600' : 'text-red-600'
                     }`}
                   >
                     {formatearMoneda(dato.rentabilidad)}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <div className="text-sm font-medium text-indigo-600">
+                  <div className="text-sm font-medium text-blue-600">
                     {formatearMoneda(dato.productividadPorHora)}
                   </div>
                 </td>
@@ -265,5 +263,6 @@ export default function ProductividadDataTable({
     </div>
   );
 }
+
 
 

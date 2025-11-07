@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { LandingPage, obtenerLandingPagePublica, capturarLead } from '../../api/landingPagesApi';
 import TextBlockEditor from '../../components/TextBlockEditor';
 import ImageBlockEditor from '../../components/ImageBlockEditor';
@@ -67,61 +68,82 @@ export default function LandingPagePublica({ slug }: LandingPagePublicaProps) {
       case 'formulario':
         return (
           <div key={bloque.id} className="my-8">
-            {enviado ? (
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-                ¡Gracias! Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto contigo pronto.
-              </div>
-            ) : (
-              <form onSubmit={handleSubmitForm} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.nombre}
-                    onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
+            <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-6">
+              {enviado ? (
+                <div className="rounded-2xl bg-green-50 ring-1 ring-green-200 p-4">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 size={24} className="text-green-600 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-sm font-semibold text-green-900 mb-1">¡Mensaje enviado!</h3>
+                      <p className="text-sm text-green-700">
+                        Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto contigo pronto.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.telefono}
-                    onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
-                  <textarea
-                    required
-                    value={formData.mensaje}
-                    onChange={(e) => setFormData({ ...formData, mensaje: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    rows={4}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={enviando}
-                  className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {enviando ? 'Enviando...' : 'Enviar'}
-                </button>
-              </form>
-            )}
+              ) : (
+                <form onSubmit={handleSubmitForm} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Nombre</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.nombre}
+                      onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 transition-all"
+                      placeholder="Ingresa tu nombre"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 transition-all"
+                      placeholder="tu@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.telefono}
+                      onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 transition-all"
+                      placeholder="+34 123 456 789"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Mensaje</label>
+                    <textarea
+                      required
+                      value={formData.mensaje}
+                      onChange={(e) => setFormData({ ...formData, mensaje: e.target.value })}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 transition-all"
+                      rows={4}
+                      placeholder="Escribe tu mensaje aquí..."
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={enviando}
+                    className="w-full bg-blue-600 text-white px-4 py-2.5 rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm shadow-sm ring-1 ring-blue-200/70"
+                  >
+                    {enviando ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <Loader2 size={18} className="animate-spin" />
+                        Enviando...
+                      </span>
+                    ) : (
+                      'Enviar mensaje'
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         );
       default:
@@ -131,10 +153,10 @@ export default function LandingPagePublica({ slug }: LandingPagePublicaProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Cargando página...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-8 text-center max-w-md mx-auto">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando página...</p>
         </div>
       </div>
     );
@@ -142,27 +164,31 @@ export default function LandingPagePublica({ slug }: LandingPagePublicaProps) {
 
   if (error || !landingPage) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Página no encontrada</h1>
-          <p className="text-gray-600">{error || 'La página que buscas no existe'}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-8 text-center max-w-md mx-auto">
+          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Página no encontrada</h3>
+          <p className="text-gray-600 mb-4">{error || 'La página que buscas no existe'}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <head>
         <title>{landingPage.seoMeta.titulo || landingPage.nombre}</title>
         <meta name="description" content={landingPage.seoMeta.descripcion} />
       </head>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        {landingPage.contenidoJson.bloques?.map((bloque) => renderBloque(bloque))}
+      <main className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {landingPage.contenidoJson.bloques?.map((bloque) => renderBloque(bloque))}
+        </div>
       </main>
     </div>
   );
 }
+
 
 

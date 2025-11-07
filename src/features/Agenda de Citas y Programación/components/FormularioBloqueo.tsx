@@ -200,7 +200,7 @@ export default function FormularioBloqueo({
     <div className="space-y-6">
       {/* Alerta de conflicto */}
       {conflicto.tiene && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start space-x-2">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-start space-x-2">
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-semibold">Conflicto detectado</p>
@@ -239,7 +239,7 @@ export default function FormularioBloqueo({
           }}
           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
         />
-        <label htmlFor="esDiaCompleto" className="text-sm font-medium text-gray-700">
+        <label htmlFor="esDiaCompleto" className="text-sm font-medium text-slate-700">
           Bloquear día completo
         </label>
       </div>
@@ -248,7 +248,7 @@ export default function FormularioBloqueo({
       {!formData.esDiaCompleto && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center space-x-2 text-sm font-medium text-slate-700 mb-2">
               <Calendar className="w-4 h-4" />
               <span>Fecha *</span>
             </label>
@@ -259,12 +259,12 @@ export default function FormularioBloqueo({
               onChange={(e) => {
                 handleFechaHoraChange('inicio', e.target.value, horaInicioStr);
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center space-x-2 text-sm font-medium text-slate-700 mb-2">
               <Clock className="w-4 h-4" />
               <span>Hora Inicio *</span>
             </label>
@@ -276,12 +276,12 @@ export default function FormularioBloqueo({
                 handleFechaHoraChange('inicio', fechaStr, e.target.value);
               }}
               disabled={formData.esDiaCompleto}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:opacity-50"
             />
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center space-x-2 text-sm font-medium text-slate-700 mb-2">
               <Clock className="w-4 h-4" />
               <span>Hora Fin *</span>
             </label>
@@ -293,7 +293,7 @@ export default function FormularioBloqueo({
                 handleFechaHoraChange('fin', fechaStr, e.target.value);
               }}
               disabled={formData.esDiaCompleto}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:opacity-50"
             />
           </div>
         </div>
@@ -301,7 +301,7 @@ export default function FormularioBloqueo({
 
       {formData.esDiaCompleto && (
         <div>
-          <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center space-x-2 text-sm font-medium text-slate-700 mb-2">
             <Calendar className="w-4 h-4" />
             <span>Fecha *</span>
           </label>
@@ -317,14 +317,14 @@ export default function FormularioBloqueo({
               handleChange('fechaInicio', fecha.toISOString());
               handleChange('fechaFin', fechaFin.toISOString());
             }}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       )}
 
       {/* Motivo */}
       <div>
-        <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+        <label className="flex items-center space-x-2 text-sm font-medium text-slate-700 mb-2">
           <FileText className="w-4 h-4" />
           <span>Motivo del Bloqueo *</span>
         </label>
@@ -334,7 +334,7 @@ export default function FormularioBloqueo({
           required
           rows={3}
           placeholder="Ej: Mantenimiento del sillón, Reunión de equipo, Vacaciones..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
 

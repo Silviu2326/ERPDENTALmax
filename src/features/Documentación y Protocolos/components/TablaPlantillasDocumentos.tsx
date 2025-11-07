@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Edit, Trash2, Eye, FileText, CheckCircle, XCircle } from 'lucide-react';
+import { Edit, Trash2, Eye, FileText, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { DocumentoPlantilla } from '../api/plantillasApi';
 
 interface TablaPlantillasDocumentosProps {
@@ -28,10 +27,10 @@ export default function TablaPlantillasDocumentos({
 }: TablaPlantillasDocumentosProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Cargando plantillas...</p>
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200">
+        <div className="p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando plantillas...</p>
         </div>
       </div>
     );
@@ -39,37 +38,38 @@ export default function TablaPlantillasDocumentos({
 
   if (plantillas.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="text-center py-8">
-          <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">No hay plantillas disponibles</p>
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200">
+        <div className="p-8 text-center">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay plantillas disponibles</h3>
+          <p className="text-gray-600">No se encontraron plantillas que coincidan con los filtros aplicados</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Nombre
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Versión
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Sede
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -84,7 +84,7 @@ export default function TablaPlantillasDocumentos({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 ring-1 ring-blue-200/50">
                     {tipoLabels[plantilla.tipo]}
                   </span>
                 </td>
@@ -93,12 +93,12 @@ export default function TablaPlantillasDocumentos({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {plantilla.activa ? (
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 ring-1 ring-green-200/50">
                       <CheckCircle className="w-3 h-3 mr-1" />
                       Activa
                     </span>
                   ) : (
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 ring-1 ring-red-200/50">
                       <XCircle className="w-3 h-3 mr-1" />
                       Inactiva
                     </span>
@@ -108,24 +108,24 @@ export default function TablaPlantillasDocumentos({
                   {plantilla.sedeId ? 'Específica' : 'Global'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex items-center justify-end space-x-2">
+                  <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => onVer(plantilla)}
-                      className="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50 transition-colors"
+                      className="text-blue-600 hover:text-blue-900 p-2 rounded-xl hover:bg-blue-50 transition-all"
                       title="Ver detalles"
                     >
                       <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onEditar(plantilla)}
-                      className="text-indigo-600 hover:text-indigo-900 p-2 rounded-lg hover:bg-indigo-50 transition-colors"
+                      className="text-indigo-600 hover:text-indigo-900 p-2 rounded-xl hover:bg-indigo-50 transition-all"
                       title="Editar"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => onEliminar(plantilla)}
-                      className="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50 transition-colors"
+                      className="text-red-600 hover:text-red-900 p-2 rounded-xl hover:bg-red-50 transition-all"
                       title="Eliminar"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -140,5 +140,6 @@ export default function TablaPlantillasDocumentos({
     </div>
   );
 }
+
 
 

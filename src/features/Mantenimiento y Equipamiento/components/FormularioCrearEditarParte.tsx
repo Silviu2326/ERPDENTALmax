@@ -142,9 +142,9 @@ export default function FormularioCrearEditarParte({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <form onSubmit={handleSubmit} className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <FileText className="w-5 h-5" />
           {modoEdicion ? 'Editar Parte de Avería' : 'Nuevo Parte de Avería'}
         </h2>
@@ -158,7 +158,7 @@ export default function FormularioCrearEditarParte({
       </div>
 
       {errores.general && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-800">
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-red-800">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <span className="text-sm">{errores.general}</span>
         </div>
@@ -168,7 +168,7 @@ export default function FormularioCrearEditarParte({
         {/* Selección de Clínica */}
         {clinicas.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Clínica <span className="text-red-500">*</span>
             </label>
             <select
@@ -179,8 +179,8 @@ export default function FormularioCrearEditarParte({
                 setErrores({ ...errores, clinicaId: '', equipoId: '' });
               }}
               disabled={modoEdicion}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.clinicaId ? 'border-red-300' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+                errores.clinicaId ? 'ring-red-300' : 'ring-slate-300'
               } ${modoEdicion ? 'bg-gray-100' : ''}`}
             >
               <option value="">Seleccione una clínica</option>
@@ -198,7 +198,7 @@ export default function FormularioCrearEditarParte({
 
         {/* Selección de Equipo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Equipo Afectado <span className="text-red-500">*</span>
           </label>
           <div className="relative">
@@ -215,15 +215,15 @@ export default function FormularioCrearEditarParte({
               onFocus={() => setMostrarEquipos(true)}
               placeholder="Buscar equipo..."
               disabled={modoEdicion || !clinicaSeleccionada}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.equipoId ? 'border-red-300' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-10 py-2.5 ${
+                errores.equipoId ? 'ring-red-300' : 'ring-slate-300'
               } ${modoEdicion || !clinicaSeleccionada ? 'bg-gray-100' : ''}`}
             />
-            <Package className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Package className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             {mostrarEquipos && !modoEdicion && clinicaSeleccionada && busquedaEquipo && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              <div className="absolute z-10 w-full mt-1 bg-white ring-1 ring-slate-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                 {cargandoEquipos ? (
-                  <div className="p-4 text-center text-gray-500">Cargando equipos...</div>
+                  <div className="p-4 text-center text-slate-500">Cargando equipos...</div>
                 ) : equiposFiltrados.length > 0 ? (
                   equiposFiltrados.map((equipo) => (
                     <button
@@ -235,18 +235,18 @@ export default function FormularioCrearEditarParte({
                         setMostrarEquipos(false);
                         setErrores({ ...errores, equipoId: '' });
                       }}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
+                      className="w-full text-left px-4 py-2 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-b-0"
                     >
                       <div className="font-medium text-gray-900">{equipo.nombre}</div>
                       {equipo.marca && equipo.modelo && (
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-slate-500">
                           {equipo.marca} {equipo.modelo}
                         </div>
                       )}
                     </button>
                   ))
                 ) : (
-                  <div className="p-4 text-center text-gray-500">No se encontraron equipos</div>
+                  <div className="p-4 text-center text-slate-500">No se encontraron equipos</div>
                 )}
               </div>
             )}
@@ -258,7 +258,7 @@ export default function FormularioCrearEditarParte({
 
         {/* Descripción del Problema */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Descripción del Problema <span className="text-red-500">*</span>
           </label>
           <textarea
@@ -269,27 +269,27 @@ export default function FormularioCrearEditarParte({
             }}
             rows={4}
             placeholder="Describa detalladamente el problema detectado en el equipo..."
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.descripcionProblema ? 'border-red-300' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+              errores.descripcionProblema ? 'ring-red-300' : 'ring-slate-300'
             }`}
           />
           {errores.descripcionProblema && (
             <p className="mt-1 text-sm text-red-600">{errores.descripcionProblema}</p>
           )}
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-slate-500">
             {descripcionProblema.length}/500 caracteres
           </p>
         </div>
 
         {/* Prioridad */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Prioridad <span className="text-red-500">*</span>
           </label>
           <select
             value={prioridad}
             onChange={(e) => setPrioridad(e.target.value as PrioridadParteAveria)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           >
             {prioridades.map((p) => (
               <option key={p} value={p}>
@@ -302,11 +302,11 @@ export default function FormularioCrearEditarParte({
         {/* Estado (solo en edición) */}
         {modoEdicion && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Estado</label>
             <select
               value={estado}
               onChange={(e) => setEstado(e.target.value as EstadoParteAveria)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               {estados.map((e) => (
                 <option key={e} value={e}>
@@ -320,7 +320,7 @@ export default function FormularioCrearEditarParte({
         {/* Técnico Asignado (solo en edición) */}
         {modoEdicion && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Técnico Asignado
             </label>
             <input
@@ -328,37 +328,37 @@ export default function FormularioCrearEditarParte({
               value={tecnicoAsignado}
               onChange={(e) => setTecnicoAsignado(e.target.value)}
               placeholder="Nombre del técnico interno o externo"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         )}
 
         {/* Notas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Notas Adicionales</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Notas Adicionales</label>
           <textarea
             value={notas}
             onChange={(e) => setNotas(e.target.value)}
             rows={3}
             placeholder="Información adicional, observaciones, etc."
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       </div>
 
       {/* Botones de acción */}
-      <div className="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-gray-200">
+      <div className="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-gray-100">
         <button
           type="button"
           onClick={onCancelar}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-colors shadow-sm"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={guardando}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2 shadow-sm"
         >
           {guardando ? (
             <>
@@ -376,5 +376,6 @@ export default function FormularioCrearEditarParte({
     </form>
   );
 }
+
 
 

@@ -233,7 +233,11 @@ export default function ReportBuilderWizard({
 
       case 'results':
         if (!reportData) {
-          return <div className="text-center py-12">No hay datos para mostrar</div>;
+          return (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <p className="text-gray-600">No hay datos para mostrar</p>
+            </div>
+          );
         }
 
         return (
@@ -263,15 +267,15 @@ export default function ReportBuilderWizard({
   return (
     <div className="space-y-6">
       {/* Barra de progreso */}
-      <div className="bg-white rounded-xl shadow-md border-2 border-blue-100 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-4">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Constructor de Informes</h2>
+          <h2 className="text-xl font-bold text-gray-900">Constructor de Informes</h2>
           {currentStep === 'results' && (
             <button
               onClick={() => setSaveModalOpen(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
             >
-              <Save className="w-4 h-4" />
+              <Save size={20} />
               <span>Guardar Informe</span>
             </button>
           )}
@@ -310,7 +314,7 @@ export default function ReportBuilderWizard({
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={`flex-1 h-1 mx-2 ${
+                  className={`flex-1 h-1 mx-2 rounded ${
                     index < currentStepIndex ? 'bg-green-600' : 'bg-gray-200'
                   }`}
                 />
@@ -325,30 +329,30 @@ export default function ReportBuilderWizard({
 
       {/* Navegación */}
       {currentStep !== 'results' && (
-        <div className="flex items-center justify-between bg-white rounded-xl shadow-md border-2 border-blue-100 p-4">
+        <div className="flex items-center justify-between bg-white shadow-sm rounded-xl p-4">
           <button
             onClick={handlePrevious}
             disabled={currentStepIndex === 0}
-            className="flex items-center space-x-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft size={20} />
             <span>Anterior</span>
           </button>
 
           <button
             onClick={handleNext}
             disabled={!canGoNext() || loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {currentStep === 'visualization' ? (
               <>
-                <Play className="w-4 h-4" />
+                <Play size={20} />
                 <span>{loading ? 'Generando...' : 'Generar Informe'}</span>
               </>
             ) : (
               <>
                 <span>Siguiente</span>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight size={20} />
               </>
             )}
           </button>
@@ -360,18 +364,18 @@ export default function ReportBuilderWizard({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-xl p-6 max-w-md w-full mx-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Guardar Informe</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Guardar Informe</h3>
               <button
                 onClick={() => setSaveModalOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X size={20} />
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Nombre del Informe *
                 </label>
                 <input
@@ -379,12 +383,12 @@ export default function ReportBuilderWizard({
                   value={reportName}
                   onChange={(e) => setReportName(e.target.value)}
                   placeholder="Ej: Ingresos Mensuales por Tratamiento"
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Descripción (opcional)
                 </label>
                 <textarea
@@ -392,15 +396,15 @@ export default function ReportBuilderWizard({
                   onChange={(e) => setReportDescription(e.target.value)}
                   placeholder="Descripción del informe..."
                   rows={3}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 resize-none"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end space-x-3 mt-6">
+            <div className="flex items-center justify-end gap-2 mt-6">
               <button
                 onClick={() => setSaveModalOpen(false)}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors"
               >
                 Cancelar
               </button>
@@ -418,5 +422,6 @@ export default function ReportBuilderWizard({
     </div>
   );
 }
+
 
 

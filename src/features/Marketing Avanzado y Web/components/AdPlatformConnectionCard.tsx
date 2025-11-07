@@ -48,14 +48,18 @@ export default function AdPlatformConnectionCard({
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md border-2 p-6 ${
+    <div className={`bg-white rounded-xl shadow-sm p-6 transition-all hover:shadow-md ${
       connection.connected 
-        ? (isGoogle ? 'border-blue-500' : 'border-purple-500')
-        : 'border-gray-200'
+        ? (isGoogle ? 'ring-1 ring-blue-200' : 'ring-1 ring-purple-200')
+        : 'ring-1 ring-slate-200'
     }`}>
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
-          <div className={`p-3 rounded-lg ${isGoogle ? 'bg-blue-100' : 'bg-purple-100'}`}>
+          <div className={`p-2 rounded-xl ring-1 ${
+            isGoogle 
+              ? 'bg-blue-100 ring-blue-200/70' 
+              : 'bg-purple-100 ring-purple-200/70'
+          }`}>
             {connection.platform === 'google' ? (
               <svg className="w-6 h-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -78,7 +82,7 @@ export default function AdPlatformConnectionCard({
         </div>
         <div>
           {connection.connected ? (
-            <CheckCircle2 className="w-6 h-6 text-green-500" />
+            <CheckCircle2 className="w-6 h-6 text-green-600" />
           ) : (
             <XCircle className="w-6 h-6 text-gray-400" />
           )}
@@ -89,12 +93,12 @@ export default function AdPlatformConnectionCard({
         <div className="space-y-3">
           {connection.accountName && (
             <div className="text-sm text-gray-600">
-              <span className="font-medium">Cuenta:</span> {connection.accountName}
+              <span className="font-medium text-slate-700">Cuenta:</span> {connection.accountName}
             </div>
           )}
           {connection.connectedAt && (
             <div className="text-sm text-gray-600">
-              <span className="font-medium">Conectada el:</span>{' '}
+              <span className="font-medium text-slate-700">Conectada el:</span>{' '}
               {new Date(connection.connectedAt).toLocaleDateString('es-ES', {
                 year: 'numeric',
                 month: 'long',
@@ -102,23 +106,25 @@ export default function AdPlatformConnectionCard({
               })}
             </div>
           )}
-          <button
-            onClick={handleDisconnect}
-            disabled={isDisconnecting}
-            className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isDisconnecting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Desconectando...</span>
-              </>
-            ) : (
-              <>
-                <XCircle className="w-4 h-4" />
-                <span>Desconectar</span>
-              </>
-            )}
-          </button>
+          <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+            <button
+              onClick={handleDisconnect}
+              disabled={isDisconnecting}
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium ring-1 ring-red-200"
+            >
+              {isDisconnecting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Desconectando...</span>
+                </>
+              ) : (
+                <>
+                  <XCircle className="w-4 h-4" />
+                  <span>Desconectar</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       ) : (
         <div className="space-y-3">
@@ -128,10 +134,10 @@ export default function AdPlatformConnectionCard({
           <button
             onClick={handleConnect}
             disabled={isConnecting}
-            className={`w-full flex items-center justify-center space-x-2 px-4 py-2 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-white rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm ring-1 ${
               isGoogle 
-                ? 'bg-blue-600 hover:bg-blue-700' 
-                : 'bg-purple-600 hover:bg-purple-700'
+                ? 'bg-blue-600 hover:bg-blue-700 ring-blue-600/20' 
+                : 'bg-purple-600 hover:bg-purple-700 ring-purple-600/20'
             }`}
           >
             {isConnecting ? (

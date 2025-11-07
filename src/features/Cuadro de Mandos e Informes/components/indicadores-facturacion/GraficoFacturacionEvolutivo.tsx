@@ -17,19 +17,19 @@ export default function GraficoFacturacionEvolutivo({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+      <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <TrendingUp className="w-5 h-5 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución de Facturación</h3>
-            <p className="text-sm text-gray-500">Facturado vs Cobrado</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución de Facturación</h3>
+            <p className="text-sm text-gray-600">Facturado vs Cobrado</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
-          <p>Cargando datos...</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando datos...</p>
         </div>
       </div>
     );
@@ -37,18 +37,18 @@ export default function GraficoFacturacionEvolutivo({
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+      <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <TrendingUp className="w-5 h-5 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución de Facturación</h3>
-            <p className="text-sm text-gray-500">Facturado vs Cobrado</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución de Facturación</h3>
+            <p className="text-sm text-gray-600">Facturado vs Cobrado</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p>No hay datos disponibles</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <p className="text-gray-600">No hay datos disponibles</p>
         </div>
       </div>
     );
@@ -106,23 +106,23 @@ export default function GraficoFacturacionEvolutivo({
     .join(' ');
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <TrendingUp className="w-5 h-5 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución de Facturación</h3>
-            <p className="text-sm text-gray-500">Facturado vs Cobrado</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución de Facturación</h3>
+            <p className="text-sm text-gray-600">Facturado vs Cobrado</p>
           </div>
         </div>
-        <div className="flex items-center space-x-4 text-sm">
-          <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
             <span className="text-gray-600">Facturado</span>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
             <span className="text-gray-600">Cobrado</span>
           </div>
@@ -300,5 +300,6 @@ export default function GraficoFacturacionEvolutivo({
     </div>
   );
 }
+
 
 

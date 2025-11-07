@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Plus, RefreshCw, Search, Filter, DollarSign, Package, TrendingUp, AlertCircle, BarChart3 } from 'lucide-react';
+import { Plus, RefreshCw, Search, Filter, AlertCircle, BarChart3, ShoppingCart, ChevronDown, ChevronUp, X, Loader2 } from 'lucide-react';
 import {
   obtenerOrdenesCompra,
   cambiarEstadoOrdenCompra,
@@ -10,6 +10,7 @@ import {
 import TablaOrdenesCompra from '../components/TablaOrdenesCompra';
 import FormularioCrearOrdenCompra from '../components/FormularioCrearOrdenCompra';
 import { crearOrdenCompra } from '../api/ordenesCompraApi';
+import MetricCards from '../components/MetricCards';
 
 interface OrdenesCompraPageProps {
   onVerDetalle?: (ordenId: string) => void;
@@ -991,249 +992,332 @@ export default function OrdenesCompraPage({
 
   if (mostrarFormulario) {
     return (
-      <div className="p-6">
-        <FormularioCrearOrdenCompra
-          onSubmit={handleCrearOrden}
-          onCancel={() => setMostrarFormulario(false)}
-        />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <FormularioCrearOrdenCompra
+            onSubmit={handleCrearOrden}
+            onCancel={() => setMostrarFormulario(false)}
+          />
+        </div>
       </div>
     );
   }
 
+  const filtrosActivos = [
+    estadoFiltro && 'Estado',
+    sucursalFiltro && 'Sucursal',
+    fechaInicioFiltro && 'Fecha Inicio',
+    fechaFinFiltro && 'Fecha Fin',
+  ].filter(Boolean).length;
+
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Órdenes de Compra</h1>
-          <p className="text-gray-600 mt-1">Gestiona las órdenes de compra a proveedores</p>
-        </div>
-        <div className="flex gap-3">
-          <button
-            onClick={() => setMostrarFiltros(!mostrarFiltros)}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <Filter className="w-4 h-4" />
-            Filtros
-          </button>
-          <button
-            onClick={cargarOrdenes}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Actualizar
-          </button>
-          <button
-            onClick={() => setMostrarFormulario(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            Nueva Orden
-          </button>
-        </div>
-      </div>
-
-      {/* Filtros */}
-      {mostrarFiltros && (
-        <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-              <select
-                value={estadoFiltro}
-                onChange={(e) => setEstadoFiltro(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-              >
-                {estados.map((estado) => (
-                  <option key={estado.value} value={estado.value}>
-                    {estado.label}
-                  </option>
-                ))}
-              </select>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <ShoppingCart size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Órdenes de Compra
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona las órdenes de compra a proveedores
+                  </p>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Sucursal</label>
-              <select
-                value={sucursalFiltro}
-                onChange={(e) => setSucursalFiltro(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-              >
-                {sucursales.map((sucursal) => (
-                  <option key={sucursal._id} value={sucursal._id}>
-                    {sucursal.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Fecha Inicio</label>
-              <input
-                type="date"
-                value={fechaInicioFiltro}
-                onChange={(e) => setFechaInicioFiltro(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Fecha Fin</label>
-              <input
-                type="date"
-                value={fechaFinFiltro}
-                onChange={(e) => setFechaFinFiltro(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-              />
-            </div>
-            <div className="flex items-end gap-2">
-              <button
-                onClick={aplicarFiltros}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-              >
-                Aplicar
-              </button>
-              <button
-                onClick={limpiarFiltros}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm"
-              >
-                Limpiar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Estadísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500 hover:shadow-lg transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Órdenes</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">{estadisticas.totalOrdenes}</p>
-              <p className="text-xs text-gray-500 mt-1">Todas las órdenes</p>
-            </div>
-            <Package className="w-12 h-12 text-blue-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500 hover:shadow-lg transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Valor Total</p>
-              <p className="text-3xl font-bold text-gray-900 mt-2">
-                ${estadisticas.valorTotal.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">Valor acumulado</p>
-            </div>
-            <DollarSign className="w-12 h-12 text-green-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500 hover:shadow-lg transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Pendientes</p>
-              <p className="text-3xl font-bold text-orange-600 mt-2">{estadisticas.ordenesPendientes}</p>
-              <p className="text-xs text-gray-500 mt-1">Requieren acción</p>
-            </div>
-            <TrendingUp className="w-12 h-12 text-orange-500 opacity-50" />
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500 hover:shadow-lg transition-shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Completadas</p>
-              <p className="text-3xl font-bold text-purple-600 mt-2">{estadisticas.ordenesCompletadas}</p>
-              <p className="text-xs text-gray-500 mt-1">Recibidas completamente</p>
-            </div>
-            <AlertCircle className="w-12 h-12 text-purple-500 opacity-50" />
           </div>
         </div>
       </div>
 
-      {/* Estadísticas adicionales por estado */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <BarChart3 className="w-5 h-5 text-blue-600" />
-          Distribución por Estado
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {Object.entries(estadisticas.ordenesPorEstado).map(([estado, cantidad]) => {
-            const porcentaje = estadisticas.totalOrdenes > 0 
-              ? (cantidad / estadisticas.totalOrdenes) * 100 
-              : 0;
-            const colores: { [key: string]: string } = {
-              'Borrador': 'bg-gray-500',
-              'Enviada': 'bg-blue-500',
-              'Recibida Parcial': 'bg-yellow-500',
-              'Recibida Completa': 'bg-green-500',
-              'Cancelada': 'bg-red-500',
-            };
-            return (
-              <div key={estado} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <p className="text-sm font-medium text-gray-700 mb-2 truncate">{estado}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-gray-900">{cantidad}</span>
-                    <span className="text-xs text-gray-500">{porcentaje.toFixed(1)}%</span>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <button
+              onClick={() => setMostrarFormulario(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            >
+              <Plus size={20} />
+              Nueva Orden
+            </button>
+          </div>
+
+          {/* Sistema de Filtros */}
+          <div className="bg-white shadow-sm rounded-lg p-0">
+            <div className="p-4">
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="flex gap-4">
+                  {/* Input de búsqueda */}
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                    <input
+                      type="text"
+                      placeholder="Buscar órdenes de compra..."
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5 text-sm"
+                    />
                   </div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div
-                      className={`${colores[estado] || 'bg-gray-500'} h-2 rounded-full transition-all duration-500`}
-                      style={{ width: `${porcentaje}%` }}
-                    ></div>
+                  
+                  {/* Botón de filtros */}
+                  <button
+                    onClick={() => setMostrarFiltros(!mostrarFiltros)}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-colors text-sm font-medium"
+                  >
+                    <Filter size={18} />
+                    Filtros
+                    {filtrosActivos > 0 && (
+                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-white text-xs font-semibold">
+                        {filtrosActivos}
+                      </span>
+                    )}
+                    {mostrarFiltros ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </button>
+                  
+                  {/* Botón limpiar (si hay filtros activos) */}
+                  {filtrosActivos > 0 && (
+                    <button
+                      onClick={limpiarFiltros}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-colors text-sm font-medium"
+                    >
+                      <X size={18} />
+                      Limpiar
+                    </button>
+                  )}
+                  
+                  {/* Botón actualizar */}
+                  <button
+                    onClick={cargarOrdenes}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-colors text-sm font-medium"
+                  >
+                    <RefreshCw size={18} />
+                    Actualizar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Panel de Filtros Avanzados */}
+            {mostrarFiltros && (
+              <div className="px-4 pb-4">
+                <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <Filter size={16} className="inline mr-1" />
+                        Estado
+                      </label>
+                      <select
+                        value={estadoFiltro}
+                        onChange={(e) => setEstadoFiltro(e.target.value)}
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                      >
+                        {estados.map((estado) => (
+                          <option key={estado.value} value={estado.value}>
+                            {estado.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <Package size={16} className="inline mr-1" />
+                        Sucursal
+                      </label>
+                      <select
+                        value={sucursalFiltro}
+                        onChange={(e) => setSucursalFiltro(e.target.value)}
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                      >
+                        {sucursales.map((sucursal) => (
+                          <option key={sucursal._id} value={sucursal._id}>
+                            {sucursal.nombre}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Fecha Inicio
+                      </label>
+                      <input
+                        type="date"
+                        value={fechaInicioFiltro}
+                        onChange={(e) => setFechaInicioFiltro(e.target.value)}
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Fecha Fin
+                      </label>
+                      <input
+                        type="date"
+                        value={fechaFinFiltro}
+                        onChange={(e) => setFechaFinFiltro(e.target.value)}
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                      />
+                    </div>
+                    <div className="flex items-end">
+                      <button
+                        onClick={aplicarFiltros}
+                        className="w-full px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
+                      >
+                        Aplicar Filtros
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Resumen de resultados */}
+                  <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+                    <span>{todasLasOrdenes.length} órdenes encontradas</span>
+                    <span>{filtrosActivos} filtros aplicados</span>
                   </div>
                 </div>
               </div>
-            );
-          })}
+            )}
+          </div>
+
+          {/* KPIs/Métricas */}
+          <MetricCards
+            data={[
+              {
+                id: 'total-ordenes',
+                title: 'Total Órdenes',
+                value: estadisticas.totalOrdenes,
+                color: 'info',
+              },
+              {
+                id: 'valor-total',
+                title: 'Valor Total',
+                value: `€${estadisticas.valorTotal.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'success',
+              },
+              {
+                id: 'pendientes',
+                title: 'Pendientes',
+                value: estadisticas.ordenesPendientes,
+                color: 'warning',
+              },
+              {
+                id: 'completadas',
+                title: 'Completadas',
+                value: estadisticas.ordenesCompletadas,
+                color: 'success',
+              },
+            ]}
+          />
+
+          {/* Estadísticas adicionales por estado */}
+          <div className="bg-white shadow-sm rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <BarChart3 size={20} className="text-blue-600" />
+              Distribución por Estado
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {Object.entries(estadisticas.ordenesPorEstado).map(([estado, cantidad]) => {
+                const porcentaje = estadisticas.totalOrdenes > 0 
+                  ? (cantidad / estadisticas.totalOrdenes) * 100 
+                  : 0;
+                const colores: { [key: string]: string } = {
+                  'Borrador': 'bg-gray-500',
+                  'Enviada': 'bg-blue-500',
+                  'Recibida Parcial': 'bg-yellow-500',
+                  'Recibida Completa': 'bg-green-500',
+                  'Cancelada': 'bg-red-500',
+                };
+                return (
+                  <div key={estado} className="p-4 bg-gray-50 rounded-lg ring-1 ring-gray-200">
+                    <p className="text-sm font-medium text-slate-700 mb-2 truncate">{estado}</p>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-gray-900">{cantidad}</span>
+                        <span className="text-xs text-gray-500">{porcentaje.toFixed(1)}%</span>
+                      </div>
+                      <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div
+                          className={`${colores[estado] || 'bg-gray-500'} h-2 rounded-full transition-all duration-500`}
+                          style={{ width: `${porcentaje}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={cargarOrdenes}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              >
+                <RefreshCw size={18} />
+                Reintentar
+              </button>
+            </div>
+          )}
+
+          {/* Tabla */}
+          {!error && (
+            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+              <TablaOrdenesCompra
+                ordenes={ordenes}
+                loading={loading}
+                onVerDetalle={(ordenId) => {
+                  if (onVerDetalle) {
+                    onVerDetalle(ordenId);
+                  }
+                }}
+                onEditar={(ordenId) => {
+                  // TODO: Implementar edición
+                  console.log('Editar orden:', ordenId);
+                }}
+                onEliminar={handleEliminar}
+                onCambiarEstado={handleCambiarEstado}
+              />
+            </div>
+          )}
+
+          {/* Paginación */}
+          {!error && totalPaginas > 1 && (
+            <div className="bg-white shadow-sm rounded-lg p-4">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) - 1 })}
+                  disabled={!filtros.page || filtros.page <= 1}
+                  className="px-4 py-2 rounded-lg ring-1 ring-slate-300 text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                >
+                  Anterior
+                </button>
+                <span className="px-4 py-2 text-sm text-slate-600">
+                  Página {filtros.page || 1} de {totalPaginas}
+                </span>
+                <button
+                  onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) + 1 })}
+                  disabled={!filtros.page || filtros.page >= totalPaginas}
+                  className="px-4 py-2 rounded-lg ring-1 ring-slate-300 text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Error */}
-      {error && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          {error}
-        </div>
-      )}
-
-      {/* Tabla */}
-      <div className="bg-white rounded-lg shadow">
-        <TablaOrdenesCompra
-          ordenes={ordenes}
-          loading={loading}
-          onVerDetalle={(ordenId) => {
-            if (onVerDetalle) {
-              onVerDetalle(ordenId);
-            }
-          }}
-          onEditar={(ordenId) => {
-            // TODO: Implementar edición
-            console.log('Editar orden:', ordenId);
-          }}
-          onEliminar={handleEliminar}
-          onCambiarEstado={handleCambiarEstado}
-        />
-      </div>
-
-      {/* Paginación */}
-      {totalPaginas > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <button
-            onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) - 1 })}
-            disabled={!filtros.page || filtros.page <= 1}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Anterior
-          </button>
-          <span className="px-4 py-2 text-gray-700">
-            Página {filtros.page || 1} de {totalPaginas}
-          </span>
-          <button
-            onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) + 1 })}
-            disabled={!filtros.page || filtros.page >= totalPaginas}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Siguiente
-          </button>
-        </div>
-      )}
     </div>
   );
 }

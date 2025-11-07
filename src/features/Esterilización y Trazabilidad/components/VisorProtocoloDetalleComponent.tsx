@@ -45,21 +45,21 @@ export default function VisorProtocoloDetalleComponent({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg">
       {/* Header */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <div className="flex items-center space-x-3 mb-2">
-              <h2 className="text-2xl font-bold text-gray-900">{protocolo.titulo}</h2>
-              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+            <div className="flex items-center gap-3 mb-2 flex-wrap">
+              <h2 className="text-xl font-bold text-gray-900">{protocolo.titulo}</h2>
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg text-sm font-medium">
                 {protocolo.categoria}
               </span>
-              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">
                 Versión {protocolo.versionActual}
               </span>
             </div>
-            <div className="flex items-center space-x-4 text-sm text-gray-600 mt-2">
+            <div className="flex items-center gap-4 text-sm text-gray-600 mt-2">
               <span>
                 Autor: {protocolo.autor.nombre} {protocolo.autor.apellidos || ''}
               </span>
@@ -71,23 +71,23 @@ export default function VisorProtocoloDetalleComponent({
             </div>
           </div>
           {esAdmin && (
-            <div className="flex items-center space-x-2 ml-4">
+            <div className="flex items-center gap-2 ml-4">
               {onEditar && (
                 <button
                   onClick={() => onEditar(protocolo)}
-                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
                   title="Editar protocolo"
                 >
-                  <Edit className="w-5 h-5" />
+                  <Edit size={20} />
                 </button>
               )}
               {onArchivar && (
                 <button
                   onClick={() => onArchivar(protocolo._id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-all"
                   title="Archivar protocolo"
                 >
-                  <Archive className="w-5 h-5" />
+                  <Archive size={20} />
                 </button>
               )}
             </div>
@@ -99,33 +99,34 @@ export default function VisorProtocoloDetalleComponent({
       <div className="p-6">
         {versionActual ? (
           <div
-            className="prose max-w-none"
+            className="prose max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600"
             dangerouslySetInnerHTML={{ __html: versionActual.contenido }}
           />
         ) : (
           <div className="text-center py-12">
-            <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">No se encontró el contenido de esta versión</p>
+            <AlertCircle size={48} className="text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Contenido no disponible</h3>
+            <p className="text-gray-600">No se encontró el contenido de esta versión</p>
           </div>
         )}
       </div>
 
       {/* Footer con acciones */}
       <div className="p-6 border-t border-gray-200 bg-gray-50">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-4">
             {protocolo.versiones && protocolo.versiones.length > 1 && (
               <button
                 onClick={onVerHistorial}
-                className="flex items-center space-x-2 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-all shadow-sm"
               >
-                <History className="w-5 h-5" />
+                <History size={18} />
                 <span>Ver Historial de Versiones</span>
               </button>
             )}
             {tieneLecturaConfirmada() && (
-              <div className="flex items-center space-x-2 text-green-600">
-                <CheckCircle2 className="w-5 h-5" />
+              <div className="flex items-center gap-2 text-green-600">
+                <CheckCircle2 size={18} />
                 <span className="text-sm font-medium">Lectura confirmada</span>
               </div>
             )}
@@ -148,10 +149,10 @@ export default function VisorProtocoloDetalleComponent({
                 .map((lectura, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-2 bg-white rounded border border-gray-200"
+                    className="flex items-center justify-between p-2 bg-white rounded-lg border border-gray-200"
                   >
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 size={16} className="text-green-600" />
                       <span className="text-sm text-gray-700">
                         {lectura.usuario.nombre} {lectura.usuario.apellidos || ''}
                       </span>
@@ -168,5 +169,6 @@ export default function VisorProtocoloDetalleComponent({
     </div>
   );
 }
+
 
 

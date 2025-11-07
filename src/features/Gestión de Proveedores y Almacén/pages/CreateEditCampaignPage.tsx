@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Save, Calendar, Mail } from 'lucide-react';
+import { ArrowLeft, Save, Calendar, Mail, Loader2 } from 'lucide-react';
 import {
   EmailCampaign,
   EmailTemplate,
@@ -135,128 +135,145 @@ export default function CreateEditCampaignPage({
 
   if (loading && !name) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-2xl p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando...</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onVolver}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              {isEditMode ? 'Editar Campaña' : 'Nueva Campaña'}
-            </h2>
-            <p className="text-gray-600 text-sm mt-1">
-              {isEditMode
-                ? 'Modifica los detalles de tu campaña'
-                : 'Crea una nueva campaña de email para tus pacientes'}
-            </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <button
+                onClick={onVolver}
+                className="p-2 bg-slate-100 rounded-xl mr-4 ring-1 ring-slate-200/70 hover:bg-slate-200 transition-all"
+              >
+                <ArrowLeft size={24} className="text-slate-600" />
+              </button>
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Mail size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  {isEditMode ? 'Editar Campaña' : 'Nueva Campaña'}
+                </h1>
+                <p className="text-gray-600">
+                  {isEditMode
+                    ? 'Modifica los detalles de tu campaña'
+                    : 'Crea una nueva campaña de email para tus pacientes'}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-sm text-red-800">{error}</p>
-        </div>
-      )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {error && (
+            <div className="bg-white shadow-sm rounded-2xl p-4 ring-1 ring-red-200 bg-red-50">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
-        {/* Información básica */}
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Nombre de la Campaña *
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Ej: Recordatorio de Higiene Dental"
-            />
+          <div className="bg-white shadow-sm rounded-2xl p-6 space-y-6">
+            {/* Información básica */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Nombre de la Campaña *
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
+                  placeholder="Ej: Recordatorio de Higiene Dental"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Asunto del Email *
+                </label>
+                <input
+                  type="text"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
+                  placeholder="Ej: Recordatorio: Tu cita de revisión"
+                />
+              </div>
+            </div>
+
+            {/* Selector de plantilla */}
+            {!isEditMode && (
+              <div>
+                <EmailTemplateSelector
+                  selectedTemplateId={selectedTemplate?._id}
+                  onSelectTemplate={(template) => {
+                    setSelectedTemplate(template);
+                    if (template?.htmlContent) {
+                      setHtmlContent(template.htmlContent);
+                    }
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Segmentación de pacientes */}
+            <div>
+              <PatientSegmentBuilder
+                segmentCriteria={segmentCriteria}
+                onChange={handleSegmentChange}
+              />
+            </div>
+
+            {/* Editor de contenido */}
+            <div>
+              <CampaignEditor
+                campaign={campaign}
+                template={selectedTemplate}
+                onSave={(content) => setHtmlContent(content)}
+              />
+            </div>
+
+            {/* Acciones */}
+            <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
+              <button
+                onClick={onVolver}
+                className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-all"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleGuardarBorrador}
+                disabled={!name || !subject || loading}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-slate-600 rounded-xl hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-all"
+              >
+                <Save size={20} />
+                Guardar como Borrador
+              </button>
+              <button
+                onClick={() => setShowScheduler(true)}
+                disabled={!name || !subject || loading}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-all"
+              >
+                <Calendar size={20} />
+                Programar Envío
+              </button>
+            </div>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Asunto del Email *
-            </label>
-            <input
-              type="text"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Ej: Recordatorio: Tu cita de revisión"
-            />
-          </div>
-        </div>
-
-        {/* Selector de plantilla */}
-        {!isEditMode && (
-          <div>
-            <EmailTemplateSelector
-              selectedTemplateId={selectedTemplate?._id}
-              onSelectTemplate={(template) => {
-                setSelectedTemplate(template);
-                if (template?.htmlContent) {
-                  setHtmlContent(template.htmlContent);
-                }
-              }}
-            />
-          </div>
-        )}
-
-        {/* Segmentación de pacientes */}
-        <div>
-          <PatientSegmentBuilder
-            segmentCriteria={segmentCriteria}
-            onChange={handleSegmentChange}
-          />
-        </div>
-
-        {/* Editor de contenido */}
-        <div>
-          <CampaignEditor
-            campaign={campaign}
-            template={selectedTemplate}
-            onSave={(content) => setHtmlContent(content)}
-          />
-        </div>
-
-        {/* Acciones */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
-          <button
-            onClick={onVolver}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleGuardarBorrador}
-            disabled={!name || !subject || loading}
-            className="px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-          >
-            <Save className="w-4 h-4 inline mr-2" />
-            Guardar como Borrador
-          </button>
-          <button
-            onClick={() => setShowScheduler(true)}
-            disabled={!name || !subject || loading}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
-          >
-            <Calendar className="w-4 h-4 inline mr-2" />
-            Programar Envío
-          </button>
         </div>
       </div>
 
@@ -271,5 +288,6 @@ export default function CreateEditCampaignPage({
     </div>
   );
 }
+
 
 

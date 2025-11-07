@@ -118,19 +118,17 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-20 bg-gray-200 rounded"></div>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-6">
       <div className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <h3 className="text-xl font-bold text-gray-900 mb-2">
           Configuración de Eventos de Conversión
         </h3>
         <p className="text-sm text-gray-600">
@@ -140,18 +138,18 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
 
       {message && (
         <div
-          className={`mb-4 p-4 rounded-lg flex items-center space-x-2 ${
+          className={`mb-6 p-4 rounded-xl flex items-center gap-2 ring-1 ${
             message.type === 'success'
-              ? 'bg-green-50 text-green-800'
-              : 'bg-red-50 text-red-800'
+              ? 'bg-green-50 text-green-800 ring-green-200'
+              : 'bg-red-50 text-red-800 ring-red-200'
           }`}
         >
           {message.type === 'success' ? (
-            <CheckCircle2 className="w-5 h-5" />
+            <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
           ) : (
-            <AlertCircle className="w-5 h-5" />
+            <AlertCircle className="w-5 h-5 flex-shrink-0" />
           )}
-          <span>{message.text}</span>
+          <span className="text-sm font-medium">{message.text}</span>
         </div>
       )}
 
@@ -159,15 +157,15 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
         {/* Google Ads Events */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h4 className="font-medium text-gray-900">Google Ads</h4>
+            <h4 className="text-lg font-semibold text-gray-900">Google Ads</h4>
             <button
               onClick={() => handleAddEvent('google')}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all"
             >
               + Agregar Evento
             </button>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {settings.conversionEvents
               .filter((event) => event.platform === 'google')
               .map((event, index) => {
@@ -175,10 +173,10 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                   (e, i) => e.platform === 'google' && i >= index
                 );
                 return (
-                  <div key={actualIndex} className="border border-gray-200 rounded-lg p-4">
+                  <div key={actualIndex} className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Evento ERP
                         </label>
                         <select
@@ -186,7 +184,7 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                           onChange={(e) =>
                             handleUpdateEvent(actualIndex, { erpEvent: e.target.value })
                           }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                         >
                           <option value="">Seleccionar...</option>
                           {ERP_EVENTS.map((evt) => (
@@ -197,7 +195,7 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Evento Google Ads
                         </label>
                         <select
@@ -205,7 +203,7 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                           onChange={(e) =>
                             handleUpdateEvent(actualIndex, { platformEvent: e.target.value })
                           }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                         >
                           <option value="">Seleccionar...</option>
                           {GOOGLE_ADS_EVENTS.map((evt) => (
@@ -215,21 +213,21 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                           ))}
                         </select>
                       </div>
-                      <div className="flex items-end space-x-2">
-                        <label className="flex items-center space-x-2">
+                      <div className="flex items-end gap-2">
+                        <label className="flex items-center gap-2">
                           <input
                             type="checkbox"
                             checked={event.enabled}
                             onChange={(e) =>
                               handleUpdateEvent(actualIndex, { enabled: e.target.checked })
                             }
-                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                           />
-                          <span className="text-sm text-gray-700">Habilitado</span>
+                          <span className="text-sm text-slate-700">Habilitado</span>
                         </label>
                         <button
                           onClick={() => handleRemoveEvent(actualIndex)}
-                          className="text-red-600 hover:text-red-700 text-sm font-medium"
+                          className="text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-2 rounded-xl transition-all"
                         >
                           Eliminar
                         </button>
@@ -244,15 +242,15 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
         {/* Meta Ads Events */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h4 className="font-medium text-gray-900">Meta Ads</h4>
+            <h4 className="text-lg font-semibold text-gray-900">Meta Ads</h4>
             <button
               onClick={() => handleAddEvent('meta')}
-              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-all"
             >
               + Agregar Evento
             </button>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {settings.conversionEvents
               .filter((event) => event.platform === 'meta')
               .map((event, index) => {
@@ -260,10 +258,10 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                   (e, i) => e.platform === 'meta' && i >= index
                 );
                 return (
-                  <div key={actualIndex} className="border border-gray-200 rounded-lg p-4">
+                  <div key={actualIndex} className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Evento ERP
                         </label>
                         <select
@@ -271,7 +269,7 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                           onChange={(e) =>
                             handleUpdateEvent(actualIndex, { erpEvent: e.target.value })
                           }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-400 px-3 py-2.5"
                         >
                           <option value="">Seleccionar...</option>
                           {ERP_EVENTS.map((evt) => (
@@ -282,7 +280,7 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Evento Meta Ads
                         </label>
                         <select
@@ -290,7 +288,7 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                           onChange={(e) =>
                             handleUpdateEvent(actualIndex, { platformEvent: e.target.value })
                           }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-400 px-3 py-2.5"
                         >
                           <option value="">Seleccionar...</option>
                           {META_ADS_EVENTS.map((evt) => (
@@ -300,21 +298,21 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
                           ))}
                         </select>
                       </div>
-                      <div className="flex items-end space-x-2">
-                        <label className="flex items-center space-x-2">
+                      <div className="flex items-end gap-2">
+                        <label className="flex items-center gap-2">
                           <input
                             type="checkbox"
                             checked={event.enabled}
                             onChange={(e) =>
                               handleUpdateEvent(actualIndex, { enabled: e.target.checked })
                             }
-                            className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                            className="rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                           />
-                          <span className="text-sm text-gray-700">Habilitado</span>
+                          <span className="text-sm text-slate-700">Habilitado</span>
                         </label>
                         <button
                           onClick={() => handleRemoveEvent(actualIndex)}
-                          className="text-red-600 hover:text-red-700 text-sm font-medium"
+                          className="text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-2 rounded-xl transition-all"
                         >
                           Eliminar
                         </button>
@@ -327,20 +325,20 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
         </div>
       </div>
 
-      <div className="mt-6 flex justify-end">
+      <div className="mt-6 flex justify-end border-t border-gray-100 pt-6">
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="flex items-center space-x-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-blue-600/20 font-medium"
         >
           {isSaving ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin" />
               <span>Guardando...</span>
             </>
           ) : (
             <>
-              <Save className="w-4 h-4" />
+              <Save className="w-5 h-5" />
               <span>Guardar Configuración</span>
             </>
           )}
@@ -349,5 +347,6 @@ export default function ConversionEventSetupForm({ onSave }: ConversionEventSetu
     </div>
   );
 }
+
 
 

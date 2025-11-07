@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { ArrowUpDown, ArrowUp, ArrowDown, Loader2, Package } from 'lucide-react';
 import { CosteEquipo } from '../api/informesEquipamientoApi';
 
 interface TablaCostesEquipamientoProps {
@@ -80,7 +80,7 @@ export default function TablaCostesEquipamiento({
 
   const IconoOrden = ({ campo }: { campo: CampoOrden }) => {
     if (campoOrden !== campo) {
-      return <ArrowUpDown className="w-4 h-4 text-gray-400" />;
+      return <ArrowUpDown className="w-4 h-4 text-slate-400" />;
     }
     return direccionOrden === 'asc' ? (
       <ArrowUp className="w-4 h-4 text-blue-600" />
@@ -91,35 +91,31 @@ export default function TablaCostesEquipamiento({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="animate-pulse space-y-4">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-12 bg-gray-200 rounded"></div>
-          ))}
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (costes.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="text-center py-12 text-gray-500">
-          <p className="text-lg font-medium">No hay datos para mostrar</p>
-          <p className="text-sm">Ajusta los filtros para ver resultados</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos para mostrar</h3>
+        <p className="text-gray-600">Ajusta los filtros para ver resultados</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleOrdenar('nombre')}
               >
                 <div className="flex items-center gap-2">
@@ -127,14 +123,14 @@ export default function TablaCostesEquipamiento({
                   <IconoOrden campo="nombre" />
                 </div>
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Categoría
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Sede
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleOrdenar('costoAdquisicion')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -142,17 +138,17 @@ export default function TablaCostesEquipamiento({
                   <IconoOrden campo="costoAdquisicion" />
                 </div>
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Mant. Preventivo
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Mant. Correctivo
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Reparaciones
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleOrdenar('costeTotal')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -161,7 +157,7 @@ export default function TablaCostesEquipamiento({
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleOrdenar('depreciacion')}
               >
                 <div className="flex items-center justify-end gap-2">
@@ -169,14 +165,14 @@ export default function TablaCostesEquipamiento({
                   <IconoOrden campo="depreciacion" />
                 </div>
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {costesOrdenados.map((coste) => (
-              <tr key={coste.equipoId} className="hover:bg-gray-50">
+              <tr key={coste.equipoId} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
                     {coste.nombre}
@@ -234,5 +230,6 @@ export default function TablaCostesEquipamiento({
     </div>
   );
 }
+
 
 

@@ -111,31 +111,31 @@ export default function SeccionHabitosYControl({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Hábitos Bucales</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Hábitos Bucales</h3>
         {!readonly && (
           <button
             onClick={() => setMostrarFormulario(!mostrarFormulario)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             {habitoEditando !== null ? 'Editando...' : 'Agregar Hábito'}
           </button>
         )}
       </div>
 
       {mostrarFormulario && (
-        <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="mb-6 p-4 bg-slate-50 rounded-2xl ring-1 ring-slate-200">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Nombre del Hábito
               </label>
               <select
                 value={nuevoHabito.nombre || ''}
                 onChange={(e) => setNuevoHabito({ ...nuevoHabito, nombre: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               >
                 <option value="">Seleccionar hábito común...</option>
                 {HABITOS_COMUNES.map((habito) => (
@@ -149,32 +149,32 @@ export default function SeccionHabitosYControl({
                 value={nuevoHabito.nombre || ''}
                 onChange={(e) => setNuevoHabito({ ...nuevoHabito, nombre: e.target.value })}
                 placeholder="O escribir un hábito personalizado"
-                className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="mt-2 w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                  <Calendar size={16} />
                   Fecha de Inicio
                 </label>
                 <input
                   type="date"
                   value={nuevoHabito.fechaInicio || ''}
                   onChange={(e) => setNuevoHabito({ ...nuevoHabito, fechaInicio: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                  <Calendar size={16} />
                   Fecha de Fin (si ya no está activo)
                 </label>
                 <input
                   type="date"
                   value={nuevoHabito.fechaFin || ''}
                   onChange={(e) => setNuevoHabito({ ...nuevoHabito, fechaFin: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
             </div>
@@ -186,31 +186,31 @@ export default function SeccionHabitosYControl({
                   onChange={(e) => setNuevoHabito({ ...nuevoHabito, activo: e.target.checked })}
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm font-medium text-gray-700">Hábito activo actualmente</span>
+                <span className="text-sm font-medium text-slate-700">Hábito activo actualmente</span>
               </label>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Observaciones
               </label>
               <textarea
                 value={nuevoHabito.observaciones || ''}
                 onChange={(e) => setNuevoHabito({ ...nuevoHabito, observaciones: e.target.value })}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Observaciones sobre el hábito..."
               />
             </div>
             <div className="flex gap-2">
               <button
                 onClick={handleAgregarHabito}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 {habitoEditando !== null ? 'Actualizar' : 'Agregar'}
               </button>
               <button
                 onClick={handleCancelar}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium"
               >
                 Cancelar
               </button>
@@ -226,16 +226,16 @@ export default function SeccionHabitosYControl({
           habitos.map((habito, index) => (
             <div
               key={index}
-              className={`p-4 rounded-lg border-2 ${
+              className={`p-4 rounded-lg ring-1 ${
                 habito.activo
-                  ? 'bg-green-50 border-green-200'
-                  : 'bg-gray-50 border-gray-200'
+                  ? 'bg-green-50 ring-green-200'
+                  : 'bg-slate-50 ring-slate-200'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h4 className="font-semibold text-gray-800">{habito.nombre}</h4>
+                    <h4 className="font-semibold text-gray-900">{habito.nombre}</h4>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium ${
                         habito.activo
@@ -247,23 +247,23 @@ export default function SeccionHabitosYControl({
                     </span>
                   </div>
                   {(habito.fechaInicio || habito.fechaFin) && (
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                    <div className="flex items-center gap-4 text-sm text-slate-600 mb-2">
                       {habito.fechaInicio && (
                         <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
+                          <Calendar size={16} />
                           Inicio: {new Date(habito.fechaInicio).toLocaleDateString('es-ES')}
                         </span>
                       )}
                       {habito.fechaFin && (
                         <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
+                          <Calendar size={16} />
                           Fin: {new Date(habito.fechaFin).toLocaleDateString('es-ES')}
                         </span>
                       )}
                     </div>
                   )}
                   {habito.observaciones && (
-                    <p className="text-sm text-gray-600">{habito.observaciones}</p>
+                    <p className="text-sm text-slate-600">{habito.observaciones}</p>
                   )}
                 </div>
                 {!readonly && (
@@ -284,14 +284,14 @@ export default function SeccionHabitosYControl({
                       className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="Editar"
                     >
-                      <Edit2 className="w-4 h-4" />
+                      <Edit2 size={20} />
                     </button>
                     <button
                       onClick={() => handleEliminarHabito(index)}
                       className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Eliminar"
                     >
-                      <X className="w-4 h-4" />
+                      <X size={20} />
                     </button>
                   </div>
                 )}
@@ -303,5 +303,6 @@ export default function SeccionHabitosYControl({
     </div>
   );
 }
+
 
 

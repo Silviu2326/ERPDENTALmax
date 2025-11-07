@@ -78,23 +78,23 @@ export default function EditorPlantillasMensajes({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
+    <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-900">
           {plantilla ? 'Editar Plantilla' : 'Nueva Plantilla'}
         </h3>
         <button
           onClick={onCancelar}
-          className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
+          className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
       </div>
 
       {/* Nombre y tipo */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre de la Plantilla
           </label>
           <input
@@ -102,17 +102,17 @@ export default function EditorPlantillasMensajes({
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             placeholder="Ej: Recordatorio SMS 48h"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tipo de Canal
           </label>
           <select
             value={tipo}
             onChange={(e) => setTipo(e.target.value as RecordatorioPlantilla['tipo'])}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           >
             <option value="SMS">SMS</option>
             <option value="Email">Email</option>
@@ -124,7 +124,7 @@ export default function EditorPlantillasMensajes({
       {/* Asunto (solo para Email) */}
       {tipo === 'Email' && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Asunto del Email
           </label>
           <input
@@ -132,25 +132,25 @@ export default function EditorPlantillasMensajes({
             value={asunto}
             onChange={(e) => setAsunto(e.target.value)}
             placeholder="Ej: Recordatorio de su cita dental"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           />
         </div>
       )}
 
       {/* Variables disponibles */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Variables Disponibles
         </label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {VARIABLES_DISPONIBLES.map((v) => (
             <button
               key={v.variable}
               onClick={() => handleInsertarVariable(v.variable)}
-              className="text-left px-3 py-2 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-sm"
+              className="text-left px-3 py-2 rounded-xl bg-white ring-1 ring-slate-200 hover:bg-blue-50 hover:ring-blue-300 transition-all text-sm"
             >
               <code className="text-blue-600 font-mono">{v.variable}</code>
-              <p className="text-gray-500 text-xs mt-1">{v.descripcion}</p>
+              <p className="text-slate-500 text-xs mt-1">{v.descripcion}</p>
             </button>
           ))}
         </div>
@@ -158,7 +158,7 @@ export default function EditorPlantillasMensajes({
 
       {/* Cuerpo del mensaje */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Cuerpo del Mensaje
         </label>
         <textarea
@@ -167,10 +167,10 @@ export default function EditorPlantillasMensajes({
           onChange={(e) => setCuerpo(e.target.value)}
           placeholder="Ej: Hola {{nombre_paciente}}, te recordamos tu cita el {{fecha_cita}} a las {{hora_cita}}. Responde SÍ para confirmar."
           rows={8}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 font-mono text-sm"
         />
         {tipo === 'SMS' && (
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-slate-600 mt-2">
             Caracteres: {cuerpo.length} / 160 (SMS estándar)
           </p>
         )}
@@ -185,30 +185,31 @@ export default function EditorPlantillasMensajes({
           onChange={(e) => setActivo(e.target.checked)}
           className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
         />
-        <label htmlFor="activo" className="text-sm font-medium text-gray-700">
+        <label htmlFor="activo" className="text-sm font-medium text-slate-700">
           Plantilla activa (visible para uso en reglas)
         </label>
       </div>
 
       {/* Botones */}
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+      <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
         <button
           onClick={onCancelar}
-          className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+          className="px-4 py-2 text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors text-sm font-medium"
         >
           Cancelar
         </button>
         <button
           onClick={handleGuardar}
           disabled={loading || !nombre || !cuerpo}
-          className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
         >
-          <Save className="w-4 h-4" />
+          <Save size={20} />
           {loading ? 'Guardando...' : 'Guardar Plantilla'}
         </button>
       </div>
     </div>
   );
 }
+
 
 

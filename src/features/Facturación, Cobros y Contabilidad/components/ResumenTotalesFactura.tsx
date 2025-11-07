@@ -33,18 +33,18 @@ export default function ResumenTotalesFactura({ conceptos }: ResumenTotalesFactu
   const { subtotal, impuestos, total } = calcularTotales();
 
   return (
-    <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Resumen de Totales</h3>
       <div className="space-y-3">
         <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-gray-700">Subtotal:</span>
+          <span className="text-sm font-medium text-slate-700">Subtotal:</span>
           <span className="text-sm font-semibold text-gray-900">{subtotal.toFixed(2)} €</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-gray-700">Impuestos (IVA):</span>
+          <span className="text-sm font-medium text-slate-700">Impuestos (IVA):</span>
           <span className="text-sm font-semibold text-gray-900">{impuestos.toFixed(2)} €</span>
         </div>
-        <div className="border-t border-gray-300 pt-3 mt-3">
+        <div className="border-t border-slate-200 pt-3 mt-3">
           <div className="flex justify-between items-center">
             <span className="text-lg font-bold text-gray-900">Total:</span>
             <span className="text-2xl font-bold text-blue-600">{total.toFixed(2)} €</span>
@@ -54,5 +54,6 @@ export default function ResumenTotalesFactura({ conceptos }: ResumenTotalesFactu
     </div>
   );
 }
+
 
 

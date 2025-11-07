@@ -89,12 +89,13 @@ export default function BuscadorPacientes({
 
   return (
     <div className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Buscar Paciente
+      <label className="block text-sm font-medium text-slate-700 mb-2">
+        <Search size={16} className="inline mr-1" />
+        Buscar Paciente <span className="text-red-500">*</span>
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
+          <Search className="h-5 w-5 text-slate-400" />
         </div>
         <input
           type="text"
@@ -102,43 +103,43 @@ export default function BuscadorPacientes({
           onChange={(e) => setBusqueda(e.target.value)}
           onFocus={() => busqueda.length >= 2 && setMostrarResultados(true)}
           placeholder="Buscar por nombre, apellidos o DNI..."
-          className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="block w-full pl-10 pr-10 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         {pacienteSeleccionado && (
           <button
             onClick={handleLimpiar}
             className="absolute inset-y-0 right-0 pr-3 flex items-center"
           >
-            <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+            <X className="h-5 w-5 text-slate-400 hover:text-slate-600" />
           </button>
         )}
       </div>
 
       {mostrarResultados && resultados.length > 0 && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-10 w-full mt-1 bg-white ring-1 ring-slate-200 rounded-xl shadow-lg max-h-60 overflow-auto">
           <ul className="py-1">
             {resultados.map((paciente) => (
               <li
                 key={paciente._id}
                 onClick={() => handleSeleccionar(paciente)}
-                className="px-4 py-3 cursor-pointer hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0"
+                className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-b-0"
               >
                 <div className="flex items-center space-x-3">
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center ring-1 ring-blue-200/70">
                       <User className="w-5 h-5 text-blue-600" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-slate-900">
                       {paciente.nombre} {paciente.apellidos}
                     </p>
                     <div className="flex items-center space-x-4 mt-1">
                       {paciente.dni && (
-                        <p className="text-xs text-gray-500">DNI: {paciente.dni}</p>
+                        <p className="text-xs text-slate-500">DNI: {paciente.dni}</p>
                       )}
                       {paciente.telefono && (
-                        <p className="text-xs text-gray-500">Tel: {paciente.telefono}</p>
+                        <p className="text-xs text-slate-500">Tel: {paciente.telefono}</p>
                       )}
                     </div>
                   </div>
@@ -150,16 +151,16 @@ export default function BuscadorPacientes({
       )}
 
       {loading && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4">
-          <p className="text-sm text-gray-500 text-center">Buscando pacientes...</p>
+        <div className="absolute z-10 w-full mt-1 bg-white ring-1 ring-slate-200 rounded-xl shadow-lg p-4">
+          <p className="text-sm text-slate-500 text-center">Buscando pacientes...</p>
         </div>
       )}
 
       {pacienteSeleccionado && (
-        <div className="mt-2 p-3 bg-green-50 rounded-lg">
+        <div className="mt-2 p-3 bg-blue-50 rounded-xl ring-1 ring-blue-200/70">
           <div className="flex items-center space-x-2">
-            <User className="w-4 h-4 text-green-600" />
-            <p className="text-sm font-medium text-green-900">
+            <User className="w-4 h-4 text-blue-600" />
+            <p className="text-sm font-medium text-slate-900">
               Paciente seleccionado: {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
             </p>
           </div>
@@ -168,5 +169,6 @@ export default function BuscadorPacientes({
     </div>
   );
 }
+
 
 

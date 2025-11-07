@@ -55,11 +55,11 @@ export default function DetalleCoberturaConvenio({
       : tratamiento?.nombre || 'Tratamiento desconocido';
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow ring-1 ring-slate-200">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <h4 className="font-semibold text-gray-900">{nombreTratamiento}</h4>
+            <h4 className="text-lg font-semibold text-gray-900">{nombreTratamiento}</h4>
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
               <span className="font-bold">{getTipoIcon(cobertura.tipo)}</span>
               {getTipoLabel(cobertura.tipo)}
@@ -84,7 +84,7 @@ export default function DetalleCoberturaConvenio({
             {onEditar && (
               <button
                 onClick={() => onEditar(cobertura)}
-                className="p-2 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-lg transition-colors"
+                className="inline-flex items-center justify-center p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-xl transition-all"
                 title="Editar cobertura"
               >
                 <Edit2 className="w-4 h-4" />
@@ -93,7 +93,7 @@ export default function DetalleCoberturaConvenio({
             {onEliminar && cobertura._id && (
               <button
                 onClick={() => onEliminar(cobertura._id!)}
-                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
+                className="inline-flex items-center justify-center p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-xl transition-all"
                 title="Eliminar cobertura"
               >
                 <Trash2 className="w-4 h-4" />
@@ -105,5 +105,6 @@ export default function DetalleCoberturaConvenio({
     </div>
   );
 }
+
 
 

@@ -247,131 +247,143 @@ export default function ComisionesProfesionalPage() {
   };
 
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <DollarSign className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Comisiones por Profesional</h1>
-              <p className="text-gray-600 mt-1">
-                Gestión y visualización de comisiones generadas por profesionales
-              </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <DollarSign size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Comisiones por Profesional
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión y visualización de comisiones generadas por profesionales
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={cargarReporte}
+                disabled={loading}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                <span>Actualizar</span>
+              </button>
             </div>
           </div>
-          <button
-            onClick={cargarReporte}
-            disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            <span>Actualizar</span>
-          </button>
         </div>
       </div>
 
-      {/* Error */}
-      {error && (
-        <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-2 text-red-800">
-          <AlertCircle className="w-5 h-5" />
-          <span>{error}</span>
-        </div>
-      )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8 space-y-6">
 
-      {/* Filtros */}
-      <FiltrosComisiones
-        filtros={filtros}
-        onFiltrosChange={setFiltros}
-        onAplicarFiltros={cargarReporte}
-        loading={loading}
-      />
-
-      {/* Resumen de KPIs */}
-      {!loading && reportes.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Total Comisiones</h3>
-            <p className="text-3xl font-bold text-gray-900">
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                reportes.reduce((sum, r) => sum + r.totalComisiones, 0)
-              )}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              {reportes.length} profesionales
-            </p>
+        {/* Error */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-2 text-red-800 ring-1 ring-red-200">
+            <AlertCircle size={20} className="text-red-600" />
+            <span className="text-sm font-medium">{error}</span>
           </div>
+        )}
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
-                <DollarSign className="w-6 h-6" />
+        {/* Filtros */}
+        <FiltrosComisiones
+          filtros={filtros}
+          onFiltrosChange={setFiltros}
+          onAplicarFiltros={cargarReporte}
+          loading={loading}
+        />
+
+        {/* Resumen de KPIs */}
+        {!loading && reportes.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                  <DollarSign size={20} className="text-blue-600" />
+                </div>
               </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Total Comisiones</h3>
+              <p className="text-3xl font-bold text-gray-900">
+                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                  reportes.reduce((sum, r) => sum + r.totalComisiones, 0)
+                )}
+              </p>
+              <p className="text-xs text-gray-600 mt-2">
+                {reportes.length} profesionales
+              </p>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Comisiones Liquidadas</h3>
-            <p className="text-3xl font-bold text-green-600">
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0)
-              )}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              {reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0) > 0
-                ? Math.round((reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0) / reportes.reduce((sum, r) => sum + r.totalComisiones, 0)) * 100)
-                : 0}% del total
-            </p>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-green-100 rounded-xl ring-1 ring-green-200/70">
+                  <DollarSign size={20} className="text-green-600" />
+                </div>
+              </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Comisiones Liquidadas</h3>
+              <p className="text-3xl font-bold text-green-600">
+                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                  reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0)
+                )}
+              </p>
+              <p className="text-xs text-gray-600 mt-2">
+                {reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0) > 0
+                  ? Math.round((reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0) / reportes.reduce((sum, r) => sum + r.totalComisiones, 0)) * 100)
+                  : 0}% del total
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-yellow-100 rounded-xl ring-1 ring-yellow-200/70">
+                  <DollarSign size={20} className="text-yellow-600" />
+                </div>
+              </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Comisiones Pendientes</h3>
+              <p className="text-3xl font-bold text-yellow-600">
+                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                  reportes.reduce((sum, r) => sum + r.totalComisionesPendientes, 0)
+                )}
+              </p>
+              <p className="text-xs text-gray-600 mt-2">
+                Por liquidar
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-purple-100 rounded-xl ring-1 ring-purple-200/70">
+                  <DollarSign size={20} className="text-purple-600" />
+                </div>
+              </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Total Tratamientos</h3>
+              <p className="text-3xl font-bold text-gray-900">
+                {reportes.reduce((sum, r) => sum + r.cantidadTratamientos, 0)}
+              </p>
+              <p className="text-xs text-gray-600 mt-2">
+                Tratamientos realizados
+              </p>
+            </div>
           </div>
+        )}
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
-                <DollarSign className="w-6 h-6" />
+        {/* KPIs Adicionales */}
+        {!loading && reportes.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-indigo-100 rounded-xl ring-1 ring-indigo-200/70">
+                  <DollarSign size={20} className="text-indigo-600" />
+                </div>
               </div>
-            </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Comisiones Pendientes</h3>
-            <p className="text-3xl font-bold text-yellow-600">
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                reportes.reduce((sum, r) => sum + r.totalComisionesPendientes, 0)
-              )}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Por liquidar
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Total Tratamientos</h3>
-            <p className="text-3xl font-bold text-gray-900">
-              {reportes.reduce((sum, r) => sum + r.cantidadTratamientos, 0)}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Tratamientos realizados
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* KPIs Adicionales */}
-      {!loading && reportes.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Comisión Promedio</h3>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Comisión Promedio</h3>
             <p className="text-3xl font-bold text-gray-900">
               {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
                 reportes.length > 0
@@ -379,35 +391,35 @@ export default function ComisionesProfesionalPage() {
                   : 0
               )}
             </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Por profesional
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
+              <p className="text-xs text-gray-600 mt-2">
+                Por profesional
+              </p>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Tasa de Liquidación</h3>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-pink-100 rounded-xl ring-1 ring-pink-200/70">
+                  <DollarSign size={20} className="text-pink-600" />
+                </div>
+              </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Tasa de Liquidación</h3>
             <p className="text-3xl font-bold text-gray-900">
               {reportes.reduce((sum, r) => sum + r.totalComisiones, 0) > 0
                 ? Math.round((reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0) / reportes.reduce((sum, r) => sum + r.totalComisiones, 0)) * 100)
                 : 0}%
             </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Comisiones liquidadas vs total
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
+              <p className="text-xs text-gray-600 mt-2">
+                Comisiones liquidadas vs total
+              </p>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Comisión por Tratamiento</h3>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-teal-100 rounded-xl ring-1 ring-teal-200/70">
+                  <DollarSign size={20} className="text-teal-600" />
+                </div>
+              </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Comisión por Tratamiento</h3>
             <p className="text-3xl font-bold text-gray-900">
               {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
                 reportes.reduce((sum, r) => sum + r.cantidadTratamientos, 0) > 0
@@ -415,43 +427,41 @@ export default function ComisionesProfesionalPage() {
                   : 0
               )}
             </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Promedio por tratamiento
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
+              <p className="text-xs text-gray-600 mt-2">
+                Promedio por tratamiento
+              </p>
             </div>
-            <h3 className="text-gray-600 text-sm font-medium mb-2">Top Profesional</h3>
+
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-2 bg-cyan-100 rounded-xl ring-1 ring-cyan-200/70">
+                  <DollarSign size={20} className="text-cyan-600" />
+                </div>
+              </div>
+              <h3 className="text-sm font-medium text-slate-700 mb-2">Top Profesional</h3>
             <p className="text-xl font-bold text-gray-900">
               {reportes.length > 0
                 ? `${reportes[0].profesional.nombre} ${reportes[0].profesional.apellidos}`
                 : 'N/A'}
             </p>
-            <p className="text-xs text-gray-500 mt-2">
-              {reportes.length > 0
-                ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(reportes[0].totalComisiones)
-                : '€0'}
-            </p>
+              <p className="text-xs text-gray-600 mt-2">
+                {reportes.length > 0
+                  ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(reportes[0].totalComisiones)
+                  : '€0'}
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Gráfico */}
-      {reportes.length > 0 && (
-        <div className="mb-6">
+        {/* Gráfico */}
+        {reportes.length > 0 && (
           <GraficoComisionesProfesional reportes={reportes} />
-        </div>
-      )}
+        )}
 
-      {/* Análisis de Comisiones por Especialidad */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Especialidad</h3>
+        {/* Análisis de Comisiones por Especialidad */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Especialidad</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {(() => {
               const especialidadesMap: { [key: string]: { nombre: string; total: number; cantidad: number } } = {};
@@ -492,10 +502,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Comisiones por Sede */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Sede</h3>
+        {/* Análisis de Comisiones por Sede */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Sede</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {(() => {
               const sedesMap: { [key: string]: { nombre: string; total: number; liquidadas: number; pendientes: number; cantidad: number } } = {};
@@ -546,10 +556,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Comisiones por Tipo de Tratamiento */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Tipo de Tratamiento</h3>
+        {/* Análisis de Comisiones por Tipo de Tratamiento */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Tipo de Tratamiento</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {(() => {
               const tratamientos = [
@@ -587,10 +597,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Predicción de Comisiones */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Predicción de Comisiones - Próximo Mes</h3>
+        {/* Predicción de Comisiones */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Predicción de Comisiones - Próximo Mes</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
               <p className="text-sm font-medium text-blue-800 mb-2">Comisiones Estimadas</p>
@@ -621,10 +631,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Comisiones por Tipo de Comisión */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Tipo de Cálculo</h3>
+        {/* Análisis de Comisiones por Tipo de Comisión */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Tipo de Cálculo</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {(() => {
               const tiposComision = [
@@ -663,10 +673,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Eficiencia de Liquidación por Profesional */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Eficiencia de Liquidación por Profesional</h3>
+        {/* Análisis de Eficiencia de Liquidación por Profesional */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Eficiencia de Liquidación por Profesional</h3>
           <div className="space-y-3">
             {reportes.slice(0, 5).map((reporte) => {
               const tasaLiquidacion = reporte.totalComisiones > 0
@@ -710,10 +720,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Comisiones por Mes */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Comisiones - Últimos 6 Meses</h3>
+        {/* Análisis de Comisiones por Mes */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Comisiones - Últimos 6 Meses</h3>
           <div className="space-y-3">
             {(() => {
               const meses = [];
@@ -779,10 +789,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Comisiones por Rango de Importe */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Rango de Importe</h3>
+        {/* Análisis de Comisiones por Rango de Importe */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Rango de Importe</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {(() => {
               const rangos = [
@@ -820,10 +830,10 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Análisis de Comisiones por Día de la Semana */}
-      {!loading && reportes.length > 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Día de la Semana</h3>
+        {/* Análisis de Comisiones por Día de la Semana */}
+        {!loading && reportes.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Comisiones por Día de la Semana</h3>
           <div className="grid grid-cols-7 gap-2">
             {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((dia, index) => {
               const comisionesDia = Math.round((Math.random() * 2000 + 1000) * 100) / 100;
@@ -851,12 +861,13 @@ export default function ComisionesProfesionalPage() {
         </div>
       )}
 
-      {/* Tabla de Reportes */}
-      <TablaReporteComisiones
-        reportes={reportes}
-        loading={loading}
-        onVerDetalle={handleVerDetalle}
-      />
+        {/* Tabla de Reportes */}
+        <TablaReporteComisiones
+          reportes={reportes}
+          loading={loading}
+          onVerDetalle={handleVerDetalle}
+        />
+      </div>
 
       {/* Modal de Detalle */}
       {mostrarModal && (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Calendar, Plus, CheckCircle, X } from 'lucide-react';
+import { Calendar, Plus, CheckCircle } from 'lucide-react';
 import SelectorPacienteFactura from './SelectorPacienteFactura';
 import TablaConceptosFactura from './TablaConceptosFactura';
 import ResumenTotalesFactura from './ResumenTotalesFactura';
@@ -199,28 +199,6 @@ export default function FormularioNuevaFactura({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="bg-blue-600 p-2 rounded-lg">
-            <FileText className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Nueva Factura</h2>
-            <p className="text-sm text-gray-600">Cree una nueva factura para un paciente</p>
-          </div>
-        </div>
-        {onCancelar && (
-          <button
-            onClick={onCancelar}
-            className="flex items-center space-x-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
-          >
-            <X className="w-4 h-4" />
-            <span>Cancelar</span>
-          </button>
-        )}
-      </div>
-
       {/* Error */}
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
@@ -233,7 +211,7 @@ export default function FormularioNuevaFactura({
         {/* Columna principal */}
         <div className="lg:col-span-2 space-y-6">
           {/* Selección de paciente */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white shadow-sm rounded-lg p-6">
             <SelectorPacienteFactura
               pacienteSeleccionado={pacienteSeleccionado}
               onPacienteSeleccionado={setPacienteSeleccionado}
@@ -242,7 +220,7 @@ export default function FormularioNuevaFactura({
 
           {/* Tratamientos pendientes */}
           {pacienteSeleccionado && tratamientosPendientes.length > 0 && (
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Tratamientos Pendientes de Facturación
               </h3>
@@ -250,7 +228,7 @@ export default function FormularioNuevaFactura({
                 {tratamientosPendientes.map((tratamiento) => (
                   <label
                     key={tratamiento._id}
-                    className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+                    className="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-all"
                   >
                     <input
                       type="checkbox"
@@ -264,7 +242,7 @@ export default function FormularioNuevaFactura({
                           );
                         }
                       }}
-                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-400"
                     />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900">{tratamiento.descripcion}</p>
@@ -279,9 +257,9 @@ export default function FormularioNuevaFactura({
               {tratamientosSeleccionados.length > 0 && (
                 <button
                   onClick={handleAgregarTratamientos}
-                  className="mt-4 flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                  className="mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus size={18} />
                   <span>Agregar {tratamientosSeleccionados.length} tratamiento(s) seleccionado(s)</span>
                 </button>
               )}
@@ -289,7 +267,7 @@ export default function FormularioNuevaFactura({
           )}
 
           {/* Tabla de conceptos */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white shadow-sm rounded-lg p-6">
             <TablaConceptosFactura
               conceptos={conceptos}
               onConceptosChange={setConceptos}
@@ -298,41 +276,41 @@ export default function FormularioNuevaFactura({
           </div>
 
           {/* Fechas y notas */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white shadow-sm rounded-lg p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-2" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
                   Fecha de Emisión *
                 </label>
                 <input
                   type="date"
                   value={fechaEmision}
                   onChange={(e) => setFechaEmision(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4 inline mr-2" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
                   Fecha de Vencimiento (Opcional)
                 </label>
                 <input
                   type="date"
                   value={fechaVencimiento}
                   onChange={(e) => setFechaVencimiento(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Notas (Opcional)</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Notas (Opcional)</label>
               <textarea
                 value={notas}
                 onChange={(e) => setNotas(e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Notas adicionales para la factura..."
               />
             </div>
@@ -347,7 +325,7 @@ export default function FormularioNuevaFactura({
           <button
             onClick={handleEmitirFactura}
             disabled={loading || !pacienteSeleccionado || conceptos.length === 0}
-            className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
@@ -356,7 +334,7 @@ export default function FormularioNuevaFactura({
               </>
             ) : (
               <>
-                <CheckCircle className="w-5 h-5" />
+                <CheckCircle size={20} />
                 <span>Emitir Factura</span>
               </>
             )}
@@ -384,5 +362,6 @@ export default function FormularioNuevaFactura({
     </div>
   );
 }
+
 
 

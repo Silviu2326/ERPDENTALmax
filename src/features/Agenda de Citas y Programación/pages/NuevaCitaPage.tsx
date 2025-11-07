@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { Paciente, Profesional, Tratamiento, SlotDisponibilidad, crearCita } from '../api/citasApi';
 import FormularioNuevaCita from '../components/FormularioNuevaCita';
 
@@ -57,43 +57,69 @@ export default function NuevaCitaPage({ onVolver }: NuevaCitaPageProps) {
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 mb-4 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Volver a Agenda</span>
-            </button>
-          )}
-          <div className="flex items-center space-x-3">
-            <Calendar className="w-8 h-8 text-blue-600" />
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">Nueva Cita</h1>
-              <p className="text-gray-600 mt-1">
-                Crea una nueva cita para un paciente de manera rápida y sencilla
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            {onVolver && (
+              <button
+                onClick={onVolver}
+                className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 mb-4 transition-colors"
+              >
+                <ArrowLeft size={18} />
+                <span>Volver a Agenda</span>
+              </button>
+            )}
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Calendar size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Nueva Cita
+                </h1>
+                <p className="text-gray-600">
+                  Crea una nueva cita para un paciente de manera rápida y sencilla
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {/* Mensaje de éxito */}
         {success && (
-          <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-            <CheckCircle className="w-5 h-5" />
-            <span className="font-medium">¡Cita creada exitosamente! Redirigiendo...</span>
+          <div className="mb-6 bg-white shadow-sm rounded-xl p-4 ring-1 ring-green-200/70">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <CheckCircle size={20} className="text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-green-900">¡Cita creada exitosamente!</p>
+                <p className="text-xs text-green-700">Redirigiendo...</p>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-            <AlertCircle className="w-5 h-5" />
-            <span>{error}</span>
+          <div className="mb-6 bg-white shadow-sm rounded-xl p-4 ring-1 ring-red-200/70">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-red-100 rounded-lg">
+                <AlertCircle size={20} className="text-red-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-red-900">Error al crear la cita</p>
+                <p className="text-xs text-red-700">{error}</p>
+              </div>
+            </div>
           </div>
         )}
 
@@ -101,19 +127,17 @@ export default function NuevaCitaPage({ onVolver }: NuevaCitaPageProps) {
         {!success && (
           <FormularioNuevaCita onConfirmar={handleConfirmarCita} />
         )}
-
-        {/* Loading overlay */}
-        {loading && (
-          <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 shadow-xl">
-              <div className="flex items-center space-x-3">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                <span className="text-gray-700 font-medium">Creando cita...</span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Loading overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center max-w-sm mx-4">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600 font-medium">Creando cita...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

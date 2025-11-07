@@ -37,113 +37,139 @@ export default function FiltrosIncidencias({
   };
 
   const tieneFiltros = filtros.clinicaId || filtros.estado || filtros.tipo || filtros.fechaInicio || filtros.fechaFin;
+  const numFiltros = [
+    filtros.clinicaId,
+    filtros.estado,
+    filtros.tipo,
+    filtros.fechaInicio,
+    filtros.fechaFin,
+  ].filter(Boolean).length;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-gray-500" />
-          <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
-        </div>
-        {tieneFiltros && (
-          <button
-            onClick={limpiarFiltros}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <X className="w-4 h-4" />
-            Limpiar filtros
-          </button>
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Filtro por Clínica */}
-        {clinicas.length > 0 && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Clínica
-            </label>
-            <select
-              value={filtros.clinicaId || ''}
-              onChange={(e) => handleChange('clinicaId', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Todas</option>
-              {clinicas.map((clinica) => (
-                <option key={clinica._id} value={clinica._id}>
-                  {clinica.nombre}
-                </option>
-              ))}
-            </select>
+    <div className="bg-white shadow-sm rounded-xl mb-6">
+      <div className="space-y-4 p-4">
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-4 items-center">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <Filter size={16} className="text-slate-600" />
+                <span className="text-sm font-medium text-slate-700">Filtros</span>
+                {numFiltros > 0 && (
+                  <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                    {numFiltros}
+                  </span>
+                )}
+              </div>
+            </div>
+            {tieneFiltros && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70"
+              >
+                <X size={16} />
+                Limpiar
+              </button>
+            )}
           </div>
-        )}
-
-        {/* Filtro por Tipo */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tipo
-          </label>
-          <select
-            value={filtros.tipo || ''}
-            onChange={(e) => handleChange('tipo', e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Todos</option>
-            {tipos.map((tipo) => (
-              <option key={tipo} value={tipo}>
-                {tipo}
-              </option>
-            ))}
-          </select>
         </div>
 
-        {/* Filtro por Estado */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Estado
-          </label>
-          <select
-            value={filtros.estado || ''}
-            onChange={(e) => handleChange('estado', e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Todos</option>
-            {estados.map((estado) => (
-              <option key={estado} value={estado}>
-                {estado}
-              </option>
-            ))}
-          </select>
-        </div>
+        <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Filtro por Clínica */}
+            {clinicas.length > 0 && (
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Clínica
+                </label>
+                <select
+                  value={filtros.clinicaId || ''}
+                  onChange={(e) => handleChange('clinicaId', e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="">Todas</option>
+                  {clinicas.map((clinica) => (
+                    <option key={clinica._id} value={clinica._id}>
+                      {clinica.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
-        {/* Filtro por Fecha Inicio */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Fecha Inicio
-          </label>
-          <input
-            type="date"
-            value={filtros.fechaInicio || ''}
-            onChange={(e) => handleChange('fechaInicio', e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
+            {/* Filtro por Tipo */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Filter size={16} className="inline mr-1" />
+                Tipo
+              </label>
+              <select
+                value={filtros.tipo || ''}
+                onChange={(e) => handleChange('tipo', e.target.value)}
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+              >
+                <option value="">Todos</option>
+                {tipos.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {tipo}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        {/* Filtro por Fecha Fin */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Fecha Fin
-          </label>
-          <input
-            type="date"
-            value={filtros.fechaFin || ''}
-            onChange={(e) => handleChange('fechaFin', e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
+            {/* Filtro por Estado */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Filter size={16} className="inline mr-1" />
+                Estado
+              </label>
+              <select
+                value={filtros.estado || ''}
+                onChange={(e) => handleChange('estado', e.target.value)}
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+              >
+                <option value="">Todos</option>
+                {estados.map((estado) => (
+                  <option key={estado} value={estado}>
+                    {estado}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Filtro por Fecha Inicio */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Filter size={16} className="inline mr-1" />
+                Fecha Inicio
+              </label>
+              <input
+                type="date"
+                value={filtros.fechaInicio || ''}
+                onChange={(e) => handleChange('fechaInicio', e.target.value)}
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+              />
+            </div>
+
+            {/* Filtro por Fecha Fin */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Filter size={16} className="inline mr-1" />
+                Fecha Fin
+              </label>
+              <input
+                type="date"
+                value={filtros.fechaFin || ''}
+                onChange={(e) => handleChange('fechaFin', e.target.value)}
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 

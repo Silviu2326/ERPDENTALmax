@@ -33,27 +33,29 @@ export default function VistaPreviaDocumento({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200">
+    <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200">
       {/* Header con acciones */}
-      <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div className="flex items-center justify-between">
+      <div className="px-6 py-4 border-b border-gray-200/60">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center space-x-3">
-            <FileText className="w-6 h-6 text-blue-600" />
+            <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+              <FileText size={20} className="text-blue-600" />
+            </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
                 {nombrePlantilla || 'Vista Previa del Documento'}
               </h3>
-              <p className="text-sm text-gray-500">Vista previa del documento generado</p>
+              <p className="text-sm text-gray-600">Vista previa del documento generado</p>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {onGuardar && (
               <button
                 onClick={onGuardar}
                 disabled={loading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Save className="w-4 h-4" />
+                <Save size={18} />
                 <span>Guardar</span>
               </button>
             )}
@@ -61,27 +63,27 @@ export default function VistaPreviaDocumento({
               <button
                 onClick={onGenerarPDF}
                 disabled={loading}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Download className="w-4 h-4" />
+                <Download size={18} />
                 <span>PDF</span>
               </button>
             )}
             <button
               onClick={handleImprimir}
               disabled={loading}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Printer className="w-4 h-4" />
+              <Printer size={18} />
               <span>Imprimir</span>
             </button>
             {onEnviarEmail && (
               <button
                 onClick={onEnviarEmail}
                 disabled={loading}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Mail className="w-4 h-4" />
+                <Mail size={18} />
                 <span>Email</span>
               </button>
             )}
@@ -92,9 +94,9 @@ export default function VistaPreviaDocumento({
       {/* Contenido del documento */}
       <div className="p-8">
         {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="ml-4 text-gray-600">Generando documento...</p>
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <p className="text-sm text-gray-600">Generando documento...</p>
           </div>
         ) : contenidoHtml ? (
           <div
@@ -102,17 +104,16 @@ export default function VistaPreviaDocumento({
             dangerouslySetInnerHTML={{ __html: contenidoHtml }}
           />
         ) : (
-          <div className="flex items-center justify-center py-12 text-gray-400">
-            <div className="text-center">
-              <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <p className="text-lg">No hay contenido para mostrar</p>
-              <p className="text-sm mt-2">Selecciona una plantilla y un paciente para generar el documento</p>
-            </div>
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <FileText size={48} className="text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay contenido para mostrar</h3>
+            <p className="text-sm text-gray-600">Selecciona una plantilla y un paciente para generar el documento</p>
           </div>
         )}
       </div>
     </div>
   );
 }
+
 
 

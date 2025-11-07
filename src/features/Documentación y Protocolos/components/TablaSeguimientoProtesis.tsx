@@ -1,4 +1,4 @@
-import { Eye, Edit, Clock } from 'lucide-react';
+import { Eye, Edit, Loader2, Package } from 'lucide-react';
 import { Protesis, EstadoProtesis } from '../api/protesisApi';
 
 interface TablaSeguimientoProtesisProps {
@@ -37,27 +37,25 @@ export default function TablaSeguimientoProtesis({
 }: TablaSeguimientoProtesisProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-8">
-        <div className="text-center text-gray-500">
-          <Clock className="w-8 h-8 mx-auto mb-2 animate-spin" />
-          <p>Cargando órdenes de prótesis...</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando órdenes de prótesis...</p>
       </div>
     );
   }
 
   if (protesis.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-8">
-        <div className="text-center text-gray-500">
-          <p>No se encontraron órdenes de prótesis</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron órdenes de prótesis</h3>
+        <p className="text-gray-600">No hay órdenes de prótesis que coincidan con los filtros seleccionados.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -127,21 +125,21 @@ export default function TablaSeguimientoProtesis({
                     : '-'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex items-center justify-end space-x-2">
+                  <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => item._id && onVerDetalle(item._id)}
-                      className="text-blue-600 hover:text-blue-900 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="text-blue-600 hover:text-blue-900 p-2 hover:bg-blue-50 rounded-lg transition-all"
                       title="Ver detalle"
                     >
-                      <Eye className="w-5 h-5" />
+                      <Eye size={20} />
                     </button>
                     {onEditar && (
                       <button
                         onClick={() => item._id && onEditar(item._id)}
-                        className="text-indigo-600 hover:text-indigo-900 p-2 hover:bg-indigo-50 rounded-lg transition-colors"
+                        className="text-slate-600 hover:text-slate-900 p-2 hover:bg-slate-50 rounded-lg transition-all"
                         title="Editar"
                       >
-                        <Edit className="w-5 h-5" />
+                        <Edit size={20} />
                       </button>
                     )}
                   </div>
@@ -154,5 +152,6 @@ export default function TablaSeguimientoProtesis({
     </div>
   );
 }
+
 
 

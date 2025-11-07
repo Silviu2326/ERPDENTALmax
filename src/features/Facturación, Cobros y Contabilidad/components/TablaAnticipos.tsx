@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, Trash2, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { Eye, Trash2, CheckCircle, XCircle, RotateCcw, Loader2, Package } from 'lucide-react';
 import { Anticipo } from '../api/anticiposApi';
 import DetalleAnticipoPanel from './DetalleAnticipoPanel';
 
@@ -42,7 +42,7 @@ export default function TablaAnticipos({
 
   const getMetodoPagoBadge = (metodo: string) => {
     const colores = {
-      Efectivo: 'bg-gray-100 text-gray-800',
+      Efectivo: 'bg-slate-100 text-slate-800',
       Tarjeta: 'bg-purple-100 text-purple-800',
       Transferencia: 'bg-indigo-100 text-indigo-800',
     };
@@ -68,52 +68,49 @@ export default function TablaAnticipos({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div className="flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-3 text-gray-600">Cargando anticipos...</span>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando anticipos...</p>
       </div>
     );
   }
 
   if (anticipos.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div className="text-center text-gray-500">
-          <p className="text-lg font-medium">No se encontraron anticipos</p>
-          <p className="text-sm mt-2">Intente ajustar los filtros de búsqueda</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron anticipos</h3>
+        <p className="text-gray-600 mb-4">Intente ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-slate-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Fecha
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Paciente
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Monto
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Método de Pago
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Estado
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Factura Aplicada
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
@@ -122,7 +119,7 @@ export default function TablaAnticipos({
               {anticipos.map((anticipo) => (
                 <tr
                   key={anticipo._id}
-                  className="hover:bg-gray-50 cursor-pointer transition-colors"
+                  className="hover:bg-slate-50 cursor-pointer transition-all"
                   onClick={() => handleVerDetalle(anticipo)}
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -163,13 +160,13 @@ export default function TablaAnticipos({
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center justify-end space-x-2">
+                    <div className="flex items-center justify-end gap-2">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleVerDetalle(anticipo);
                         }}
-                        className="text-blue-600 hover:text-blue-900 transition-colors"
+                        className="text-blue-600 hover:text-blue-900 transition-all rounded-lg p-1.5 hover:bg-blue-50"
                         title="Ver detalle"
                       >
                         <Eye className="w-5 h-5" />
@@ -177,7 +174,7 @@ export default function TablaAnticipos({
                       {anticipo.estado === 'disponible' && onAnular && (
                         <button
                           onClick={(e) => handleAnular(anticipo._id!, e)}
-                          className="text-red-600 hover:text-red-900 transition-colors"
+                          className="text-red-600 hover:text-red-900 transition-all rounded-lg p-1.5 hover:bg-red-50"
                           title="Anular anticipo"
                         >
                           <Trash2 className="w-5 h-5" />
@@ -195,7 +192,7 @@ export default function TablaAnticipos({
       {/* Modal de Detalle */}
       {mostrarDetalle && anticipoSeleccionado && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <DetalleAnticipoPanel
               anticipo={anticipoSeleccionado}
               onCerrar={() => {
@@ -209,5 +206,6 @@ export default function TablaAnticipos({
     </>
   );
 }
+
 
 

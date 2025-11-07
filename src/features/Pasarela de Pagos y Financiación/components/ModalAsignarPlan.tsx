@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { X, CheckCircle2, AlertCircle, Loader2, CreditCard } from 'lucide-react';
 import { PlanFinanciacion, AsignarPlanRequest, asignarPlanAPaciente } from '../api/financiacionApi';
 import SelectorDePlan from './SelectorDePlan';
 import TablaAmortizacionDetallada from './TablaAmortizacionDetallada';
@@ -161,30 +161,35 @@ export default function ModalAsignarPlan({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">Asignar Plan de Financiación</h2>
+        <div className="sticky top-0 border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+              <CreditCard size={24} className="text-blue-600" />
+            </div>
+            <h2 className="text-xl font-bold text-gray-900">Asignar Plan de Financiación</h2>
+          </div>
           <button
             onClick={onClose}
-            className="p-2 text-white hover:bg-white/20 rounded-lg transition-colors"
+            className="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
           >
-            <X className="w-6 h-6" />
+            <X size={20} />
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <div className="bg-red-50 ring-1 ring-red-200 rounded-xl p-4 flex items-start gap-3">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-red-800">{error}</p>
             </div>
           )}
 
           {/* Información del Presupuesto */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="rounded-2xl bg-blue-50 ring-1 ring-blue-200 p-4">
             <h3 className="font-semibold text-blue-900 mb-2">Información del Presupuesto</h3>
             <p className="text-sm text-blue-800">
               Monto Total: <span className="font-bold">€{montoPresupuesto.toFixed(2)}</span>
@@ -193,7 +198,7 @@ export default function ModalAsignarPlan({
 
           {/* Selección de Plan */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Seleccionar Plan de Financiación <span className="text-red-500">*</span>
             </label>
             <SelectorDePlan
@@ -208,7 +213,7 @@ export default function ModalAsignarPlan({
               {/* Monto a Financiar */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Monto a Financiar (€) <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -218,16 +223,16 @@ export default function ModalAsignarPlan({
                     max={planSeleccionado.montoMaximo}
                     value={montoAFinanciar}
                     onChange={(e) => setMontoAFinanciar(parseFloat(e.target.value) || 0)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-slate-600 mt-1">
                     Rango: €{planSeleccionado.montoMinimo} - €{planSeleccionado.montoMaximo}
                   </p>
                 </div>
 
                 {/* Número de Cuotas */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Número de Cuotas <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -236,9 +241,9 @@ export default function ModalAsignarPlan({
                     max={planSeleccionado.numeroCuotasMax}
                     value={numeroCuotas}
                     onChange={(e) => setNumeroCuotas(parseInt(e.target.value) || 1)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-slate-600 mt-1">
                     Rango: {planSeleccionado.numeroCuotasMin} - {planSeleccionado.numeroCuotasMax} cuotas
                   </p>
                 </div>
@@ -246,7 +251,7 @@ export default function ModalAsignarPlan({
                 {/* Monto de Entrada */}
                 {planSeleccionado.requiereEntrada && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Monto de Entrada (€) <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -256,10 +261,10 @@ export default function ModalAsignarPlan({
                       max={montoAFinanciar}
                       value={montoEntrada}
                       onChange={(e) => setMontoEntrada(parseFloat(e.target.value) || 0)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     />
                     {planSeleccionado.porcentajeEntrada && (
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-slate-600 mt-1">
                         Mínimo recomendado: {((montoAFinanciar * planSeleccionado.porcentajeEntrada) / 100).toFixed(2)}€ ({planSeleccionado.porcentajeEntrada}%)
                       </p>
                     )}
@@ -270,14 +275,14 @@ export default function ModalAsignarPlan({
               {/* Simulación */}
               {cargandoSimulacion && (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                  <Loader2 size={48} className="animate-spin text-blue-500" />
                   <span className="ml-2 text-gray-600">Calculando simulación...</span>
                 </div>
               )}
 
               {simulacion && (
                 <div className="space-y-4">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="rounded-2xl bg-green-50 ring-1 ring-green-200 p-4">
                     <h3 className="font-semibold text-green-900 mb-2">Resumen de la Financiación</h3>
                     <div className="grid grid-cols-3 gap-4">
                       <div>
@@ -306,27 +311,27 @@ export default function ModalAsignarPlan({
           )}
 
           {/* Botones */}
-          <div className="flex items-center justify-end space-x-4 pt-4 border-t border-gray-200">
+          <div className="flex items-center justify-end gap-4 pt-4 border-t border-slate-200">
             <button
               onClick={onClose}
               disabled={loading}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 disabled:opacity-50"
             >
               Cancelar
             </button>
             <button
               onClick={handleAsignar}
               disabled={loading || !simulacion || !planId}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 size={20} className="animate-spin" />
                   <span>Asignando...</span>
                 </>
               ) : (
                 <>
-                  <CheckCircle2 className="w-5 h-5" />
+                  <CheckCircle2 size={20} />
                   <span>Asignar Plan</span>
                 </>
               )}
@@ -337,5 +342,6 @@ export default function ModalAsignarPlan({
     </div>
   );
 }
+
 
 

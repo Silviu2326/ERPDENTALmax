@@ -36,33 +36,46 @@ export default function RentabilidadAnalisisPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
-        <div className="flex items-center space-x-4">
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-3 rounded-xl shadow-lg">
-            <TrendingUp className="w-8 h-8 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Rentabilidad y Análisis</h2>
-            <p className="text-gray-600 mt-1">
-              Análisis financiero y rentabilidad de la clínica
-            </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <TrendingUp size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Rentabilidad y Análisis
+                </h1>
+                <p className="text-gray-600">
+                  Análisis financiero y rentabilidad de la clínica
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Dashboard de Rentabilidad */}
-      <RentabilidadDashboard
-        fechaInicio={fechaInicio}
-        fechaFin={fechaFin}
-        sedeId={sedeSeleccionada}
-        sedes={sedes}
-        onCambioFecha={handleCambioFecha}
-        onCambioSede={handleCambioSede}
-      />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {/* Dashboard de Rentabilidad */}
+        <RentabilidadDashboard
+          fechaInicio={fechaInicio}
+          fechaFin={fechaFin}
+          sedeId={sedeSeleccionada}
+          sedes={sedes}
+          onCambioFecha={handleCambioFecha}
+          onCambioSede={handleCambioSede}
+        />
+      </div>
     </div>
   );
 }
+
 
 

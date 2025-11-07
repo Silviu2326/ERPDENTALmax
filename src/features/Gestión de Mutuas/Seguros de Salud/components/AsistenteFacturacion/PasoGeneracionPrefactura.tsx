@@ -79,8 +79,9 @@ export default function PasoGeneracionPrefactura({
 
   if (tratamientosSeleccionados.length === 0 || detallesCobertura.length === 0) {
     return (
-      <div className="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
-        <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos suficientes</h3>
         <p className="text-gray-600">No hay datos suficientes para generar la prefactura</p>
       </div>
     );
@@ -88,9 +89,9 @@ export default function PasoGeneracionPrefactura({
 
   if (loading) {
     return (
-      <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-2 text-gray-600">Generando prefactura...</p>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600">Generando prefactura...</p>
       </div>
     );
   }
@@ -98,20 +99,18 @@ export default function PasoGeneracionPrefactura({
   if (error) {
     return (
       <div className="space-y-4">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <div className="flex items-center gap-2 text-red-800 mb-2">
-            <AlertCircle className="w-5 h-5" />
-            <span className="font-medium">Error al generar prefactura</span>
-          </div>
-          <p className="text-red-600">{error}</p>
+        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al generar prefactura</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={handleRegenerar}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm font-semibold"
+          >
+            <RefreshCw size={20} className="inline mr-2" />
+            Intentar nuevamente
+          </button>
         </div>
-        <button
-          onClick={handleRegenerar}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <RefreshCw className="w-4 h-4" />
-          Intentar nuevamente
-        </button>
       </div>
     );
   }
@@ -131,16 +130,16 @@ export default function PasoGeneracionPrefactura({
         </div>
         <button
           onClick={handleRegenerar}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+          className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
         >
-          <RefreshCw className="w-4 h-4" />
+          <RefreshCw size={20} className="mr-2" />
           Regenerar
         </button>
       </div>
 
       {/* Mensaje de éxito */}
-      <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
-        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+      <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-start gap-3">
+        <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
         <div>
           <div className="font-medium text-green-900">Prefactura generada correctamente</div>
           <div className="text-sm text-green-700 mt-1">
@@ -154,5 +153,6 @@ export default function PasoGeneracionPrefactura({
     </div>
   );
 }
+
 
 

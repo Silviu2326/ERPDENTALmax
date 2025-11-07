@@ -25,10 +25,10 @@ export default function UploadProgressBar({ estados, progresoTotal }: UploadProg
       : 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-semibold text-gray-800">Progreso de Subida</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Progreso de Subida</h3>
           <span className="text-sm font-medium text-gray-600">
             {estadosCompletados} de {estados.length} completadas
           </span>
@@ -57,14 +57,14 @@ export default function UploadProgressBar({ estados, progresoTotal }: UploadProg
         {estados.map((estado) => (
           <div
             key={estado.id}
-            className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
+            className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg ring-1 ring-slate-200"
           >
             <div className="flex-shrink-0">
               {estado.estado === 'completado' && (
-                <CheckCircle2 className="w-5 h-5 text-green-500" />
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
               )}
               {estado.estado === 'error' && (
-                <XCircle className="w-5 h-5 text-red-500" />
+                <XCircle className="w-5 h-5 text-red-600" />
               )}
               {(estado.estado === 'pendiente' || estado.estado === 'subiendo') && (
                 <Loader2 className="w-5 h-5 text-blue-500 animate-spin" />
@@ -89,7 +89,7 @@ export default function UploadProgressBar({ estados, progresoTotal }: UploadProg
             </div>
             
             <div className="flex-shrink-0">
-              <span className="text-xs font-medium text-gray-500 capitalize">
+              <span className="text-xs font-medium text-slate-600 capitalize">
                 {estado.estado === 'subiendo' && `${estado.progreso}%`}
                 {estado.estado === 'pendiente' && 'Pendiente'}
                 {estado.estado === 'completado' && 'Completado'}
@@ -102,7 +102,7 @@ export default function UploadProgressBar({ estados, progresoTotal }: UploadProg
 
       {/* Resumen */}
       {estados.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between text-sm">
+        <div className="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between text-sm">
           <div className="flex items-center gap-4">
             {estadosCompletados > 0 && (
               <span className="text-green-600 font-medium">
@@ -125,5 +125,6 @@ export default function UploadProgressBar({ estados, progresoTotal }: UploadProg
     </div>
   );
 }
+
 
 

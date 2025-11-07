@@ -43,12 +43,12 @@ export default function FormularioNuevoBlanqueamiento({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-      <h3 className="text-xl font-semibold text-gray-800 mb-6">Nuevo Tratamiento de Blanqueamiento</h3>
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h3 className="text-xl font-bold text-gray-900 mb-6">Nuevo Tratamiento de Blanqueamiento</h3>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Inicio <span className="text-red-500">*</span>
             </label>
             <input
@@ -56,12 +56,12 @@ export default function FormularioNuevoBlanqueamiento({
               value={formulario.fechaInicio}
               onChange={(e) => setFormulario({ ...formulario, fechaInicio: e.target.value })}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Blanqueamiento <span className="text-red-500">*</span>
             </label>
             <select
@@ -73,7 +73,7 @@ export default function FormularioNuevoBlanqueamiento({
                 })
               }
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               <option value="En Clínica">En Clínica</option>
               <option value="En Casa">En Casa</option>
@@ -82,7 +82,7 @@ export default function FormularioNuevoBlanqueamiento({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Producto Utilizado <span className="text-red-500">*</span>
             </label>
             <input
@@ -91,18 +91,18 @@ export default function FormularioNuevoBlanqueamiento({
               onChange={(e) => setFormulario({ ...formulario, productoUtilizado: e.target.value })}
               required
               placeholder="Ej: Peróxido de hidrógeno 35%"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Concentración</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Concentración</label>
             <input
               type="text"
               value={formulario.concentracion}
               onChange={(e) => setFormulario({ ...formulario, concentracion: e.target.value })}
               placeholder="Ej: 35%, 10%"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         </div>
@@ -117,31 +117,31 @@ export default function FormularioNuevoBlanqueamiento({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Notas Generales</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Notas Generales</label>
           <textarea
             value={formulario.notasGenerales}
             onChange={(e) => setFormulario({ ...formulario, notasGenerales: e.target.value })}
             rows={4}
             placeholder="Ingrese notas adicionales sobre el tratamiento..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-gray-200">
+        <div className="flex gap-2 pt-3 border-t border-gray-100">
           <button
             type="submit"
             disabled={enviando || loading}
-            className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
           >
-            <Save className="w-5 h-5" />
+            <Save size={20} />
             {enviando ? 'Guardando...' : 'Guardar Tratamiento'}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="flex items-center gap-2 px-6 py-2.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
             Cancelar
           </button>
         </div>
@@ -149,5 +149,6 @@ export default function FormularioNuevoBlanqueamiento({
     </div>
   );
 }
+
 
 

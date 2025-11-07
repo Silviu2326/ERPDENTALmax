@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, Calendar, X } from 'lucide-react';
+import { Search, Filter, Calendar, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { FiltrosComunicaciones } from '../../api/crmApi';
 
 interface FiltrosCrmDashboardProps {
@@ -48,121 +48,140 @@ export default function FiltrosCrmDashboard({
   };
 
   const tieneFiltros = filtros.proveedorId || filtros.tipo || filtros.fechaInicio || filtros.fechaFin;
+  const cantidadFiltros = [
+    filtros.proveedorId && 1,
+    filtros.tipo && 1,
+    filtros.fechaInicio && 1,
+    filtros.fechaFin && 1,
+  ].filter(Boolean).length;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 mb-6 border border-gray-200">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Buscar en comunicaciones..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <button
-            onClick={() => setMostrarFiltros(!mostrarFiltros)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-              mostrarFiltros || tieneFiltros
-                ? 'bg-blue-50 border-blue-300 text-blue-700'
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-            }`}
-          >
-            <Filter className="w-4 h-4" />
-            <span className="text-sm font-medium">Filtros</span>
-            {tieneFiltros && (
-              <span className="bg-blue-600 text-white text-xs rounded-full px-2 py-0.5">
-                {[
-                  filtros.proveedorId && 1,
-                  filtros.tipo && 1,
-                  filtros.fechaInicio && 1,
-                  filtros.fechaFin && 1,
-                ].filter(Boolean).length}
-              </span>
-            )}
-          </button>
-          {tieneFiltros && (
+    <div className="bg-white rounded-xl shadow-sm mb-6">
+      <div className="space-y-4 p-4">
+        {/* Barra de búsqueda */}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-4">
+            {/* Input de búsqueda */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Buscar en comunicaciones..."
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+              />
+            </div>
+            
+            {/* Botón de filtros */}
             <button
-              onClick={limpiarFiltros}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={() => setMostrarFiltros(!mostrarFiltros)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white ring-1 ring-slate-300"
             >
-              <X className="w-4 h-4" />
-              <span className="text-sm font-medium">Limpiar</span>
+              <Filter size={18} className={tieneFiltros ? 'opacity-100' : 'opacity-70'} />
+              <span>Filtros</span>
+              {tieneFiltros && (
+                <span className="bg-blue-600 text-white text-xs rounded-full px-2 py-0.5">
+                  {cantidadFiltros}
+                </span>
+              )}
+              {mostrarFiltros ? (
+                <ChevronUp size={16} className="opacity-70" />
+              ) : (
+                <ChevronDown size={16} className="opacity-70" />
+              )}
             </button>
-          )}
+            
+            {/* Botón limpiar (si hay filtros activos) */}
+            {tieneFiltros && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white ring-1 ring-slate-300"
+              >
+                <X size={18} className="opacity-70" />
+                <span>Limpiar</span>
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* Panel de filtros avanzados */}
+        {mostrarFiltros && (
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Proveedor
+                </label>
+                <select
+                  value={filtros.proveedorId || ''}
+                  onChange={(e) => handleProveedorChange(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="">Todos los proveedores</option>
+                  {proveedores.map((proveedor) => (
+                    <option key={proveedor._id} value={proveedor._id}>
+                      {proveedor.nombreComercial}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Tipo de Comunicación
+                </label>
+                <select
+                  value={filtros.tipo || ''}
+                  onChange={(e) => handleTipoChange(e.target.value as 'Email' | 'Llamada' | 'Reunión' | '')}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="">Todos los tipos</option>
+                  <option value="Email">Email</option>
+                  <option value="Llamada">Llamada</option>
+                  <option value="Reunión">Reunión</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
+                  Fecha Inicio
+                </label>
+                <input
+                  type="date"
+                  value={filtros.fechaInicio || ''}
+                  onChange={(e) => handleFechaInicioChange(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
+                  Fecha Fin
+                </label>
+                <input
+                  type="date"
+                  value={filtros.fechaFin || ''}
+                  onChange={(e) => handleFechaFinChange(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                />
+              </div>
+            </div>
+
+            {/* Resumen de resultados */}
+            {tieneFiltros && (
+              <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+                <span>{cantidadFiltros} filtro{cantidadFiltros !== 1 ? 's' : ''} aplicado{cantidadFiltros !== 1 ? 's' : ''}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-
-      {mostrarFiltros && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Proveedor
-            </label>
-            <select
-              value={filtros.proveedorId || ''}
-              onChange={(e) => handleProveedorChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Todos los proveedores</option>
-              {proveedores.map((proveedor) => (
-                <option key={proveedor._id} value={proveedor._id}>
-                  {proveedor.nombreComercial}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tipo de Comunicación
-            </label>
-            <select
-              value={filtros.tipo || ''}
-              onChange={(e) => handleTipoChange(e.target.value as 'Email' | 'Llamada' | 'Reunión' | '')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Todos los tipos</option>
-              <option value="Email">Email</option>
-              <option value="Llamada">Llamada</option>
-              <option value="Reunión">Reunión</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Fecha Inicio
-            </label>
-            <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="date"
-                value={filtros.fechaInicio || ''}
-                onChange={(e) => handleFechaInicioChange(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Fecha Fin
-            </label>
-            <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="date"
-                value={filtros.fechaFin || ''}
-                onChange={(e) => handleFechaFinChange(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
+
 
 

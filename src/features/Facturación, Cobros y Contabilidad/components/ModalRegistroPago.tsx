@@ -209,7 +209,7 @@ export default function ModalRegistroPago({
 
           {/* Búsqueda de Paciente */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Buscar Paciente
             </label>
             <div className="relative">
@@ -219,7 +219,7 @@ export default function ModalRegistroPago({
                 value={busquedaPaciente}
                 onChange={(e) => setBusquedaPaciente(e.target.value)}
                 placeholder="Buscar por nombre, apellido o DNI..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
               />
             </div>
 
@@ -274,7 +274,7 @@ export default function ModalRegistroPago({
           {/* Selección de Factura */}
           {pacienteSeleccionado && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Factura Pendiente
               </label>
               {facturasPendientes.length === 0 ? (
@@ -288,7 +288,7 @@ export default function ModalRegistroPago({
                     const factura = facturasPendientes.find((f) => f._id === e.target.value);
                     setFacturaSeleccionada(factura || null);
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 >
                   <option value="">Seleccione una factura</option>
@@ -324,7 +324,7 @@ export default function ModalRegistroPago({
 
           {/* Monto */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Monto del Pago *
             </label>
             <input
@@ -339,7 +339,7 @@ export default function ModalRegistroPago({
                   monto: parseFloat(e.target.value) || 0,
                 }))
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             />
             {facturaSeleccionada && (
@@ -351,7 +351,7 @@ export default function ModalRegistroPago({
 
           {/* Método de Pago */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Método de Pago *
             </label>
             <select
@@ -362,7 +362,7 @@ export default function ModalRegistroPago({
                   metodoPago: e.target.value as NuevoPagoData['metodoPago'],
                 }))
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             >
               {METODOS_PAGO.map((metodo) => (
@@ -375,7 +375,7 @@ export default function ModalRegistroPago({
 
           {/* Fecha de Pago */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Pago *
             </label>
             <input
@@ -387,14 +387,14 @@ export default function ModalRegistroPago({
                   fechaPago: e.target.value,
                 }))
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             />
           </div>
 
           {/* Notas */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Notas (opcional)
             </label>
             <textarea
@@ -406,28 +406,28 @@ export default function ModalRegistroPago({
                 }))
               }
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Notas adicionales sobre el pago..."
             />
           </div>
 
           {/* Botones */}
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-2 pt-4 border-t border-slate-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading || !pacienteSeleccionado || !facturaSeleccionada}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 size={20} className="animate-spin" />
                   <span>Registrando...</span>
                 </>
               ) : (
@@ -440,5 +440,6 @@ export default function ModalRegistroPago({
     </div>
   );
 }
+
 
 

@@ -1,4 +1,4 @@
-import { Eye, CheckCircle, AlertCircle, XCircle, Calendar } from 'lucide-react';
+import { Eye, CheckCircle, AlertCircle, XCircle, Calendar, Loader2, Receipt } from 'lucide-react';
 import { PagoSeguro } from '../api/pagosSeguroApi';
 
 interface TablaPagosSeguroProps {
@@ -75,54 +75,51 @@ export default function TablaPagosSeguro({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center border border-gray-200">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (pagos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <Calendar className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay pagos registrados</p>
-          <p className="text-sm">Los pagos de seguros aparecerán aquí cuando se registren</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center border border-gray-200">
+        <Receipt size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay pagos registrados</h3>
+        <p className="text-gray-600">Los pagos de seguros aparecerán aquí cuando se registren</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha de Pago
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Aseguradora
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Monto Total
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Método de Pago
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Referencia
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Reclamaciones
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -140,7 +137,7 @@ export default function TablaPagosSeguro({
                     {pago.aseguradora?.nombreComercial || 'N/A'}
                   </div>
                   {pago.aseguradora?.razonSocial && (
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-slate-600">
                       {pago.aseguradora.razonSocial}
                     </div>
                   )}
@@ -173,10 +170,10 @@ export default function TablaPagosSeguro({
                     {onVerDetalle && (
                       <button
                         onClick={() => onVerDetalle(pago)}
-                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-xl transition-all"
                         title="Ver detalle"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye size={18} />
                       </button>
                     )}
                   </div>
@@ -189,5 +186,6 @@ export default function TablaPagosSeguro({
     </div>
   );
 }
+
 
 

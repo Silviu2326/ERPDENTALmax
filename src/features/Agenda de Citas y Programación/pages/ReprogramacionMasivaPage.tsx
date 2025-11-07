@@ -251,93 +251,101 @@ export default function ReprogramacionMasivaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center space-x-4 mb-4">
-            <button
-              onClick={() => window.history.back()}
-              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div className="flex items-center space-x-3">
-              <div className="bg-blue-600 p-3 rounded-lg">
-                <Calendar className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <button
+                onClick={() => window.history.back()}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Calendar size={24} className="text-blue-600" />
               </div>
+              
+              {/* Título y descripción */}
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Reprogramación Masiva de Citas</h1>
-                <p className="text-sm text-gray-600 mt-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Reprogramación Masiva de Citas
+                </h1>
+                <p className="text-gray-600">
                   Selecciona y reprograma múltiples citas en bloque
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Filtros */}
-        <FiltroCitasReprogramar
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          onBuscar={handleBuscar}
-          loading={loading}
-        />
-
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center space-x-2">
-            <span className="font-medium">Error:</span>
-            <span>{error}</span>
-          </div>
-        )}
-
-        {/* Resultados */}
-        {citas.length > 0 && (
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Citas encontradas ({citas.length})
-              </h2>
-              {citasSeleccionadas.length > 0 && (
-                <button
-                  onClick={handleAbrirModal}
-                  className="flex items-center space-x-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  <RefreshCw className="w-5 h-5" />
-                  <span>Reprogramar {citasSeleccionadas.length} citas</span>
-                </button>
-              )}
-            </div>
-            <TablaResultadosCitas
-              citas={citas}
-              citasSeleccionadas={citasSeleccionadas}
-              onSeleccionarCita={handleSeleccionarCita}
-              onSeleccionarTodas={handleSeleccionarTodas}
-              loading={loading}
-            />
-          </div>
-        )}
-
-        {/* Resumen de resultado */}
-        {resultado && !mostrarModal && (
-          <div className="mb-6">
-            <ResumenCambiosReprogramacion resultado={resultado} />
-          </div>
-        )}
-
-        {/* Modal de confirmación */}
-        <ModalConfirmacionReprogramacion
-          mostrar={mostrarModal}
-          onCerrar={handleCerrarModal}
-          onConfirmar={handleConfirmarReprogramacion}
-          datos={datosReprogramacion}
-          onDatosChange={setDatosReprogramacion}
-          cantidadCitas={citasSeleccionadas.length}
-          loading={procesando}
-          resultado={resultado}
-        />
       </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltroCitasReprogramar
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            onBuscar={handleBuscar}
+            loading={loading}
+          />
+
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
+              <span className="font-medium">Error:</span>
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Resultados */}
+          {citas.length > 0 && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">
+                  Citas encontradas ({citas.length})
+                </h2>
+                {citasSeleccionadas.length > 0 && (
+                  <button
+                    onClick={handleAbrirModal}
+                    className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-medium"
+                  >
+                    <RefreshCw size={20} />
+                    <span>Reprogramar {citasSeleccionadas.length} citas</span>
+                  </button>
+                )}
+              </div>
+              <TablaResultadosCitas
+                citas={citas}
+                citasSeleccionadas={citasSeleccionadas}
+                onSeleccionarCita={handleSeleccionarCita}
+                onSeleccionarTodas={handleSeleccionarTodas}
+                loading={loading}
+              />
+            </div>
+          )}
+
+          {/* Resumen de resultado */}
+          {resultado && !mostrarModal && (
+            <ResumenCambiosReprogramacion resultado={resultado} />
+          )}
+        </div>
+      </div>
+
+      {/* Modal de confirmación */}
+      <ModalConfirmacionReprogramacion
+        mostrar={mostrarModal}
+        onCerrar={handleCerrarModal}
+        onConfirmar={handleConfirmarReprogramacion}
+        datos={datosReprogramacion}
+        onDatosChange={setDatosReprogramacion}
+        cantidadCitas={citasSeleccionadas.length}
+        loading={procesando}
+        resultado={resultado}
+      />
     </div>
   );
 }

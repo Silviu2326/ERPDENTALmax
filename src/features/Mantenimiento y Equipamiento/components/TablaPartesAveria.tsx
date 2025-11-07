@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Eye, Edit, Trash2, AlertCircle, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Eye, Edit, Trash2, AlertCircle, Clock, CheckCircle, XCircle, Loader2, Package } from 'lucide-react';
 import { ParteAveria, EstadoParteAveria, PrioridadParteAveria } from '../api/partesAveriaApi';
 
 interface TablaPartesAveriaProps {
@@ -76,26 +75,25 @@ export default function TablaPartesAveria({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div className="text-center text-gray-500">Cargando partes de avería...</div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (partes.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div className="text-center text-gray-500">
-          <AlertCircle className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p className="text-lg font-medium">No se encontraron partes de avería</p>
-          <p className="text-sm">Intenta ajustar los filtros de búsqueda</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron partes de avería</h3>
+        <p className="text-gray-600 mb-4">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -180,7 +178,7 @@ export default function TablaPartesAveria({
                   <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => onVerDetalle(parte)}
-                      className="text-blue-600 hover:text-blue-900 p-1.5 rounded hover:bg-blue-50 transition-colors"
+                      className="text-blue-600 hover:text-blue-900 p-1.5 rounded-xl hover:bg-blue-50 transition-colors"
                       title="Ver detalle"
                     >
                       <Eye className="w-5 h-5" />
@@ -188,7 +186,7 @@ export default function TablaPartesAveria({
                     {onEditar && (
                       <button
                         onClick={() => onEditar(parte)}
-                        className="text-indigo-600 hover:text-indigo-900 p-1.5 rounded hover:bg-indigo-50 transition-colors"
+                        className="text-indigo-600 hover:text-indigo-900 p-1.5 rounded-xl hover:bg-indigo-50 transition-colors"
                         title="Editar"
                       >
                         <Edit className="w-5 h-5" />
@@ -197,7 +195,7 @@ export default function TablaPartesAveria({
                     {onEliminar && (
                       <button
                         onClick={() => onEliminar(parte)}
-                        className="text-red-600 hover:text-red-900 p-1.5 rounded hover:bg-red-50 transition-colors"
+                        className="text-red-600 hover:text-red-900 p-1.5 rounded-xl hover:bg-red-50 transition-colors"
                         title="Eliminar"
                       >
                         <Trash2 className="w-5 h-5" />
@@ -213,5 +211,6 @@ export default function TablaPartesAveria({
     </div>
   );
 }
+
 
 

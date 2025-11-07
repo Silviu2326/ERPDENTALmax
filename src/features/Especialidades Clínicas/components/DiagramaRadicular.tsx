@@ -126,20 +126,21 @@ export default function DiagramaRadicular({ numeroDiente, conductos }: DiagramaR
   };
 
   return (
-    <div className="bg-white rounded-lg border-2 border-gray-200 p-6 shadow-sm">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+    <div className="bg-white shadow-sm rounded-2xl p-4">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
         Diagrama Radicular
       </h3>
       <div className="flex justify-center items-center min-h-[300px]">
         {renderDiagrama()}
       </div>
       {conductos.length === 0 && (
-        <p className="text-center text-gray-500 text-sm mt-4">
+        <p className="text-center text-gray-600 text-sm mt-4">
           Agregue conductos para ver el diagrama
         </p>
       )}
     </div>
   );
 }
+
 
 

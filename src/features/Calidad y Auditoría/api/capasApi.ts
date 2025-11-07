@@ -228,3 +228,4 @@ export async function subirAdjuntosCapa(id: string, archivos: File[]): Promise<s
 }
 
 
+

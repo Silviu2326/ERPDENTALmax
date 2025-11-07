@@ -22,18 +22,18 @@ export default function TimelineEstadoFabricacion({
 
   if (historial.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-        <p className="text-gray-500 text-center">No hay historial de estados disponible</p>
+      <div className="bg-white shadow-sm rounded-lg p-6">
+        <p className="text-gray-600 text-center">No hay historial de estados disponible</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-6">Historial de Estados</h3>
       <div className="relative">
         {/* Línea vertical */}
-        <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+        <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-slate-200"></div>
 
         {/* Items del timeline */}
         <div className="space-y-6">
@@ -53,7 +53,7 @@ export default function TimelineEstadoFabricacion({
                       ? 'bg-green-100 border-green-400'
                       : isActual
                       ? 'bg-blue-100 border-blue-400'
-                      : 'bg-gray-100 border-gray-300'
+                      : 'bg-slate-100 border-slate-300'
                   }`}
                 >
                   {isCancelado ? (
@@ -61,7 +61,7 @@ export default function TimelineEstadoFabricacion({
                   ) : isCompletado ? (
                     <CheckCircle className="w-5 h-5 text-green-600" />
                   ) : (
-                    <Clock className="w-4 h-4 text-gray-600" />
+                    <Clock className="w-4 h-4 text-slate-600" />
                   )}
                 </div>
 
@@ -76,18 +76,18 @@ export default function TimelineEstadoFabricacion({
                       >
                         {item.estado}
                       </p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-600 mt-1">
                         {formatearFecha(item.fecha)}
                       </p>
                       {item.usuarioId && (
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-600">
                           Por: {item.usuarioId.nombre}
                         </p>
                       )}
                     </div>
                   </div>
                   {item.notas && (
-                    <div className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="mt-2 p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200">
                       <p className="text-sm text-gray-700">{item.notas}</p>
                     </div>
                   )}
@@ -100,5 +100,6 @@ export default function TimelineEstadoFabricacion({
     </div>
   );
 }
+
 
 

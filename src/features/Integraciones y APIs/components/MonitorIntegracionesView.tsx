@@ -531,3 +531,4 @@ function VistaEstadisticas({ estadisticas }: { estadisticas: EstadisticasIntegra
 }
 
 
+

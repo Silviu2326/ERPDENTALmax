@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Loader2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Plus, Loader2, AlertCircle, FileImage, ChevronRight } from 'lucide-react';
 import {
   obtenerRadiologiasPorPaciente,
   eliminarRadiologia,
@@ -116,9 +116,9 @@ export default function HistorialRadiologicoPacientePage({
 
   if (loading && radiologias.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
           <p className="text-gray-600">Cargando historial radiológico...</p>
         </div>
       </div>
@@ -126,57 +126,74 @@ export default function HistorialRadiologicoPacientePage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        {/* Header */}
-        <div className="mb-6">
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Volver</span>
-            </button>
-          )}
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Historial Radiológico
-              </h1>
-              {pacienteNombre && (
-                <p className="text-gray-600">Paciente: {pacienteNombre}</p>
-              )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            {onVolver && (
+              <button
+                onClick={onVolver}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+              >
+                <ArrowLeft size={20} />
+                <span>Volver</span>
+              </button>
+            )}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileImage size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Historial Radiológico
+                  </h1>
+                  {pacienteNombre && (
+                    <p className="text-gray-600">
+                      Paciente: {pacienteNombre}
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
             <button
               onClick={() => setMostrarModalCarga(true)}
-              className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
             >
-              <Plus className="w-5 h-5" />
+              <Plus size={20} />
               <span>Añadir Radiografía</span>
             </button>
           </div>
-        </div>
 
-        {/* Filtros */}
-        <div className="mb-6">
+          {/* Filtros */}
           <FiltrosHistorialRadiologico
             filtros={filtros}
             onFiltrosChange={setFiltros}
           />
-        </div>
 
-        {/* Error */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
-            <AlertCircle className="w-5 h-5" />
-            <span>{error}</span>
-          </div>
-        )}
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+            </div>
+          )}
 
-        {/* Galería */}
-        <div className="mb-6">
+          {/* Galería */}
           <GaleriaRadiologica
             radiologias={radiologias}
             loading={loading}
@@ -185,37 +202,42 @@ export default function HistorialRadiologicoPacientePage({
             onEliminar={handleEliminarRadiografia}
             radiografiaSeleccionadaId={radiografiaSeleccionada?._id}
           />
-        </div>
 
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="flex items-center justify-between bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-4">
-            <div className="text-sm text-gray-600">
-              Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} -{' '}
-              {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
-              {paginacion.total} radiografías
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="text-sm text-gray-600">
+                  Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} -{' '}
+                  {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
+                  {paginacion.total} radiografías
+                </div>
+                <div className="flex justify-center items-center gap-2">
+                  <button
+                    onClick={() => handlePageChange(paginacion.page - 1)}
+                    disabled={paginacion.page === 1}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <ArrowLeft size={16} />
+                    <span>Anterior</span>
+                  </button>
+                  <span className="px-4 py-2 text-sm text-gray-700">
+                    Página {paginacion.page} de {paginacion.totalPages}
+                  </span>
+                  <button
+                    onClick={() => handlePageChange(paginacion.page + 1)}
+                    disabled={paginacion.page === paginacion.totalPages}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>Siguiente</span>
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handlePageChange(paginacion.page - 1)}
-                disabled={paginacion.page === 1}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Anterior
-              </button>
-              <span className="px-4 py-2 text-gray-700">
-                Página {paginacion.page} de {paginacion.totalPages}
-              </span>
-              <button
-                onClick={() => handlePageChange(paginacion.page + 1)}
-                disabled={paginacion.page === paginacion.totalPages}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
+      </div>
 
         {/* Modal de carga */}
         <ModalCargaRadiografia
@@ -251,5 +273,6 @@ export default function HistorialRadiologicoPacientePage({
     </div>
   );
 }
+
 
 

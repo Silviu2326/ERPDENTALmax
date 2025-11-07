@@ -33,3 +33,4 @@ export default function CitasTabs({ activeTab, onTabChange }: CitasTabsProps) {
 }
 
 
+

@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, Loader2 } from 'lucide-react';
 import { SedeSummary } from '../api/dashboardSedesApi';
 
 interface ComparativaSedesChartProps {
@@ -94,37 +94,28 @@ export default function ComparativaSedesChart({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <BarChart3 className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-bold text-gray-800">{getTitulo()}</h2>
-        </div>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">Cargando datos...</div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center ring-1 ring-slate-200">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando datos del gráfico...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <BarChart3 className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-bold text-gray-800">{getTitulo()}</h2>
-        </div>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">No hay datos disponibles</div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center ring-1 ring-slate-200">
+        <BarChart3 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600">No se encontraron datos para mostrar el gráfico comparativo.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-      <div className="flex items-center space-x-2 mb-6">
-        <BarChart3 className="w-6 h-6 text-blue-600" />
-        <h2 className="text-xl font-bold text-gray-800">{getTitulo()}</h2>
+    <div className="bg-white shadow-sm rounded-xl p-6 ring-1 ring-slate-200">
+      <div className="flex items-center gap-2 mb-6">
+        <BarChart3 size={20} className="text-blue-600" />
+        <h2 className="text-xl font-bold text-gray-900">{getTitulo()}</h2>
       </div>
 
       <ResponsiveContainer width="100%" height={350}>
@@ -174,5 +165,6 @@ export default function ComparativaSedesChart({
     </div>
   );
 }
+
 
 

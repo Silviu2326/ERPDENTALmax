@@ -93,10 +93,10 @@ export default function FormularioExportacion({
     new Date(parametros.fechaInicio) <= new Date(parametros.fechaFin);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg">
-          <FileText className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <FileText size={20} className="text-blue-600" />
         </div>
         <h2 className="text-xl font-bold text-gray-900">Parámetros de Exportación</h2>
       </div>
@@ -104,13 +104,13 @@ export default function FormularioExportacion({
       <div className="space-y-6">
         {/* Rango de Fechas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            <Calendar className="w-4 h-4 inline mr-2" />
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            <Calendar size={16} className="inline mr-1" />
             Rango de Fechas
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-gray-600 mb-1">Fecha Inicio</label>
+              <label className="block text-xs text-slate-600 mb-1">Fecha Inicio</label>
               <input
                 type="date"
                 value={parametros.fechaInicio}
@@ -120,12 +120,12 @@ export default function FormularioExportacion({
                     fechaInicio: e.target.value,
                   })
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 max={parametros.fechaFin || undefined}
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-600 mb-1">Fecha Fin</label>
+              <label className="block text-xs text-slate-600 mb-1">Fecha Fin</label>
               <input
                 type="date"
                 value={parametros.fechaFin}
@@ -135,7 +135,7 @@ export default function FormularioExportacion({
                     fechaFin: e.target.value,
                   })
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 min={parametros.fechaInicio || undefined}
               />
             </div>
@@ -144,12 +144,12 @@ export default function FormularioExportacion({
 
         {/* Formato de Exportación */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            <FileText className="w-4 h-4 inline mr-2" />
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            <FileText size={16} className="inline mr-1" />
             Formato de Exportación
           </label>
           {loadingFormatos ? (
-            <div className="animate-pulse bg-gray-200 h-12 rounded-lg"></div>
+            <div className="animate-pulse bg-slate-200 h-12 rounded-xl"></div>
           ) : (
             <select
               value={parametros.formato}
@@ -159,7 +159,7 @@ export default function FormularioExportacion({
                   formato: e.target.value as FormatoExportacion,
                 })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             >
               <option value="">Seleccione un formato...</option>
               {formatosDisponibles.map((formato) => (
@@ -173,8 +173,8 @@ export default function FormularioExportacion({
 
         {/* Tipos de Datos */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
-            <CheckSquare className="w-4 h-4 inline mr-2" />
+          <label className="block text-sm font-medium text-slate-700 mb-3">
+            <CheckSquare size={16} className="inline mr-1" />
             Tipos de Datos a Exportar
           </label>
           <div className="space-y-3">
@@ -183,17 +183,17 @@ export default function FormularioExportacion({
               return (
                 <label
                   key={tipo.id}
-                  className={`flex items-start space-x-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                  className={`flex items-start space-x-3 p-4 rounded-xl cursor-pointer transition-all ring-1 ${
                     estaSeleccionado
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'ring-blue-400 bg-blue-50'
+                      : 'ring-slate-200 hover:ring-slate-300 bg-white'
                   }`}
                 >
                   <div className="mt-1">
                     {estaSeleccionado ? (
                       <CheckSquare className="w-5 h-5 text-blue-600" />
                     ) : (
-                      <Square className="w-5 h-5 text-gray-400" />
+                      <Square className="w-5 h-5 text-slate-400" />
                     )}
                   </div>
                   <div className="flex-1">
@@ -213,11 +213,11 @@ export default function FormularioExportacion({
         </div>
 
         {/* Botón de Generar */}
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-gray-100">
           <button
             onClick={onGenerarExportacion}
             disabled={!puedeGenerar || loading}
-            className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
           >
             {loading ? (
               <>
@@ -226,7 +226,7 @@ export default function FormularioExportacion({
               </>
             ) : (
               <>
-                <FileText className="w-5 h-5" />
+                <FileText size={20} />
                 <span>Generar Exportación</span>
               </>
             )}
@@ -241,5 +241,6 @@ export default function FormularioExportacion({
     </div>
   );
 }
+
 
 

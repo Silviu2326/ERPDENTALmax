@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Save, Eye, Settings } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Settings, Layout, Loader2, AlertCircle } from 'lucide-react';
 import { LandingPage, obtenerLandingPage, guardarLandingPage } from '../api/landingPagesApi';
 import LandingPageCanvas from '../components/LandingPageCanvas';
 import BlockLibrarySidebar from '../components/BlockLibrarySidebar';
@@ -96,10 +96,10 @@ export default function LandingPageEditorPage({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Cargando editor...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando editor...</p>
         </div>
       </div>
     );
@@ -107,65 +107,90 @@ export default function LandingPageEditorPage({
 
   if (error || !landingPage) {
     return (
-      <div className="p-6">
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          {error || 'Error al cargar la landing page'}
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error || 'Error al cargar la landing page'}</p>
+            {onVolver && (
+              <button
+                onClick={onVolver}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+              >
+                <ArrowLeft size={20} />
+                <span>Volver al dashboard</span>
+              </button>
+            )}
+          </div>
         </div>
-        {onVolver && (
-          <button
-            onClick={onVolver}
-            className="mt-4 flex items-center space-x-2 text-blue-600 hover:text-blue-700"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Volver al dashboard</span>
-          </button>
-        )}
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col">
-      {/* Barra superior */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span>Volver</span>
-            </button>
-          )}
-          <h1 className="text-xl font-semibold text-gray-900">{landingPage.nombre}</h1>
-        </div>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={handleGuardar}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Save className="w-5 h-5" />
-            <span>Guardar</span>
-          </button>
-          <button
-            onClick={() => setMostrarModalPublicacion(true)}
-            className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
-          >
-            <Settings className="w-5 h-5" />
-            <span>Publicar</span>
-          </button>
-          <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
-            <Eye className="w-5 h-5" />
-            <span>Vista previa</span>
-          </button>
+    <div className="h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex flex-col">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Layout size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {landingPage.nombre}
+                  </h1>
+                  <p className="text-gray-600">
+                    Editor de Landing Page
+                  </p>
+                </div>
+              </div>
+              
+              {/* Toolbar */}
+              <div className="flex items-center gap-2">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70"
+                  >
+                    <ArrowLeft size={20} />
+                    <span>Volver</span>
+                  </button>
+                )}
+                <button
+                  onClick={handleGuardar}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                >
+                  <Save size={20} />
+                  <span>Guardar</span>
+                </button>
+                <button
+                  onClick={() => setMostrarModalPublicacion(true)}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm"
+                >
+                  <Settings size={20} />
+                  <span>Publicar</span>
+                </button>
+                <button className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70">
+                  <Eye size={20} />
+                  <span>Vista previa</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Área principal del editor */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden bg-gray-50">
         {/* Sidebar izquierda - Biblioteca de bloques */}
-        <div className="w-64 bg-gray-50 border-r border-gray-200 overflow-y-auto">
+        <div className="w-64 bg-white border-r border-gray-200/60 overflow-y-auto">
           <BlockLibrarySidebar onAgregarBloque={handleAgregarBloque} />
         </div>
 
@@ -179,7 +204,7 @@ export default function LandingPageEditorPage({
         </div>
 
         {/* Panel derecho - Inspector de propiedades */}
-        <div className="w-80 bg-white border-l border-gray-200 overflow-y-auto">
+        <div className="w-80 bg-white border-l border-gray-200/60 overflow-y-auto">
           <PropertyInspectorPanel
             bloqueId={bloqueSeleccionado}
             contenido={landingPage.contenidoJson}
@@ -209,5 +234,6 @@ export default function LandingPageEditorPage({
     </div>
   );
 }
+
 
 

@@ -166,3 +166,4 @@ Se referencia desde el modelo Cita para calcular la producción: { nombre: Strin
 - Exportación: Implementar funcionalidad de exportación a CSV y PDF para permitir a los usuarios generar reportes personalizados para reuniones y análisis externos.
 
 
+

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, AlertCircle, BarChart3 } from 'lucide-react';
+import { RefreshCw, AlertCircle, BarChart3, Loader2, Package } from 'lucide-react';
 import {
   getSedesSummary,
   getAllSedes,
@@ -149,9 +149,9 @@ export default function DashboardSedesPage() {
 
   if (loading && !refreshing) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
           <p className="text-gray-600">Cargando cuadro de mandos...</p>
         </div>
       </div>
@@ -159,146 +159,157 @@ export default function DashboardSedesPage() {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <BarChart3 className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">Cuadro de Mandos por Sede</h1>
-              <p className="text-sm text-gray-600 mt-1">
-                Vista panorámica y comparativa del rendimiento de todas las sedes
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <BarChart3 size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Cuadro de Mandos por Sede
+                  </h1>
+                  <p className="text-gray-600">
+                    Vista panorámica y comparativa del rendimiento de todas las sedes
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-medium transition-all hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              >
+                <RefreshCw size={20} className={refreshing ? 'animate-spin' : ''} />
+                <span>Actualizar</span>
+              </button>
             </div>
           </div>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-          >
-            <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin' : ''}`} />
-            <span>Actualizar</span>
-          </button>
         </div>
+      </div>
 
-        {/* Selector de Sedes y Período */}
-        <SelectorSedesPeriodo
-          sedes={sedes}
-          sedesSeleccionadas={sedesSeleccionadas}
-          fechaInicio={fechaInicio}
-          fechaFin={fechaFin}
-          onSedesChange={handleSedesChange}
-          onPeriodoChange={handlePeriodoChange}
-          loading={refreshing}
-        />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Selector de Sedes y Período */}
+          <SelectorSedesPeriodo
+            sedes={sedes}
+            sedesSeleccionadas={sedesSeleccionadas}
+            fechaInicio={fechaInicio}
+            fechaFin={fechaFin}
+            onSedesChange={handleSedesChange}
+            onPeriodoChange={handlePeriodoChange}
+            loading={refreshing}
+          />
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg">
-            <div className="flex items-center space-x-2">
-              <AlertCircle className="w-5 h-5 text-yellow-600" />
-              <p className="text-yellow-800">
-                {error}. Mostrando datos de ejemplo para desarrollo.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* KPIs por Sede */}
-        {datos.length > 0 && (
-          <>
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">KPIs por Sede</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {datos.map((sede) => (
-                  <KPICardSede key={sede.sedeId} sede={sede} />
-                ))}
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-4 border-l-4 border-yellow-400">
+              <div className="flex items-center gap-2">
+                <AlertCircle size={20} className="text-yellow-600" />
+                <p className="text-sm text-yellow-800">
+                  {error}. Mostrando datos de ejemplo para desarrollo.
+                </p>
               </div>
             </div>
+          )}
 
-            {/* Selector de Métrica para el Gráfico */}
-            <div className="mb-6 bg-white rounded-xl shadow-md border-2 border-gray-200 p-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Métrica a comparar:
-              </label>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setMetricaGrafico('ingresos')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    metricaGrafico === 'ingresos'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Ingresos
-                </button>
-                <button
-                  onClick={() => setMetricaGrafico('pacientes')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    metricaGrafico === 'pacientes'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Nuevos Pacientes
-                </button>
-                <button
-                  onClick={() => setMetricaGrafico('citas')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    metricaGrafico === 'citas'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Citas Atendidas
-                </button>
-                <button
-                  onClick={() => setMetricaGrafico('ocupacion')}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    metricaGrafico === 'ocupacion'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  Tasa de Ocupación
-                </button>
+          {/* KPIs por Sede */}
+          {datos.length > 0 && (
+            <>
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">KPIs por Sede</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {datos.map((sede) => (
+                    <KPICardSede key={sede.sedeId} sede={sede} />
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Gráfico Comparativo */}
-            <div className="mb-6">
+              {/* Selector de Métrica para el Gráfico */}
+              <div className="bg-white shadow-sm rounded-xl p-4 ring-1 ring-slate-200">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Métrica a comparar:
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setMetricaGrafico('ingresos')}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      metricaGrafico === 'ingresos'
+                        ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    Ingresos
+                  </button>
+                  <button
+                    onClick={() => setMetricaGrafico('pacientes')}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      metricaGrafico === 'pacientes'
+                        ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    Nuevos Pacientes
+                  </button>
+                  <button
+                    onClick={() => setMetricaGrafico('citas')}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      metricaGrafico === 'citas'
+                        ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    Citas Atendidas
+                  </button>
+                  <button
+                    onClick={() => setMetricaGrafico('ocupacion')}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      metricaGrafico === 'ocupacion'
+                        ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    Tasa de Ocupación
+                  </button>
+                </div>
+              </div>
+
+              {/* Gráfico Comparativo */}
               <ComparativaSedesChart
                 datos={datos}
                 metrica={metricaGrafico}
                 loading={refreshing}
               />
-            </div>
 
-            {/* Tabla de Rendimiento */}
-            <div className="mb-6">
+              {/* Tabla de Rendimiento */}
               <TablaRendimientoSedes datos={datos} loading={refreshing} />
-            </div>
-          </>
-        )}
+            </>
+          )}
 
-        {/* Mensaje cuando no hay datos */}
-        {!loading && datos.length === 0 && (
-          <div className="text-center py-12 bg-white rounded-xl shadow-md border-2 border-gray-200">
-            <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
-              No hay datos disponibles
-            </h3>
-            <p className="text-gray-500">
-              Selecciona un período diferente o verifica que haya sedes seleccionadas.
-            </p>
-          </div>
-        )}
+          {/* Mensaje cuando no hay datos */}
+          {!loading && datos.length === 0 && (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center ring-1 ring-slate-200">
+              <Package size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                No hay datos disponibles
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Selecciona un período diferente o verifica que haya sedes seleccionadas.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

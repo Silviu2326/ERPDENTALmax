@@ -83,13 +83,13 @@ export default function ModalBusquedaTratamientos({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+      <div className="bg-white shadow-xl rounded-lg w-full max-w-2xl max-h-[80vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-bold text-gray-900">Buscar Tratamiento o Producto</h2>
           <button
             onClick={onClose}
-            className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-1 text-slate-400 hover:text-slate-600 transition-colors rounded-xl hover:bg-slate-100"
           >
             <X className="w-5 h-5" />
           </button>
@@ -98,13 +98,13 @@ export default function ModalBusquedaTratamientos({
         {/* Search Input */}
         <div className="p-6 border-b border-gray-200">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar por nombre o código..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               autoFocus
             />
           </div>
@@ -114,17 +114,17 @@ export default function ModalBusquedaTratamientos({
         <div className="flex-1 overflow-y-auto p-6">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
-              <span className="ml-2 text-gray-600">Buscando...</span>
+              <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
+              <span className="ml-2 text-sm text-gray-600">Buscando...</span>
             </div>
           ) : error ? (
             <div className="text-center py-12">
-              <p className="text-red-600 mb-2">{error}</p>
+              <p className="text-sm text-red-600 mb-2">{error}</p>
               <p className="text-sm text-gray-500">Mostrando resultados de ejemplo</p>
             </div>
           ) : tratamientos.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500">
+              <p className="text-sm text-gray-600">
                 {query.trim().length < 2
                   ? 'Escribe al menos 2 caracteres para buscar'
                   : 'No se encontraron tratamientos'}
@@ -136,20 +136,20 @@ export default function ModalBusquedaTratamientos({
                 <button
                   key={tratamiento._id}
                   onClick={() => handleSelect(tratamiento)}
-                  className="w-full text-left p-4 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors"
+                  className="w-full text-left p-4 bg-white shadow-sm rounded-xl ring-1 ring-slate-200 hover:bg-blue-50 hover:ring-blue-300 transition-all"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-semibold text-gray-900">{tratamiento.nombre}</p>
+                      <p className="text-sm font-semibold text-gray-900">{tratamiento.nombre}</p>
                       {tratamiento.codigo && (
-                        <p className="text-sm text-gray-500">Código: {tratamiento.codigo}</p>
+                        <p className="text-xs text-gray-500 mt-1">Código: {tratamiento.codigo}</p>
                       )}
                       {tratamiento.descripcion && (
-                        <p className="text-sm text-gray-600 mt-1">{tratamiento.descripcion}</p>
+                        <p className="text-xs text-gray-600 mt-1">{tratamiento.descripcion}</p>
                       )}
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-blue-600">{tratamiento.precio.toFixed(2)} €</p>
+                      <p className="text-sm font-bold text-blue-600">{tratamiento.precio.toFixed(2)} €</p>
                     </div>
                   </div>
                 </button>
@@ -161,5 +161,6 @@ export default function ModalBusquedaTratamientos({
     </div>
   );
 }
+
 
 

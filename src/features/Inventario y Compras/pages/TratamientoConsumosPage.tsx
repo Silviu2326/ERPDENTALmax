@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import { ClipboardList, DollarSign, Package, TrendingUp, BarChart3, TrendingDown, AlertCircle, Activity } from 'lucide-react';
 import TratamientoConsumosList from '../components/TratamientoConsumosList';
+import MetricCards from '../components/MetricCards';
 
 interface TratamientoConsumosPageProps {
   // Props opcionales para futuras funcionalidades
@@ -108,266 +109,247 @@ export default function TratamientoConsumosPage({}: TratamientoConsumosPageProps
   }, [tratamientosData]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto mb-6">
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-4">
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <ClipboardList className="w-8 h-8 text-purple-600" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Consumos por Tratamiento</h1>
-              <p className="text-gray-600 mt-1">Gestiona los materiales consumidos en cada tipo de tratamiento</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Estadísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Tratamientos</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{estadisticasMock.totalTratamientos}</p>
-                <p className="text-xs text-gray-500 mt-1">Configurados</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <ClipboardList size={24} className="text-blue-600" />
               </div>
-              <ClipboardList className="w-12 h-12 text-purple-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
+              
+              {/* Título y descripción */}
               <div>
-                <p className="text-sm font-medium text-gray-600">Valor Total</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
-                  ${estadisticasMock.valorTotalTratamientos.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Consumos por Tratamiento
+                </h1>
+                <p className="text-gray-600">
+                  Gestiona los materiales consumidos en cada tipo de tratamiento
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Precio acumulado</p>
               </div>
-              <DollarSign className="w-12 h-12 text-green-500 opacity-50" />
             </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Items de Consumo</p>
-                <p className="text-3xl font-bold text-blue-600 mt-2">{estadisticasMock.totalItemsConsumo}</p>
-                <p className="text-xs text-gray-500 mt-1">Total de materiales</p>
-              </div>
-              <Package className="w-12 h-12 text-blue-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-indigo-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Promedio Items</p>
-                <p className="text-3xl font-bold text-indigo-600 mt-2">
-                  {estadisticasMock.promedioItemsPorTratamiento.toFixed(1)}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Por tratamiento</p>
-              </div>
-              <TrendingUp className="w-12 h-12 text-indigo-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-
-        {/* Estadísticas adicionales */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Costo Total Materiales</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
-                  ${estadisticasMock.costoTotalMateriales.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Inversión en materiales</p>
-              </div>
-              <Package className="w-12 h-12 text-purple-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Margen Promedio</p>
-                <p className="text-3xl font-bold text-green-600 mt-2">
-                  {estadisticasMock.margenPromedio.toFixed(1)}%
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Rentabilidad promedio</p>
-              </div>
-              <TrendingUp className="w-12 h-12 text-green-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Valor Promedio</p>
-                <p className="text-3xl font-bold text-blue-600 mt-2">
-                  ${(estadisticasMock.valorTotalTratamientos / estadisticasMock.totalTratamientos).toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Por tratamiento</p>
-              </div>
-              <Activity className="w-12 h-12 text-blue-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-
-        {/* Tratamientos más costosos */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <BarChart3 className="w-6 h-6 text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-900">Tratamientos Más Costosos</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {estadisticasMock.tratamientosMasCostosos.map((tratamiento, index) => (
-              <div key={index} className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                <p className="text-sm font-medium text-gray-700 mb-2 truncate">{tratamiento.nombre}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900">
-                      ${tratamiento.precio.toFixed(2)}
-                    </span>
-                    <span className="text-xs text-gray-500">{tratamiento.items} items</span>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    Costo materiales: ${tratamiento.costoMateriales.toFixed(2)}
-                  </div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min((tratamiento.precio / estadisticasMock.valorTotalTratamientos) * 100, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tratamientos más rentables */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <TrendingUp className="w-6 h-6 text-green-600" />
-            <h2 className="text-xl font-bold text-gray-900">Tratamientos Más Rentables</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {estadisticasMock.tratamientosMasRentables.map((tratamiento, index) => (
-              <div key={index} className="p-4 bg-gradient-to-br from-green-50 to-white rounded-lg border border-green-200 hover:shadow-md transition-shadow">
-                <p className="text-sm font-medium text-gray-700 mb-2 truncate">{tratamiento.nombre}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-green-600">
-                      {tratamiento.margen.toFixed(1)}%
-                    </span>
-                    <span className="text-xs text-gray-500">Margen</span>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    Precio: ${tratamiento.precio.toFixed(2)} | Costo: ${tratamiento.costoMateriales.toFixed(2)}
-                  </div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div
-                      className="bg-green-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min(tratamiento.margen, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Materiales más usados */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Package className="w-6 h-6 text-indigo-600" />
-            <h2 className="text-xl font-bold text-gray-900">Materiales Más Utilizados</h2>
-          </div>
-          <div className="space-y-3">
-            {estadisticasMock.materialesMasUsados.map((material, index) => (
-              <div key={index} className="p-4 bg-gradient-to-br from-indigo-50 to-white rounded-lg border border-indigo-200">
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">{material.nombre}</p>
-                    <p className="text-xs text-gray-500">{material.categoria}</p>
-                  </div>
-                  <span className="text-sm font-bold text-indigo-600">{material.usos} tratamientos</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
-                    <div
-                      className="bg-indigo-600 h-3 rounded-full transition-all duration-500"
-                      style={{ width: `${material.porcentaje}%` }}
-                    ></div>
-                  </div>
-                  <span className="text-xs text-gray-500 w-12 text-right">{material.porcentaje}%</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tratamientos más frecuentes */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Activity className="w-6 h-6 text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-900">Tratamientos Más Frecuentes</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {estadisticasMock.tratamientosMasFrecuentes.map((tratamiento, index) => (
-              <div key={index} className="p-4 bg-gradient-to-br from-blue-50 to-white rounded-lg border border-blue-200">
-                <p className="text-sm font-medium text-gray-700 mb-2 truncate">{tratamiento.nombre}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-blue-600">{tratamiento.frecuencia} veces/mes</span>
-                    <span className="text-xs text-gray-500">{tratamiento.items} items</span>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    Margen: {tratamiento.margen.toFixed(1)}%
-                  </div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min((tratamiento.frecuencia / 100) * 100, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tratamientos con mejor margen */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <TrendingUp className="w-6 h-6 text-green-600" />
-            <h2 className="text-xl font-bold text-gray-900">Tratamientos con Mejor Margen de Ganancia</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {estadisticasMock.tratamientosMejorMargen.map((tratamiento, index) => (
-              <div key={index} className="p-4 bg-gradient-to-br from-green-50 to-white rounded-lg border border-green-200">
-                <p className="text-sm font-medium text-gray-700 mb-2 truncate">{tratamiento.nombre}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-green-600">{tratamiento.margen.toFixed(1)}%</span>
-                    <span className="text-xs text-gray-500">Margen</span>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    Precio: ${tratamiento.precio.toFixed(2)} | Costo: ${tratamiento.costoMateriales.toFixed(2)}
-                  </div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div
-                      className="bg-green-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min(tratamiento.margen, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
 
-      {/* Lista de tratamientos */}
-      <TratamientoConsumosList />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* KPIs principales */}
+          <MetricCards
+            data={[
+              {
+                id: 'total-tratamientos',
+                title: 'Total Tratamientos',
+                value: estadisticasMock.totalTratamientos,
+                color: 'info',
+              },
+              {
+                id: 'valor-total',
+                title: 'Valor Total',
+                value: `$${estadisticasMock.valorTotalTratamientos.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'success',
+              },
+              {
+                id: 'items-consumo',
+                title: 'Items de Consumo',
+                value: estadisticasMock.totalItemsConsumo,
+                color: 'info',
+              },
+              {
+                id: 'promedio-items',
+                title: 'Promedio Items',
+                value: estadisticasMock.promedioItemsPorTratamiento.toFixed(1),
+                color: 'info',
+              },
+            ]}
+          />
+
+          {/* Estadísticas adicionales */}
+          <MetricCards
+            data={[
+              {
+                id: 'costo-total-materiales',
+                title: 'Costo Total Materiales',
+                value: `$${estadisticasMock.costoTotalMateriales.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'warning',
+              },
+              {
+                id: 'margen-promedio',
+                title: 'Margen Promedio',
+                value: `${estadisticasMock.margenPromedio.toFixed(1)}%`,
+                color: 'success',
+              },
+              {
+                id: 'valor-promedio',
+                title: 'Valor Promedio',
+                value: `$${((estadisticasMock.valorTotalTratamientos / estadisticasMock.totalTratamientos) || 0).toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'info',
+              },
+            ]}
+          />
+
+          {/* Tratamientos más costosos */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <BarChart3 className="w-6 h-6 text-blue-600" />
+              <h2 className="text-xl font-bold text-gray-900">Tratamientos Más Costosos</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {estadisticasMock.tratamientosMasCostosos.map((tratamiento, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-sm p-4 border border-gray-200 hover:shadow-md transition-all">
+                  <p className="text-sm font-medium text-slate-700 mb-2 truncate">{tratamiento.nombre}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-gray-900">
+                        ${tratamiento.precio.toFixed(2)}
+                      </span>
+                      <span className="text-xs text-slate-600">{tratamiento.items} items</span>
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Costo materiales: ${tratamiento.costoMateriales.toFixed(2)}
+                    </div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${Math.min((tratamiento.precio / estadisticasMock.valorTotalTratamientos) * 100, 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tratamientos más rentables */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <TrendingUp className="w-6 h-6 text-green-600" />
+              <h2 className="text-xl font-bold text-gray-900">Tratamientos Más Rentables</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {estadisticasMock.tratamientosMasRentables.map((tratamiento, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-sm p-4 border border-gray-200 hover:shadow-md transition-all">
+                  <p className="text-sm font-medium text-slate-700 mb-2 truncate">{tratamiento.nombre}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-green-600">
+                        {tratamiento.margen.toFixed(1)}%
+                      </span>
+                      <span className="text-xs text-slate-600">Margen</span>
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Precio: ${tratamiento.precio.toFixed(2)} | Costo: ${tratamiento.costoMateriales.toFixed(2)}
+                    </div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-green-600 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${Math.min(tratamiento.margen, 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Materiales más usados */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Package className="w-6 h-6 text-blue-600" />
+              <h2 className="text-xl font-bold text-gray-900">Materiales Más Utilizados</h2>
+            </div>
+            <div className="space-y-4">
+              {estadisticasMock.materialesMasUsados.map((material, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <p className="text-sm font-medium text-slate-700">{material.nombre}</p>
+                      <p className="text-xs text-slate-600">{material.categoria}</p>
+                    </div>
+                    <span className="text-sm font-bold text-blue-600">{material.usos} tratamientos</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div
+                        className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+                        style={{ width: `${material.porcentaje}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-xs text-slate-600 w-12 text-right">{material.porcentaje}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tratamientos más frecuentes */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Activity className="w-6 h-6 text-blue-600" />
+              <h2 className="text-xl font-bold text-gray-900">Tratamientos Más Frecuentes</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {estadisticasMock.tratamientosMasFrecuentes.map((tratamiento, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-sm p-4 border border-gray-200 hover:shadow-md transition-all">
+                  <p className="text-sm font-medium text-slate-700 mb-2 truncate">{tratamiento.nombre}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-blue-600">{tratamiento.frecuencia} veces/mes</span>
+                      <span className="text-xs text-slate-600">{tratamiento.items} items</span>
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Margen: {tratamiento.margen.toFixed(1)}%
+                    </div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${Math.min((tratamiento.frecuencia / 100) * 100, 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tratamientos con mejor margen */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <TrendingUp className="w-6 h-6 text-green-600" />
+              <h2 className="text-xl font-bold text-gray-900">Tratamientos con Mejor Margen de Ganancia</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {estadisticasMock.tratamientosMejorMargen.map((tratamiento, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-sm p-4 border border-gray-200 hover:shadow-md transition-all">
+                  <p className="text-sm font-medium text-slate-700 mb-2 truncate">{tratamiento.nombre}</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-green-600">{tratamiento.margen.toFixed(1)}%</span>
+                      <span className="text-xs text-slate-600">Margen</span>
+                    </div>
+                    <div className="text-xs text-slate-600">
+                      Precio: ${tratamiento.precio.toFixed(2)} | Costo: ${tratamiento.costoMateriales.toFixed(2)}
+                    </div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-green-600 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${Math.min(tratamiento.margen, 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Lista de tratamientos */}
+          <TratamientoConsumosList />
+        </div>
+      </div>
     </div>
   );
 }

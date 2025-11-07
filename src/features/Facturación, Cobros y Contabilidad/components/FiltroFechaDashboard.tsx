@@ -80,86 +80,92 @@ export default function FiltroFechaDashboard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-4 border border-gray-200">
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center space-x-2">
-          <Filter className="w-5 h-5 text-gray-600" />
-          <span className="text-sm font-semibold text-gray-700">Filtros:</span>
-        </div>
+    <div className="bg-white shadow-sm rounded-xl mb-6">
+      <div className="p-4 space-y-4">
+        {/* Barra de búsqueda */}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Filter size={16} className="text-slate-600" />
+              <span className="text-sm font-medium text-slate-700">Filtros:</span>
+            </div>
 
-        {/* Rangos rápidos */}
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => aplicarRangoPredeterminado('hoy')}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-          >
-            Hoy
-          </button>
-          <button
-            onClick={() => aplicarRangoPredeterminado('semana')}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-          >
-            Última Semana
-          </button>
-          <button
-            onClick={() => aplicarRangoPredeterminado('mes')}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-          >
-            Mes Actual
-          </button>
-          <button
-            onClick={() => aplicarRangoPredeterminado('trimestre')}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-          >
-            Trimestre
-          </button>
-          <button
-            onClick={() => aplicarRangoPredeterminado('año')}
-            className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-          >
-            Año Actual
-          </button>
-        </div>
+            {/* Rangos rápidos */}
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => aplicarRangoPredeterminado('hoy')}
+                className="px-3 py-1.5 text-sm font-medium rounded-xl bg-white text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300 transition-all"
+              >
+                Hoy
+              </button>
+              <button
+                onClick={() => aplicarRangoPredeterminado('semana')}
+                className="px-3 py-1.5 text-sm font-medium rounded-xl bg-white text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300 transition-all"
+              >
+                Última Semana
+              </button>
+              <button
+                onClick={() => aplicarRangoPredeterminado('mes')}
+                className="px-3 py-1.5 text-sm font-medium rounded-xl bg-white text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300 transition-all"
+              >
+                Mes Actual
+              </button>
+              <button
+                onClick={() => aplicarRangoPredeterminado('trimestre')}
+                className="px-3 py-1.5 text-sm font-medium rounded-xl bg-white text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300 transition-all"
+              >
+                Trimestre
+              </button>
+              <button
+                onClick={() => aplicarRangoPredeterminado('año')}
+                className="px-3 py-1.5 text-sm font-medium rounded-xl bg-white text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300 transition-all"
+              >
+                Año Actual
+              </button>
+            </div>
 
-        {/* Selector de fechas personalizado */}
-        <div className="flex items-center space-x-2">
-          <Calendar className="w-4 h-4 text-gray-600" />
-          <input
-            type="date"
-            value={filtros.fechaInicio}
-            onChange={handleFechaInicioChange}
-            className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <span className="text-gray-500">a</span>
-          <input
-            type="date"
-            value={filtros.fechaFin}
-            onChange={handleFechaFinChange}
-            className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
+            {/* Selector de fechas personalizado */}
+            <div className="flex items-center gap-2">
+              <Calendar size={16} className="text-slate-600" />
+              <input
+                type="date"
+                value={filtros.fechaInicio}
+                onChange={handleFechaInicioChange}
+                className="px-3 py-2.5 text-sm rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <span className="text-slate-500 text-sm">a</span>
+              <input
+                type="date"
+                value={filtros.fechaFin}
+                onChange={handleFechaFinChange}
+                className="px-3 py-2.5 text-sm rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
 
-        {/* Selector de sede (si está disponible) */}
-        {sedes && sedes.length > 0 && onSedeChange && (
-          <div className="flex items-center space-x-2">
-            <label className="text-sm font-medium text-gray-700">Sede:</label>
-            <select
-              value={sedeId || ''}
-              onChange={(e) => onSedeChange(e.target.value || undefined)}
-              className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">Todas las sedes</option>
-              {sedes.map((sede) => (
-                <option key={sede._id} value={sede._id}>
-                  {sede.nombre}
-                </option>
-              ))}
-            </select>
+            {/* Selector de sede (si está disponible) */}
+            {sedes && sedes.length > 0 && onSedeChange && (
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-slate-700">Sede:</label>
+                <select
+                  value={sedeId || ''}
+                  onChange={(e) => onSedeChange(e.target.value || undefined)}
+                  className="px-3 py-2.5 text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                  <option value="">Todas las sedes</option>
+                  {sedes.map((sede) => (
+                    <option key={sede._id} value={sede._id}>
+                      {sede.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

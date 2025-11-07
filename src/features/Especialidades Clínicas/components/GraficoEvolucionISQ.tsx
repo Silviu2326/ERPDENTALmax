@@ -31,18 +31,18 @@ export default function GraficoEvolucionISQ({ mediciones }: GraficoEvolucionISQP
 
   if (datosGrafico.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Evolución de Mediciones ISQ</h3>
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Mediciones ISQ</h3>
         <div className="flex items-center justify-center h-64 text-gray-500">
-          <p>No hay mediciones ISQ registradas para mostrar</p>
+          <p className="text-gray-600">No hay mediciones ISQ registradas para mostrar</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Evolución de Mediciones ISQ</h3>
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Mediciones ISQ</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={datosGrafico}>
           <CartesianGrid strokeDasharray="3 3" />

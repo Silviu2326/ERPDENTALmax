@@ -1,4 +1,4 @@
-import { Users, AlertTriangle } from 'lucide-react';
+import { Users, AlertTriangle, Loader2 } from 'lucide-react';
 import { PacienteReincidente } from '../api/analiticaApi';
 
 interface TablaPacientesReincidentesProps {
@@ -14,22 +14,19 @@ export default function TablaPacientesReincidentes({
 }: TablaPacientesReincidentesProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-32 bg-gray-100 rounded"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (!pacientes || pacientes.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <Users className="w-12 h-12 mb-4 text-gray-400" />
-          <p>No se encontraron pacientes reincidentes</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Users size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron pacientes reincidentes</h3>
+        <p className="text-gray-600">No hay pacientes con ausencias recurrentes en el período seleccionado</p>
       </div>
     );
   }
@@ -43,10 +40,10 @@ export default function TablaPacientesReincidentes({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-          <AlertTriangle className="w-5 h-5 text-orange-600" />
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <AlertTriangle size={20} className="text-orange-600" />
           <span>Pacientes Reincidentes</span>
         </h2>
       </div>
@@ -76,7 +73,7 @@ export default function TablaPacientesReincidentes({
                   <div className="text-xs text-gray-500">ID: {paciente.pacienteId}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-2">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                       {paciente.numeroAusencias}
                     </span>
@@ -101,11 +98,12 @@ export default function TablaPacientesReincidentes({
           </tbody>
         </table>
       </div>
-      <div className="mt-4 text-sm text-gray-600">
+      <div className="mt-4 text-sm text-gray-600 border-t border-gray-200 pt-4">
         <p>Total de pacientes reincidentes: {pacientes.length}</p>
       </div>
     </div>
   );
 }
+
 
 

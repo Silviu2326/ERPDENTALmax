@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Tag } from 'lucide-react';
+import { Plus, Tag, ArrowLeft } from 'lucide-react';
 import { Promocion, obtenerPromociones, eliminarPromocion, FiltrosPromociones } from '../api/promocionesApi';
 import ListaPromociones from '../components/ListaPromociones';
 import FormularioPromocion from '../components/FormularioPromocion';
@@ -287,13 +287,33 @@ export default function PromocionesOfertasPage() {
 
   if (vista === 'crear') {
     return (
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Crear Nueva Promoción</h2>
-          <p className="text-gray-600 mt-1">Completa el formulario para crear una nueva promoción</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Tag size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Crear Nueva Promoción
+                  </h1>
+                  <p className="text-gray-600">
+                    Completa el formulario para crear una nueva promoción
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-          <FormularioPromocion onGuardar={handleGuardar} onCancelar={handleCancelar} />
+
+        {/* Contenido Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <FormularioPromocion onGuardar={handleGuardar} onCancelar={handleCancelar} />
+          </div>
         </div>
       </div>
     );
@@ -301,17 +321,37 @@ export default function PromocionesOfertasPage() {
 
   if (vista === 'editar' && promocionSeleccionada) {
     return (
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Editar Promoción</h2>
-          <p className="text-gray-600 mt-1">Modifica los datos de la promoción</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Tag size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Editar Promoción
+                  </h1>
+                  <p className="text-gray-600">
+                    Modifica los datos de la promoción
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-          <FormularioPromocion
-            promocion={promocionSeleccionada}
-            onGuardar={handleGuardar}
-            onCancelar={handleCancelar}
-          />
+
+        {/* Contenido Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <FormularioPromocion
+              promocion={promocionSeleccionada}
+              onGuardar={handleGuardar}
+              onCancelar={handleCancelar}
+            />
+          </div>
         </div>
       </div>
     );
@@ -319,68 +359,108 @@ export default function PromocionesOfertasPage() {
 
   if (vista === 'detalle' && promocionSeleccionada) {
     return (
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <button
-            onClick={handleCancelar}
-            className="text-blue-600 hover:text-blue-700 font-medium mb-4"
-          >
-            ← Volver a la lista
-          </button>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                <button
+                  onClick={handleCancelar}
+                  className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 mr-4"
+                >
+                  <ArrowLeft size={18} />
+                  Volver
+                </button>
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Tag size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Detalle de Promoción
+                  </h1>
+                  <p className="text-gray-600">
+                    Información detallada de la promoción
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <TarjetaDetallePromocion
-          promocion={promocionSeleccionada}
-          onEditar={() => handleEditar(promocionSeleccionada)}
-          onEliminar={() => handleEliminar(promocionSeleccionada)}
-        />
+
+        {/* Contenido Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <TarjetaDetallePromocion
+            promocion={promocionSeleccionada}
+            onEditar={() => handleEditar(promocionSeleccionada)}
+            onEliminar={() => handleEliminar(promocionSeleccionada)}
+          />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Tag className="w-7 h-7 text-blue-600" />
-            Promociones y Ofertas
-          </h2>
-          <p className="text-gray-600 mt-1">
-            Gestiona las promociones y ofertas de la clínica
-          </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Tag size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Promociones y Ofertas
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona las promociones y ofertas de la clínica
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-end">
+                <button
+                  onClick={handleCrearNueva}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
+                >
+                  <Plus size={20} />
+                  Nueva Promoción
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <button
-          onClick={handleCrearNueva}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-        >
-          <Plus className="w-5 h-5" />
-          Nueva Promoción
-        </button>
       </div>
 
-      {/* Filtros */}
-      <FiltrosPromocionesComponent
-        filtros={filtros}
-        onFiltrosChange={setFiltros}
-        onLimpiar={handleLimpiarFiltros}
-      />
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosPromocionesComponent
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            onLimpiar={handleLimpiarFiltros}
+          />
 
-      {/* Error */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          {error}
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          {/* Lista de promociones */}
+          <ListaPromociones
+            promociones={promociones}
+            onEditar={handleEditar}
+            onEliminar={handleEliminar}
+            onVerDetalle={handleVerDetalle}
+            loading={loading}
+          />
         </div>
-      )}
-
-      {/* Lista de promociones */}
-      <ListaPromociones
-        promociones={promociones}
-        onEditar={handleEditar}
-        onEliminar={handleEliminar}
-        onVerDetalle={handleVerDetalle}
-        loading={loading}
-      />
+      </div>
 
       {/* Modal de confirmación de eliminación */}
       <ModalConfirmacionEliminar

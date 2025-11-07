@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { Mail, ArrowLeft, Send } from 'lucide-react';
+import { Mail, ArrowLeft, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { solicitarRecuperacionPassword } from '../api/authApi';
 
 interface ForgotPasswordFormProps {
@@ -36,17 +36,24 @@ export default function ForgotPasswordForm({ onBack, onSuccess }: ForgotPassword
   if (success) {
     return (
       <div className="space-y-6">
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
-          <p className="font-semibold mb-1">¡Correo enviado!</p>
-          <p>Hemos enviado un enlace de recuperación a tu correo electrónico. Por favor, revisa tu bandeja de entrada.</p>
+        <div className="rounded-2xl bg-green-50 ring-1 ring-green-200 p-4 space-y-3">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-green-900 mb-1">¡Correo enviado!</p>
+              <p className="text-sm text-green-700">
+                Hemos enviado un enlace de recuperación a tu correo electrónico. Por favor, revisa tu bandeja de entrada.
+              </p>
+            </div>
+          </div>
         </div>
         {onBack && (
           <button
             type="button"
             onClick={onBack}
-            className="w-full flex items-center justify-center space-x-2 text-blue-600 hover:text-blue-800 font-medium"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all text-blue-600 hover:text-blue-700 hover:bg-blue-50"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft size={18} className="opacity-100" />
             <span>Volver al inicio de sesión</span>
           </button>
         )}
@@ -56,23 +63,25 @@ export default function ForgotPasswordForm({ onBack, onSuccess }: ForgotPassword
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="text-sm text-gray-600 mb-4">
+      <div className="text-sm text-gray-600">
         Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-          {error}
+        <div className="rounded-2xl bg-red-50 ring-1 ring-red-200 p-4 flex items-start gap-3">
+          <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-red-800">{error}</p>
         </div>
       )}
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+          <Mail size={16} className="inline mr-1" />
           Correo electrónico
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Mail className="h-5 w-5 text-gray-400" />
+            <Mail className="h-5 w-5 text-slate-400" />
           </div>
           <input
             id="email"
@@ -80,7 +89,7 @@ export default function ForgotPasswordForm({ onBack, onSuccess }: ForgotPassword
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5 transition-all"
             placeholder="tu@email.com"
           />
         </div>
@@ -89,16 +98,16 @@ export default function ForgotPasswordForm({ onBack, onSuccess }: ForgotPassword
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center space-x-2"
+        className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
       >
         {loading ? (
           <>
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            <Loader2 size={18} className="animate-spin" />
             <span>Enviando...</span>
           </>
         ) : (
           <>
-            <Send className="w-5 h-5" />
+            <Send size={18} className="opacity-100" />
             <span>Enviar enlace de recuperación</span>
           </>
         )}
@@ -108,14 +117,15 @@ export default function ForgotPasswordForm({ onBack, onSuccess }: ForgotPassword
         <button
           type="button"
           onClick={onBack}
-          className="w-full flex items-center justify-center space-x-2 text-gray-600 hover:text-gray-800 font-medium"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-50"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft size={18} className="opacity-70" />
           <span>Volver al inicio de sesión</span>
         </button>
       )}
     </form>
   );
 }
+
 
 

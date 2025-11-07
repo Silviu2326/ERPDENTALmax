@@ -1,5 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { ProduccionBox } from '../api/analiticaApi';
+import { Loader2, PieChart as PieChartIcon } from 'lucide-react';
 
 interface GraficoProduccionPorBoxProps {
   datos: ProduccionBox[];
@@ -12,19 +13,29 @@ export default function GraficoProduccionPorBox({
   datos,
   loading = false,
 }: GraficoProduccionPorBoxProps) {
+  const formatearMoneda = (valor: number) => {
+    return new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    }).format(valor);
+  };
+
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="h-64 bg-gray-100 rounded animate-pulse"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando gráfico...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Producción por Box</h3>
-        <p className="text-gray-500 text-center py-8">No hay datos disponibles</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <PieChartIcon size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Producción por Box</h3>
+        <p className="text-gray-600">No hay datos disponibles para mostrar</p>
       </div>
     );
   }
@@ -35,16 +46,8 @@ export default function GraficoProduccionPorBox({
     porcentaje: box.utilizacionPorcentaje,
   }));
 
-  const formatearMoneda = (valor: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0,
-    }).format(valor);
-  };
-
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-4">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Producción por Box</h3>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
@@ -62,12 +65,20 @@ export default function GraficoProduccionPorBox({
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={(value: number) => formatearMoneda(value)} />
+          <Tooltip 
+            formatter={(value: number) => formatearMoneda(value)}
+            contentStyle={{
+              backgroundColor: 'white',
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+            }}
+          />
           <Legend />
         </PieChart>
       </ResponsiveContainer>
     </div>
   );
 }
+
 
 

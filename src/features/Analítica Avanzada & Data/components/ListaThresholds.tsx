@@ -58,10 +58,10 @@ export default function ListaThresholds({
 
   if (thresholds.length === 0) {
     return (
-      <div className="text-center py-12">
-        <Settings className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-        <p className="text-gray-500 text-lg">No hay thresholds configurados</p>
-        <p className="text-gray-400 text-sm mt-2">Crea tu primer threshold para comenzar a recibir alertas automáticas</p>
+      <div className="bg-white shadow-sm rounded-2xl p-8 text-center">
+        <Settings size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay thresholds configurados</h3>
+        <p className="text-gray-600 mb-4">Crea tu primer threshold para comenzar a recibir alertas automáticas</p>
       </div>
     );
   }
@@ -71,23 +71,21 @@ export default function ListaThresholds({
       {thresholds.map((threshold) => (
         <div
           key={threshold._id}
-          className={`border-2 rounded-lg p-6 transition-all duration-200 hover:shadow-lg ${
-            threshold.activa
-              ? 'bg-white border-blue-300'
-              : 'bg-gray-50 border-gray-300 opacity-75'
+          className={`bg-white shadow-sm rounded-2xl p-4 transition-shadow hover:shadow-md overflow-hidden ${
+            !threshold.activa ? 'opacity-75' : ''
           }`}
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <div className="flex items-center space-x-3 mb-2">
-                <h3 className="text-lg font-bold">{threshold.nombre}</h3>
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900">{threshold.nombre}</h3>
                 {threshold.activa ? (
-                  <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 flex items-center space-x-1">
-                    <Bell className="w-3 h-3" />
+                  <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 ring-1 ring-green-200 flex items-center gap-1">
+                    <Bell size={12} />
                     <span>Activa</span>
                   </span>
                 ) : (
-                  <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                  <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800 ring-1 ring-gray-200">
                     Inactiva
                   </span>
                 )}
@@ -96,68 +94,68 @@ export default function ListaThresholds({
                 <p className="text-sm text-gray-600 mb-4">{threshold.descripcion}</p>
               )}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-blue-50 rounded-lg p-3">
-                  <p className="text-xs font-medium text-blue-700 mb-1">Métrica</p>
-                  <p className="text-sm font-bold text-blue-900">{threshold.metrica}</p>
+                <div className="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                  <p className="text-xs font-medium text-slate-600 mb-1">Métrica</p>
+                  <p className="text-sm font-bold text-gray-900">{threshold.metrica}</p>
                 </div>
-                <div className="bg-purple-50 rounded-lg p-3">
-                  <p className="text-xs font-medium text-purple-700 mb-1">Condición</p>
-                  <p className="text-sm font-bold text-purple-900">
+                <div className="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                  <p className="text-xs font-medium text-slate-600 mb-1">Condición</p>
+                  <p className="text-sm font-bold text-gray-900">
                     {getOperadorTexto(threshold.operador)} {formatValor(threshold.valorUmbral, threshold.metrica)}
                     {threshold.operador === 'entre' && threshold.valorUmbral2
                       ? ` - ${formatValor(threshold.valorUmbral2, threshold.metrica)}`
                       : ''}
                   </p>
                 </div>
-                <div className="bg-indigo-50 rounded-lg p-3">
-                  <p className="text-xs font-medium text-indigo-700 mb-1">Frecuencia</p>
-                  <p className="text-sm font-bold text-indigo-900">{getFrecuenciaTexto(threshold.frecuenciaVerificacion)}</p>
+                <div className="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                  <p className="text-xs font-medium text-slate-600 mb-1">Frecuencia</p>
+                  <p className="text-sm font-bold text-gray-900">{getFrecuenciaTexto(threshold.frecuenciaVerificacion)}</p>
                 </div>
-                <div className="bg-orange-50 rounded-lg p-3">
-                  <p className="text-xs font-medium text-orange-700 mb-1">Notificaciones</p>
-                  <div className="flex space-x-2">
+                <div className="rounded-xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                  <p className="text-xs font-medium text-slate-600 mb-1">Notificaciones</p>
+                  <div className="flex flex-wrap gap-1">
                     {threshold.notificaciones.email && (
-                      <span className="text-xs bg-white px-2 py-1 rounded">Email</span>
+                      <span className="text-xs bg-white px-2 py-1 rounded ring-1 ring-slate-200 text-slate-700">Email</span>
                     )}
                     {threshold.notificaciones.push && (
-                      <span className="text-xs bg-white px-2 py-1 rounded">Push</span>
+                      <span className="text-xs bg-white px-2 py-1 rounded ring-1 ring-slate-200 text-slate-700">Push</span>
                     )}
                     {threshold.notificaciones.dashboard && (
-                      <span className="text-xs bg-white px-2 py-1 rounded">Dashboard</span>
+                      <span className="text-xs bg-white px-2 py-1 rounded ring-1 ring-slate-200 text-slate-700">Dashboard</span>
                     )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col space-y-2 ml-4">
+            <div className="flex flex-col gap-2 ml-4">
               <button
                 onClick={() => onToggleActivo(threshold._id!, !threshold.activa)}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`p-2 rounded-xl transition-all ${
                   threshold.activa
-                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-green-100 text-green-700 hover:bg-green-200 ring-1 ring-green-200'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 ring-1 ring-gray-200'
                 }`}
                 title={threshold.activa ? 'Desactivar' : 'Activar'}
               >
                 {threshold.activa ? (
-                  <ToggleRight className="w-5 h-5" />
+                  <ToggleRight size={20} />
                 ) : (
-                  <ToggleLeft className="w-5 h-5" />
+                  <ToggleLeft size={20} />
                 )}
               </button>
               <button
                 onClick={() => onEditar(threshold)}
-                className="p-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                className="p-2 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-all ring-1 ring-blue-200"
                 title="Editar"
               >
-                <Edit className="w-5 h-5" />
+                <Edit size={20} />
               </button>
               <button
                 onClick={() => onEliminar(threshold._id!)}
-                className="p-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                className="p-2 bg-red-100 text-red-700 rounded-xl hover:bg-red-200 transition-all ring-1 ring-red-200"
                 title="Eliminar"
               >
-                <Trash2 className="w-5 h-5" />
+                <Trash2 size={20} />
               </button>
             </div>
           </div>
@@ -166,5 +164,6 @@ export default function ListaThresholds({
     </div>
   );
 }
+
 
 

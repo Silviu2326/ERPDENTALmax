@@ -86,12 +86,12 @@ export default function ModalNuevoSeguimiento({
       <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">Nuevo Seguimiento Postoperatorio</h2>
+          <h2 className="text-xl font-bold text-gray-900">Nuevo Seguimiento Postoperatorio</h2>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         </div>
 
@@ -99,8 +99,8 @@ export default function ModalNuevoSeguimiento({
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Fecha del Seguimiento */}
           <div>
-            <label htmlFor="fecha" className="block text-sm font-medium text-gray-700 mb-2">
-              <Calendar className="w-4 h-4 inline mr-2" />
+            <label htmlFor="fecha" className="block text-sm font-medium text-slate-700 mb-2">
+              <Calendar size={16} className="inline mr-1" />
               Fecha y Hora del Seguimiento *
             </label>
             <input
@@ -108,15 +108,15 @@ export default function ModalNuevoSeguimiento({
               id="fecha"
               value={fecha}
               onChange={(e) => setFecha(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
               required
             />
           </div>
 
           {/* Notas de Evolución */}
           <div>
-            <label htmlFor="notas" className="block text-sm font-medium text-gray-700 mb-2">
-              <FileText className="w-4 h-4 inline mr-2" />
+            <label htmlFor="notas" className="block text-sm font-medium text-slate-700 mb-2">
+              <FileText size={16} className="inline mr-1" />
               Notas de Evolución *
             </label>
             <textarea
@@ -124,7 +124,7 @@ export default function ModalNuevoSeguimiento({
               value={notasEvolucion}
               onChange={(e) => setNotasEvolucion(e.target.value)}
               rows={6}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 resize-none"
               placeholder="Describa la evolución del paciente, estado de la cicatrización, síntomas, signos clínicos observados..."
               required
             />
@@ -132,11 +132,11 @@ export default function ModalNuevoSeguimiento({
 
           {/* Archivos Adjuntos */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Upload className="w-4 h-4 inline mr-2" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Upload size={16} className="inline mr-1" />
               Archivos Adjuntos (Opcional)
             </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+            <div className="border-2 border-dashed border-gray-300 rounded-xl p-4">
               <input
                 type="file"
                 multiple
@@ -149,7 +149,7 @@ export default function ModalNuevoSeguimiento({
                 htmlFor="file-upload"
                 className="cursor-pointer flex flex-col items-center justify-center py-4"
               >
-                <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                <Upload size={32} className="text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600">
                   <span className="text-blue-600 font-medium">Haga clic para subir</span> o arrastre archivos aquí
                 </p>
@@ -168,9 +168,9 @@ export default function ModalNuevoSeguimiento({
                       <button
                         type="button"
                         onClick={() => handleRemoveFile(index)}
-                        className="ml-2 text-red-600 hover:text-red-700"
+                        className="ml-2 text-red-600 hover:text-red-700 transition-all"
                       >
-                        <X className="w-4 h-4" />
+                        <X size={20} />
                       </button>
                     </div>
                   ))}
@@ -185,24 +185,24 @@ export default function ModalNuevoSeguimiento({
           {/* Mensaje de error */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <AlertCircle size={20} className="flex-shrink-0" />
               <p className="text-sm">{error}</p>
             </div>
           )}
 
           {/* Botones */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-2 pt-4 border-t border-gray-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading || !fecha || !notasEvolucion.trim()}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all"
             >
               {loading ? 'Guardando...' : 'Guardar Seguimiento'}
             </button>
@@ -212,5 +212,6 @@ export default function ModalNuevoSeguimiento({
     </div>
   );
 }
+
 
 

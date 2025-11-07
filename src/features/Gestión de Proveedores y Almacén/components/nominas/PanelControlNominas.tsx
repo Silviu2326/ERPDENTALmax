@@ -53,21 +53,23 @@ export default function PanelControlNominas({ onCalcularCompletado }: PanelContr
   const anios = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 2 + i);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-6">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg">
-          <Calculator className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <Calculator size={20} className="text-blue-600" />
         </div>
         <h2 className="text-xl font-bold text-gray-900">Control de Nóminas</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Mes</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Mes
+          </label>
           <select
             value={mes}
             onChange={(e) => setMes(Number(e.target.value))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           >
             {meses.map((nombreMes, index) => (
               <option key={index} value={index + 1}>
@@ -78,11 +80,13 @@ export default function PanelControlNominas({ onCalcularCompletado }: PanelContr
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Año</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Año
+          </label>
           <select
             value={anio}
             onChange={(e) => setAnio(Number(e.target.value))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           >
             {anios.map((a) => (
               <option key={a} value={a}>
@@ -96,9 +100,9 @@ export default function PanelControlNominas({ onCalcularCompletado }: PanelContr
           <button
             onClick={handleCalcular}
             disabled={calculando}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-blue-600/20 font-medium"
           >
-            <Calendar className="w-5 h-5" />
+            <Calendar size={20} />
             {calculando ? 'Calculando...' : 'Calcular Nóminas'}
           </button>
         </div>
@@ -106,18 +110,19 @@ export default function PanelControlNominas({ onCalcularCompletado }: PanelContr
 
       {mensaje && (
         <div
-          className={`mt-4 p-4 rounded-lg flex items-center gap-2 ${
+          className={`p-4 rounded-lg flex items-center gap-2 ${
             mensaje.tipo === 'success'
               ? 'bg-green-50 border border-green-200 text-green-800'
               : 'bg-red-50 border border-red-200 text-red-800'
           }`}
         >
-          <CheckCircle2 className="w-5 h-5" />
+          <CheckCircle2 size={20} />
           <span className="text-sm">{mensaje.texto}</span>
         </div>
       )}
     </div>
   );
 }
+
 
 

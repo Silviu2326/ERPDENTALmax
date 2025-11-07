@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Save, AlertCircle, Baby, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, AlertCircle, Baby, Loader2, FileText, Stethoscope, AlertTriangle, History } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   FichaPediatrica,
@@ -166,9 +166,9 @@ export default function FichaPediatricaPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center max-w-md w-full">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
           <p className="text-gray-600">Cargando ficha pediátrica...</p>
         </div>
       </div>
@@ -177,17 +177,15 @@ export default function FichaPediatricaPage({
 
   if (!ficha) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-lg border-2 border-gray-200 p-8 shadow-lg max-w-md w-full">
-          <div className="flex items-center gap-3 mb-4">
-            <AlertCircle className="w-6 h-6 text-red-600" />
-            <h2 className="text-xl font-semibold text-gray-800">Error</h2>
-          </div>
-          <p className="text-gray-600 mb-6">{error || 'No se pudo cargar la ficha pediátrica'}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center max-w-md w-full">
+          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+          <p className="text-gray-600 mb-4">{error || 'No se pudo cargar la ficha pediátrica'}</p>
           {onVolver && (
             <button
               onClick={onVolver}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Volver
             </button>
@@ -198,65 +196,71 @@ export default function FichaPediatricaPage({
   }
 
   const tabs = [
-    { id: 'anamnesis' as const, label: 'Anamnesis Pediátrica', icon: '📋' },
-    { id: 'odontograma' as const, label: 'Odontograma Mixto', icon: '🦷' },
-    { id: 'habitos' as const, label: 'Hábitos Bucales', icon: '👶' },
-    { id: 'riesgo' as const, label: 'Riesgo de Caries', icon: '⚠️' },
-    { id: 'evolucion' as const, label: 'Evolución', icon: '📝' },
+    { id: 'anamnesis' as const, label: 'Anamnesis Pediátrica', icon: FileText },
+    { id: 'odontograma' as const, label: 'Odontograma Mixto', icon: Stethoscope },
+    { id: 'habitos' as const, label: 'Hábitos Bucales', icon: Baby },
+    { id: 'riesgo' as const, label: 'Riesgo de Caries', icon: AlertTriangle },
+    { id: 'evolucion' as const, label: 'Evolución', icon: History },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
-              )}
-              <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                  <Baby className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-800">Ficha Pediátrica</h1>
-                  <p className="text-sm text-gray-600">Paciente ID: {pacienteId}</p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <ArrowLeft size={20} className="text-gray-600" />
+                  </button>
+                )}
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <Baby size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Ficha Pediátrica
+                    </h1>
+                    <p className="text-gray-600">
+                      Gestión completa de la historia clínica pediátrica
+                    </p>
+                  </div>
                 </div>
               </div>
+              <button
+                onClick={crearOActualizarFicha}
+                disabled={saving}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm font-medium"
+              >
+                {saving ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" />
+                    Guardando...
+                  </>
+                ) : (
+                  <>
+                    <Save size={20} />
+                    Guardar Ficha
+                  </>
+                )}
+              </button>
             </div>
-            <button
-              onClick={crearOActualizarFicha}
-              disabled={saving}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              {saving ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Guardando...
-                </>
-              ) : (
-                <>
-                  <Save className="w-4 h-4" />
-                  Guardar Ficha
-                </>
-              )}
-            </button>
           </div>
         </div>
       </div>
 
       {/* Mensajes de éxito/error */}
       {(error || success) && (
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-4">
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center gap-2">
-              <AlertCircle className="w-5 h-5" />
+              <AlertCircle size={20} />
               <span>{error}</span>
             </div>
           )}
@@ -269,28 +273,41 @@ export default function FichaPediatricaPage({
       )}
 
       {/* Tabs */}
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex gap-2 border-b border-gray-200">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 font-medium transition-colors border-b-2 ${
-                activeTab === tab.id
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-800'
-              }`}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-4">
+        <div className="bg-white shadow-sm rounded-lg p-0">
+          <div className="px-4 py-3">
+            <div
+              role="tablist"
+              aria-label="Secciones"
+              className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
             >
-              <span className="mr-2">{tab.icon}</span>
-              {tab.label}
-            </button>
-          ))}
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      isActive
+                        ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                    }`}
+                  >
+                    <Icon size={18} className={isActive ? 'opacity-100' : 'opacity-70'} />
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Contenido de las tabs */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {activeTab === 'anamnesis' && (
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="mt-6">
+          {activeTab === 'anamnesis' && (
           <FormularioAnamnesisPediatrica
             anamnesis={ficha.anamnesisPediatrica}
             onChange={(anamnesis) => setFicha({ ...ficha, anamnesisPediatrica: anamnesis })}
@@ -330,10 +347,12 @@ export default function FichaPediatricaPage({
             profesionalNombre={user?.name}
             onAgregarNota={handleAgregarNotaEvolucion}
           />
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

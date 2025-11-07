@@ -88,26 +88,26 @@ export default function ChecklistTemplateBuilder({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+    <div className="bg-white rounded-xl shadow-sm p-6 space-y-6">
       <div className="flex items-center justify-between border-b border-gray-200 pb-4">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900">
           {initialData ? 'Editar Plantilla' : 'Nueva Plantilla de Auditoría'}
         </h2>
         <div className="flex gap-2">
           {onCancel && (
             <button
               onClick={onCancel}
-              className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white rounded-xl ring-1 ring-slate-300 hover:bg-slate-50 transition-all"
             >
-              <X className="w-4 h-4" />
+              <X size={20} />
               Cancelar
             </button>
           )}
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-sm"
           >
-            <Save className="w-4 h-4" />
+            <Save size={20} />
             Guardar Plantilla
           </button>
         </div>
@@ -116,7 +116,7 @@ export default function ChecklistTemplateBuilder({
       {/* Información básica */}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre de la Plantilla <span className="text-red-500">*</span>
           </label>
           <input
@@ -124,12 +124,12 @@ export default function ChecklistTemplateBuilder({
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ej: Checklist de Primera Visita"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Descripción
           </label>
           <textarea
@@ -137,7 +137,7 @@ export default function ChecklistTemplateBuilder({
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Descripción de la plantilla y su propósito..."
             rows={3}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           />
         </div>
       </div>
@@ -148,17 +148,17 @@ export default function ChecklistTemplateBuilder({
           <h3 className="text-lg font-semibold text-gray-900">Ítems del Checklist</h3>
           <button
             onClick={addItem}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-green-700 transition-all shadow-sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             Agregar Ítem
           </button>
         </div>
 
         {items.length === 0 ? (
-          <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-            <p className="text-gray-500">No hay ítems en la plantilla</p>
-            <p className="text-sm text-gray-400 mt-2">
+          <div className="text-center py-8 bg-slate-50 rounded-2xl ring-1 ring-slate-200 border-2 border-dashed border-slate-300">
+            <p className="text-slate-600">No hay ítems en la plantilla</p>
+            <p className="text-sm text-slate-400 mt-2">
               Haga clic en "Agregar Ítem" para comenzar
             </p>
           </div>
@@ -167,7 +167,7 @@ export default function ChecklistTemplateBuilder({
             {items.map((item, index) => (
               <div
                 key={item.id}
-                className="bg-gray-50 rounded-lg border border-gray-200 p-4"
+                className="bg-slate-50 rounded-2xl ring-1 ring-slate-200 p-4"
               >
                 <div className="flex items-start gap-3">
                   <div className="flex flex-col gap-1 pt-2">
@@ -191,7 +191,7 @@ export default function ChecklistTemplateBuilder({
                   <div className="flex-1 space-y-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Etiqueta <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -201,12 +201,12 @@ export default function ChecklistTemplateBuilder({
                             updateItem(item.id, { label: e.target.value })
                           }
                           placeholder="Ej: Verificar historial médico"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 pr-3 py-2.5"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Tipo
                         </label>
                         <select
@@ -217,7 +217,7 @@ export default function ChecklistTemplateBuilder({
                               options: e.target.value === 'select' ? ['Opción 1'] : undefined,
                             })
                           }
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                         >
                           <option value="checkbox">Casilla de verificación</option>
                           <option value="text">Campo de texto</option>
@@ -229,7 +229,7 @@ export default function ChecklistTemplateBuilder({
 
                     {item.type === 'select' && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Opciones (una por línea)
                         </label>
                         <textarea
@@ -241,7 +241,7 @@ export default function ChecklistTemplateBuilder({
                           }
                           placeholder="Opción 1&#10;Opción 2&#10;Opción 3"
                           rows={3}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                         />
                       </div>
                     )}
@@ -256,16 +256,16 @@ export default function ChecklistTemplateBuilder({
                           }
                           className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm text-gray-700">Obligatorio</span>
+                        <span className="text-sm text-slate-700">Obligatorio</span>
                       </label>
                     </div>
                   </div>
 
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 size={16} />
                   </button>
                 </div>
               </div>
@@ -276,5 +276,6 @@ export default function ChecklistTemplateBuilder({
     </div>
   );
 }
+
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { PuntoTendenciaFinanciera } from '../api/revisionDireccionApi';
-import { TrendingUp, DollarSign } from 'lucide-react';
+import { TrendingUp, DollarSign, Loader2 } from 'lucide-react';
 
 interface GraficoTendenciasFinancierasProps {
   datos: PuntoTendenciaFinanciera[];
@@ -117,32 +117,25 @@ export default function GraficoTendenciasFinancieras({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-            <p className="text-gray-600">Cargando datos...</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando datos...</p>
       </div>
     );
   }
 
   if (datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center text-gray-500">
-            <TrendingUp className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No hay datos disponibles para el período seleccionado</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <TrendingUp size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin datos disponibles</h3>
+        <p className="text-gray-600">No hay datos disponibles para el período seleccionado</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl p-4">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
           <DollarSign className="w-5 h-5 text-blue-600" />
@@ -152,22 +145,23 @@ export default function GraficoTendenciasFinancieras({
       <div className="relative">
         <canvas ref={canvasRef} width={800} height={300} className="w-full h-auto"></canvas>
       </div>
-      <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-gray-200">
+      <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-gray-100">
         <div className="flex items-center gap-2">
           <div className="w-4 h-0.5 bg-blue-600"></div>
-          <span className="text-sm text-gray-600">Ingresos</span>
+          <span className="text-sm text-slate-600">Ingresos</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-0.5 bg-red-600"></div>
-          <span className="text-sm text-gray-600">Gastos</span>
+          <span className="text-sm text-slate-600">Gastos</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-0.5 bg-green-600"></div>
-          <span className="text-sm text-gray-600">Beneficios</span>
+          <span className="text-sm text-slate-600">Beneficios</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 

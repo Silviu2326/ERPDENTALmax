@@ -67,93 +67,106 @@ export default function GestionProveedoresYAlmacenPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Building2 className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Gestión de Proveedores y Almacén
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Administra proveedores y catálogo de productos médicos
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Building2 size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Gestión de Proveedores y Almacén
+                </h1>
+                <p className="text-gray-600">
+                  Administra proveedores y catálogo de productos médicos
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Tabs */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-6">
-          <div className="border-b border-gray-200 bg-gray-50">
-            <div className="flex overflow-x-auto">
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {/* Sistema de Tabs */}
+        <div className="bg-white shadow-sm rounded-lg p-0 mb-6">
+          <div className="px-4 py-3">
+            <div
+              role="tablist"
+              aria-label="Secciones"
+              className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1 overflow-x-auto"
+            >
               {tabs.map((tab) => {
                 const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
-                      activeTab === tab.id
-                        ? 'border-blue-600 text-blue-600 bg-white'
-                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all whitespace-nowrap ${
+                      isActive
+                        ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                     }`}
                   >
-                    <Icon className="w-5 h-5" />
-                    {tab.label}
+                    <Icon size={18} className={isActive ? 'opacity-100' : 'opacity-70'} />
+                    <span>{tab.label}</span>
                   </button>
                 );
               })}
             </div>
           </div>
+        </div>
 
-          {/* Contenido de las pestañas */}
-          <div className="p-0">
-            {activeTab === 'proveedores' && <GestionProveedoresTab />}
-            {activeTab === 'crm-dashboard' && <CrmDashboardPage />}
-            {activeTab === 'seguimiento-campanas' && (
-              <>
-                {campanaSeleccionadaId ? (
-                  <DetalleCampanaPage
-                    campanaId={campanaSeleccionadaId}
-                    onVolver={handleVolverACampanas}
-                  />
-                ) : (
-                  <SeguimientoCampanasPage onVerDetalle={handleVerDetalleCampana} />
-                )}
-              </>
-            )}
-            {activeTab === 'circuitos-recalls' && <CircuitosRecallsPage />}
-            {activeTab === 'campanas-email' && <EmailCampaignsPage />}
-            {activeTab === 'campanas-sms' && <CampanasSmsPage />}
-            {activeTab === 'recordatorios-citas' && <RecordatoriosCitasPage />}
-            {activeTab === 'configuracion-plantillas' && <ConfiguracionPlantillasPage />}
-            {activeTab === 'listas-pacientes' && <ListasPacientesPage />}
-            {activeTab === 'promociones-ofertas' && <PromocionesOfertasPage />}
-            {activeTab === 'catalogo-productos' && <CatalogoProductosPage />}
-            {activeTab === 'almacenes' && <GestionAlmacenesTab />}
-            {activeTab === 'transferencias' && (
-              <>
-                {transferenciaSeleccionadaId ? (
-                  <DetalleTransferenciaPage
-                    transferenciaId={transferenciaSeleccionadaId}
-                    onVolver={handleVolverATransferencias}
-                  />
-                ) : (
-                  <TransferenciasAlmacenesPage onVerDetalle={handleVerDetalleTransferencia} />
-                )}
-              </>
-            )}
-            {activeTab === 'recepcion-mercancias' && <RecepcionMercanciasPage />}
-            {activeTab === 'empleados' && <ListadoEmpleadosPage />}
-            {activeTab === 'horarios-turnos' && <GestionHorariosTurnosPage />}
-            {activeTab === 'productividad-profesional' && <ProductividadProfesionalPage />}
-            {activeTab === 'nominas-salarios' && <NominasSalariosPage />}
-            {activeTab === 'permisos-roles' && <PermisosRolesPage />}
-          </div>
+        {/* Contenido de las pestañas */}
+        <div className="mt-6">
+          {activeTab === 'proveedores' && <GestionProveedoresTab />}
+          {activeTab === 'crm-dashboard' && <CrmDashboardPage />}
+          {activeTab === 'seguimiento-campanas' && (
+            <>
+              {campanaSeleccionadaId ? (
+                <DetalleCampanaPage
+                  campanaId={campanaSeleccionadaId}
+                  onVolver={handleVolverACampanas}
+                />
+              ) : (
+                <SeguimientoCampanasPage onVerDetalle={handleVerDetalleCampana} />
+              )}
+            </>
+          )}
+          {activeTab === 'circuitos-recalls' && <CircuitosRecallsPage />}
+          {activeTab === 'campanas-email' && <EmailCampaignsPage />}
+          {activeTab === 'campanas-sms' && <CampanasSmsPage />}
+          {activeTab === 'recordatorios-citas' && <RecordatoriosCitasPage />}
+          {activeTab === 'configuracion-plantillas' && <ConfiguracionPlantillasPage />}
+          {activeTab === 'listas-pacientes' && <ListasPacientesPage />}
+          {activeTab === 'promociones-ofertas' && <PromocionesOfertasPage />}
+          {activeTab === 'catalogo-productos' && <CatalogoProductosPage />}
+          {activeTab === 'almacenes' && <GestionAlmacenesTab />}
+          {activeTab === 'transferencias' && (
+            <>
+              {transferenciaSeleccionadaId ? (
+                <DetalleTransferenciaPage
+                  transferenciaId={transferenciaSeleccionadaId}
+                  onVolver={handleVolverATransferencias}
+                />
+              ) : (
+                <TransferenciasAlmacenesPage onVerDetalle={handleVerDetalleTransferencia} />
+              )}
+            </>
+          )}
+          {activeTab === 'recepcion-mercancias' && <RecepcionMercanciasPage />}
+          {activeTab === 'empleados' && <ListadoEmpleadosPage />}
+          {activeTab === 'horarios-turnos' && <GestionHorariosTurnosPage />}
+          {activeTab === 'productividad-profesional' && <ProductividadProfesionalPage />}
+          {activeTab === 'nominas-salarios' && <NominasSalariosPage />}
+          {activeTab === 'permisos-roles' && <PermisosRolesPage />}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { TrendingDown } from 'lucide-react';
+import { TrendingDown, Loader2 } from 'lucide-react';
 import { EvolucionAusencias } from '../api/analiticaApi';
 
 interface GraficoTasaAusenciasProps {
@@ -13,19 +13,19 @@ export default function GraficoTasaAusencias({
 }: GraficoTasaAusenciasProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="h-64 bg-gray-100 rounded animate-pulse"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="flex flex-col items-center justify-center h-64 text-gray-500">
-          <TrendingDown className="w-12 h-12 mb-4 text-gray-400" />
-          <p>No hay datos disponibles para mostrar</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <TrendingDown size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600">No se encontraron datos para mostrar el gráfico</p>
       </div>
     );
   }
@@ -41,10 +41,10 @@ export default function GraficoTasaAusencias({
   }));
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-          <TrendingDown className="w-5 h-5" />
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <TrendingDown size={20} />
           <span>Evolución de la Tasa de Ausentismo</span>
         </h2>
       </div>
@@ -76,19 +76,20 @@ export default function GraficoTasaAusencias({
           <Line
             type="monotone"
             dataKey="tasa"
-            stroke="#ef4444"
+            stroke="#3b82f6"
             strokeWidth={2}
-            dot={{ fill: '#ef4444', r: 4 }}
+            dot={{ fill: '#3b82f6', r: 4 }}
             activeDot={{ r: 6 }}
             name="Tasa de Ausentismo (%)"
           />
         </LineChart>
       </ResponsiveContainer>
-      <div className="mt-4 text-sm text-gray-600">
+      <div className="mt-4 text-sm text-gray-600 border-t border-gray-200 pt-4">
         <p>Total de ausencias en el período: {datos.reduce((acc, item) => acc + item.total, 0)}</p>
       </div>
     </div>
   );
 }
+
 
 

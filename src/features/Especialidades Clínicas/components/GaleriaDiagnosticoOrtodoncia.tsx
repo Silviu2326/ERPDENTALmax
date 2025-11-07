@@ -78,8 +78,9 @@ export default function GaleriaDiagnosticoOrtodoncia({
 
   if (diagnostico.archivos.length === 0) {
     return (
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
-        <Image className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Image size={48} className="text-gray-400 mx-auto mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay archivos</h3>
         <p className="text-gray-600">No hay archivos en este diagnóstico</p>
       </div>
     );
@@ -87,11 +88,11 @@ export default function GaleriaDiagnosticoOrtodoncia({
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {diagnostico.archivos.map((archivo) => (
           <div
             key={archivo._id}
-            className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow group"
+            className="bg-white rounded-lg shadow-sm ring-1 ring-slate-200 overflow-hidden hover:shadow-md transition-shadow group h-full flex flex-col"
           >
             {/* Vista previa */}
             <div
@@ -104,8 +105,8 @@ export default function GaleriaDiagnosticoOrtodoncia({
             >
               {archivo.tipo.includes('3D') ? (
                 <div className="text-center p-4">
-                  <File3D className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-xs text-gray-600">{archivo.subtipo || archivo.tipo}</p>
+                  <File3D size={48} className="text-gray-400 mx-auto mb-2" />
+                  <p className="text-xs text-slate-600">{archivo.subtipo || archivo.tipo}</p>
                 </div>
               ) : (
                 <img
@@ -116,7 +117,7 @@ export default function GaleriaDiagnosticoOrtodoncia({
               )}
               
               {/* Overlay con acciones */}
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all flex items-center justify-center space-x-2">
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all flex items-center justify-center gap-2">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -124,20 +125,20 @@ export default function GaleriaDiagnosticoOrtodoncia({
                       setArchivoSeleccionado(archivo);
                     }
                   }}
-                  className="opacity-0 group-hover:opacity-100 p-2 bg-white rounded text-blue-600 hover:bg-blue-50 transition-opacity"
+                  className="opacity-0 group-hover:opacity-100 p-2 bg-white rounded-lg text-blue-600 hover:bg-blue-50 transition-opacity"
                   title="Ver"
                 >
-                  <Eye className="w-4 h-4" />
+                  <Eye size={16} />
                 </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDescargar(archivo);
                   }}
-                  className="opacity-0 group-hover:opacity-100 p-2 bg-white rounded text-green-600 hover:bg-green-50 transition-opacity"
+                  className="opacity-0 group-hover:opacity-100 p-2 bg-white rounded-lg text-green-600 hover:bg-green-50 transition-opacity"
                   title="Descargar"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download size={16} />
                 </button>
                 {onEliminarArchivo && archivo._id && (
                   <button
@@ -147,17 +148,17 @@ export default function GaleriaDiagnosticoOrtodoncia({
                         onEliminarArchivo(archivo._id);
                       }
                     }}
-                    className="opacity-0 group-hover:opacity-100 p-2 bg-white rounded text-red-600 hover:bg-red-50 transition-opacity"
+                    className="opacity-0 group-hover:opacity-100 p-2 bg-white rounded-lg text-red-600 hover:bg-red-50 transition-opacity"
                     title="Eliminar"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 size={16} />
                   </button>
                 )}
               </div>
             </div>
 
             {/* Información del archivo */}
-            <div className="p-3">
+            <div className="p-4 flex-1 flex flex-col">
               {archivoEditando === archivo._id ? (
                 <div className="space-y-2">
                   <select
@@ -166,7 +167,7 @@ export default function GaleriaDiagnosticoOrtodoncia({
                       setNuevoTipo(e.target.value);
                       setNuevoSubtipo(subtiposPorTipo[e.target.value]?.[0] || '');
                     }}
-                    className="w-full text-xs px-2 py-1 border border-gray-300 rounded"
+                    className="w-full text-xs rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2"
                   >
                     {tiposArchivo.map((tipo) => (
                       <option key={tipo} value={tipo}>
@@ -177,7 +178,7 @@ export default function GaleriaDiagnosticoOrtodoncia({
                   <select
                     value={nuevoSubtipo}
                     onChange={(e) => setNuevoSubtipo(e.target.value)}
-                    className="w-full text-xs px-2 py-1 border border-gray-300 rounded"
+                    className="w-full text-xs rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2"
                   >
                     {subtiposPorTipo[nuevoTipo]?.map((subtipo) => (
                       <option key={subtipo} value={subtipo}>
@@ -185,16 +186,16 @@ export default function GaleriaDiagnosticoOrtodoncia({
                       </option>
                     ))}
                   </select>
-                  <div className="flex space-x-1">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => handleGuardarEdicion(archivo._id!)}
-                      className="flex-1 text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      className="flex-1 text-xs px-3 py-1.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
                     >
                       Guardar
                     </button>
                     <button
                       onClick={handleCancelarEdicion}
-                      className="flex-1 text-xs px-2 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                      className="flex-1 text-xs px-3 py-1.5 bg-slate-200 text-slate-700 rounded-xl hover:bg-slate-300 transition-colors"
                     >
                       Cancelar
                     </button>
@@ -202,22 +203,22 @@ export default function GaleriaDiagnosticoOrtodoncia({
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center space-x-2 mb-1">
+                  <div className="flex items-center gap-2 mb-2">
                     {getIconoArchivo(archivo.tipo)}
-                    <p className="text-xs font-medium text-gray-800 truncate flex-1">
+                    <p className="text-xs font-medium text-gray-900 truncate flex-1">
                       {archivo.nombreArchivo}
                     </p>
                   </div>
-                  <div className="text-xs text-gray-600 mb-2">
+                  <div className="text-xs text-slate-600 mb-3">
                     <div>{archivo.tipo}</div>
-                    {archivo.subtipo && <div className="text-gray-500">{archivo.subtipo}</div>}
+                    {archivo.subtipo && <div className="text-slate-500">{archivo.subtipo}</div>}
                   </div>
                   {onEditarArchivo && archivo._id && (
                     <button
                       onClick={() => handleIniciarEdicion(archivo)}
-                      className="text-xs text-blue-600 hover:text-blue-700 flex items-center space-x-1"
+                      className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 mt-auto"
                     >
-                      <Edit2 className="w-3 h-3" />
+                      <Edit2 size={12} />
                       <span>Editar</span>
                     </button>
                   )}
@@ -239,5 +240,6 @@ export default function GaleriaDiagnosticoOrtodoncia({
     </>
   );
 }
+
 
 

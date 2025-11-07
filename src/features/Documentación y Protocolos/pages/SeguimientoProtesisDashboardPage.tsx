@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw, FileText } from 'lucide-react';
+import { Plus, RefreshCw, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   obtenerProtesis,
   Protesis,
@@ -62,91 +62,105 @@ export default function SeguimientoProtesisDashboardPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
               </div>
+              
+              {/* Título y descripción */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Seguimiento de Prótesis</h1>
-                <p className="text-gray-600 mt-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Seguimiento de Prótesis
+                </h1>
+                <p className="text-gray-600">
                   Gestión y monitorización del ciclo de vida completo de las prótesis dentales
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex items-center gap-2">
               <button
                 onClick={cargarProtesis}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-100 text-slate-700 hover:bg-slate-200"
               >
-                <RefreshCw className="w-5 h-5" />
-                <span>Actualizar</span>
+                <RefreshCw size={20} className="mr-2" />
+                Actualizar
               </button>
               <button
                 onClick={onNuevaOrden}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
               >
-                <Plus className="w-5 h-5" />
-                <span>Nueva Orden</span>
+                <Plus size={20} className="mr-2" />
+                Nueva Orden
               </button>
             </div>
           </div>
-        </div>
 
-        {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">{error}</p>
-          </div>
-        )}
+          {/* Mensaje de error */}
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+              <p className="text-red-700">{error}</p>
+            </div>
+          )}
 
-        {/* Filtros */}
-        <div className="mb-6">
+          {/* Filtros */}
           <FiltrosProtesisPanel
             filtros={filtros}
             onFiltrosChange={setFiltros}
             onLimpiarFiltros={handleLimpiarFiltros}
           />
-        </div>
 
-        {/* Tabla de Prótesis */}
-        <div className="mb-6">
+          {/* Tabla de Prótesis */}
           <TablaSeguimientoProtesis
             protesis={protesis}
             onVerDetalle={onVerDetalle}
             onEditar={onEditar}
             loading={loading}
           />
-        </div>
 
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="flex items-center justify-center space-x-2">
-            <button
-              onClick={() => handlePageChange(paginacion.page - 1)}
-              disabled={paginacion.page === 1}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Anterior
-            </button>
-            <span className="text-sm text-gray-600">
-              Página {paginacion.page} de {paginacion.totalPages} ({paginacion.total} total)
-            </span>
-            <button
-              onClick={() => handlePageChange(paginacion.page + 1)}
-              disabled={paginacion.page >= paginacion.totalPages}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Siguiente
-            </button>
-          </div>
-        )}
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white shadow-sm rounded-lg p-4">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => handlePageChange(paginacion.page - 1)}
+                  disabled={paginacion.page === 1}
+                  className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <span className="px-4 py-2 text-sm text-gray-700">
+                  Página {paginacion.page} de {paginacion.totalPages}
+                </span>
+                <button
+                  onClick={() => handlePageChange(paginacion.page + 1)}
+                  disabled={paginacion.page >= paginacion.totalPages}
+                  className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

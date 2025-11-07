@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Edit, Trash2, Eye, Play, Pause, Users } from 'lucide-react';
+import { Edit, Trash2, Eye, Play, Pause, Users, Loader2, Package } from 'lucide-react';
 import { RecallCircuit } from '../api/recallsApi';
 
 interface RecallsTableProps {
@@ -47,24 +47,27 @@ export default function RecallsTable({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando circuitos...</p>
       </div>
     );
   }
 
   if (circuitos.length === 0) {
     return (
-      <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-gray-500 text-lg">No hay circuitos de recall configurados</p>
-        <p className="text-gray-400 text-sm mt-2">Crea tu primer circuito para comenzar</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay circuitos de recall configurados</h3>
+        <p className="text-gray-600 mb-4">Crea tu primer circuito para comenzar</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -168,8 +171,10 @@ export default function RecallsTable({
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Loader2, AlertCircle, Receipt } from 'lucide-react';
 import { obtenerFacturaPorId, FacturaDetallada } from '../api/facturacionApi';
 import FormularioEdicionFactura from '../components/FormularioEdicionFactura';
 
@@ -111,11 +111,11 @@ export default function EditarFacturaPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-            <span className="ml-3 text-gray-600">Cargando factura...</span>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando factura...</p>
           </div>
         </div>
       </div>
@@ -124,26 +124,22 @@ export default function EditarFacturaPage({
 
   if (error && !factura) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-            <div className="flex items-start space-x-3">
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-medium text-red-800 mb-1">Error al cargar la factura</h3>
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar la factura</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
+            {onVolver && (
+              <button
+                onClick={onVolver}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50"
+              >
+                <ArrowLeft size={20} />
+                <span>Volver</span>
+              </button>
+            )}
           </div>
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="mt-4 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Volver</span>
-            </button>
-          )}
         </div>
       </div>
     );
@@ -151,16 +147,18 @@ export default function EditarFacturaPage({
 
   if (!factura) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center py-12">
-            <p className="text-gray-600">No se encontró la factura</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Receipt size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontró la factura</h3>
+            <p className="text-gray-600 mb-4">La factura solicitada no existe o no está disponible</p>
             {onVolver && (
               <button
                 onClick={onVolver}
-                className="mt-4 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors mx-auto"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft size={20} />
                 <span>Volver</span>
               </button>
             )}
@@ -171,26 +169,42 @@ export default function EditarFacturaPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        {onVolver && (
-          <button
-            onClick={onVolver}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Volver al Panel de Facturación</span>
-          </button>
-        )}
-
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">Editar Factura</h1>
-          <p className="text-gray-600 mt-1">
-            Modifica los datos de la factura antes de que sea cerrada o pagada
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            {onVolver && (
+              <button
+                onClick={onVolver}
+                className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-slate-600 hover:text-slate-900 transition-all"
+              >
+                <ArrowLeft size={18} />
+                <span>Volver al Panel de Facturación</span>
+              </button>
+            )}
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Receipt size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Editar Factura
+                </h1>
+                <p className="text-gray-600">
+                  Modifica los datos de la factura antes de que sea cerrada o pagada
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {/* Formulario */}
         <FormularioEdicionFactura
           factura={factura}
@@ -200,15 +214,19 @@ export default function EditarFacturaPage({
 
         {/* Mostrar error si existe pero también hay factura (datos mock) */}
         {error && factura && (
-          <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <p className="text-sm text-yellow-700">
-              Nota: Se están mostrando datos de ejemplo. {error}
-            </p>
+          <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-yellow-700">
+                Nota: Se están mostrando datos de ejemplo. {error}
+              </p>
+            </div>
           </div>
         )}
       </div>
     </div>
   );
 }
+
 
 

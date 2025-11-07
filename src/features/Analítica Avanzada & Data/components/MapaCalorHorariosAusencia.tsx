@@ -1,4 +1,4 @@
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, Loader2 } from 'lucide-react';
 
 interface MapaCalorHorariosAusenciaProps {
   datos?: Array<{
@@ -53,17 +53,18 @@ export default function MapaCalorHorariosAusencia({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="h-64 bg-gray-100 rounded animate-pulse"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-          <Clock className="w-5 h-5" />
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <Clock size={20} />
           <span>Mapa de Calor: Ausencias por Día y Hora</span>
         </h2>
       </div>
@@ -73,7 +74,7 @@ export default function MapaCalorHorariosAusencia({
             <thead>
               <tr>
                 <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <Calendar className="w-4 h-4 inline mr-1" />
+                  <Calendar size={16} className="inline mr-1" />
                   Día / Hora
                 </th>
                 {horas.map((hora) => (
@@ -132,5 +133,6 @@ export default function MapaCalorHorariosAusencia({
     </div>
   );
 }
+
 
 

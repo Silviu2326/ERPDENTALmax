@@ -95,14 +95,14 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6 ring-1 ring-slate-200">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900">
           {config ? 'Editar Configuración de Píxel' : 'Nueva Configuración de Píxel'}
         </h2>
         <button
           onClick={onCancel}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-lg hover:bg-gray-100"
           aria-label="Cerrar"
         >
           <X className="w-5 h-5" />
@@ -111,13 +111,13 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
             {error}
           </div>
         )}
 
         <div>
-          <label htmlFor="platform" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="platform" className="block text-sm font-medium text-slate-700 mb-2">
             Plataforma
           </label>
           <select
@@ -125,7 +125,7 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
             value={platform}
             onChange={(e) => setPlatform(e.target.value as TrackingPlatform)}
             disabled={!!config}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed"
             required
           >
             {PLATFORMS.map((p) => (
@@ -135,12 +135,12 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
             ))}
           </select>
           {config && (
-            <p className="mt-1 text-sm text-gray-500">No se puede cambiar la plataforma de una configuración existente</p>
+            <p className="mt-1 text-sm text-slate-500">No se puede cambiar la plataforma de una configuración existente</p>
           )}
         </div>
 
         <div>
-          <label htmlFor="pixelId" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="pixelId" className="block text-sm font-medium text-slate-700 mb-2">
             Pixel ID
           </label>
           <input
@@ -148,11 +148,11 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
             id="pixelId"
             value={pixelId}
             onChange={(e) => setPixelId(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             placeholder="Ej: 123456789012345"
             required
           />
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-slate-500">
             Ingresa el ID del píxel proporcionado por la plataforma
           </p>
         </div>
@@ -163,37 +163,37 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
             id="isEnabled"
             checked={isEnabled}
             onChange={(e) => setIsEnabled(e.target.checked)}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
           />
-          <label htmlFor="isEnabled" className="ml-2 block text-sm text-gray-700">
+          <label htmlFor="isEnabled" className="ml-2 block text-sm text-slate-700">
             Activar seguimiento
           </label>
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-3">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-slate-700">
               Eventos de Conversión
             </label>
             <button
               type="button"
               onClick={handleAddEvent}
-              className="flex items-center space-x-1 text-sm text-blue-600 hover:text-blue-700"
+              className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={16} />
               <span>Agregar Evento</span>
             </button>
           </div>
 
           <div className="space-y-3">
             {conversionEvents.map((event, index) => (
-              <div key={index} className="flex items-center space-x-3">
+              <div key={index} className="flex items-center gap-3">
                 <input
                   type="text"
                   value={event.eventName}
                   onChange={(e) => handleEventChange(index, 'eventName', e.target.value)}
                   placeholder="Nombre del evento"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
                 <input
@@ -201,34 +201,34 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
                   value={event.eventCode}
                   onChange={(e) => handleEventChange(index, 'eventCode', e.target.value)}
                   placeholder="Código del evento"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveEvent(index)}
-                  className="text-red-600 hover:text-red-700 p-2"
+                  className="text-red-600 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors"
                   aria-label="Eliminar evento"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 size={16} />
                 </button>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4 border-t">
+        <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
@@ -237,7 +237,7 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
               </>
             ) : (
               <>
-                <Save className="w-4 h-4" />
+                <Save size={16} />
                 <span>Guardar</span>
               </>
             )}
@@ -247,5 +247,6 @@ export default function PixelConfigForm({ config, onSave, onCancel }: PixelConfi
     </div>
   );
 }
+
 
 

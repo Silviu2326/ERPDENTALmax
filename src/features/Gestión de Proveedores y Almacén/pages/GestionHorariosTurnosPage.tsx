@@ -150,115 +150,137 @@ export default function GestionHorariosTurnosPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Clock className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Gestión de Horarios y Turnos</h1>
-              <p className="text-gray-600 mt-1">
-                Administra los horarios y turnos del personal de la clínica
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Clock size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Gestión de Horarios y Turnos
+                </h1>
+                <p className="text-gray-600">
+                  Administra los horarios y turnos del personal de la clínica
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {/* Tabs principales */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-6">
-          <div className="border-b border-gray-200 bg-gray-50">
-            <div className="flex overflow-x-auto">
+        <div className="bg-white shadow-sm p-0 mb-6 rounded-xl overflow-hidden">
+          <div className="px-4 py-3">
+            <div
+              role="tablist"
+              aria-label="Secciones"
+              className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+            >
               <button
                 onClick={() => setSubVista('calendario')}
-                className={`flex items-center gap-2 px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
                   subVista === 'calendario'
-                    ? 'border-blue-600 text-blue-600 bg-white'
-                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                 }`}
               >
-                <Calendar className="w-5 h-5" />
-                Calendario
+                <Calendar size={18} className={subVista === 'calendario' ? 'opacity-100' : 'opacity-70'} />
+                <span>Calendario</span>
               </button>
               <button
                 onClick={() => {
                   setSubVista('plantillas');
                   cargarPlantillas();
                 }}
-                className={`flex items-center gap-2 px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
                   subVista === 'plantillas'
-                    ? 'border-blue-600 text-blue-600 bg-white'
-                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                 }`}
               >
-                <FileText className="w-5 h-5" />
-                Plantillas
+                <FileText size={18} className={subVista === 'plantillas' ? 'opacity-100' : 'opacity-70'} />
+                <span>Plantillas</span>
               </button>
               <button
                 onClick={() => setSubVista('solicitudes')}
-                className={`flex items-center gap-2 px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
                   subVista === 'solicitudes'
-                    ? 'border-blue-600 text-blue-600 bg-white'
-                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                 }`}
               >
-                <User className="w-5 h-5" />
-                Solicitudes de Ausencia
+                <User size={18} className={subVista === 'solicitudes' ? 'opacity-100' : 'opacity-70'} />
+                <span>Solicitudes de Ausencia</span>
               </button>
             </div>
           </div>
 
           {/* Contenido de las pestañas */}
-          <div className="p-6">
+          <div className="px-4 pb-4">
             {subVista === 'calendario' && (
-              <div className="space-y-6">
-                {/* Filtros y controles */}
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <SelectorProfesionalSede
-                      profesionalId={profesionalId}
-                      sedeId={sedeId}
-                      onProfesionalChange={setProfesionalId}
-                      onSedeChange={setSedeId}
-                      required={false}
-                    />
-                  </div>
+              <div className="space-y-6 mt-6">
+                {/* Toolbar superior */}
+                <div className="flex items-center justify-end">
+                  <button
+                    onClick={() => {
+                      setFechaSeleccionada(null);
+                      setMostrarModalTurno(true);
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
+                  >
+                    <Plus size={20} className="mr-2" />
+                    Nuevo Turno
+                  </button>
+                </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setVista('semana')}
-                        className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                          vista === 'semana'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        Semana
-                      </button>
-                      <button
-                        onClick={() => setVista('mes')}
-                        className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                          vista === 'mes'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        Mes
-                      </button>
+                {/* Filtros y controles */}
+                <div className="bg-white shadow-sm rounded-xl p-4 mb-6">
+                  <div className="space-y-4">
+                    <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                      <div className="flex gap-4">
+                        <div className="flex-1">
+                          <SelectorProfesionalSede
+                            profesionalId={profesionalId}
+                            sedeId={sedeId}
+                            onProfesionalChange={setProfesionalId}
+                            onSedeChange={setSedeId}
+                            required={false}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <button
-                      onClick={() => {
-                        setFechaSeleccionada(null);
-                        setMostrarModalTurno(true);
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      <Plus className="w-4 h-4" />
-                      Nuevo Turno
-                    </button>
+
+                    <div className="flex items-center gap-2 pt-2">
+                      <span className="text-sm font-medium text-gray-700">Vista:</span>
+                      <div className="flex border rounded-lg overflow-hidden ring-1 ring-slate-200">
+                        <button
+                          onClick={() => setVista('semana')}
+                          className={`px-4 py-2 text-sm font-medium transition-colors ${
+                            vista === 'semana'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-white text-slate-700 hover:bg-slate-50'
+                          }`}
+                        >
+                          Semana
+                        </button>
+                        <button
+                          onClick={() => setVista('mes')}
+                          className={`px-4 py-2 text-sm font-medium transition-colors border-l border-slate-200 ${
+                            vista === 'mes'
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-white text-slate-700 hover:bg-slate-50'
+                          }`}
+                        >
+                          Mes
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -274,14 +296,14 @@ export default function GestionHorariosTurnosPage() {
             )}
 
             {subVista === 'plantillas' && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-gray-900">Plantillas de Horarios</h3>
+              <div className="space-y-6 mt-6">
+                {/* Toolbar superior */}
+                <div className="flex items-center justify-end">
                   <button
                     onClick={() => setMostrarFormularioPlantilla(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus size={20} className="mr-2" />
                     Nueva Plantilla
                   </button>
                 </div>
@@ -294,46 +316,50 @@ export default function GestionHorariosTurnosPage() {
                 ) : (
                   <>
                     {plantillas.length === 0 ? (
-                      <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                        <FileText className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                        <p className="text-lg font-medium text-gray-600">No hay plantillas</p>
-                        <p className="text-sm text-gray-500 mb-4">
+                      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+                        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay plantillas</h3>
+                        <p className="text-gray-600 mb-4">
                           Crea una plantilla para reutilizar horarios comunes
                         </p>
                         <button
                           onClick={() => setMostrarFormularioPlantilla(true)}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus size={20} />
                           Crear Primera Plantilla
                         </button>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {plantillas.map((plantilla) => (
                           <div
                             key={plantilla._id}
-                            className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                            className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md"
                           >
-                            <div className="flex items-start justify-between mb-3">
-                              <h4 className="font-semibold text-gray-900">{plantilla.nombre}</h4>
-                              <LayoutGrid className="w-5 h-5 text-blue-600" />
+                            <div className="p-4 flex flex-col h-full">
+                              <div className="flex items-start justify-between mb-3">
+                                <h4 className="text-lg font-semibold text-gray-900">{plantilla.nombre}</h4>
+                                <LayoutGrid size={20} className="text-blue-600 flex-shrink-0" />
+                              </div>
+                              {plantilla.descripcion && (
+                                <p className="text-sm text-gray-600 mb-3 flex-1">{plantilla.descripcion}</p>
+                              )}
+                              <div className="text-xs text-slate-500 mb-4">
+                                {plantilla.turnos.length} turno(s) definido(s)
+                              </div>
+                              <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
+                                <button
+                                  onClick={() => {
+                                    setPlantillaSeleccionada(plantilla._id!);
+                                    setMostrarModalAplicarPlantilla(true);
+                                  }}
+                                  className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-xl hover:bg-blue-700 transition-colors font-medium"
+                                >
+                                  Aplicar Plantilla
+                                </button>
+                              </div>
                             </div>
-                            {plantilla.descripcion && (
-                              <p className="text-sm text-gray-600 mb-3">{plantilla.descripcion}</p>
-                            )}
-                            <div className="text-xs text-gray-500 mb-3">
-                              {plantilla.turnos.length} turno(s) definido(s)
-                            </div>
-                            <button
-                              onClick={() => {
-                                setPlantillaSeleccionada(plantilla._id!);
-                                setMostrarModalAplicarPlantilla(true);
-                              }}
-                              className="w-full px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                              Aplicar Plantilla
-                            </button>
                           </div>
                         ))}
                       </div>
@@ -351,40 +377,40 @@ export default function GestionHorariosTurnosPage() {
                               onSedeChange={setSedeId}
                             />
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                              <label className="block text-sm font-medium text-slate-700 mb-2">
                                 Fecha Inicio
                               </label>
                               <input
                                 type="date"
                                 value={fechaInicioPlantilla}
                                 onChange={(e) => setFechaInicioPlantilla(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-2">
+                              <label className="block text-sm font-medium text-slate-700 mb-2">
                                 Fecha Fin
                               </label>
                               <input
                                 type="date"
                                 value={fechaFinPlantilla}
                                 onChange={(e) => setFechaFinPlantilla(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                               />
                             </div>
-                            <div className="flex items-center justify-end gap-3 pt-4">
+                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
                               <button
                                 onClick={() => {
                                   setMostrarModalAplicarPlantilla(false);
                                   setPlantillaSeleccionada('');
                                 }}
-                                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                                className="px-4 py-2 border border-slate-300 text-slate-700 rounded-xl hover:bg-slate-50 transition-colors text-sm font-medium"
                               >
                                 Cancelar
                               </button>
                               <button
                                 onClick={handleAplicarPlantilla}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
                               >
                                 Aplicar
                               </button>
@@ -398,7 +424,11 @@ export default function GestionHorariosTurnosPage() {
               </div>
             )}
 
-            {subVista === 'solicitudes' && <PanelSolicitudesAusencia />}
+            {subVista === 'solicitudes' && (
+              <div className="mt-6">
+                <PanelSolicitudesAusencia />
+              </div>
+            )}
           </div>
         </div>
       </div>

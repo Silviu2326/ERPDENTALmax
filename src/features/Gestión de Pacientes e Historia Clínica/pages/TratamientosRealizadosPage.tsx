@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ClipboardList, Loader2 } from 'lucide-react';
+import { ClipboardList, AlertCircle } from 'lucide-react';
 import {
   obtenerTratamientosRealizados,
   FiltrosTratamientosRealizados,
@@ -98,56 +98,76 @@ export default function TratamientosRealizadosPage({
 
   if (!pacienteId) {
     return (
-      <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-        ID de paciente no válido
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">ID de paciente no válido</h3>
+            <p className="text-gray-600">Por favor, proporcione un ID de paciente válido</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-          <ClipboardList className="w-6 h-6 text-white" />
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">Tratamientos Realizados</h2>
-          <p className="text-gray-600 text-sm mt-1">
-            Historial cronológico de todas las intervenciones clínicas completadas
-          </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <ClipboardList size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Tratamientos Realizados
+                </h1>
+                <p className="text-gray-600">
+                  Historial cronológico de todas las intervenciones clínicas completadas
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Filtros */}
-      <FiltrosHistorialTratamientos
-        filtros={filtros}
-        onFiltrosChange={handleFiltrosChange}
-        odontologos={odontologos}
-      />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosHistorialTratamientos
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            odontologos={odontologos}
+          />
 
-      {/* Mensaje de error */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          <p className="font-medium">Error al cargar los tratamientos</p>
-          <p className="text-sm mt-1">{error}</p>
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar los tratamientos</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+            </div>
+          )}
+
+          {/* Tabla de tratamientos */}
+          <TablaTratamientosRealizados
+            tratamientos={tratamientos}
+            loading={loading}
+            onVerDetalle={handleVerDetalle}
+          />
+
+          {/* Paginación */}
+          {!loading && tratamientos.length > 0 && (
+            <PaginacionListado
+              paginacion={paginacion}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
-      )}
-
-      {/* Tabla de tratamientos */}
-      <TablaTratamientosRealizados
-        tratamientos={tratamientos}
-        loading={loading}
-        onVerDetalle={handleVerDetalle}
-      />
-
-      {/* Paginación */}
-      {!loading && tratamientos.length > 0 && (
-        <PaginacionListado
-          paginacion={paginacion}
-          onPageChange={handlePageChange}
-        />
-      )}
+      </div>
 
       {/* Modal de detalle */}
       {mostrarModal && tratamientoSeleccionado && (

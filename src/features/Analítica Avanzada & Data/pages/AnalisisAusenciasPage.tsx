@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import FiltrosAnalisisAusencias from '../components/FiltrosAnalisisAusencias';
 import IndicadoresClaveAusencias from '../components/IndicadoresClaveAusencias';
 import GraficoTasaAusencias from '../components/GraficoTasaAusencias';
@@ -72,59 +72,69 @@ export default function AnalisisAusenciasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-red-600 to-rose-600 p-3 rounded-xl shadow-lg">
-              <AlertCircle className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Análisis de Ausencias (No-show)</h1>
-              <p className="text-gray-600 mt-1">
-                Visualiza el impacto de las inasistencias y toma decisiones estratégicas
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <AlertCircle size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Análisis de Ausencias (No-show)
+                </h1>
+                <p className="text-gray-600">
+                  Visualiza el impacto de las inasistencias y toma decisiones estratégicas
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <FiltrosAnalisisAusencias
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          onAplicarFiltros={handleAplicarFiltros}
-          loading={loading}
-        />
-
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-            <div className="flex items-center space-x-2">
-              <AlertCircle className="w-5 h-5 text-red-600" />
-              <p className="text-red-800">{error}</p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-4 border border-red-200">
+              <div className="flex items-center space-x-2">
+                <AlertCircle size={20} className="text-red-600" />
+                <p className="text-red-800">{error}</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Indicadores Clave */}
-        <IndicadoresClaveAusencias kpis={kpis} loading={loading} />
+          {/* Filtros */}
+          <FiltrosAnalisisAusencias
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            onAplicarFiltros={handleAplicarFiltros}
+            loading={loading}
+          />
 
-        {/* Gráfico de Evolución */}
-        <GraficoTasaAusencias datos={evolucion} loading={loading} />
+          {/* Indicadores Clave */}
+          <IndicadoresClaveAusencias kpis={kpis} loading={loading} />
 
-        {/* Tabla de Pacientes Reincidentes */}
-        <TablaPacientesReincidentes
-          pacientes={pacientesReincidentes}
-          loading={loading}
-          onVerPaciente={handleVerPaciente}
-        />
+          {/* Gráfico de Evolución */}
+          <GraficoTasaAusencias datos={evolucion} loading={loading} />
 
-        {/* Mapa de Calor */}
-        <MapaCalorHorariosAusencia loading={loading} />
+          {/* Tabla de Pacientes Reincidentes */}
+          <TablaPacientesReincidentes
+            pacientes={pacientesReincidentes}
+            loading={loading}
+            onVerPaciente={handleVerPaciente}
+          />
+
+          {/* Mapa de Calor */}
+          <MapaCalorHorariosAusencia loading={loading} />
+        </div>
       </div>
     </div>
   );
 }
+
 
 

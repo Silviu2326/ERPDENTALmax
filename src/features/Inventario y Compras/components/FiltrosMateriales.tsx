@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { FiltrosMateriales } from '../api/materialesApi';
 
 interface FiltrosMaterialesProps {
@@ -14,29 +14,29 @@ export default function FiltrosMaterialesComponent({
   categorias = [],
 }: FiltrosMaterialesProps) {
   const [busqueda, setBusqueda] = useState(filtros.search || '');
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [mostrarFiltrosAvanzados, setMostrarFiltrosAvanzados] = useState(false);
 
-  // Aplicar debounce a la búsqueda
+  // Sincronizar busqueda con filtros.search cuando cambia desde fuera
   useEffect(() => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
+    if (filtros.search !== busqueda) {
+      setBusqueda(filtros.search || '');
     }
+  }, [filtros.search]);
 
+  // Debouncing para la búsqueda
+  useEffect(() => {
     const timer = setTimeout(() => {
-      onFiltrosChange({
-        ...filtros,
-        search: busqueda || undefined,
-        page: 1, // Resetear a primera página al buscar
-      });
+      if (busqueda !== filtros.search) {
+        onFiltrosChange({
+          ...filtros,
+          search: busqueda || undefined,
+          page: 1, // Resetear a primera página al buscar
+        });
+      }
     }, 500);
 
-    setDebounceTimer(timer);
-
-    return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
-      }
-    };
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [busqueda]);
 
   const handleCategoriaChange = (categoriaId: string) => {
@@ -63,71 +63,113 @@ export default function FiltrosMaterialesComponent({
     });
   };
 
-  const tieneFiltrosActivos = filtros.search || filtros.categoria || filtros.estado;
+  const filtrosActivos = (filtros.search ? 1 : 0) + (filtros.categoria ? 1 : 0) + (filtros.estado ? 1 : 0);
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-2">
-          <Filter className="w-5 h-5 text-gray-600" />
-          <h3 className="text-lg font-semibold text-gray-800">Filtros de Búsqueda</h3>
+    <div className="bg-white rounded-xl shadow-sm mb-6">
+      <div className="space-y-4 p-4">
+        {/* Barra de búsqueda */}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-4">
+            {/* Input de búsqueda */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Buscar por nombre o SKU..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+              />
+            </div>
+
+            {/* Botón de filtros */}
+            <button
+              onClick={() => setMostrarFiltrosAvanzados(!mostrarFiltrosAvanzados)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 bg-white/50 ring-1 ring-slate-200"
+            >
+              <Filter size={18} className={mostrarFiltrosAvanzados || filtrosActivos > 0 ? 'opacity-100' : 'opacity-70'} />
+              <span>Filtros</span>
+              {filtrosActivos > 0 && (
+                <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-blue-600 rounded-full">
+                  {filtrosActivos}
+                </span>
+              )}
+              {mostrarFiltrosAvanzados ? (
+                <ChevronUp size={18} className="opacity-70" />
+              ) : (
+                <ChevronDown size={18} className="opacity-70" />
+              )}
+            </button>
+
+            {/* Botón limpiar filtros */}
+            {filtrosActivos > 0 && (
+              <button
+                onClick={handleLimpiarFiltros}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 bg-white/50 ring-1 ring-slate-200"
+              >
+                <X size={18} className="opacity-70" />
+                <span>Limpiar</span>
+              </button>
+            )}
+          </div>
         </div>
-        {tieneFiltrosActivos && (
-          <button
-            onClick={handleLimpiarFiltros}
-            className="flex items-center space-x-1 text-sm text-blue-600 hover:text-blue-700"
-          >
-            <X className="w-4 h-4" />
-            <span>Limpiar filtros</span>
-          </button>
+
+        {/* Panel de filtros avanzados */}
+        {mostrarFiltrosAvanzados && (
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Filtro por categoría */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Categoría
+                </label>
+                <select
+                  value={filtros.categoria || ''}
+                  onChange={(e) => handleCategoriaChange(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="">Todas las categorías</option>
+                  {categorias.map((cat) => (
+                    <option key={cat._id} value={cat._id}>
+                      {cat.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Filtro por estado de stock */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Estado de Stock
+                </label>
+                <select
+                  value={filtros.estado || ''}
+                  onChange={(e) => handleEstadoChange(e.target.value as any)}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="">Todos los estados</option>
+                  <option value="en_stock">En stock</option>
+                  <option value="bajo_stock">Bajo stock</option>
+                  <option value="agotado">Agotado</option>
+                </select>
+              </div>
+            </div>
+          </div>
         )}
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Búsqueda por texto */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Buscar por nombre o SKU..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        {/* Filtro por categoría */}
-        <div>
-          <select
-            value={filtros.categoria || ''}
-            onChange={(e) => handleCategoriaChange(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Todas las categorías</option>
-            {categorias.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Filtro por estado de stock */}
-        <div>
-          <select
-            value={filtros.estado || ''}
-            onChange={(e) => handleEstadoChange(e.target.value as any)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Todos los estados</option>
-            <option value="en_stock">En stock</option>
-            <option value="bajo_stock">Bajo stock</option>
-            <option value="agotado">Agotado</option>
-          </select>
-        </div>
+        {/* Resumen de resultados */}
+        {filtrosActivos > 0 && (
+          <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+            <span>{filtrosActivos} filtro{filtrosActivos > 1 ? 's' : ''} aplicado{filtrosActivos > 1 ? 's' : ''}</span>
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
 
 

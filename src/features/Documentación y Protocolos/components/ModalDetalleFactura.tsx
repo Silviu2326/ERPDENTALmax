@@ -35,29 +35,31 @@ export default function ModalDetalleFactura({
 
   const getEstadoColor = (estado: string): string => {
     const colores: Record<string, string> = {
-      'Pendiente': 'bg-yellow-100 text-yellow-800 border-yellow-300',
-      'Pagada': 'bg-green-100 text-green-800 border-green-300',
-      'Vencida': 'bg-red-100 text-red-800 border-red-300',
-      'Cancelada': 'bg-gray-100 text-gray-800 border-gray-300',
+      'Pendiente': 'bg-yellow-100 text-yellow-800 ring-yellow-300',
+      'Pagada': 'bg-green-100 text-green-800 ring-green-300',
+      'Vencida': 'bg-red-100 text-red-800 ring-red-300',
+      'Cancelada': 'bg-gray-100 text-gray-800 ring-gray-300',
     };
-    return colores[estado] || 'bg-gray-100 text-gray-800 border-gray-300';
+    return colores[estado] || 'bg-gray-100 text-gray-800 ring-gray-300';
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <FileText className="w-6 h-6 text-white" />
+        <div className="bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+              <FileText size={24} className="text-blue-600" />
+            </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Detalle de Factura</h2>
-              <p className="text-sm text-blue-100">Nº {factura.numeroFactura}</p>
+              <h2 className="text-xl font-bold text-gray-900">Detalle de Factura</h2>
+              <p className="text-sm text-gray-600">Nº {factura.numeroFactura}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+            className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-xl transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -67,10 +69,10 @@ export default function ModalDetalleFactura({
         <div className="flex-1 overflow-y-auto p-6">
           {/* Información General */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center space-x-2 mb-2">
-                <Building2 className="w-5 h-5 text-gray-600" />
-                <h3 className="font-semibold text-gray-900">Laboratorio</h3>
+            <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Building2 size={16} className="text-slate-600" />
+                <h3 className="text-sm font-semibold text-gray-900">Laboratorio</h3>
               </div>
               <p className="text-gray-900">{factura.laboratorio.nombre}</p>
               {factura.laboratorio.cif && (
@@ -88,10 +90,10 @@ export default function ModalDetalleFactura({
               )}
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center space-x-2 mb-2">
-                <Calendar className="w-5 h-5 text-gray-600" />
-                <h3 className="font-semibold text-gray-900">Fechas</h3>
+            <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Calendar size={16} className="text-slate-600" />
+                <h3 className="text-sm font-semibold text-gray-900">Fechas</h3>
               </div>
               <div className="space-y-2">
                 <div>
@@ -115,11 +117,11 @@ export default function ModalDetalleFactura({
           {/* Estado */}
           <div className="mb-6">
             <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getEstadoColor(
+              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ring-1 ${getEstadoColor(
                 factura.estado
               )}`}
             >
-              {factura.estado === 'Pagada' && <CheckCircle className="w-4 h-4 mr-1" />}
+              {factura.estado === 'Pagada' && <CheckCircle size={12} />}
               {factura.estado}
             </span>
             {factura.metodoPago && (
@@ -131,24 +133,24 @@ export default function ModalDetalleFactura({
 
           {/* Items */}
           <div className="mb-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Ítems de la Factura</h3>
-            <div className="border border-gray-200 rounded-lg overflow-hidden">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Ítems de la Factura</h3>
+            <div className="ring-1 ring-slate-200 rounded-xl overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-slate-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase">
                       Descripción
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase">
                       Paciente / Tratamiento
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase">
                       Cantidad
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase">
                       Precio Unit.
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase">
                       Total
                     </th>
                   </tr>
@@ -187,7 +189,7 @@ export default function ModalDetalleFactura({
           </div>
 
           {/* Totales */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4 mb-6">
             <div className="flex justify-end">
               <div className="w-64 space-y-2">
                 <div className="flex justify-between text-sm">
@@ -208,7 +210,7 @@ export default function ModalDetalleFactura({
 
           {/* Notas */}
           {factura.notas && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="bg-yellow-50 ring-1 ring-yellow-200 rounded-xl p-4 mb-6">
               <h4 className="font-semibold text-gray-900 mb-2">Notas</h4>
               <p className="text-sm text-gray-700">{factura.notas}</p>
             </div>
@@ -231,27 +233,27 @@ export default function ModalDetalleFactura({
         </div>
 
         {/* Footer */}
-        <div className="bg-gray-50 px-6 py-4 flex items-center justify-end space-x-3 border-t border-gray-200">
+        <div className="bg-gray-50 px-6 py-4 flex items-center justify-end gap-2 border-t border-gray-200">
           {onMarcarPagada && factura.estado !== 'Pagada' && (
             <button
               onClick={onMarcarPagada}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm"
             >
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle size={20} />
               <span>Marcar como Pagada</span>
             </button>
           )}
           {onEditar && (
             <button
               onClick={onEditar}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
             >
               Editar
             </button>
           )}
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           >
             Cerrar
           </button>
@@ -260,5 +262,6 @@ export default function ModalDetalleFactura({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, AlertCircle, Package } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   PacienteActivo,
@@ -93,61 +93,74 @@ export default function AsignacionBandejaPacientePage({ onVolver }: AsignacionBa
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
               {onVolver && (
                 <button
                   onClick={onVolver}
-                  className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all mr-4"
                 >
-                  <ArrowLeft className="w-5 h-5" />
+                  <ArrowLeft size={20} />
                 </button>
               )}
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Package size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Asignación de Bandejas a Pacientes</h2>
-                <p className="text-gray-600 mt-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Asignación de Bandejas a Pacientes
+                </h1>
+                <p className="text-gray-600">
                   Asigne bandejas esterilizadas a pacientes mediante escaneo de código QR
                 </p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Mensaje de éxito */}
-        {asignacionExitosa && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start space-x-3">
-            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="font-medium text-green-800">Asignación realizada exitosamente</p>
-              <p className="text-sm text-green-700 mt-1">
-                La bandeja ha sido asignada al paciente correctamente.
-              </p>
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+
+        <div className="space-y-6">
+          {/* Mensaje de éxito */}
+          {asignacionExitosa && (
+            <div className="rounded-2xl bg-green-50 ring-1 ring-green-200 p-4 flex items-start space-x-3">
+              <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-green-800">Asignación realizada exitosamente</p>
+                <p className="text-sm text-green-700 mt-1">
+                  La bandeja ha sido asignada al paciente correctamente.
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Error */}
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="font-medium text-red-800">{error}</p>
-              <button
-                onClick={() => setError(null)}
-                className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
-              >
-                Cerrar
-              </button>
+          {/* Error */}
+          {error && (
+            <div className="rounded-2xl bg-red-50 ring-1 ring-red-200 p-4 flex items-start space-x-3">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-red-800">{error}</p>
+                <button
+                  onClick={() => setError(null)}
+                  className="mt-2 text-sm text-red-600 hover:text-red-800 underline transition-colors"
+                >
+                  Cerrar
+                </button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Layout principal: Dos columnas */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Layout principal: Dos columnas */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Columna izquierda: Selector de paciente y escáner */}
           <div className="space-y-6">
             <SelectorPacienteActivo
@@ -165,12 +178,12 @@ export default function AsignacionBandejaPacientePage({ onVolver }: AsignacionBa
                 <DetalleBandejaScaneada bandeja={bandejaEscaneada} />
 
                 {puedeAsignar() && (
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <div className="bg-white rounded-lg shadow-sm p-6">
                     <button
                       onClick={() => setMostrarModalConfirmacion(true)}
-                      className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center space-x-2"
+                      className="w-full px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
                     >
-                      <CheckCircle className="w-5 h-5" />
+                      <CheckCircle size={20} />
                       <span>Confirmar Asignación</span>
                     </button>
                   </div>
@@ -179,8 +192,10 @@ export default function AsignacionBandejaPacientePage({ onVolver }: AsignacionBa
             )}
 
             {!bandejaEscaneada && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-                <p className="text-gray-500">
+              <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                <Package size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Escanee una bandeja</h3>
+                <p className="text-gray-600">
                   Escanee un código QR de bandeja para ver los detalles
                 </p>
               </div>
@@ -190,6 +205,8 @@ export default function AsignacionBandejaPacientePage({ onVolver }: AsignacionBa
 
         {/* Lista de asignaciones recientes */}
         <ListaAsignacionesRecientes limit={10} />
+        </div>
+      </div>
 
         {/* Modal de confirmación */}
         {mostrarModalConfirmacion && pacienteSeleccionado && bandejaEscaneada && (
@@ -205,5 +222,6 @@ export default function AsignacionBandejaPacientePage({ onVolver }: AsignacionBa
     </div>
   );
 }
+
 
 

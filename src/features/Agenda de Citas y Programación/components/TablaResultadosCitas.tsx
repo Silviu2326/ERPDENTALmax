@@ -49,42 +49,43 @@ export default function TablaResultadosCitas({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Cargando citas...</p>
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-8 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <p className="text-gray-600">Cargando citas...</p>
       </div>
     );
   }
 
   if (citas.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 text-lg">No se encontraron citas con los filtros seleccionados</p>
-        <p className="text-gray-400 text-sm mt-2">Intenta ajustar los filtros de búsqueda</p>
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-8 text-center">
+        <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron citas</h3>
+        <p className="text-gray-600 mb-4">No se encontraron citas con los filtros seleccionados</p>
+        <p className="text-sm text-gray-500">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+    <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 overflow-hidden">
+      <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+        <div className="flex items-center gap-2">
           <button
             onClick={onSeleccionarTodas}
-            className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+            className="inline-flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors font-medium"
           >
             {todasSeleccionadas ? (
-              <CheckSquare className="w-5 h-5 text-blue-600" />
+              <CheckSquare size={20} className="text-blue-600" />
             ) : (
-              <Square className="w-5 h-5" />
+              <Square size={20} />
             )}
-            <span className="font-medium">
+            <span>
               {todasSeleccionadas ? 'Deseleccionar todas' : 'Seleccionar todas'}
             </span>
           </button>
         </div>
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-slate-600">
           <span className="font-semibold">{citasSeleccionadas.length}</span> de{' '}
           <span className="font-semibold">{citas.length}</span> citas seleccionadas
         </div>
@@ -92,60 +93,60 @@ export default function TablaResultadosCitas({
 
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider w-12">
                 <span className="sr-only">Seleccionar</span>
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider">
                 Paciente
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider">
                 Profesional
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider">
                 Fecha y Hora
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider">
                 Sede
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider">
                 Duración
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-slate-200">
             {citas.map((cita) => {
               const estaSeleccionada = citasSeleccionadas.includes(cita._id || '');
               return (
                 <tr
                   key={cita._id}
-                  className={`hover:bg-gray-50 transition-colors ${estaSeleccionada ? 'bg-blue-50' : ''}`}
+                  className={`hover:bg-slate-50 transition-colors ${estaSeleccionada ? 'bg-blue-50' : ''}`}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => onSeleccionarCita(cita._id || '')}
-                      className="text-gray-400 hover:text-blue-600 transition-colors"
+                      className="text-slate-400 hover:text-blue-600 transition-colors"
                     >
                       {estaSeleccionada ? (
-                        <CheckSquare className="w-5 h-5 text-blue-600" />
+                        <CheckSquare size={20} className="text-blue-600" />
                       ) : (
-                        <Square className="w-5 h-5" />
+                        <Square size={20} />
                       )}
                     </button>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <User className="w-4 h-4 text-gray-400 mr-2" />
+                      <User size={16} className="text-slate-400 mr-2" />
                       <div>
                         <div className="text-sm font-medium text-gray-900">
                           {cita.paciente.nombre} {cita.paciente.apellidos}
                         </div>
                         {cita.paciente.telefono && (
-                          <div className="text-sm text-gray-500">{cita.paciente.telefono}</div>
+                          <div className="text-sm text-slate-600">{cita.paciente.telefono}</div>
                         )}
                       </div>
                     </div>
@@ -156,14 +157,14 @@ export default function TablaResultadosCitas({
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
+                    <div className="flex items-center gap-2">
+                      <Calendar size={16} className="text-slate-400" />
                       <div>
                         <div className="text-sm font-medium text-gray-900">
                           {formatearFecha(cita.fecha_hora_inicio)}
                         </div>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <Clock className="w-3 h-3 mr-1" />
+                        <div className="flex items-center text-sm text-slate-600">
+                          <Clock size={14} className="mr-1" />
                           {formatearHora(cita.fecha_hora_inicio)} - {formatearHora(cita.fecha_hora_fin)}
                         </div>
                       </div>
@@ -171,7 +172,7 @@ export default function TablaResultadosCitas({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <MapPin className="w-4 h-4 text-gray-400 mr-2" />
+                      <MapPin size={16} className="text-slate-400 mr-2" />
                       <span className="text-sm text-gray-900">{cita.sede.nombre}</span>
                     </div>
                   </td>
@@ -184,7 +185,7 @@ export default function TablaResultadosCitas({
                       {cita.estado}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                     {cita.duracion_minutos} min
                   </td>
                 </tr>
@@ -196,5 +197,6 @@ export default function TablaResultadosCitas({
     </div>
   );
 }
+
 
 

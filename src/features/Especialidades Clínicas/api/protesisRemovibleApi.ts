@@ -147,3 +147,4 @@ export async function obtenerDetallesProtesis(tratamientoId: string): Promise<De
 }
 
 
+

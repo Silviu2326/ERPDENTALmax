@@ -51,8 +51,8 @@ export default function GraficoEvolucionPeriodontal({
 
   if (sesiones.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Evolución de Índices Periodontales</h3>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Índices Periodontales</h3>
         <div className="text-center py-12 text-gray-500">
           <p className="text-lg">No hay datos históricos disponibles</p>
           <p className="text-sm mt-2">Las mediciones aparecerán aquí después de guardar sesiones</p>
@@ -77,17 +77,17 @@ export default function GraficoEvolucionPeriodontal({
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-      <h3 className="text-lg font-bold text-gray-800 mb-4">Evolución de Índices Periodontales</h3>
+    <div className="bg-white shadow-sm rounded-lg p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Índices Periodontales</h3>
       
       <div className="mb-4 flex items-center gap-4">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-blue-500 rounded"></div>
-          <span className="text-sm text-gray-700">Índice de Placa (%)</span>
+          <span className="text-sm text-slate-700">Índice de Placa (%)</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-red-500 rounded"></div>
-          <span className="text-sm text-gray-700">Índice de Sangrado - BOP (%)</span>
+          <span className="text-sm text-slate-700">Índice de Sangrado - BOP (%)</span>
         </div>
       </div>
 
@@ -231,7 +231,7 @@ export default function GraficoEvolucionPeriodontal({
 
       {/* Resumen numérico */}
       <div className="mt-6 grid grid-cols-2 gap-4">
-        <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+        <div className="bg-blue-50 rounded-lg p-4 ring-1 ring-blue-200">
           <h4 className="text-sm font-semibold text-blue-800 mb-2">Índice de Placa</h4>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-blue-600">
@@ -246,7 +246,7 @@ export default function GraficoEvolucionPeriodontal({
                   ? 'text-green-600'
                   : datosGrafico.placa[datosGrafico.placa.length - 1] > datosGrafico.placa[datosGrafico.placa.length - 2]
                   ? 'text-red-600'
-                  : 'text-gray-600'
+                  : 'text-slate-600'
               }`}>
                 {datosGrafico.placa[datosGrafico.placa.length - 1] < datosGrafico.placa[datosGrafico.placa.length - 2]
                   ? '↓ Mejorando'
@@ -258,7 +258,7 @@ export default function GraficoEvolucionPeriodontal({
           </div>
         </div>
 
-        <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+        <div className="bg-red-50 rounded-lg p-4 ring-1 ring-red-200">
           <h4 className="text-sm font-semibold text-red-800 mb-2">Índice de Sangrado (BOP)</h4>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-red-600">
@@ -273,7 +273,7 @@ export default function GraficoEvolucionPeriodontal({
                   ? 'text-green-600'
                   : datosGrafico.sangrado[datosGrafico.sangrado.length - 1] > datosGrafico.sangrado[datosGrafico.sangrado.length - 2]
                   ? 'text-red-600'
-                  : 'text-gray-600'
+                  : 'text-slate-600'
               }`}>
                 {datosGrafico.sangrado[datosGrafico.sangrado.length - 1] < datosGrafico.sangrado[datosGrafico.sangrado.length - 2]
                   ? '↓ Mejorando'
@@ -288,5 +288,6 @@ export default function GraficoEvolucionPeriodontal({
     </div>
   );
 }
+
 
 

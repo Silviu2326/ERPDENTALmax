@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, FileText, AlertCircle } from 'lucide-react';
+import { ArrowLeft, FileText, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   ControlEndodontico,
@@ -121,13 +121,13 @@ export default function EndodonciaControlPostoperatorioPage({
 
   if (!tratamientoId) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 max-w-md">
-          <AlertCircle className="w-12 h-12 text-yellow-600 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-gray-800 text-center mb-2">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white rounded-xl shadow-sm p-8 max-w-md">
+          <AlertCircle size={48} className="mx-auto text-yellow-600 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">
             Tratamiento no especificado
-          </h2>
-          <p className="text-gray-600 text-center mb-6">
+          </h3>
+          <p className="text-gray-600 mb-4 text-center">
             Para acceder al control postoperatorio, necesita especificar un tratamiento de endodoncia.
           </p>
           {onVolver && (
@@ -144,45 +144,53 @@ export default function EndodonciaControlPostoperatorioPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
-            {onVolver && (
-              <button
-                onClick={onVolver}
-                className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-            )}
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <FileText className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">
-                Control Postoperatorio - Endodoncia
-              </h1>
-              <p className="text-sm text-gray-600">
-                Seguimiento y evaluación de tratamientos de conducto radicular
-              </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {onVolver && (
+                <button
+                  onClick={onVolver}
+                  className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+                >
+                  <ArrowLeft size={20} />
+                </button>
+              )}
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Control Postoperatorio - Endodoncia
+                </h1>
+                <p className="text-gray-600">
+                  Seguimiento y evaluación de tratamientos de conducto radicular
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
+          <div className="mb-6 bg-white shadow-sm p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
           </div>
         )}
 
         {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="bg-white shadow-sm p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando...</p>
           </div>
         ) : mostrarFormulario ? (
           <FormularioNuevoControlEndo
@@ -227,5 +235,6 @@ export default function EndodonciaControlPostoperatorioPage({
     </div>
   );
 }
+
 
 

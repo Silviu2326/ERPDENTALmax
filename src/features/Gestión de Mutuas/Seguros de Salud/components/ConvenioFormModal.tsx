@@ -211,15 +211,15 @@ export default function ConvenioFormModal({
           {/* Datos básicos */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Mutua <span className="text-red-500">*</span>
               </label>
               <select
                 value={formData.mutua}
                 onChange={(e) => setFormData({ ...formData, mutua: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errores.mutua ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 ring-1 ${
+                  errores.mutua ? 'ring-red-500' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5`}
                 disabled={loading}
               >
                 <option value="">Seleccionar mutua...</option>
@@ -235,7 +235,7 @@ export default function ConvenioFormModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Estado <span className="text-red-500">*</span>
               </label>
               <select
@@ -246,7 +246,7 @@ export default function ConvenioFormModal({
                     estado: e.target.value as 'activo' | 'inactivo' | 'borrador',
                   })
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 disabled={loading}
               >
                 <option value="borrador">Borrador</option>
@@ -256,16 +256,16 @@ export default function ConvenioFormModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Nombre <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={formData.nombre}
                 onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errores.nombre ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                  errores.nombre ? 'ring-red-500' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5`}
                 disabled={loading}
               />
               {errores.nombre && (
@@ -274,16 +274,16 @@ export default function ConvenioFormModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Código <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={formData.codigo}
                 onChange={(e) => setFormData({ ...formData, codigo: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errores.codigo ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                  errores.codigo ? 'ring-red-500' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5`}
                 disabled={loading}
               />
               {errores.codigo && (
@@ -292,16 +292,16 @@ export default function ConvenioFormModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Fecha de Inicio <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 value={formData.fechaInicio}
                 onChange={(e) => setFormData({ ...formData, fechaInicio: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errores.fechaInicio ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 ring-1 ${
+                  errores.fechaInicio ? 'ring-red-500' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5`}
                 disabled={loading}
               />
               {errores.fechaInicio && (
@@ -310,16 +310,16 @@ export default function ConvenioFormModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Fecha de Fin <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 value={formData.fechaFin}
                 onChange={(e) => setFormData({ ...formData, fechaFin: e.target.value })}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errores.fechaFin ? 'border-red-500' : 'border-gray-300'
-                }`}
+                className={`w-full rounded-xl bg-white text-slate-900 ring-1 ${
+                  errores.fechaFin ? 'ring-red-500' : 'ring-slate-300'
+                } focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5`}
                 disabled={loading}
               />
               {errores.fechaFin && (
@@ -329,14 +329,14 @@ export default function ConvenioFormModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Notas
             </label>
             <textarea
               value={formData.notas || ''}
               onChange={(e) => setFormData({ ...formData, notas: e.target.value })}
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               disabled={loading}
             />
           </div>
@@ -356,11 +356,11 @@ export default function ConvenioFormModal({
 
             {/* Formulario de cobertura */}
             {coberturaEditando && (
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="mt-4 p-4 rounded-2xl bg-white ring-1 ring-slate-200">
                 <h4 className="font-semibold text-gray-900 mb-3">Configurar Cobertura</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Tipo de Cobertura
                     </label>
                     <select
@@ -371,7 +371,7 @@ export default function ConvenioFormModal({
                           tipo: e.target.value as 'porcentaje' | 'copago_fijo' | 'tarifa_especial',
                         })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                     >
                       <option value="porcentaje">Porcentaje</option>
                       <option value="copago_fijo">Copago Fijo</option>
@@ -379,7 +379,7 @@ export default function ConvenioFormModal({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
                       Valor
                     </label>
                     <input
@@ -393,14 +393,14 @@ export default function ConvenioFormModal({
                           valor: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                     />
                   </div>
                   <div className="flex items-end">
                     <button
                       type="button"
                       onClick={handleGuardarCobertura}
-                      className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200"
                     >
                       <Save className="w-4 h-4" />
                       Guardar
@@ -408,7 +408,7 @@ export default function ConvenioFormModal({
                   </div>
                 </div>
                 <div className="mt-3">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Notas de Cobertura
                   </label>
                   <textarea
@@ -420,14 +420,14 @@ export default function ConvenioFormModal({
                       })
                     }
                     rows={2}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                     placeholder="Notas adicionales sobre esta cobertura..."
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => setCoberturaEditando(null)}
-                  className="mt-2 text-sm text-gray-600 hover:text-gray-900"
+                  className="mt-2 text-sm text-slate-600 hover:text-slate-900"
                 >
                   Cancelar
                 </button>
@@ -455,14 +455,14 @@ export default function ConvenioFormModal({
             <button
               type="button"
               onClick={onCancelar}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all border border-gray-300 text-gray-700 hover:bg-gray-50"
               disabled={loading}
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading}
             >
               {loading ? (
@@ -483,5 +483,6 @@ export default function ConvenioFormModal({
     </div>
   );
 }
+
 
 

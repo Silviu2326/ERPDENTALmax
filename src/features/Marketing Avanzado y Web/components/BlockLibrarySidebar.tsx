@@ -34,10 +34,12 @@ export default function BlockLibrarySidebar({ onAgregarBloque }: BlockLibrarySid
 
   return (
     <div className="p-4 space-y-4">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Biblioteca de Bloques</h2>
-      <p className="text-sm text-gray-600 mb-4">
-        Arrastra o haz clic para añadir bloques a tu página
-      </p>
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">Biblioteca de Bloques</h2>
+        <p className="text-sm text-gray-600">
+          Arrastra o haz clic para añadir bloques a tu página
+        </p>
+      </div>
 
       <div className="space-y-2">
         {tiposBloques.map((bloque) => {
@@ -46,13 +48,13 @@ export default function BlockLibrarySidebar({ onAgregarBloque }: BlockLibrarySid
             <button
               key={bloque.tipo}
               onClick={() => onAgregarBloque(bloque.tipo)}
-              className="w-full flex items-start space-x-3 p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-left"
+              className="w-full flex items-start gap-3 p-3 bg-white border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50/50 transition-all text-left shadow-sm hover:shadow-md"
             >
-              <div className="bg-blue-100 p-2 rounded-lg">
+              <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70 flex-shrink-0">
                 <Icono className="w-5 h-5 text-blue-600" />
               </div>
-              <div className="flex-1">
-                <h3 className="font-medium text-gray-900">{bloque.nombre}</h3>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-medium text-gray-900">{bloque.nombre}</h3>
                 <p className="text-xs text-gray-500 mt-1">{bloque.descripcion}</p>
               </div>
             </button>
@@ -62,5 +64,6 @@ export default function BlockLibrarySidebar({ onAgregarBloque }: BlockLibrarySid
     </div>
   );
 }
+
 
 

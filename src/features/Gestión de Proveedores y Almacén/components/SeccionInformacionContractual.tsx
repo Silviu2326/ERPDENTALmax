@@ -33,7 +33,7 @@ export default function SeccionInformacionContractual({
   ];
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
+    <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
       <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
         <FileText className="w-5 h-5 text-blue-600" />
         Información Contractual
@@ -41,7 +41,7 @@ export default function SeccionInformacionContractual({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Puesto *
           </label>
           <input
@@ -50,8 +50,8 @@ export default function SeccionInformacionContractual({
             value={datos.puesto}
             onChange={(e) => onChange('puesto', e.target.value)}
             placeholder="Ej: Odontólogo, Recepcionista..."
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errors.puesto ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+              errors.puesto ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.puesto && (
@@ -60,15 +60,15 @@ export default function SeccionInformacionContractual({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tipo de Contrato *
           </label>
           <select
             required
             value={datos.tipoContrato}
             onChange={(e) => onChange('tipoContrato', e.target.value)}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errors.tipoContrato ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+              errors.tipoContrato ? 'ring-red-500' : 'ring-slate-300'
             }`}
           >
             {tiposContrato.map((tipo) => (
@@ -83,8 +83,8 @@ export default function SeccionInformacionContractual({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-            <DollarSign className="w-4 h-4" />
+          <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+            <DollarSign size={16} className="inline" />
             Salario (€) *
           </label>
           <input
@@ -94,8 +94,8 @@ export default function SeccionInformacionContractual({
             min="0"
             value={datos.salario}
             onChange={(e) => onChange('salario', e.target.value)}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errors.salario ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+              errors.salario ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.salario && (
@@ -104,8 +104,8 @@ export default function SeccionInformacionContractual({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
+          <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+            <Calendar size={16} className="inline" />
             Fecha de Contratación *
           </label>
           <input
@@ -113,8 +113,8 @@ export default function SeccionInformacionContractual({
             required
             value={datos.fechaContratacion}
             onChange={(e) => onChange('fechaContratacion', e.target.value)}
-            className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errors.fechaContratacion ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+              errors.fechaContratacion ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.fechaContratacion && (
@@ -123,7 +123,7 @@ export default function SeccionInformacionContractual({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Número de Seguridad Social
           </label>
           <input
@@ -131,19 +131,19 @@ export default function SeccionInformacionContractual({
             value={datos.numeroSeguridadSocial}
             onChange={(e) => onChange('numeroSeguridadSocial', e.target.value)}
             placeholder="Ej: 123456789012"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       </div>
 
       {/* Datos Bancarios */}
-      <div className="pt-6 border-t border-gray-200">
+      <div className="pt-6 border-t border-slate-200">
         <h4 className="text-md font-semibold text-gray-800 mb-4">
           Datos Bancarios
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               IBAN
             </label>
             <input
@@ -151,18 +151,18 @@ export default function SeccionInformacionContractual({
               value={datos.datosBancarios.iban}
               onChange={(e) => onChangeBancarios('iban', e.target.value)}
               placeholder="ES91 2100 0418 4502 0005 1332"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Titular
             </label>
             <input
               type="text"
               value={datos.datosBancarios.titular}
               onChange={(e) => onChangeBancarios('titular', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         </div>
@@ -170,5 +170,6 @@ export default function SeccionInformacionContractual({
     </div>
   );
 }
+
 
 

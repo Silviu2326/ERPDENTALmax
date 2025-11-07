@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, X } from 'lucide-react';
+import { Save, X, Loader2 } from 'lucide-react';
 import { DocumentoPlantilla } from '../api/plantillasApi';
 import EditorTextoEnriquecidoConPlaceholders from './EditorTextoEnriquecidoConPlaceholders';
 import SelectorDePlaceholders from './SelectorDePlaceholders';
@@ -109,33 +109,31 @@ export default function FormularioDetallePlantilla({
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
-          {plantilla ? 'Editar Plantilla' : 'Nueva Plantilla'}
-        </h2>
-        <div className="flex items-center space-x-2">
+    <div className="bg-white shadow-sm rounded-lg">
+      {/* Toolbar superior */}
+      <div className="flex items-center justify-end p-4 border-b border-gray-200/60">
+        <div className="flex items-center gap-2">
           <button
             onClick={onCancelar}
             disabled={loading}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <X className="w-4 h-4" />
+            <X size={18} />
             <span>Cancelar</span>
           </button>
           <button
             onClick={handleGuardar}
             disabled={loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                <Loader2 size={18} className="animate-spin" />
                 <span>Guardando...</span>
               </>
             ) : (
               <>
-                <Save className="w-4 h-4" />
+                <Save size={18} />
                 <span>Guardar</span>
               </>
             )}
@@ -143,37 +141,36 @@ export default function FormularioDetallePlantilla({
         </div>
       </div>
 
-      {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-800">{error}</p>
-        </div>
-      )}
-
-      <div className="space-y-6">
+      <div className="p-6 space-y-6">
+        {error && (
+          <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-800">{error}</p>
+          </div>
+        )}
         {/* Información básica */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre de la Plantilla *
             </label>
             <input
               type="text"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Ej: Consentimiento Informado - Implantes"
               disabled={loading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Documento *
             </label>
             <select
               value={tipo}
               onChange={(e) => setTipo(e.target.value as DocumentoPlantilla['tipo'])}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading}
             >
               {tipos.map((t) => (
@@ -187,34 +184,34 @@ export default function FormularioDetallePlantilla({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Sede (opcional)
             </label>
             <input
               type="text"
               value={sedeId || ''}
               onChange={(e) => setSedeId(e.target.value || null)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder="Dejar vacío para plantilla global"
               disabled={loading}
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Dejar vacío para crear una plantilla global (disponible para todas las sedes)
             </p>
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 mt-6">
+            <label className="flex items-center gap-2 mt-6">
               <input
                 type="checkbox"
                 checked={activa}
                 onChange={(e) => setActiva(e.target.checked)}
-                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 ring-1 ring-slate-300 rounded focus:ring-2 focus:ring-blue-400 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               />
-              <span className="text-sm font-medium text-gray-700">Plantilla activa</span>
+              <span className="text-sm font-medium text-slate-700">Plantilla activa</span>
             </label>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Las plantillas inactivas no estarán disponibles para generar documentos
             </p>
           </div>
@@ -222,10 +219,10 @@ export default function FormularioDetallePlantilla({
 
         {/* Editor de contenido */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Contenido de la Plantilla *
           </label>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <EditorTextoEnriquecidoConPlaceholders
                 contenido={contenidoHTML}
@@ -236,10 +233,10 @@ export default function FormularioDetallePlantilla({
             </div>
             <div className="lg:col-span-1">
               {loadingPlaceholders ? (
-                <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                <div className="bg-white shadow-sm rounded-lg p-4 ring-1 ring-slate-200">
                   <div className="text-center py-4">
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-2 text-sm text-gray-600">Cargando placeholders...</p>
+                    <Loader2 size={24} className="animate-spin text-blue-500 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600">Cargando placeholders...</p>
                   </div>
                 </div>
               ) : (
@@ -277,5 +274,6 @@ export default function FormularioDetallePlantilla({
     </div>
   );
 }
+
 
 

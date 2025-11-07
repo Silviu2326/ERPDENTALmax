@@ -208,3 +208,4 @@ nombre: String, clave: String (hash), permisos: [String], clinicId: ObjectId, cr
 - Timeout: Configurar timeouts apropiados para las solicitudes de webhooks (ej. 10 segundos) para evitar que el sistema se bloquee esperando respuestas lentas.
 
 
+

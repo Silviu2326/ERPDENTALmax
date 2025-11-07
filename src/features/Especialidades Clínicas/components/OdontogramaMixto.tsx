@@ -163,18 +163,18 @@ export default function OdontogramaMixto({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Odontograma Mixto (Temporal/Permanente)</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Odontograma Mixto (Temporal/Permanente)</h3>
         <div className="flex gap-2 text-xs">
-          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">Temporal</span>
-          <span className="px-2 py-1 bg-green-100 text-green-800 rounded">Permanente</span>
+          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full">Temporal</span>
+          <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full">Permanente</span>
         </div>
       </div>
 
       {/* Leyenda de Estados */}
-      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-        <p className="text-xs font-medium text-gray-600 mb-2">Leyenda de Estados:</p>
+      <div className="mb-4 p-3 bg-slate-50 rounded-2xl ring-1 ring-slate-200">
+        <p className="text-xs font-medium text-slate-700 mb-2">Leyenda de Estados:</p>
         <div className="flex flex-wrap gap-2">
           {ESTADOS_DIENTE.map((estado) => (
             <div key={estado} className={`px-2 py-1 rounded text-xs ${getEstadoColor(estado)}`}>
@@ -186,7 +186,7 @@ export default function OdontogramaMixto({
 
       {/* Odontograma Superior - Temporales */}
       <div className="mb-4">
-        <div className="text-xs text-gray-600 mb-2 font-medium">Arco Superior - Dientes Temporales</div>
+        <div className="text-xs text-slate-700 mb-2 font-medium">Arco Superior - Dientes Temporales</div>
         <div className="flex flex-wrap gap-2 justify-center">
           {DIENTES_TEMPORALES_SUPERIORES.map((d) => renderDiente(d.numero, 'temporal'))}
         </div>
@@ -194,7 +194,7 @@ export default function OdontogramaMixto({
 
       {/* Odontograma Superior - Permanentes */}
       <div className="mb-4">
-        <div className="text-xs text-gray-600 mb-2 font-medium">Arco Superior - Dientes Permanentes</div>
+        <div className="text-xs text-slate-700 mb-2 font-medium">Arco Superior - Dientes Permanentes</div>
         <div className="flex flex-wrap gap-2 justify-center">
           {DIENTES_PERMANENTES_SUPERIORES.map((d) => renderDiente(d.numero, 'permanente'))}
         </div>
@@ -202,7 +202,7 @@ export default function OdontogramaMixto({
 
       {/* Odontograma Inferior - Permanentes */}
       <div className="mb-4">
-        <div className="text-xs text-gray-600 mb-2 font-medium">Arco Inferior - Dientes Permanentes</div>
+        <div className="text-xs text-slate-700 mb-2 font-medium">Arco Inferior - Dientes Permanentes</div>
         <div className="flex flex-wrap gap-2 justify-center">
           {DIENTES_PERMANENTES_INFERIORES.map((d) => renderDiente(d.numero, 'permanente'))}
         </div>
@@ -210,7 +210,7 @@ export default function OdontogramaMixto({
 
       {/* Odontograma Inferior - Temporales */}
       <div className="mb-4">
-        <div className="text-xs text-gray-600 mb-2 font-medium">Arco Inferior - Dientes Temporales</div>
+        <div className="text-xs text-slate-700 mb-2 font-medium">Arco Inferior - Dientes Temporales</div>
         <div className="flex flex-wrap gap-2 justify-center">
           {DIENTES_TEMPORALES_INFERIORES.map((d) => renderDiente(d.numero, 'temporal'))}
         </div>
@@ -219,28 +219,28 @@ export default function OdontogramaMixto({
       {/* Modal de Edición */}
       {dienteEditando !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+          <div className="bg-white shadow-sm rounded-lg p-6 max-w-md w-full mx-4">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold text-gray-800">
+              <h4 className="text-lg font-semibold text-gray-900">
                 Editar Diente {dienteEditando}
               </h4>
               <button
                 onClick={handleCancelarEdicion}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X size={20} />
               </button>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Tipo de Diente
                 </label>
                 <select
                   value={edicionDiente.tipo || 'permanente'}
                   onChange={(e) => setEdicionDiente({ ...edicionDiente, tipo: e.target.value as DienteOdontograma['tipo'] })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 >
                   {TIPOS_DIENTE.map((tipo) => (
                     <option key={tipo} value={tipo}>
@@ -251,13 +251,13 @@ export default function OdontogramaMixto({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Estado
                 </label>
                 <select
                   value={edicionDiente.estado || 'sano'}
                   onChange={(e) => setEdicionDiente({ ...edicionDiente, estado: e.target.value as DienteOdontograma['estado'] })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 >
                   {ESTADOS_DIENTE.map((estado) => (
                     <option key={estado} value={estado}>
@@ -268,14 +268,14 @@ export default function OdontogramaMixto({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Observaciones
                 </label>
                 <textarea
                   value={edicionDiente.observaciones || ''}
                   onChange={(e) => setEdicionDiente({ ...edicionDiente, observaciones: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   placeholder="Observaciones sobre el diente..."
                 />
               </div>
@@ -283,14 +283,14 @@ export default function OdontogramaMixto({
               <div className="flex gap-2">
                 <button
                   onClick={handleGuardarEdicion}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                 >
-                  <Save className="w-4 h-4" />
+                  <Save size={20} />
                   Guardar
                 </button>
                 <button
                   onClick={handleCancelarEdicion}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium"
                 >
                   Cancelar
                 </button>

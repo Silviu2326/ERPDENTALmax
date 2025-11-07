@@ -90,7 +90,7 @@ export default function TraceabilityTimelineView({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="px-6 py-4 border-b border-gray-200/60 flex items-center justify-between bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
           <div>
             <h2 className="text-xl font-bold text-gray-900">Historial de Trazabilidad</h2>
             {kitCode && (
@@ -99,42 +99,40 @@ export default function TraceabilityTimelineView({
           </div>
           <button
             onClick={onCerrar}
-            className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-all"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X size={20} className="text-gray-600" />
           </button>
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
           {loading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-              <span className="ml-3 text-gray-600">Cargando historial...</span>
+            <div className="flex flex-col items-center justify-center py-12">
+              <Loader2 size={48} className="animate-spin text-blue-500 mb-4" />
+              <p className="text-gray-600">Cargando...</p>
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-              <div className="flex items-start space-x-3">
-                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-red-800">{error}</p>
-                  <button
-                    onClick={cargarTimeline}
-                    className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
-                  >
-                    Reintentar
-                  </button>
-                </div>
-              </div>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center mb-4">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={cargarTimeline}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
+              >
+                Reintentar
+              </button>
             </div>
           )}
 
           {!loading && !error && eventos.length === 0 && (
             <div className="text-center py-12">
-              <Clock className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg">No hay eventos registrados para este kit</p>
+              <Clock size={48} className="text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay eventos registrados</h3>
+              <p className="text-gray-600">No hay eventos registrados para este kit</p>
             </div>
           )}
 
@@ -167,13 +165,13 @@ export default function TraceabilityTimelineView({
                               </h3>
                               {evento.status === 'passed' && (
                                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                  <CheckCircle className="w-3 h-3 mr-1" />
+                                  <CheckCircle size={12} className="mr-1" />
                                   Aprobado
                                 </span>
                               )}
                               {evento.status === 'failed' && (
                                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                  <AlertCircle className="w-3 h-3 mr-1" />
+                                  <AlertCircle size={12} className="mr-1" />
                                   Fallido
                                 </span>
                               )}
@@ -230,7 +228,7 @@ export default function TraceabilityTimelineView({
         <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end">
           <button
             onClick={onCerrar}
-            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all shadow-sm"
           >
             Cerrar
           </button>

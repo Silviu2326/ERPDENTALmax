@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Baby, Plus, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Baby, Plus, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   AplicacionPreventiva,
@@ -109,31 +109,32 @@ export default function OdontopediatriaFluorSelladoresPage({
   // Si no hay pacienteId, mostrar selector
   if (!pacienteId) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <div className="bg-white rounded-lg border-2 border-gray-200 p-8 shadow-lg max-w-md w-full">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
+        <div className="bg-white shadow-sm rounded-xl p-8 max-w-md w-full">
           <div className="text-center">
-            <Baby className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Seleccione un Paciente</h2>
+            <Baby size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un Paciente</h3>
             <p className="text-gray-600 mb-4">
               Para acceder a las aplicaciones de flúor y selladores, necesita seleccionar un paciente
               primero.
             </p>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">ID del Paciente</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">ID del Paciente</label>
               <input
                 type="text"
                 value={pacienteId}
                 onChange={(e) => setPacienteId(e.target.value)}
                 placeholder="Ingrese el ID del paciente"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             {onVolver && (
               <button
                 onClick={onVolver}
-                className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-600 text-white hover:bg-slate-700"
               >
-                Volver
+                <ArrowLeft size={18} />
+                <span>Volver</span>
               </button>
             )}
           </div>
@@ -143,101 +144,107 @@ export default function OdontopediatriaFluorSelladoresPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              {onVolver && (
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    title="Volver"
+                  >
+                    <ArrowLeft size={20} className="text-gray-600" />
+                  </button>
+                )}
+                <div className="flex items-center">
+                  {/* Icono con contenedor */}
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <Baby size={24} className="text-blue-600" />
+                  </div>
+                  
+                  {/* Título y descripción */}
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Odontopediatría: Fluorizaciones y Selladores
+                    </h1>
+                    <p className="text-gray-600">
+                      Registro y seguimiento de tratamientos preventivos
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {!mostrarFormulario && (
                 <button
-                  onClick={onVolver}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                  title="Volver"
+                  onClick={() => setMostrarFormulario(true)}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200"
                 >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
+                  <Plus size={20} />
+                  <span>Nueva Aplicación</span>
                 </button>
               )}
-              <div className="bg-gradient-to-br from-cyan-600 to-blue-600 p-3 rounded-xl shadow-lg">
-                <Baby className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">
-                  Odontopediatría: Fluorizaciones y Selladores
-                </h1>
-                <p className="text-sm text-gray-600">
-                  Registro y seguimiento de tratamientos preventivos
-                </p>
-              </div>
             </div>
-            {!mostrarFormulario && (
-              <button
-                onClick={() => setMostrarFormulario(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
-              >
-                <Plus className="w-5 h-5" />
-                Nueva Aplicación
-              </button>
-            )}
           </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
-            <AlertCircle className="w-5 h-5" />
-            <div>
-              <p className="font-medium">Error</p>
-              <p className="text-sm mt-1">{error}</p>
-            </div>
-          </div>
-        )}
-
-        {mostrarFormulario ? (
-          <div>
-            {aplicacionEditando ? (
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <p className="text-gray-600 mb-4">
-                  Editando aplicación del {new Date(aplicacionEditando.fechaAplicacion).toLocaleDateString('es-ES')}
-                </p>
-                <FormularioAplicacionFluorSellador
-                  pacienteId={pacienteId}
-                  profesionalId={user?._id || ''}
-                  onSubmit={handleActualizar as any}
-                  onCancel={handleCancelarFormulario}
-                  loading={loading}
-                />
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex items-center gap-2 text-red-700">
+                <AlertCircle size={20} className="text-red-500" />
+                <div>
+                  <p className="font-medium">Error</p>
+                  <p className="text-sm mt-1 text-red-600">{error}</p>
+                </div>
               </div>
-            ) : (
+            </div>
+          )}
+
+          {mostrarFormulario ? (
+            <div>
+              {aplicacionEditando && (
+                <div className="bg-white shadow-sm rounded-xl p-4 mb-6">
+                  <p className="text-gray-600">
+                    Editando aplicación del {new Date(aplicacionEditando.fechaAplicacion).toLocaleDateString('es-ES')}
+                  </p>
+                </div>
+              )}
               <FormularioAplicacionFluorSellador
                 pacienteId={pacienteId}
                 profesionalId={user?._id || ''}
-                onSubmit={handleGuardar}
+                onSubmit={aplicacionEditando ? (handleActualizar as any) : handleGuardar}
                 onCancel={handleCancelarFormulario}
                 loading={loading}
               />
-            )}
-          </div>
-        ) : (
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-4">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Historial de Aplicaciones</h2>
-              <HistorialAplicacionesTable
-                aplicaciones={aplicaciones}
-                loading={loading}
-                onEditar={handleEditar}
-                onEliminar={handleEliminar}
-                filtroTipo={filtroTipo}
-                onFiltroTipoChange={setFiltroTipo}
-              />
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="bg-white shadow-sm rounded-xl p-0">
+              <div className="p-4 border-b border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900">Historial de Aplicaciones</h2>
+              </div>
+              <div className="p-4">
+                <HistorialAplicacionesTable
+                  aplicaciones={aplicaciones}
+                  loading={loading}
+                  onEditar={handleEditar}
+                  onEliminar={handleEliminar}
+                  filtroTipo={filtroTipo}
+                  onFiltroTipoChange={setFiltroTipo}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

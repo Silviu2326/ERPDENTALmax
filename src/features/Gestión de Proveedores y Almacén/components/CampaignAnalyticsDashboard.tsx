@@ -70,22 +70,22 @@ export default function CampaignAnalyticsDashboard({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {metrics.map((metric, index) => {
           const Icon = metric.icon;
           return (
             <div
               key={index}
-              className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-lg ring-1 ring-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-lg ${metric.bgColor}`}>
+                <div className={`p-3 rounded-xl ${metric.bgColor} ring-1 ring-gray-200/50`}>
                   <Icon className={`w-6 h-6 ${metric.color}`} />
                 </div>
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{metric.value}</p>
-                <p className="text-sm font-medium text-gray-700 mt-1">{metric.label}</p>
+                <p className="text-sm font-medium text-slate-700 mt-1">{metric.label}</p>
                 {metric.subtitle && (
                   <p className="text-xs text-gray-500 mt-1">{metric.subtitle}</p>
                 )}
@@ -96,53 +96,53 @@ export default function CampaignAnalyticsDashboard({
       </div>
 
       {/* Gráfico de barras simple */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h4 className="text-md font-semibold text-gray-900 mb-4">Tasas de Rendimiento</h4>
+      <div className="bg-white rounded-lg ring-1 ring-gray-200 p-6 shadow-sm">
+        <h4 className="text-lg font-semibold text-gray-900 mb-4">Tasas de Rendimiento</h4>
         <div className="space-y-4">
           <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-gray-700">Tasa de Apertura</span>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-slate-700 font-medium">Tasa de Apertura</span>
               <span className="font-medium text-gray-900">{openRate.toFixed(2)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-slate-200 rounded-full h-2.5">
               <div
-                className="bg-green-500 h-2 rounded-full"
+                className="bg-green-500 h-2.5 rounded-full transition-all"
                 style={{ width: `${Math.min(openRate, 100)}%` }}
               ></div>
             </div>
           </div>
           <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-gray-700">Tasa de Clics</span>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-slate-700 font-medium">Tasa de Clics</span>
               <span className="font-medium text-gray-900">{clickRate.toFixed(2)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-slate-200 rounded-full h-2.5">
               <div
-                className="bg-purple-500 h-2 rounded-full"
+                className="bg-purple-500 h-2.5 rounded-full transition-all"
                 style={{ width: `${Math.min(clickRate, 100)}%` }}
               ></div>
             </div>
           </div>
           <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-gray-700">Tasa de Rebotes</span>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-slate-700 font-medium">Tasa de Rebotes</span>
               <span className="font-medium text-gray-900">{bounceRate.toFixed(2)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-slate-200 rounded-full h-2.5">
               <div
-                className="bg-yellow-500 h-2 rounded-full"
+                className="bg-yellow-500 h-2.5 rounded-full transition-all"
                 style={{ width: `${Math.min(bounceRate, 100)}%` }}
               ></div>
             </div>
           </div>
           <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-gray-700">Tasa de Bajas</span>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="text-slate-700 font-medium">Tasa de Bajas</span>
               <span className="font-medium text-gray-900">{unsubscribeRate.toFixed(2)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-slate-200 rounded-full h-2.5">
               <div
-                className="bg-red-500 h-2 rounded-full"
+                className="bg-red-500 h-2.5 rounded-full transition-all"
                 style={{ width: `${Math.min(unsubscribeRate, 100)}%` }}
               ></div>
             </div>
@@ -152,5 +152,6 @@ export default function CampaignAnalyticsDashboard({
     </div>
   );
 }
+
 
 

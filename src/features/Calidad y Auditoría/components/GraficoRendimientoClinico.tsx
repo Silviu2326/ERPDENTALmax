@@ -1,5 +1,5 @@
 import { RendimientoProfesional } from '../api/revisionDireccionApi';
-import { User, Star, DollarSign, Activity } from 'lucide-react';
+import { User, Star, DollarSign, Activity, Loader2 } from 'lucide-react';
 
 interface GraficoRendimientoClinicoProps {
   datos: RendimientoProfesional[];
@@ -12,26 +12,19 @@ export default function GraficoRendimientoClinico({
 }: GraficoRendimientoClinicoProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-            <p className="text-gray-600">Cargando datos...</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando datos...</p>
       </div>
     );
   }
 
   if (datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center text-gray-500">
-            <Activity className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No hay datos disponibles para el período seleccionado</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Activity size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin datos disponibles</h3>
+        <p className="text-gray-600">No hay datos disponibles para el período seleccionado</p>
       </div>
     );
   }
@@ -41,7 +34,7 @@ export default function GraficoRendimientoClinico({
   const maxIngresos = Math.max(...datos.map((d) => d.revenueGenerated), 1);
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl p-4">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
           <Activity className="w-5 h-5 text-blue-600" />
@@ -53,15 +46,15 @@ export default function GraficoRendimientoClinico({
           const porcentaje = (profesional.revenueGenerated / maxIngresos) * 100;
 
           return (
-            <div key={profesional.professionalId} className="border border-gray-200 rounded-lg p-4">
+            <div key={profesional.professionalId} className="border border-gray-100 rounded-xl p-4 bg-gray-50/50">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="bg-blue-100 p-2 rounded-lg">
+                  <div className="bg-blue-100 p-2 rounded-xl ring-1 ring-blue-200/70">
                     <User className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">{profesional.professionalName}</h4>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-slate-600">
                       {profesional.proceduresCount} procedimientos
                     </p>
                   </div>
@@ -77,7 +70,7 @@ export default function GraficoRendimientoClinico({
               {/* Barra de ingresos */}
               <div className="mb-2">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-gray-600 flex items-center gap-1">
+                  <span className="text-sm text-slate-600 flex items-center gap-1">
                     <DollarSign className="w-4 h-4" />
                     Ingresos generados
                   </span>
@@ -102,5 +95,6 @@ export default function GraficoRendimientoClinico({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Calendar, Plus, RefreshCw, TrendingUp, CheckCircle, Clock, X, Users, MapPin, BarChart3, Activity, Zap, Bell } from 'lucide-react';
+import { Calendar, Plus, RefreshCw, TrendingUp, CheckCircle, Clock, X, Users, MapPin, BarChart3, Activity, Zap, Bell, AlertCircle } from 'lucide-react';
 import { Cita, FiltrosCalendario as IFiltrosCalendario, FiltrosResumenMensual } from '../api/citasApi';
 import CalendarioGrid from '../components/CalendarioGrid';
 import CalendarioMensualGrid from '../components/CalendarioMensualGrid';
@@ -676,44 +676,60 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
   }, [citas]);
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
-              <Calendar className="w-8 h-8 text-blue-600" />
-              <span>Agenda de Citas y Programación</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Gestiona y visualiza todas las citas programadas de la clínica
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Calendar size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Agenda de Citas y Programación
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona y visualiza todas las citas programadas de la clínica
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  if (onNuevaCita) {
+                    onNuevaCita();
+                  } else {
+                    // Fallback: mostrar modal si no hay callback
+                    setCitaSeleccionada(null);
+                    setFechaSeleccionada(new Date());
+                    setHoraSeleccionada('09:00');
+                    setMostrarModal(true);
+                  }
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
+              >
+                <Plus size={20} className="mr-2" />
+                Nueva Cita
+              </button>
+            </div>
           </div>
-          <button
-            onClick={() => {
-              if (onNuevaCita) {
-                onNuevaCita();
-              } else {
-                // Fallback: mostrar modal si no hay callback
-                setCitaSeleccionada(null);
-                setFechaSeleccionada(new Date());
-                setHoraSeleccionada('09:00');
-                setMostrarModal(true);
-              }
-            }}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg transform hover:scale-105"
-          >
-            <Plus className="w-5 h-5" />
-            <span>Nueva Cita</span>
-          </button>
         </div>
+      </div>
 
-        {/* Panel de estadísticas mejorado - Solo en vista día/semana */}
-        {vista !== 'mes' && !loading && citas.length > 0 && (
-          <div className="space-y-4 mb-6">
-            {/* Estadísticas principales */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg shadow-sm border border-blue-200 p-4 hover:shadow-md transition-all hover:scale-105">
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* Panel de estadísticas mejorado - Solo en vista día/semana */}
+          {vista !== 'mes' && !loading && citas.length > 0 && (
+            <div className="space-y-6">
+              {/* Estadísticas principales */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-6">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1 font-medium">Total de Citas</p>
@@ -726,7 +742,7 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg shadow-sm border border-green-200 p-4 hover:shadow-md transition-all hover:scale-105">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1 font-medium">Confirmadas</p>
@@ -739,7 +755,7 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg shadow-sm border border-indigo-200 p-4 hover:shadow-md transition-all hover:scale-105">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1 font-medium">Programadas</p>
@@ -752,7 +768,7 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg shadow-sm border border-purple-200 p-4 hover:shadow-md transition-all hover:scale-105">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1 font-medium">Duración Promedio</p>
@@ -765,8 +781,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             </div>
             
-            {estadisticas.citasHoy > 0 && (
-              <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg shadow-sm border border-orange-200 p-4 hover:shadow-md transition-all hover:scale-105">
+              {estadisticas.citasHoy > 0 && (
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Citas Hoy</p>
@@ -780,8 +796,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             )}
             
-            {estadisticas.citasUrgentes > 0 && (
-              <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-lg shadow-sm border border-red-200 p-4 hover:shadow-md transition-all hover:scale-105">
+              {estadisticas.citasUrgentes > 0 && (
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Urgentes</p>
@@ -795,8 +811,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             )}
             
-            {estadisticas.realizadas > 0 && (
-              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg shadow-sm border border-emerald-200 p-4 hover:shadow-md transition-all hover:scale-105">
+              {estadisticas.realizadas > 0 && (
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Realizadas</p>
@@ -810,8 +826,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
             )}
             
-            {estadisticas.canceladas > 0 && (
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all hover:scale-105">
+              {estadisticas.canceladas > 0 && (
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Canceladas</p>
@@ -824,12 +840,12 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               </div>
             )}
-            </div>
-            
-            {/* Estadísticas secundarias y métricas avanzadas */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Pacientes únicos */}
-              <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg shadow-sm border border-indigo-200 p-4">
+              </div>
+              
+              {/* Estadísticas secundarias y métricas avanzadas */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Pacientes únicos */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Pacientes Únicos</p>
@@ -842,8 +858,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               </div>
               
-              {/* Profesionales activos */}
-              <div className="bg-gradient-to-br from-violet-50 to-violet-100 rounded-lg shadow-sm border border-violet-200 p-4">
+                {/* Profesionales activos */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Profesionales</p>
@@ -856,8 +872,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               </div>
               
-              {/* Sedes activas */}
-              <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg shadow-sm border border-cyan-200 p-4">
+                {/* Sedes activas */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Sedes</p>
@@ -870,8 +886,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               </div>
               
-              {/* Citas con notas */}
-              <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg shadow-sm border border-amber-200 p-4">
+                {/* Citas con notas */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Con Notas</p>
@@ -883,13 +899,13 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Métricas de tiempo y distribución */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              {/* Citas mañana */}
-              {estadisticas.citasManana > 0 && (
-                <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg shadow-sm border border-teal-200 p-4">
+              </div>
+              
+              {/* Métricas de tiempo y distribución */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {/* Citas mañana */}
+                {estadisticas.citasManana > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-600 mb-1 font-medium">Mañana</p>
@@ -903,8 +919,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               )}
               
-              {/* Próximas 3 días */}
-              <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-lg shadow-sm border border-sky-200 p-4">
+                {/* Próximos 3 días */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Próximos 3 Días</p>
@@ -917,9 +933,9 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               </div>
               
-              {/* Citas próximas (2 horas) */}
-              {estadisticas.citasProximas > 0 && (
-                <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow-sm border border-yellow-200 p-4 ring-2 ring-yellow-300">
+                {/* Citas próximas (2 horas) */}
+                {estadisticas.citasProximas > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-yellow-200 p-4 ring-2 ring-yellow-300">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-600 mb-1 font-medium">Próximas 2h</p>
@@ -933,9 +949,9 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               )}
               
-              {/* Hora más ocupada */}
-              {estadisticas.horaMasOcupada > 0 && (
-                <div className="bg-gradient-to-br from-rose-50 to-rose-100 rounded-lg shadow-sm border border-rose-200 p-4">
+                {/* Hora más ocupada */}
+                {estadisticas.horaMasOcupada > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-600 mb-1 font-medium">Hora Pico</p>
@@ -949,8 +965,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                 </div>
               )}
               
-              {/* Duración mínima/máxima */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg shadow-sm border border-pink-200 p-4">
+                {/* Duración mínima/máxima */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 mb-1 font-medium">Duración</p>
@@ -964,11 +980,11 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Resumen de profesionales y sedes */}
-            {(estadisticas.profesionalMasOcupado || estadisticas.sedeMasOcupada) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              </div>
+              
+              {/* Resumen de profesionales y sedes */}
+              {(estadisticas.profesionalMasOcupado || estadisticas.sedeMasOcupada) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {estadisticas.profesionalMasOcupado && (
                   <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                     <div className="flex items-center space-x-2 mb-2">
@@ -995,133 +1011,147 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                   </div>
                 )}
               </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
 
-        {/* Selector de Vista */}
-        <div className="mb-4 bg-white rounded-lg shadow-sm border border-gray-200 p-2 inline-flex items-center space-x-2">
-          <button
-            onClick={() => setVista('dia')}
-            className={`px-5 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm ${
-              vista === 'dia'
-                ? 'bg-blue-600 text-white shadow-md transform scale-105'
-                : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm'
-            }`}
-          >
-            📅 Día
-          </button>
-          <button
-            onClick={() => setVista('semana')}
-            className={`px-5 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm ${
-              vista === 'semana'
-                ? 'bg-blue-600 text-white shadow-md transform scale-105'
-                : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm'
-            }`}
-          >
-            📆 Semana
-          </button>
-          <button
-            onClick={() => setVista('mes')}
-            className={`px-5 py-2.5 rounded-lg transition-all duration-200 font-medium text-sm ${
-              vista === 'mes'
-                ? 'bg-blue-600 text-white shadow-md transform scale-105'
-                : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm'
-            }`}
-          >
-            🗓️ Mes
-          </button>
+          {/* Selector de Vista (Tabs) */}
+          <div className="bg-white shadow-sm rounded-lg p-0">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Vista del calendario"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                <button
+                  onClick={() => setVista('dia')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'dia'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'dia' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Día</span>
+                </button>
+                <button
+                  onClick={() => setVista('semana')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'semana'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'semana' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Semana</span>
+                </button>
+                <button
+                  onClick={() => setVista('mes')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'mes'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'mes' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Mes</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Filtros - según la vista seleccionada */}
+          {vista === 'mes' ? (
+            <FiltrosVistaMensual
+              filtros={{
+                mes: mesActual,
+                anio: anioActual,
+                ...filtrosMensual,
+              }}
+              onFiltrosChange={handleFiltrosMensualChange}
+              profesionales={profesionales}
+              sedes={sedes}
+            />
+          ) : (
+            <FiltrosCalendario
+              filtros={filtros}
+              onFiltrosChange={handleFiltrosChange}
+              profesionales={profesionales}
+              sedes={sedes}
+            />
+          )}
+
+          {/* Toolbar - Botón de actualizar */}
+          {vista !== 'mes' && (
+            <div className="flex items-center justify-end">
+              <button
+                onClick={cargarCitas}
+                disabled={loading}
+                className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all border border-gray-300 shadow-sm disabled:opacity-50"
+              >
+                <RefreshCw size={20} className={`mr-2 ${loading ? 'animate-spin' : ''}`} />
+                Actualizar
+              </button>
+            </div>
+          )}
+
+          {/* Error */}
+          {error && (
+            <div className="bg-white rounded-lg shadow-sm border border-red-200 p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+            </div>
+          )}
+
+          {/* Calendario - según la vista seleccionada */}
+          {vista === 'mes' ? (
+            <CalendarioMensualGrid
+              mes={mesActual}
+              anio={anioActual}
+              filtros={filtrosMensual}
+              onDiaClick={handleDiaClickMensual}
+              onMesChange={handleMesChange}
+            />
+          ) : loading ? (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+              <RefreshCw size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando citas...</p>
+            </div>
+          ) : (
+            <CalendarioGrid
+              citas={citas}
+              fechaInicio={fechaInicio}
+              fechaFin={fechaFin}
+              vista={vista}
+              onCitaClick={handleCitaClick}
+              onSlotClick={handleSlotClick}
+            />
+          )}
+
+          {/* Modal de Edición de Cita (si hay una cita seleccionada) */}
+          {mostrarModal && citaSeleccionada && citaSeleccionada._id && (
+            <ModalEditarCita
+              citaId={citaSeleccionada._id}
+              onClose={handleCerrarModal}
+              onSave={handleGuardarCita}
+            />
+          )}
+
+          {/* Modal de Gestión de Cita (para nueva cita o cuando no hay ID) */}
+          {mostrarModal && (!citaSeleccionada || !citaSeleccionada._id) && (
+            <ModalGestionCita
+              cita={citaSeleccionada}
+              fechaSeleccionada={fechaSeleccionada}
+              horaSeleccionada={horaSeleccionada}
+              onClose={handleCerrarModal}
+              onSave={handleGuardarCita}
+              pacientes={pacientes}
+              profesionales={profesionales}
+              tratamientos={tratamientos}
+            />
+          )}
         </div>
-
-        {/* Filtros - según la vista seleccionada */}
-        {vista === 'mes' ? (
-          <FiltrosVistaMensual
-            filtros={{
-              mes: mesActual,
-              anio: anioActual,
-              ...filtrosMensual,
-            }}
-            onFiltrosChange={handleFiltrosMensualChange}
-            profesionales={profesionales}
-            sedes={sedes}
-          />
-        ) : (
-          <FiltrosCalendario
-            filtros={filtros}
-            onFiltrosChange={handleFiltrosChange}
-            profesionales={profesionales}
-            sedes={sedes}
-          />
-        )}
-
-        {/* Botón de actualizar */}
-        {vista !== 'mes' && (
-          <div className="mb-4 flex justify-end">
-            <button
-              onClick={cargarCitas}
-              disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300 disabled:opacity-50"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-          </div>
-        )}
-
-        {/* Error */}
-        {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        {/* Calendario - según la vista seleccionada */}
-        {vista === 'mes' ? (
-          <CalendarioMensualGrid
-            mes={mesActual}
-            anio={anioActual}
-            filtros={filtrosMensual}
-            onDiaClick={handleDiaClickMensual}
-            onMesChange={handleMesChange}
-          />
-        ) : loading ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-            <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
-            <p className="text-gray-600">Cargando citas...</p>
-          </div>
-        ) : (
-          <CalendarioGrid
-            citas={citas}
-            fechaInicio={fechaInicio}
-            fechaFin={fechaFin}
-            vista={vista}
-            onCitaClick={handleCitaClick}
-            onSlotClick={handleSlotClick}
-          />
-        )}
-
-        {/* Modal de Edición de Cita (si hay una cita seleccionada) */}
-        {mostrarModal && citaSeleccionada && citaSeleccionada._id && (
-          <ModalEditarCita
-            citaId={citaSeleccionada._id}
-            onClose={handleCerrarModal}
-            onSave={handleGuardarCita}
-          />
-        )}
-
-        {/* Modal de Gestión de Cita (para nueva cita o cuando no hay ID) */}
-        {mostrarModal && (!citaSeleccionada || !citaSeleccionada._id) && (
-          <ModalGestionCita
-            cita={citaSeleccionada}
-            fechaSeleccionada={fechaSeleccionada}
-            horaSeleccionada={horaSeleccionada}
-            onClose={handleCerrarModal}
-            onSave={handleGuardarCita}
-            pacientes={pacientes}
-            profesionales={profesionales}
-            tratamientos={tratamientos}
-          />
-        )}
       </div>
     </div>
   );

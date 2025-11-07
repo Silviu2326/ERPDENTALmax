@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TrendingUp, DollarSign, Star } from 'lucide-react';
+import { TrendingUp, DollarSign, Star, Loader2, AlertCircle } from 'lucide-react';
 import {
   obtenerRendimientoAnual,
   RendimientoAnual,
@@ -78,38 +78,39 @@ export default function GraficoRendimientoProveedor({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <div className="h-64 bg-gray-200 rounded animate-pulse"></div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (error && datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <div className="text-red-600">{error}</div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
       </div>
     );
   }
 
   if (datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <TrendingUp className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay datos disponibles</p>
-          <p className="text-sm">No se encontraron datos de rendimiento para este proveedor</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <TrendingUp size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600">No se encontraron datos de rendimiento para este proveedor</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200">
+    <div className="bg-white rounded-xl shadow-sm">
       <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-xl font-bold text-gray-900">
               Rendimiento Anual - {proveedorNombre}
             </h3>
             <p className="text-sm text-gray-600 mt-1">Año {anio}</p>
@@ -117,52 +118,52 @@ export default function GraficoRendimientoProveedor({
           <div className="flex gap-2">
             <button
               onClick={() => setTipoGrafico('gasto')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 tipoGrafico === 'gasto'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-600/20'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 ring-1 ring-slate-200'
               }`}
             >
-              <DollarSign className="w-4 h-4 inline mr-1" />
+              <DollarSign size={18} />
               Gasto
             </button>
             <button
               onClick={() => setTipoGrafico('calificacion')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 tipoGrafico === 'calificacion'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-600/20'
+                  : 'bg-white text-slate-700 hover:bg-slate-50 ring-1 ring-slate-200'
               }`}
             >
-              <Star className="w-4 h-4 inline mr-1" />
+              <Star size={18} />
               Calificación
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-blue-50 rounded-xl p-4 border-l-4 border-blue-200">
             <div className="flex items-center gap-2 mb-2">
-              <DollarSign className="w-5 h-5 text-blue-600" />
-              <span className="text-sm font-medium text-gray-600">Total Gasto</span>
+              <DollarSign size={20} className="text-blue-600" />
+              <span className="text-sm font-medium text-slate-700">Total Gasto</span>
             </div>
             <p className="text-2xl font-bold text-gray-900">
               {formatearMoneda(totalGasto)}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-4">
+          <div className="bg-yellow-50 rounded-xl p-4 border-l-4 border-yellow-200">
             <div className="flex items-center gap-2 mb-2">
-              <Star className="w-5 h-5 text-yellow-600" />
-              <span className="text-sm font-medium text-gray-600">Calificación Promedio</span>
+              <Star size={20} className="text-yellow-600" />
+              <span className="text-sm font-medium text-slate-700">Calificación Promedio</span>
             </div>
             <p className="text-2xl font-bold text-gray-900">
               {promedioCalificacion.toFixed(1)}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
+          <div className="bg-green-50 rounded-xl p-4 border-l-4 border-green-200">
             <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-5 h-5 text-green-600" />
-              <span className="text-sm font-medium text-gray-600">Total Pedidos</span>
+              <TrendingUp size={20} className="text-green-600" />
+              <span className="text-sm font-medium text-slate-700">Total Pedidos</span>
             </div>
             <p className="text-2xl font-bold text-gray-900">
               {datos.reduce((sum, d) => sum + d.pedidos, 0)}
@@ -320,23 +321,23 @@ export default function GraficoRendimientoProveedor({
           <table className="w-full text-sm">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                <th className="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase">
                   Mes
                 </th>
-                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">
+                <th className="px-4 py-2 text-right text-xs font-medium text-slate-500 uppercase">
                   Gasto
                 </th>
-                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">
+                <th className="px-4 py-2 text-right text-xs font-medium text-slate-500 uppercase">
                   Calificación
                 </th>
-                <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">
+                <th className="px-4 py-2 text-right text-xs font-medium text-slate-500 uppercase">
                   Pedidos
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {datosFormateados.map((dato, index) => (
-                <tr key={index} className="hover:bg-gray-50">
+                <tr key={index} className="hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-2 text-gray-900">{dato.mesNombre}</td>
                   <td className="px-4 py-2 text-right font-medium text-blue-600">
                     {formatearMoneda(dato.gasto)}
@@ -344,7 +345,7 @@ export default function GraficoRendimientoProveedor({
                   <td className="px-4 py-2 text-right font-medium text-yellow-600">
                     {dato.calificacion.toFixed(1)}
                   </td>
-                  <td className="px-4 py-2 text-right text-gray-600">
+                  <td className="px-4 py-2 text-right text-slate-600">
                     {dato.pedidos}
                   </td>
                 </tr>

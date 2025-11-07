@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Building2, Phone, Mail, MapPin, MoreVertical, Edit, Eye, Trash2, CheckCircle, XCircle } from 'lucide-react';
+import { Building2, Phone, Mail, MapPin, MoreVertical, Edit, Eye, Trash2, CheckCircle, XCircle, Loader2, Package } from 'lucide-react';
 import { Proveedor } from '../api/proveedoresApi';
 
 interface ProveedoresTableProps {
@@ -191,25 +191,25 @@ export default function ProveedoresTable({
 }: ProveedoresTableProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Cargando proveedores...</p>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (proveedores.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 text-lg">No se encontraron proveedores</p>
-        <p className="text-gray-500 text-sm mt-2">Intenta ajustar los filtros de búsqueda</p>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron proveedores</h3>
+        <p className="text-gray-600 mb-4">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -256,5 +256,6 @@ export default function ProveedoresTable({
     </div>
   );
 }
+
 
 

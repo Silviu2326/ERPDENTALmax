@@ -1,5 +1,5 @@
 import { Tratamiento, DeudaPaciente } from '../api/pagoApi';
-import { AlertCircle, CheckCircle, Euro } from 'lucide-react';
+import { AlertCircle, CheckCircle, Euro, Loader2 } from 'lucide-react';
 
 interface ResumenDeudaPacienteProps {
   deuda: DeudaPaciente | null;
@@ -23,23 +23,19 @@ export default function ResumenDeudaPaciente({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (!deuda) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12 text-gray-500">
-          <div className="text-center">
-            <AlertCircle className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-            <p>Selecciona un paciente para ver su deuda</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin datos</h3>
+        <p className="text-gray-600">Selecciona un paciente para ver su deuda</p>
       </div>
     );
   }
@@ -49,7 +45,7 @@ export default function ResumenDeudaPaciente({
     .reduce((sum, t) => sum + (t.saldoPendiente || 0), 0);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl">
       <div className="p-6 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           Resumen de Deuda
@@ -64,7 +60,7 @@ export default function ResumenDeudaPaciente({
 
       <div className="p-6 space-y-4">
         {/* Resumen total */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-700">Total Deuda</span>
             <span className="text-2xl font-bold text-gray-900">
@@ -101,10 +97,10 @@ export default function ResumenDeudaPaciente({
                 <div
                   key={tratamiento._id}
                   onClick={() => onTratamientoToggle && tieneSaldo && onTratamientoToggle(tratamiento._id)}
-                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                  className={`p-4 rounded-xl ring-1 transition-all duration-200 ${
                     estaSeleccionado
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 bg-gray-50 hover:border-blue-300 hover:bg-blue-50/50'
+                      ? 'ring-blue-500 bg-blue-50'
+                      : 'ring-slate-200 bg-slate-50 hover:ring-blue-300 hover:bg-blue-50/50'
                   } ${tieneSaldo && onTratamientoToggle ? 'cursor-pointer' : 'cursor-default'}`}
                 >
                   <div className="flex items-start justify-between">
@@ -141,14 +137,16 @@ export default function ResumenDeudaPaciente({
             })}
           </div>
         ) : (
-          <div className="text-center py-8 text-gray-500">
-            <CheckCircle className="w-12 h-12 mx-auto mb-3 text-green-400" />
-            <p>No hay tratamientos con saldo pendiente</p>
+          <div className="text-center py-8">
+            <CheckCircle size={48} className="mx-auto text-green-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin deudas pendientes</h3>
+            <p className="text-gray-600">No hay tratamientos con saldo pendiente</p>
           </div>
         )}
       </div>
     </div>
   );
 }
+
 
 

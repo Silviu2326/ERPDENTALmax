@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw, Search } from 'lucide-react';
+import { Plus, RefreshCw, ClipboardList, AlertCircle } from 'lucide-react';
 import { obtenerOrdenes, FiltrosOrdenes, OrdenLaboratorio, eliminarOrden } from '../api/ordenesLaboratorioApi';
 import ListaOrdenesLaboratorio from '../components/ListaOrdenesLaboratorio';
 import FiltrosBusquedaOrdenes from '../components/FiltrosBusquedaOrdenes';
@@ -78,55 +78,71 @@ export default function OrdenesLaboratorioPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Órdenes a Laboratorio
-              </h1>
-              <p className="text-gray-600">
-                Gestión y seguimiento de órdenes de trabajo protésico
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <ClipboardList size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Órdenes a Laboratorio
+                </h1>
+                <p className="text-gray-600">
+                  Gestión y seguimiento de órdenes de trabajo protésico
+                </p>
+              </div>
             </div>
-            <div className="flex items-center space-x-3">
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex items-center gap-2">
               <button
                 onClick={cargarOrdenes}
                 disabled={loading}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-                <span>Actualizar</span>
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                Actualizar
               </button>
               {onNuevaOrden && (
                 <button
                   onClick={onNuevaOrden}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                 >
-                  <Plus className="w-5 h-5" />
-                  <span>Nueva Orden</span>
+                  <Plus size={20} />
+                  Nueva Orden
                 </button>
               )}
             </div>
           </div>
-        </div>
 
-        {/* Filtros */}
-        <div className="mb-6">
+          {/* Error */}
+          {error && (
+            <div className="rounded-2xl bg-red-50 ring-1 ring-red-200 p-4">
+              <div className="flex items-center gap-3">
+                <AlertCircle size={20} className="text-red-600 flex-shrink-0" />
+                <p className="text-sm text-red-800">{error}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros */}
           <FiltrosBusquedaOrdenes filtros={filtros} onFiltrosChange={setFiltros} />
-        </div>
 
-        {/* Error */}
-        {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">{error}</p>
-          </div>
-        )}
-
-        {/* Lista de Órdenes */}
-        <div className="mb-6">
+          {/* Lista de Órdenes */}
           <ListaOrdenesLaboratorio
             ordenes={ordenes}
             loading={loading}
@@ -134,38 +150,41 @@ export default function OrdenesLaboratorioPage({
             onEditar={onEditar ? handleEditar : undefined}
             onEliminar={handleEliminar}
           />
-        </div>
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between bg-white rounded-lg shadow-md p-4 border border-gray-200">
-            <div className="text-sm text-gray-700">
-              Mostrando página {filtros.page || 1} de {totalPages} ({total} órdenes totales)
+          {/* Paginación */}
+          {totalPages > 1 && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="text-sm text-slate-600">
+                  Mostrando página {filtros.page || 1} de {totalPages} ({total} órdenes totales)
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handleCambioPagina((filtros.page || 1) - 1)}
+                    disabled={!filtros.page || filtros.page <= 1}
+                    className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Anterior
+                  </button>
+                  <span className="px-4 py-2 text-sm text-slate-700">
+                    {filtros.page || 1} / {totalPages}
+                  </span>
+                  <button
+                    onClick={() => handleCambioPagina((filtros.page || 1) + 1)}
+                    disabled={!filtros.page || filtros.page >= totalPages}
+                    className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => handleCambioPagina((filtros.page || 1) - 1)}
-                disabled={!filtros.page || filtros.page <= 1}
-                className="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <span className="px-4 py-2 text-gray-700">
-                {filtros.page || 1} / {totalPages}
-              </span>
-              <button
-                onClick={() => handleCambioPagina((filtros.page || 1) + 1)}
-                disabled={!filtros.page || filtros.page >= totalPages}
-                className="px-3 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

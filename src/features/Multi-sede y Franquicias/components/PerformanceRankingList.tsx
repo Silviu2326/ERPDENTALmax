@@ -51,19 +51,19 @@ export default function PerformanceRankingList({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center space-x-2">
-          <Trophy className="w-6 h-6 text-yellow-500" />
+    <div className="bg-white shadow-sm rounded-xl p-4 ring-1 ring-gray-200">
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
+        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <Trophy size={20} className="text-yellow-500" />
           <span>Ranking de Rendimiento</span>
         </h2>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <select
             value={metric}
             onChange={(e) =>
               onMetricChange?.(e.target.value as 'revenue' | 'newPatients' | 'occupancy')
             }
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 text-sm"
           >
             <option value="revenue">Facturación</option>
             <option value="newPatients">Pacientes Nuevos</option>
@@ -71,12 +71,12 @@ export default function PerformanceRankingList({
           </select>
           <button
             onClick={() => onOrderChange?.(currentOrder === 'asc' ? 'desc' : 'asc')}
-            className="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 text-sm transition-all"
           >
             {currentOrder === 'asc' ? (
-              <TrendingUp className="w-4 h-4" />
+              <TrendingUp size={16} />
             ) : (
-              <TrendingDown className="w-4 h-4" />
+              <TrendingDown size={16} />
             )}
           </button>
         </div>
@@ -89,23 +89,23 @@ export default function PerformanceRankingList({
           ranking.map((item, index) => (
             <div
               key={item.id}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors ring-1 ring-slate-200/50"
             >
-              <div className="flex items-center space-x-4 flex-1">
+              <div className="flex items-center gap-4 flex-1">
                 <div className="flex-shrink-0 w-8 text-center">
                   {index < 3 ? (
-                    <Trophy className={`w-6 h-6 ${getMedalColor(index)}`} />
+                    <Trophy size={20} className={`${getMedalColor(index)}`} />
                   ) : (
-                    <span className="text-gray-500 font-bold">#{index + 1}</span>
+                    <span className="text-sm font-bold text-gray-500">#{index + 1}</span>
                   )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-800">{item.nombre}</h3>
-                  <p className="text-sm text-gray-500">{getMetricLabel(metric)}</p>
+                  <h3 className="font-semibold text-gray-900">{item.nombre}</h3>
+                  <p className="text-sm text-gray-600">{getMetricLabel(metric)}</p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-lg font-bold text-gray-800">
+                <p className="text-lg font-bold text-gray-900">
                   {formatValue(item.valor, metric)}
                 </p>
               </div>
@@ -116,5 +116,6 @@ export default function PerformanceRankingList({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TrendingUp } from 'lucide-react';
+import { Loader2, LineChart } from 'lucide-react';
 import { EvolucionFinanciera } from '../api/rentabilidadApi';
 
 interface GraficoEvolucionIngresosCostosProps {
@@ -15,39 +15,37 @@ export default function GraficoEvolucionIngresosCostos({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <LineChart size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución Ingresos vs Costos</h3>
-            <p className="text-sm text-gray-500">Tendencia financiera en el tiempo</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución Ingresos vs Costos</h3>
+            <p className="text-sm text-gray-600">Tendencia financiera en el tiempo</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-          <p className="text-gray-500 mt-4">Cargando datos...</p>
-        </div>
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <LineChart size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución Ingresos vs Costos</h3>
-            <p className="text-sm text-gray-500">Tendencia financiera en el tiempo</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución Ingresos vs Costos</h3>
+            <p className="text-sm text-gray-600">Tendencia financiera en el tiempo</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p>No hay datos disponibles</p>
-        </div>
+        <LineChart size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600 mb-4">No se encontraron datos de evolución financiera para el período seleccionado</p>
       </div>
     );
   }
@@ -100,15 +98,15 @@ export default function GraficoEvolucionIngresosCostos({
     .join(' ');
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <LineChart size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución Ingresos vs Costos</h3>
-            <p className="text-sm text-gray-500">Tendencia financiera en el tiempo</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución Ingresos vs Costos</h3>
+            <p className="text-sm text-gray-600">Tendencia financiera en el tiempo</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">
@@ -286,5 +284,6 @@ export default function GraficoEvolucionIngresosCostos({
     </div>
   );
 }
+
 
 

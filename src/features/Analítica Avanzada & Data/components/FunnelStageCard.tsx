@@ -44,7 +44,7 @@ export default function FunnelStageCard({
   return (
     <div className="relative">
       <div
-        className={`bg-gradient-to-r ${getStageColor(index)} rounded-lg shadow-lg p-6 text-white transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}
+        className={`bg-gradient-to-r ${getStageColor(index)} rounded-xl shadow-lg p-6 text-white transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}
         style={{
           width: `${Math.max(widthPercentage, 10)}%`,
           minWidth: '200px',
@@ -56,7 +56,7 @@ export default function FunnelStageCard({
             <p className="text-3xl font-extrabold">{stage.count.toLocaleString()}</p>
           </div>
           {index > 0 && stage.conversionRate !== undefined && (
-            <div className="flex items-center space-x-1 bg-white/20 rounded-lg px-2 py-1">
+            <div className="flex items-center gap-1 bg-white/20 rounded-xl px-2 py-1">
               {getConversionIcon()}
               <span className="text-sm font-semibold">
                 {stage.conversionRate.toFixed(1)}%
@@ -88,5 +88,6 @@ export default function FunnelStageCard({
     </div>
   );
 }
+
 
 

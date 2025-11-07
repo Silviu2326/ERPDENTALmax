@@ -45,14 +45,17 @@ export default function DateRangePicker({
     <div className="relative">
       <button
         onClick={() => setMostrarSelector(!mostrarSelector)}
-        className="flex items-center space-x-2 px-4 py-2 bg-white border-2 border-blue-300 rounded-lg hover:border-blue-500 transition-colors shadow-sm hover:shadow-md"
+        className="w-full flex items-center justify-between px-4 py-2.5 bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
       >
-        <Calendar className="w-5 h-5 text-blue-600" />
-        <span className="text-sm font-medium text-gray-700">
-          {formatearFecha(fechaInicio)} - {formatearFecha(fechaFin)}
-        </span>
+        <div className="flex items-center gap-2">
+          <Calendar size={16} className="text-slate-400" />
+          <span className="text-sm">
+            {formatearFecha(fechaInicio)} - {formatearFecha(fechaFin)}
+          </span>
+        </div>
         <ChevronRight
-          className={`w-4 h-4 text-gray-500 transition-transform ${
+          size={16}
+          className={`text-slate-400 transition-transform ${
             mostrarSelector ? 'rotate-90' : ''
           }`}
         />
@@ -64,15 +67,15 @@ export default function DateRangePicker({
             className="fixed inset-0 z-10"
             onClick={() => setMostrarSelector(false)}
           />
-          <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl border-2 border-blue-200 z-20 p-4 min-w-[280px]">
+          <div className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-lg ring-1 ring-slate-200 z-20 p-4 min-w-[280px]">
             <div className="mb-4">
-              <h4 className="text-sm font-semibold text-gray-700 mb-3">Rangos rápidos</h4>
+              <h4 className="text-sm font-medium text-slate-700 mb-3">Rangos rápidos</h4>
               <div className="space-y-2">
                 {rangosPreset.map((rango) => (
                   <button
                     key={rango.label}
                     onClick={() => aplicarRangoPreset(rango.dias)}
-                    className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-md transition-colors"
+                    className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-xl transition-colors"
                   >
                     {rango.label}
                   </button>
@@ -80,13 +83,13 @@ export default function DateRangePicker({
               </div>
             </div>
 
-            <div className="pt-4 border-t border-gray-200">
-              <h4 className="text-sm font-semibold text-gray-700 mb-3">
+            <div className="pt-4 border-t border-slate-200">
+              <h4 className="text-sm font-medium text-slate-700 mb-3">
                 Selección personalizada
               </h4>
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Fecha inicio</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Fecha inicio</label>
                   <input
                     type="date"
                     value={fechaInicio.toISOString().split('T')[0]}
@@ -95,11 +98,11 @@ export default function DateRangePicker({
                       nuevaFecha.setHours(0, 0, 0, 0);
                       onCambio(nuevaFecha, fechaFin);
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2.5 bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Fecha fin</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Fecha fin</label>
                   <input
                     type="date"
                     value={fechaFin.toISOString().split('T')[0]}
@@ -108,7 +111,7 @@ export default function DateRangePicker({
                       nuevaFecha.setHours(23, 59, 59, 999);
                       onCambio(fechaInicio, nuevaFecha);
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2.5 bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                   />
                 </div>
               </div>
@@ -119,5 +122,6 @@ export default function DateRangePicker({
     </div>
   );
 }
+
 
 

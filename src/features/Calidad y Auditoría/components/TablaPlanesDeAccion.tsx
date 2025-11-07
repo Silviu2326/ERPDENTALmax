@@ -1,5 +1,5 @@
 import { PlanDeAccion } from '../api/revisionDireccionApi';
-import { CheckCircle2, Clock, AlertCircle, Calendar, User, Edit2 } from 'lucide-react';
+import { CheckCircle2, Clock, AlertCircle, Calendar, User, Edit2, Loader2 } from 'lucide-react';
 
 // Función auxiliar para formatear fechas
 const formatDate = (dateString: string): string => {
@@ -59,70 +59,63 @@ export default function TablaPlanesDeAccion({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-            <p className="text-gray-600">Cargando planes de acción...</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando planes de acción...</p>
       </div>
     );
   }
 
   if (planes.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center text-gray-500">
-            <CheckCircle2 className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>No hay planes de acción registrados</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <CheckCircle2 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin planes de acción</h3>
+        <p className="text-gray-600">No hay planes de acción registrados</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-      <div className="p-6 border-b border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
+      <div className="p-4 border-b border-gray-100">
         <h3 className="text-lg font-semibold text-gray-900">Planes de Acción</h3>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Título
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Responsable
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha Límite
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-100">
             {planes.map((plan) => (
               <tr key={plan._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
                     <div className="text-sm font-medium text-gray-900">{plan.title}</div>
-                    <div className="text-sm text-gray-500 truncate max-w-xs">
+                    <div className="text-sm text-slate-600 truncate max-w-xs">
                       {plan.description}
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-gray-400" />
+                    <User className="w-4 h-4 text-slate-400" />
                     <span className="text-sm text-gray-900">
                       {plan.responsibleUserName || 'Sin asignar'}
                     </span>
@@ -134,7 +127,7 @@ export default function TablaPlanesDeAccion({
                       className={`w-4 h-4 ${
                         isVencido(plan.dueDate) && plan.status !== 'Completado'
                           ? 'text-red-500'
-                          : 'text-gray-400'
+                          : 'text-slate-400'
                       }`}
                     />
                     <span
@@ -159,7 +152,7 @@ export default function TablaPlanesDeAccion({
                             status: e.target.value as PlanDeAccion['status'],
                           })
                         }
-                        className="px-3 py-1 border border-gray-300 rounded-md text-xs focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="px-3 py-1 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-xs"
                       >
                         <option value="Pendiente">Pendiente</option>
                         <option value="En Progreso">En Progreso</option>

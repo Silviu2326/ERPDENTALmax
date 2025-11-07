@@ -49,84 +49,86 @@ export default function CardDetalleControlEndo({
   });
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
-      {/* Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="bg-blue-100 p-2 rounded-lg">
-            <Calendar className="w-5 h-5 text-blue-600" />
+    <div className="bg-white shadow-sm h-full flex flex-col transition-shadow overflow-hidden hover:shadow-md">
+      <div className="p-4">
+        {/* Header */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+              <Calendar size={20} className="text-blue-600" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Control del {fechaControl}</h3>
+              <p className="text-sm text-slate-600">
+                {new Date(control.fechaControl).toLocaleDateString('es-ES')}
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-semibold text-gray-800">Control del {fechaControl}</h3>
-            <p className="text-sm text-gray-500">
-              {new Date(control.fechaControl).toLocaleDateString('es-ES')}
-            </p>
-          </div>
-        </div>
-        <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getDiagnosticoColor()}`}>
-          {getDiagnosticoIcon()}
-          <span className="text-sm font-medium">{control.diagnosticoEvolutivo}</span>
-        </div>
-      </div>
-
-      {/* Información clínica */}
-      <div className="space-y-3 mb-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Sintomatología</p>
-            <p className="text-sm font-medium text-gray-800">{control.sintomatologia}</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Signos Clínicos</p>
-            <p className="text-sm font-medium text-gray-800">{control.signosClinicos}</p>
+          <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getDiagnosticoColor()}`}>
+            {getDiagnosticoIcon()}
+            <span className="text-sm font-medium">{control.diagnosticoEvolutivo}</span>
           </div>
         </div>
 
-        <div>
-          <p className="text-xs text-gray-500 mb-1">Hallazgos Radiográficos</p>
-          <p className="text-sm text-gray-800">{control.hallazgosRadiograficos}</p>
+        {/* Información clínica */}
+        <div className="space-y-3 mb-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Sintomatología</p>
+              <p className="text-sm font-medium text-gray-900">{control.sintomatologia}</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Signos Clínicos</p>
+              <p className="text-sm font-medium text-gray-900">{control.signosClinicos}</p>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs text-slate-500 mb-1">Hallazgos Radiográficos</p>
+            <p className="text-sm text-gray-900">{control.hallazgosRadiograficos}</p>
+          </div>
+
+          {control.observaciones && (
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Observaciones</p>
+              <p className="text-sm text-gray-900">{control.observaciones}</p>
+            </div>
+          )}
         </div>
 
-        {control.observaciones && (
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Observaciones</p>
-            <p className="text-sm text-gray-800">{control.observaciones}</p>
+        {/* Radiografías */}
+        {control.adjuntos && control.adjuntos.length > 0 && (
+          <div className="mb-4">
+            <p className="text-xs text-slate-500 mb-2">Radiografías ({control.adjuntos.length})</p>
+            <div className="grid grid-cols-3 gap-2">
+              {control.adjuntos.slice(0, 3).map((adjunto, index) => (
+                <div
+                  key={index}
+                  className="aspect-square bg-gray-100 rounded-lg overflow-hidden ring-1 ring-slate-200"
+                >
+                  <img
+                    src={adjunto.url}
+                    alt={adjunto.nombreArchivo}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/placeholder-image.png';
+                    }}
+                  />
+                </div>
+              ))}
+              {control.adjuntos.length > 3 && (
+                <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center ring-1 ring-slate-200">
+                  <span className="text-sm text-slate-600">+{control.adjuntos.length - 3}</span>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
 
-      {/* Radiografías */}
-      {control.adjuntos && control.adjuntos.length > 0 && (
-        <div className="mb-4">
-          <p className="text-xs text-gray-500 mb-2">Radiografías ({control.adjuntos.length})</p>
-          <div className="grid grid-cols-3 gap-2">
-            {control.adjuntos.slice(0, 3).map((adjunto, index) => (
-              <div
-                key={index}
-                className="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-200"
-              >
-                <img
-                  src={adjunto.url}
-                  alt={adjunto.nombreArchivo}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/placeholder-image.png';
-                  }}
-                />
-              </div>
-            ))}
-            {control.adjuntos.length > 3 && (
-              <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                <span className="text-sm text-gray-600">+{control.adjuntos.length - 3}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Acciones */}
       {(onEditar || onEliminar) && (
-        <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-end gap-2 mt-auto pt-3 border-t border-gray-100 px-4 pb-4">
           {onEditar && (
             <button
               onClick={onEditar}
@@ -148,5 +150,6 @@ export default function CardDetalleControlEndo({
     </div>
   );
 }
+
 
 

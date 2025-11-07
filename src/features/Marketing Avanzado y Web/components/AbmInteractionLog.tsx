@@ -65,28 +65,28 @@ export default function AbmInteractionLog({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-white shadow-sm rounded-lg p-6">
+      <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">Historial de Interacciones</h3>
         <button
           onClick={() => setMostrarFormulario(!mostrarFormulario)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all"
         >
-          <Plus className="w-4 h-4" />
+          <Plus size={18} />
           <span>Registrar Interacción</span>
         </button>
       </div>
 
       {mostrarFormulario && (
-        <form onSubmit={handleSubmit} className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <form onSubmit={handleSubmit} className="mb-6 rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de interacción</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de interacción</label>
               <select
                 required
                 value={formulario.tipo}
                 onChange={(e) => setFormulario({ ...formulario, tipo: e.target.value as TipoInteraccion })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
               >
                 <option value="Llamada">Llamada</option>
                 <option value="Email">Email</option>
@@ -96,22 +96,22 @@ export default function AbmInteractionLog({
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Fecha</label>
               <input
                 type="date"
                 required
                 value={formulario.fecha}
                 onChange={(e) => setFormulario({ ...formulario, fecha: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
               />
             </div>
             {contactos.length > 0 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Contacto (opcional)</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Contacto (opcional)</label>
                 <select
                   value={formulario.contactoId || ''}
                   onChange={(e) => setFormulario({ ...formulario, contactoId: e.target.value || undefined })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                 >
                   <option value="">Ninguno</option>
                   {contactos.map((contacto) => (
@@ -123,22 +123,22 @@ export default function AbmInteractionLog({
               </div>
             )}
           </div>
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
             <textarea
               required
               value={formulario.notas}
               onChange={(e) => setFormulario({ ...formulario, notas: e.target.value })}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 resize-none"
               placeholder="Describe la interacción, puntos clave, próximos pasos..."
             />
           </div>
-          <div className="mt-4 flex gap-2">
+          <div className="flex gap-2 pt-4 border-t border-gray-100">
             <button
               type="submit"
               disabled={cargando}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cargando ? 'Registrando...' : 'Registrar'}
             </button>
@@ -152,7 +152,7 @@ export default function AbmInteractionLog({
                   notas: '',
                 });
               }}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="px-4 py-2.5 text-sm font-medium bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-all"
             >
               Cancelar
             </button>
@@ -162,8 +162,9 @@ export default function AbmInteractionLog({
 
       {interacciones.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-          <Clock className="w-12 h-12 mx-auto mb-2 text-gray-300" />
-          <p>No hay interacciones registradas</p>
+          <Clock size={48} className="mx-auto mb-4 text-gray-300" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay interacciones</h3>
+          <p className="text-sm text-gray-600">Comienza registrando una nueva interacción</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -180,10 +181,10 @@ export default function AbmInteractionLog({
               return (
                 <div
                   key={interaccion._id}
-                  className="flex items-start gap-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  className="flex items-start gap-4 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all"
                 >
                   <div className={`p-2 rounded-lg ${colorClass}`}>
-                    <Icono className="w-5 h-5" />
+                    <Icono size={18} />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
@@ -205,5 +206,6 @@ export default function AbmInteractionLog({
     </div>
   );
 }
+
 
 

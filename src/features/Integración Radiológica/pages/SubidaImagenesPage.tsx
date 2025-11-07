@@ -156,35 +156,44 @@ export default function SubidaImagenesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Scan className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">Subida de Imágenes</h1>
-              <p className="text-sm text-gray-600">Cargar imágenes radiológicas al historial del paciente</p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Scan size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Subida de Imágenes Radiológicas
+                </h1>
+                <p className="text-gray-600">
+                  Sube y gestiona imágenes radiológicas para tus pacientes
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Contenido principal */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         <div className="space-y-6">
           {/* Búsqueda de paciente */}
-          <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Buscar Paciente</h2>
+          <div className="bg-white shadow-sm rounded-xl p-4">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Buscar Paciente</h2>
             <PatientSearchAutocomplete
               pacienteSeleccionado={pacienteSeleccionado}
               onPacienteSeleccionado={setPacienteSeleccionado}
               disabled={subiendo}
             />
             {pacienteSeleccionado && (
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
                 <p className="text-sm font-medium text-blue-900">
                   Paciente seleccionado: <span className="font-bold">{pacienteSeleccionado.nombre} {pacienteSeleccionado.apellido}</span>
                 </p>
@@ -195,8 +204,8 @@ export default function SubidaImagenesPage() {
 
           {/* Área de subida */}
           {pacienteSeleccionado && (
-            <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Seleccionar Imágenes</h2>
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Seleccionar Imágenes</h2>
               <UploaderArea
                 onFilesSelected={handleFilesSelected}
                 disabled={subiendo}
@@ -206,9 +215,9 @@ export default function SubidaImagenesPage() {
 
           {/* Previsualización de imágenes */}
           {imagenes.length > 0 && (
-            <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+            <div className="bg-white shadow-sm rounded-xl p-4">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-800">
+                <h2 className="text-lg font-semibold text-gray-900">
                   Previsualización ({imagenes.length} imagen{imagenes.length !== 1 ? 'es' : ''})
                 </h2>
                 <button
@@ -221,13 +230,13 @@ export default function SubidaImagenesPage() {
                     setImagenes([]);
                     setError(null);
                   }}
-                  className="text-sm text-red-600 hover:text-red-700 font-medium"
+                  className="text-sm text-red-600 hover:text-red-700 font-medium transition-colors"
                   disabled={subiendo}
                 >
                   Limpiar todas
                 </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {imagenes.map((imagen) => (
                   <ImagePreviewCard
                     key={imagen.id}
@@ -248,14 +257,14 @@ export default function SubidaImagenesPage() {
 
           {/* Mensajes de éxito/error */}
           {mensajeExito && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
               <p className="text-sm font-medium text-green-800">{mensajeExito}</p>
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
               <p className="text-sm font-medium text-red-800">{error}</p>
             </div>
@@ -263,11 +272,11 @@ export default function SubidaImagenesPage() {
 
           {/* Botón de subida */}
           {pacienteSeleccionado && imagenes.length > 0 && !mostrarProgreso && (
-            <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+            <div className="bg-white shadow-sm rounded-xl p-4">
               <button
                 onClick={handleSubirImagenes}
                 disabled={subiendo || imagenes.length === 0}
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {subiendo ? (
                   <>
@@ -276,7 +285,7 @@ export default function SubidaImagenesPage() {
                   </>
                 ) : (
                   <>
-                    <Upload className="w-5 h-5" />
+                    <Upload size={20} />
                     <span>Subir {imagenes.length} Imagen{imagenes.length !== 1 ? 'es' : ''}</span>
                   </>
                 )}
@@ -288,5 +297,6 @@ export default function SubidaImagenesPage() {
     </div>
   );
 }
+
 
 

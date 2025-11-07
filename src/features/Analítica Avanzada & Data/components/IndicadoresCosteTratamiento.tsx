@@ -1,4 +1,4 @@
-import { DollarSign, TrendingUp, TrendingDown, Package, Percent } from 'lucide-react';
+import { DollarSign, TrendingUp, Package, Percent } from 'lucide-react';
 import { CosteTratamientoKPIs } from '../api/analiticaApi';
 
 interface IndicadoresCosteTratamientoProps {
@@ -21,9 +21,9 @@ export default function IndicadoresCosteTratamiento({
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="bg-white rounded-xl shadow-lg p-6 border-2 border-blue-200">
+          <div key={i} className="bg-white shadow-sm rounded-xl p-6">
             <div className="animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
               <div className="h-8 bg-gray-200 rounded w-1/2"></div>
@@ -40,60 +40,86 @@ export default function IndicadoresCosteTratamiento({
 
   const indicadores = [
     {
-      titulo: 'Ingresos Totales',
-      valor: formatearMoneda(kpis.ingresosTotales),
+      id: 'ingresos',
+      title: 'Ingresos Totales',
+      value: formatearMoneda(kpis.ingresosTotales),
       icono: DollarSign,
-      color: 'from-green-500 to-emerald-600',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200',
+      color: 'success' as const,
     },
     {
-      titulo: 'Coste Total',
-      valor: formatearMoneda(kpis.costeTotal),
+      id: 'coste',
+      title: 'Coste Total',
+      value: formatearMoneda(kpis.costeTotal),
       icono: Package,
-      color: 'from-red-500 to-rose-600',
-      bgColor: 'bg-red-50',
-      borderColor: 'border-red-200',
+      color: 'danger' as const,
     },
     {
-      titulo: 'Margen Bruto',
-      valor: formatearMoneda(kpis.margenBruto),
+      id: 'margen',
+      title: 'Margen Bruto',
+      value: formatearMoneda(kpis.margenBruto),
       icono: TrendingUp,
-      color: 'from-blue-500 to-indigo-600',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200',
+      color: 'info' as const,
     },
     {
-      titulo: 'Margen %',
-      valor: `${kpis.margenPorcentual.toFixed(1)}%`,
+      id: 'margen-porcentual',
+      title: 'Margen %',
+      value: `${kpis.margenPorcentual.toFixed(1)}%`,
       icono: Percent,
-      color: 'from-purple-500 to-purple-600',
-      bgColor: 'bg-purple-50',
-      borderColor: 'border-purple-200',
+      color: 'warning' as const,
     },
   ];
 
+  const getColorClasses = (color: 'info' | 'success' | 'warning' | 'danger') => {
+    switch (color) {
+      case 'info':
+        return {
+          bg: 'bg-blue-100',
+          icon: 'text-blue-600',
+          ring: 'ring-blue-200/70',
+        };
+      case 'success':
+        return {
+          bg: 'bg-green-100',
+          icon: 'text-green-600',
+          ring: 'ring-green-200/70',
+        };
+      case 'warning':
+        return {
+          bg: 'bg-yellow-100',
+          icon: 'text-yellow-600',
+          ring: 'ring-yellow-200/70',
+        };
+      case 'danger':
+        return {
+          bg: 'bg-red-100',
+          icon: 'text-red-600',
+          ring: 'ring-red-200/70',
+        };
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      {indicadores.map((indicador, index) => {
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {indicadores.map((indicador) => {
         const Icono = indicador.icono;
+        const colors = getColorClasses(indicador.color);
         return (
           <div
-            key={index}
-            className={`bg-white rounded-xl shadow-lg p-6 border-2 ${indicador.borderColor} hover:shadow-xl transition-all duration-200`}
+            key={indicador.id}
+            className="bg-white shadow-sm rounded-xl p-6 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-lg bg-gradient-to-br ${indicador.color}`}>
-                <Icono className="w-6 h-6 text-white" />
-              </div>
-              <div className={`px-3 py-1 rounded-full text-xs font-semibold ${indicador.bgColor} text-gray-700`}>
-                {indicador.titulo}
+              <div className={`p-2 ${colors.bg} rounded-xl ring-1 ${colors.ring}`}>
+                <Icono size={20} className={colors.icon} />
               </div>
             </div>
             <div className="space-y-1">
-              <p className="text-2xl font-bold text-gray-900">{indicador.valor}</p>
-              {index === 2 && kpis.tratamientoMasRentable && (
-                <p className="text-xs text-gray-500">
+              <p className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
+                {indicador.title}
+              </p>
+              <p className="text-2xl font-bold text-gray-900">{indicador.value}</p>
+              {indicador.id === 'margen' && kpis.tratamientoMasRentable && (
+                <p className="text-xs text-gray-500 mt-2">
                   Más rentable: {kpis.tratamientoMasRentable.tratamientoNombre}
                 </p>
               )}
@@ -104,5 +130,6 @@ export default function IndicadoresCosteTratamiento({
     </div>
   );
 }
+
 
 

@@ -61,16 +61,16 @@ export default function RecallCircuitForm({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg">
       <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900">
           {circuito ? 'Editar Circuito de Recall' : 'Nuevo Circuito de Recall'}
         </h2>
         <button
           onClick={onCancelar}
           className="text-gray-400 hover:text-gray-600 transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X size={20} />
         </button>
       </div>
 
@@ -78,7 +78,7 @@ export default function RecallCircuitForm({
         {/* Información Básica */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre del Circuito <span className="text-red-500">*</span>
             </label>
             <input
@@ -86,20 +86,20 @@ export default function RecallCircuitForm({
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Recordatorio de Limpieza Semestral"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Descripción
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Describe el propósito de este circuito de recall..."
             />
           </div>
@@ -107,10 +107,10 @@ export default function RecallCircuitForm({
 
         {/* Configuración del Disparador */}
         <div className="space-y-4 border-t border-gray-200 pt-6">
-          <h3 className="text-lg font-medium text-gray-900">Configuración del Disparador</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Configuración del Disparador</h3>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Disparador <span className="text-red-500">*</span>
             </label>
             <select
@@ -128,7 +128,7 @@ export default function RecallCircuitForm({
                   },
                 })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               <option value="appointment">Después de Cita</option>
               <option value="treatment">Después de Tratamiento</option>
@@ -138,7 +138,7 @@ export default function RecallCircuitForm({
 
           {formData.trigger.type === 'treatment' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 ID de Tratamiento
               </label>
               <input
@@ -156,7 +156,7 @@ export default function RecallCircuitForm({
                     },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="ID del tratamiento"
               />
             </div>
@@ -164,7 +164,7 @@ export default function RecallCircuitForm({
 
           {formData.trigger.type === 'appointment' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Tipo de Cita
               </label>
               <input
@@ -182,14 +182,14 @@ export default function RecallCircuitForm({
                     },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Ej: Limpieza, Revisión, etc."
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Días Después del Evento <span className="text-red-500">*</span>
             </label>
             <input
@@ -206,7 +206,7 @@ export default function RecallCircuitForm({
                 })
               }
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         </div>
@@ -236,18 +236,18 @@ export default function RecallCircuitForm({
         </div>
 
         {/* Botones */}
-        <div className="flex justify-end gap-3 border-t border-gray-200 pt-6">
+        <div className="flex justify-end gap-2 border-t border-gray-200 pt-6">
           <button
             type="button"
             onClick={onCancelar}
-            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white border border-slate-300 shadow-sm"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Guardando...' : 'Guardar Circuito'}
           </button>
@@ -256,5 +256,6 @@ export default function RecallCircuitForm({
     </div>
   );
 }
+
 
 

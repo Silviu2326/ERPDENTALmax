@@ -251,3 +251,4 @@ export async function buscarPacientesParaPago(query: string): Promise<Array<{
 }
 
 
+

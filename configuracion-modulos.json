@@ -1,0 +1,785 @@
+{
+  "modulos": [
+    {
+      "archivopagina": "src/features/Agenda de Citas y Programación/pages/AdministracionBloqueosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Agenda de Citas y Programación/pages/GestionDisponibilidadPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Agenda de Citas y Programación/pages/NuevaCitaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Agenda de Citas y Programación/pages/ReprogramacionMasivaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Analítica Avanzada & Data/pages/AlertasInteligentesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Analítica Avanzada & Data/pages/AnalisisAusenciasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Analítica Avanzada & Data/pages/Analítica Avanzada & DataPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Analítica Avanzada & Data/pages/CostePorTratamientoYMargenPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Analítica Avanzada & Data/pages/EmbudoConversionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Analítica Avanzada & Data/pages/ProduccionPorProfesionalBoxPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/Calidad y AuditoríaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/CrearCapaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/DetalleCapaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/DetalleIncidenciaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/EjecucionAuditoriaClinicaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/GestionCapasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/GestionIncidenciasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/GestionTemplatesAuditoriaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/HistorialAuditoriasPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/InformesAcreditacionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Calidad y Auditoría/pages/RevisionDireccionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Cuadro de Mandos e Informes/pages/Cuadro de Mandos e InformesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Cuadro de Mandos e Informes/pages/IndicadoresFacturacionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Cuadro de Mandos e Informes/pages/InformesConfigurablesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Cuadro de Mandos e Informes/pages/RentabilidadAnalisisPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Cuadro de Mandos e Informes/pages/VerInformeGuardadoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/CartasPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/ConsentimientosInformadosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/CrearOrdenLaboratorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/CrearOrdenProtesisPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/DetalleOrdenFabricacionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/DetalleOrdenLaboratorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/DetalleOrdenProtesisPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/Documentación y ProtocolosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/EditorPlantillaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/EstadosFabricacionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/FacturacionLaboratorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/FirmaPresupuestoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/GestionPlantillasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/OrdenesLaboratorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/RecetasMedicasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Documentación y Protocolos/pages/SeguimientoProtesisDashboardPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/AtmDolorOrofacialPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/BlanqueamientoDentalPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/CargaInmediataProtocoloPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/CirugiaIntraoperatorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/CirugiaOralPostoperatorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/ControlOsteointegracionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/DetallePlanTratamientoOrtodonciaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/EndodonciaControlPostoperatorioPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/EndodonciaRegistroPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/Especialidades ClínicasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/FichaPediatricaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/MantenimientoPeriodontalPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/OdontopediatriaFluorSelladoresPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/OrtodonciaDiagnosticoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/OrtodonciaRetencionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/PeriodontogramaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/PlanTratamientoOrtodonciaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/PlanificacionEndodonciaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/PlanificacionImplantologia3DPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Especialidades Clínicas/pages/ProtesisRemovibleAjusteEntregaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Esterilización y Trazabilidad/pages/AsignacionBandejaPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Esterilización y Trazabilidad/pages/ControlBiologicoQuimicoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Esterilización y Trazabilidad/pages/Esterilización y TrazabilidadPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Esterilización y Trazabilidad/pages/InformesDeTrazabilidadPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Esterilización y Trazabilidad/pages/MantenimientoAutoclavesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Esterilización y Trazabilidad/pages/ProtocolosLimpiezaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/AnticiposPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/ComisionesProfesionalPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/EditarFacturaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/ExportacionContabilidadPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/Facturación, Cobros y ContabilidadPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/LiquidacionMutuasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/NuevaFacturaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Facturación, Cobros y Contabilidad/pages/RecibosPagosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Mutuas/Seguros de Salud/pages/AsistenteFacturacionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Mutuas/Seguros de Salud/pages/AutorizacionesTratamientosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Mutuas/Seguros de Salud/pages/ConveniosAcuerdosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Mutuas/Seguros de Salud/pages/Gestión de Mutuas/Seguros de SaludPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Mutuas/Seguros de Salud/pages/Gestión de MutuasSeguros de SaludPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Mutuas/Seguros de Salud/pages/HistorialPagosSeguroPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Pacientes e Historia Clínica/pages/AntecedentesMedicosPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Pacientes e Historia Clínica/pages/Gestión de Pacientes e Historia ClínicaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Pacientes e Historia Clínica/pages/HistorialVisitasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Pacientes e Historia Clínica/pages/NuevaFichaPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Pacientes e Historia Clínica/pages/PacientePerfilPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Pacientes e Historia Clínica/pages/TratamientosRealizadosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/CampaignReportPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/CampanasSmsPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/CatalogoProductosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/CircuitosRecallsPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/ConfiguracionPlantillasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/ConfiguracionRecallPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/CreateEditCampaignPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/CrmDashboardPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/DetalleAlmacenPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/DetalleCampanaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/DetalleTransferenciaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/EmailCampaignsPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/FichaEmpleadoDetailPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/GestionHorariosTurnosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/Gestión de Proveedores y AlmacénPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/ListadoEmpleadosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/ListasPacientesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/NominasSalariosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/NuevoEmpleadoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/PermisosRolesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/ProductividadProfesionalPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/PromocionesOfertasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/RecepcionMercanciasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/RecordatoriosCitasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/SeguimientoCampanasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Gestión de Proveedores y Almacén/pages/TransferenciasAlmacenesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Integraciones y APIs/pages/Integraciones y APIsPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Integración Radiológica/pages/DentiaAnalysisPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Integración Radiológica/pages/HistorialRadiologicoPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Integración Radiológica/pages/Integración RadiológicaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Integración Radiológica/pages/SubidaImagenesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/AlertasReabastecimientoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/CaducidadesLotesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/ControlStockPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/DetalleOrdenCompraPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/DetalleProductoStockPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/Inventario y ComprasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/ListadoMaterialesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/NuevoMaterialPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/OrdenesCompraPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Inventario y Compras/pages/TratamientoConsumosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/CalendarioRevisionesTecnicasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/CreateEditMaintenancePlanPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/DetalleParteAveriaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/InformeCostesEquipamientoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/InventarioEquiposPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/MaintenancePlanDetailPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/Mantenimiento y EquipamientoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/PartesAveriaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Mantenimiento y Equipamiento/pages/PreventiveMaintenancePlanPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/AbmCampaignCreatePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/AbmDashboardPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/AbmEmpresaDetailPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/AdsIntegrationDashboardPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/AdsIntegrationSetupPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/CalendarioEditorialPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/CatalogoServiciosWebPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/LandingPageDashboardPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/LandingPageEditorPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/Marketing Avanzado y WebPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/TrackingConfigPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Marketing Avanzado y Web/pages/public/[slug].tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Multi-sede y Franquicias/pages/DashboardSedesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Multi-sede y Franquicias/pages/Multi-sede y FranquiciasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Multi-sede y Franquicias/pages/PermisosRolesSedePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Multi-sede y Franquicias/pages/TransferenciaPacientesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/AsignarPlanFinanciacionPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/GestionPlanesFinanciacionPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/HistorialPagosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/Pasarela de Pagos y FinanciaciónPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/PortalPacientePagosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/ProcesarPagoTarjetaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Pasarela de Pagos y Financiación/pages/portal/MiFinanciacionDetallePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal de Cita Online y Móvil/pages/Portal de Cita Online y MóvilPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal de Cita Online y Móvil/pages/ReceptionMobileAgendaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/DetallePresupuestoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/ForgotPasswordPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/GestionEncuestasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/LoginPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/MensajeriaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/MisCitasPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/MisDocumentosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/MisImagenesPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/MisPresupuestosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/Portal del PacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/RegisterPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/ResetPasswordPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/ResponderEncuestaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/ResultadosEncuestaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Portal del Paciente/pages/VerifyEmailPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/AprobacionPresupuestoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/CrearNuevoPresupuestoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/EditarPresupuestoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/ListaPlanesPacientePage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/PlanTratamientoBuilderPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/Presupuestos y Planes de TratamientoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Presupuestos y Planes de Tratamiento/pages/SimuladorCostosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Seguridad y Cumplimiento/pages/CopiasSeguridadPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Seguridad y Cumplimiento/pages/GestionPermisosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Seguridad y Cumplimiento/pages/GestionRGPDPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Seguridad y Cumplimiento/pages/RegistroAccesosPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Seguridad y Cumplimiento/pages/Seguridad y CumplimientoPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Teleodontología/pages/InformeTeleconsultaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Teleodontología/pages/SesionTeleconsultaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    },
+    {
+      "archivopagina": "src/features/Teleodontología/pages/TeleodontologíaPage.tsx",
+      "archivoestilos": "GUIADEESTILO-CATALOGO-PRODUCTOS.md"
+    }
+  ],
+  "configuracion": {
+    "tiempo_espera": 30,
+    "modo": "secuencial",
+    "reintentos": 2
+  }
+}

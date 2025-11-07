@@ -176,96 +176,106 @@ export default function HistorialPagosPage({ pacienteId, onVolver }: HistorialPa
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5 text-gray-600" />
-                </button>
-              )}
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl">
-                <History className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-gray-600" />
+                  </button>
+                )}
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <History size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Historial de Pagos
+                  </h1>
+                  <p className="text-gray-600">
+                    {pacienteId 
+                      ? 'Historial de pagos del paciente'
+                      : esVistaAdministrativa 
+                      ? 'Vista global de todos los pagos de la clínica'
+                      : 'Tu historial de pagos'
+                    }
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Historial de Pagos</h1>
-                <p className="text-sm text-gray-600 mt-1">
-                  {pacienteId 
-                    ? 'Historial de pagos del paciente'
-                    : esVistaAdministrativa 
-                    ? 'Vista global de todos los pagos de la clínica'
-                    : 'Tu historial de pagos'
-                  }
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              {esVistaAdministrativa && (
+              {/* Toolbar */}
+              <div className="flex items-center gap-2">
+                {esVistaAdministrativa && (
+                  <button
+                    onClick={handleExportarCSV}
+                    disabled={pagos.length === 0}
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Download size={20} />
+                    <span>Exportar CSV</span>
+                  </button>
+                )}
                 <button
-                  onClick={handleExportarCSV}
-                  disabled={pagos.length === 0}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                  onClick={cargarPagos}
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>Exportar CSV</span>
+                  <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
                 </button>
-              )}
-              <button
-                onClick={cargarPagos}
-                disabled={loading}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-              >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                <span>Actualizar</span>
-              </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <FiltrosHistorialPagos
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          mostrarPaciente={esVistaAdministrativa}
-          mostrarProfesional={esVistaAdministrativa}
-        />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosHistorialPagos
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            mostrarPaciente={esVistaAdministrativa}
+            mostrarProfesional={esVistaAdministrativa}
+          />
 
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm text-red-800 font-medium">Error al cargar pagos</p>
-              <p className="text-sm text-red-600 mt-1">{error}</p>
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar pagos</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Tabla */}
-        <HistorialPagosTable
-          pagos={pagos}
-          loading={loading}
-          onVerDetalle={handleVerDetalle}
-          onGenerarRecibo={handleGenerarRecibo}
-          mostrarPaciente={esVistaAdministrativa}
-        />
+          {/* Tabla */}
+          <HistorialPagosTable
+            pagos={pagos}
+            loading={loading}
+            onVerDetalle={handleVerDetalle}
+            onGenerarRecibo={handleGenerarRecibo}
+            mostrarPaciente={esVistaAdministrativa}
+          />
 
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-sm text-gray-600">
-                Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
-                {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de {paginacion.total} pagos
-              </div>
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-sm text-gray-600">
+                  Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
+                  {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de {paginacion.total} pagos
+                </div>
 
-              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                 {/* Primera página */}
                 <button
                   onClick={() => handlePageChange(1)}
@@ -334,23 +344,24 @@ export default function HistorialPagosPage({ pacienteId, onVolver }: HistorialPa
                 >
                   <ChevronsRight className="w-4 h-4" />
                 </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Modal de Detalle */}
-        <ModalDetallePago
-          pago={pagoSeleccionado}
-          isOpen={mostrarModal}
-          onClose={() => {
-            setMostrarModal(false);
-            setPagoSeleccionado(null);
-          }}
-          onReciboGenerado={() => {
-            // Opcional: recargar datos después de generar recibo
-          }}
-        />
+          {/* Modal de Detalle */}
+          <ModalDetallePago
+            pago={pagoSeleccionado}
+            isOpen={mostrarModal}
+            onClose={() => {
+              setMostrarModal(false);
+              setPagoSeleccionado(null);
+            }}
+            onReciboGenerado={() => {
+              // Opcional: recargar datos después de generar recibo
+            }}
+          />
+        </div>
       </div>
     </div>
   );

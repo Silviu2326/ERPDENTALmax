@@ -84,30 +84,30 @@ export default function BuscadorPacientesConsentimientos({
   return (
     <div className="relative">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
         <input
           type="text"
           placeholder="Buscar paciente por nombre, apellidos o DNI..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           disabled={!!pacienteSeleccionado}
         />
         {pacienteSeleccionado && (
           <button
             onClick={handleLimpiar}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         )}
       </div>
 
       {pacienteSeleccionado && (
-        <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="flex items-center space-x-3">
-            <div className="bg-blue-600 p-2 rounded-full">
-              <User className="w-4 h-4 text-white" />
+        <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-xl">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-600 rounded-full">
+              <User size={16} className="text-white" />
             </div>
             <div className="flex-1">
               <p className="font-semibold text-gray-900">
@@ -122,14 +122,14 @@ export default function BuscadorPacientesConsentimientos({
       )}
 
       {mostrarResultados && resultados.length > 0 && !pacienteSeleccionado && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
           {resultados.map((paciente) => (
             <button
               key={paciente._id}
               onClick={() => handleSeleccionarPaciente(paciente)}
-              className="w-full px-4 py-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0 flex items-center space-x-3"
+              className="w-full px-4 py-3 text-left hover:bg-gray-50 border-b border-gray-100 last:border-b-0 flex items-center gap-3 transition-colors"
             >
-              <User className="w-5 h-5 text-gray-400" />
+              <User size={20} className="text-gray-400" />
               <div>
                 <p className="font-medium text-gray-900">
                   {paciente.nombre} {paciente.apellidos}
@@ -142,12 +142,13 @@ export default function BuscadorPacientesConsentimientos({
       )}
 
       {loading && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-4 text-center">
-          <p className="text-gray-500">Buscando...</p>
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg p-4 text-center">
+          <p className="text-sm text-gray-600">Buscando...</p>
         </div>
       )}
     </div>
   );
 }
+
 
 

@@ -55,13 +55,13 @@ export default function ApproveRejectActions({
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row gap-3 mt-6">
+      <div className="flex flex-col sm:flex-row gap-3">
         {puedeAprobar && (
           <button
             onClick={() => setModalAprobarAbierto(true)}
-            className="flex-1 flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-md"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all font-medium shadow-sm"
           >
-            <Check className="w-5 h-5" />
+            <Check size={20} />
             <span>Aprobar Presupuesto</span>
           </button>
         )}
@@ -69,9 +69,9 @@ export default function ApproveRejectActions({
         {puedeRechazar && (
           <button
             onClick={() => setModalRechazarAbierto(true)}
-            className="flex-1 flex items-center justify-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium shadow-md"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all font-medium shadow-sm"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
             <span>Rechazar Presupuesto</span>
           </button>
         )}
@@ -96,9 +96,9 @@ export default function ApproveRejectActions({
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center gap-3">
                   <div className="p-2 rounded-full bg-red-100">
-                    <X className="w-6 h-6 text-red-600" />
+                    <X size={24} className="text-red-600" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Rechazar Presupuesto</h3>
                 </div>
@@ -108,9 +108,9 @@ export default function ApproveRejectActions({
                     setNotasRechazo('');
                   }}
                   disabled={cargando}
-                  className="text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50"
+                  className="text-gray-400 hover:text-gray-600 transition-all disabled:opacity-50"
                 >
-                  <X className="w-5 h-5" />
+                  <X size={20} />
                 </button>
               </div>
 
@@ -119,35 +119,35 @@ export default function ApproveRejectActions({
               </p>
 
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <MessageSquare className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <MessageSquare size={16} className="inline mr-1" />
                   Notas (opcional)
                 </label>
                 <textarea
                   value={notasRechazo}
                   onChange={(e) => setNotasRechazo(e.target.value)}
                   placeholder="Explica el motivo del rechazo..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-red-400 px-3 py-2.5 resize-none"
                   rows={4}
                   disabled={cargando}
                 />
               </div>
 
-              <div className="flex justify-end space-x-3">
+              <div className="flex justify-end gap-3">
                 <button
                   onClick={() => {
                     setModalRechazarAbierto(false);
                     setNotasRechazo('');
                   }}
                   disabled={cargando}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-slate-300 rounded-xl text-slate-700 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={handleRechazar}
                   disabled={cargando}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {cargando ? 'Procesando...' : 'Confirmar Rechazo'}
                 </button>
@@ -159,5 +159,6 @@ export default function ApproveRejectActions({
     </>
   );
 }
+
 
 

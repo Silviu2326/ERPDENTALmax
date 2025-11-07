@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw } from 'lucide-react';
+import { Plus, RefreshCw, Mail } from 'lucide-react';
 import {
   RecallCircuit,
   RecallStats,
@@ -304,64 +304,87 @@ export default function CircuitosRecallsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Circuitos Automáticos (Recalls)</h1>
-          <p className="text-gray-600 mt-1">
-            Gestiona los circuitos de comunicación automatizados con pacientes
-          </p>
-        </div>
-        <div className="flex gap-3">
-          <button
-            onClick={cargarDatos}
-            disabled={loading}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-            Actualizar
-          </button>
-          <button
-            onClick={handleNuevoCircuito}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Nuevo Circuito
-          </button>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Mail size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Circuitos Automáticos (Recalls)
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona los circuitos de comunicación automatizados con pacientes
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Estadísticas */}
-      {stats && <RecallStatsWidget stats={stats} />}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex gap-2">
+              <button
+                onClick={cargarDatos}
+                disabled={loading}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white border border-slate-300 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                Actualizar
+              </button>
+              <button
+                onClick={handleNuevoCircuito}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                <Plus size={20} />
+                Nuevo Circuito
+              </button>
+            </div>
+          </div>
 
-      {/* Formulario */}
-      {mostrarFormulario && (
-        <RecallCircuitForm
-          circuito={circuitoEditando}
-          onGuardar={handleGuardarCircuito}
-          onCancelar={() => {
-            setMostrarFormulario(false);
-            setCircuitoEditando(undefined);
-          }}
-          loading={loading}
-        />
-      )}
+          {/* Estadísticas */}
+          {stats && <RecallStatsWidget stats={stats} />}
 
-      {/* Tabla de Circuitos */}
-      {!mostrarFormulario && (
-        <div className="bg-white rounded-lg shadow border border-gray-200 p-6">
-          <RecallsTable
-            circuitos={circuitos}
-            onEditar={handleEditarCircuito}
-            onEliminar={handleEliminarCircuito}
-            onVerDetalle={handleVerDetalle}
-            onToggleActivo={handleToggleActivo}
-            onPreviewPacientes={handlePreviewPacientes}
-            loading={loading}
-          />
+          {/* Formulario */}
+          {mostrarFormulario && (
+            <RecallCircuitForm
+              circuito={circuitoEditando}
+              onGuardar={handleGuardarCircuito}
+              onCancelar={() => {
+                setMostrarFormulario(false);
+                setCircuitoEditando(undefined);
+              }}
+              loading={loading}
+            />
+          )}
+
+          {/* Tabla de Circuitos */}
+          {!mostrarFormulario && (
+            <RecallsTable
+              circuitos={circuitos}
+              onEditar={handleEditarCircuito}
+              onEliminar={handleEliminarCircuito}
+              onVerDetalle={handleVerDetalle}
+              onToggleActivo={handleToggleActivo}
+              onPreviewPacientes={handlePreviewPacientes}
+              loading={loading}
+            />
+          )}
         </div>
-      )}
+      </div>
 
       {/* Modal de Preview de Pacientes */}
       {circuitoPreviewId && (

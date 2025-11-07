@@ -43,7 +43,7 @@ export default function AlertaProximoMantenimiento({
   return (
     <div className="space-y-3">
       {autoclavesVencidos.length > 0 && (
-        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg ring-1 ring-red-200">
           <div className="flex items-start">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
             <div className="ml-3 flex-1">
@@ -69,7 +69,7 @@ export default function AlertaProximoMantenimiento({
       )}
 
       {autoclavesProximos.length > 0 && (
-        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
+        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg ring-1 ring-yellow-200">
           <div className="flex items-start">
             <Calendar className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
             <div className="ml-3 flex-1">
@@ -96,5 +96,6 @@ export default function AlertaProximoMantenimiento({
     </div>
   );
 }
+
 
 

@@ -70,7 +70,7 @@ export default function EditorPlantillasConsentimiento({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">
           {plantilla ? 'Editar Plantilla' : 'Nueva Plantilla de Consentimiento'}
@@ -82,15 +82,15 @@ export default function EditorPlantillasConsentimiento({
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="w-5 h-5 text-red-600" />
-          <p className="text-red-800">{error}</p>
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2">
+          <AlertCircle size={20} className="text-red-600" />
+          <p className="text-sm text-red-800">{error}</p>
         </div>
       )}
 
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre de la Plantilla <span className="text-red-500">*</span>
           </label>
           <input
@@ -98,24 +98,24 @@ export default function EditorPlantillasConsentimiento({
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             placeholder="Ej: Consentimiento Informado para Endodoncia"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Descripción</label>
           <textarea
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
             placeholder="Breve descripción de la plantilla..."
             rows={2}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-slate-700">
               Contenido <span className="text-red-500">*</span>
             </label>
             <div className="flex flex-wrap gap-2">
@@ -124,7 +124,7 @@ export default function EditorPlantillasConsentimiento({
                 <button
                   key={variable}
                   onClick={() => insertarVariable(variable)}
-                  className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                  className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-colors"
                   title={`Insertar ${variable}`}
                 >
                   {variable}
@@ -138,26 +138,26 @@ export default function EditorPlantillasConsentimiento({
             onChange={(e) => setContenido(e.target.value)}
             placeholder="Escribe el contenido del consentimiento informado. Puedes usar variables como {{nombre_paciente}}, {{tratamiento_descripcion}}, etc."
             rows={15}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+            className="w-full px-4 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 font-mono text-sm"
           />
           <p className="text-xs text-gray-500 mt-1">
             Usa variables entre dobles llaves para personalizar el contenido automáticamente
           </p>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+        <div className="flex justify-end gap-2 pt-4 border-t border-gray-200">
           <button
             onClick={onCancelar}
             disabled={loading}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <X className="w-4 h-4" />
+            <X size={20} />
             <span>Cancelar</span>
           </button>
           <button
             onClick={handleGuardar}
             disabled={loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
@@ -166,7 +166,7 @@ export default function EditorPlantillasConsentimiento({
               </>
             ) : (
               <>
-                <Save className="w-4 h-4" />
+                <Save size={20} />
                 <span>Guardar Plantilla</span>
               </>
             )}
@@ -176,5 +176,6 @@ export default function EditorPlantillasConsentimiento({
     </div>
   );
 }
+
 
 

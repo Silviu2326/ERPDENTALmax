@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Plus, RefreshCw, Wrench } from 'lucide-react';
+import { Calendar, Plus, RefreshCw, Wrench, Loader2, AlertCircle } from 'lucide-react';
 import {
   RevisionTecnica,
   FiltrosRevisiones,
@@ -177,124 +177,164 @@ export default function CalendarioRevisionesTecnicasPage({}: CalendarioRevisione
   }));
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center space-x-3">
-              <Wrench className="w-8 h-8 text-blue-600" />
-              <span>Calendario de Revisiones Técnicas</span>
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Gestiona y visualiza todas las revisiones técnicas programadas del equipamiento
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Wrench size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Calendario de Revisiones Técnicas
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona y visualiza todas las revisiones técnicas programadas del equipamiento
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <button
-            onClick={() => {
-              setRevisionSeleccionada(null);
-              setFechaSeleccionada(new Date());
-              setMostrarModal(true);
-            }}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
-          >
-            <Plus className="w-5 h-5" />
-            <span>Nueva Revisión</span>
-          </button>
         </div>
+      </div>
 
-        {/* Selector de Vista */}
-        <div className="mb-4 flex items-center space-x-2">
-          <button
-            onClick={() => setVista('dia')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              vista === 'dia'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Día
-          </button>
-          <button
-            onClick={() => setVista('semana')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              vista === 'semana'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Semana
-          </button>
-          <button
-            onClick={() => setVista('mes')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              vista === 'mes'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Mes
-          </button>
-        </div>
-
-        {/* Filtros */}
-        <FiltrosRevisiones
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-          sedes={sedes}
-          equipos={equiposFormato}
-        />
-
-        {/* Botón de actualizar */}
-        <div className="mb-4 flex justify-end">
-          <button
-            onClick={cargarRevisiones}
-            disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300 disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            <span>Actualizar</span>
-          </button>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <button
+              onClick={() => {
+                setRevisionSeleccionada(null);
+                setFechaSeleccionada(new Date());
+                setMostrarModal(true);
+              }}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+            >
+              <Plus size={20} />
+              <span>Nueva Revisión</span>
+            </button>
           </div>
-        )}
 
-        {/* Calendario */}
-        {loading ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-            <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
-            <p className="text-gray-600">Cargando revisiones técnicas...</p>
+          {/* Selector de Vista (Tabs) */}
+          <div className="bg-white shadow-sm rounded-lg p-0">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Vista del calendario"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                <button
+                  onClick={() => setVista('dia')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'dia'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'dia' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Día</span>
+                </button>
+                <button
+                  onClick={() => setVista('semana')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'semana'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'semana' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Semana</span>
+                </button>
+                <button
+                  onClick={() => setVista('mes')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'mes'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'mes' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Mes</span>
+                </button>
+              </div>
+            </div>
           </div>
-        ) : (
-          <CalendarioRevisionesGrid
-            revisiones={revisiones}
-            fechaInicio={fechaInicio}
-            fechaFin={fechaFin}
-            vista={vista}
-            onRevisionClick={handleRevisionClick}
-            onSlotClick={handleSlotClick}
-          />
-        )}
 
-        {/* Modal de Gestión de Revisión */}
-        {mostrarModal && (
-          <ModalFormRevisionTecnica
-            revision={revisionSeleccionada}
-            fechaSeleccionada={fechaSeleccionada}
-            onClose={handleCerrarModal}
-            onSave={handleGuardarRevision}
+          {/* Filtros */}
+          <FiltrosRevisiones
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
             sedes={sedes}
             equipos={equiposFormato}
           />
-        )}
+
+          {/* Botón de actualizar */}
+          <div className="flex items-center justify-end">
+            <button
+              onClick={cargarRevisiones}
+              disabled={loading}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            >
+              <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+              <span>Actualizar</span>
+            </button>
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={cargarRevisiones}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+              >
+                Reintentar
+              </button>
+            </div>
+          )}
+
+          {/* Calendario */}
+          {loading ? (
+            <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+              <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando revisiones técnicas...</p>
+            </div>
+          ) : (
+            <CalendarioRevisionesGrid
+              revisiones={revisiones}
+              fechaInicio={fechaInicio}
+              fechaFin={fechaFin}
+              vista={vista}
+              onRevisionClick={handleRevisionClick}
+              onSlotClick={handleSlotClick}
+            />
+          )}
+        </div>
       </div>
+
+      {/* Modal de Gestión de Revisión */}
+      {mostrarModal && (
+        <ModalFormRevisionTecnica
+          revision={revisionSeleccionada}
+          fechaSeleccionada={fechaSeleccionada}
+          onClose={handleCerrarModal}
+          onSave={handleGuardarRevision}
+          sedes={sedes}
+          equipos={equiposFormato}
+        />
+      )}
     </div>
   );
 }
+
 
 

@@ -246,18 +246,18 @@ export default function FormularioNuevoEmpleado({
   return (
     <div className="space-y-6">
       {/* Indicador de pasos */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
+      <div className="bg-white rounded-lg shadow-sm p-4">
         <div className="flex items-center justify-between">
           {pasos.map((paso, index) => (
             <div key={paso.id} className="flex items-center flex-1">
               <div className="flex flex-col items-center flex-1">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
                     index < indicePasoActual
-                      ? 'bg-green-500 text-white'
+                      ? 'bg-green-600 text-white'
                       : index === indicePasoActual
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-600'
+                      ? 'bg-blue-600 text-white ring-2 ring-blue-200'
+                      : 'bg-slate-200 text-slate-600'
                   }`}
                 >
                   {index < indicePasoActual ? (
@@ -268,7 +268,7 @@ export default function FormularioNuevoEmpleado({
                 </div>
                 <span
                   className={`mt-2 text-xs font-medium ${
-                    index === indicePasoActual ? 'text-blue-600' : 'text-gray-600'
+                    index === indicePasoActual ? 'text-blue-600' : 'text-slate-600'
                   }`}
                 >
                   {paso.label}
@@ -276,8 +276,8 @@ export default function FormularioNuevoEmpleado({
               </div>
               {index < pasos.length - 1 && (
                 <div
-                  className={`h-1 flex-1 mx-2 ${
-                    index < indicePasoActual ? 'bg-green-500' : 'bg-gray-200'
+                  className={`h-1 flex-1 mx-2 rounded-full transition-all ${
+                    index < indicePasoActual ? 'bg-green-600' : 'bg-slate-200'
                   }`}
                 />
               )}
@@ -288,7 +288,7 @@ export default function FormularioNuevoEmpleado({
 
       {/* Error general */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
           {error}
         </div>
       )}
@@ -340,12 +340,12 @@ export default function FormularioNuevoEmpleado({
             />
 
             {/* Subida de documentos */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
+            <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
               <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
                 <Upload className="w-5 h-5 text-blue-600" />
                 Documentos (Opcional)
               </h3>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-slate-600 mb-4">
                 Puede adjuntar documentos como DNI, contrato firmado o titulaciones.
               </p>
 
@@ -353,11 +353,11 @@ export default function FormularioNuevoEmpleado({
                 {documentos.map((doc, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg"
+                    className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 ring-1 ring-slate-200"
                   >
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900">{doc.file.name}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-slate-500">
                         {(doc.file.size / 1024).toFixed(2)} KB
                       </p>
                     </div>
@@ -369,7 +369,7 @@ export default function FormularioNuevoEmpleado({
                           e.target.value as 'Contrato' | 'DNI' | 'Titulacion' | 'Otro'
                         )
                       }
-                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                      className="px-3 py-2 rounded-xl bg-white text-sm text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="DNI">DNI</option>
                       <option value="Contrato">Contrato</option>
@@ -379,16 +379,16 @@ export default function FormularioNuevoEmpleado({
                     <button
                       type="button"
                       onClick={() => handleEliminarDocumento(index)}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
                 ))}
 
-                <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 cursor-pointer transition-colors">
-                  <Upload className="w-5 h-5 text-gray-400" />
-                  <span className="text-sm text-gray-600">Agregar documento</span>
+                <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-slate-300 rounded-xl hover:border-blue-500 hover:bg-blue-50/50 cursor-pointer transition-all">
+                  <Upload className="w-5 h-5 text-slate-400" />
+                  <span className="text-sm text-slate-600">Agregar documento</span>
                   <input
                     type="file"
                     onChange={handleAgregarDocumento}
@@ -403,13 +403,13 @@ export default function FormularioNuevoEmpleado({
       </div>
 
       {/* Botones de navegación */}
-      <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+      <div className="flex justify-between items-center pt-6 border-t border-slate-200">
         <div>
           {onCancelar && (
             <button
               type="button"
               onClick={onCancelar}
-              className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              className="px-6 py-2 text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all"
             >
               Cancelar
             </button>
@@ -420,9 +420,9 @@ export default function FormularioNuevoEmpleado({
             <button
               type="button"
               onClick={handleAnterior}
-              className="flex items-center gap-2 px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              className="flex items-center gap-2 px-6 py-2 text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft size={20} />
               Anterior
             </button>
           )}
@@ -430,17 +430,17 @@ export default function FormularioNuevoEmpleado({
             <button
               type="button"
               onClick={handleSiguiente}
-              className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm"
             >
               Siguiente
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight size={20} />
             </button>
           ) : (
             <button
               type="button"
               onClick={handleSubmit}
               disabled={loading}
-              className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
               {loading ? 'Guardando...' : 'Guardar Empleado'}
             </button>

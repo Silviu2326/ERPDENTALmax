@@ -29,7 +29,7 @@ export default function FilaItemFacturaEditable({
   };
 
   return (
-    <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+    <tr className="border-b border-gray-200 hover:bg-slate-50 transition-colors">
       <td className="px-4 py-3">
         {item.tratamiento ? (
           <div>
@@ -42,7 +42,7 @@ export default function FilaItemFacturaEditable({
             value={item.descripcion}
             onChange={(e) => handleFieldChange('descripcion', e.target.value)}
             disabled={readonly}
-            className="w-full text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            className="w-full text-sm rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-500"
             placeholder="Descripción del ítem"
           />
         )}
@@ -55,7 +55,7 @@ export default function FilaItemFacturaEditable({
           value={item.cantidad}
           onChange={(e) => handleFieldChange('cantidad', parseFloat(e.target.value) || 0)}
           disabled={readonly}
-          className="w-20 text-sm border border-gray-300 rounded-md px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+          className="w-20 text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-2 text-center disabled:bg-slate-100 disabled:text-slate-500"
         />
       </td>
       <td className="px-4 py-3">
@@ -66,7 +66,7 @@ export default function FilaItemFacturaEditable({
           value={item.precioUnitario}
           onChange={(e) => handleFieldChange('precioUnitario', parseFloat(e.target.value) || 0)}
           disabled={readonly}
-          className="w-24 text-sm border border-gray-300 rounded-md px-2 py-1 text-right focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+          className="w-24 text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-2 text-right disabled:bg-slate-100 disabled:text-slate-500"
         />
       </td>
       <td className="px-4 py-3">
@@ -79,9 +79,9 @@ export default function FilaItemFacturaEditable({
             value={item.descuento}
             onChange={(e) => handleFieldChange('descuento', parseFloat(e.target.value) || 0)}
             disabled={readonly}
-            className="w-20 text-sm border border-gray-300 rounded-md px-2 py-1 text-right focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            className="w-20 text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-2 text-right disabled:bg-slate-100 disabled:text-slate-500"
           />
-          <span className="text-sm text-gray-500">%</span>
+          <span className="text-sm text-slate-600">%</span>
         </div>
       </td>
       <td className="px-4 py-3">
@@ -94,9 +94,9 @@ export default function FilaItemFacturaEditable({
             value={item.impuesto}
             onChange={(e) => handleFieldChange('impuesto', parseFloat(e.target.value) || 0)}
             disabled={readonly}
-            className="w-20 text-sm border border-gray-300 rounded-md px-2 py-1 text-right focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            className="w-20 text-sm rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-2 text-right disabled:bg-slate-100 disabled:text-slate-500"
           />
-          <span className="text-sm text-gray-500">%</span>
+          <span className="text-sm text-slate-600">%</span>
         </div>
       </td>
       <td className="px-4 py-3 text-right">
@@ -118,5 +118,6 @@ export default function FilaItemFacturaEditable({
     </tr>
   );
 }
+
 
 

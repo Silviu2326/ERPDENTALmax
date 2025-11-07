@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ArrowLeft, Package, Edit, TrendingUp, TrendingDown, AlertCircle, BarChart3, DollarSign } from 'lucide-react';
+import { ArrowLeft, Package, Edit, AlertCircle, Loader2 } from 'lucide-react';
 import {
   obtenerDetalleProducto,
   obtenerHistorialMovimientos,
@@ -7,6 +7,7 @@ import {
   MovimientoInventario,
 } from '../api/stockApi';
 import HistorialMovimientosProducto from '../components/HistorialMovimientosProducto';
+import MetricCards from '../components/MetricCards';
 
 interface DetalleProductoStockPageProps {
   productoId: string;
@@ -224,11 +225,11 @@ export default function DetalleProductoStockPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Cargando detalle del producto...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm p-8 text-center rounded-xl">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando detalle del producto...</p>
           </div>
         </div>
       </div>
@@ -237,18 +238,19 @@ export default function DetalleProductoStockPage({
 
   if (error || !producto) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-8">
-            <div className="text-center">
-              <p className="text-red-600 mb-4">{error || 'Producto no encontrado'}</p>
-              <button
-                onClick={onVolver}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Volver
-              </button>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm p-8 text-center rounded-xl">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error || 'Producto no encontrado'}</p>
+            <button
+              onClick={onVolver}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm"
+            >
+              <ArrowLeft size={20} />
+              Volver
+            </button>
           </div>
         </div>
       </div>
@@ -256,68 +258,79 @@ export default function DetalleProductoStockPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={onVolver}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Volver al inventario
-          </button>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="bg-blue-600 p-4 rounded-lg">
-                <Package className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">{producto.nombre}</h1>
-                <p className="text-gray-600 mt-1">SKU: {producto.sku}</p>
-              </div>
-            </div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
-              <Edit className="w-5 h-5" />
-              Editar
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <button
+              onClick={onVolver}
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-4 transition-colors text-sm font-medium"
+            >
+              <ArrowLeft size={20} />
+              Volver al inventario
             </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Package size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {producto.nombre}
+                  </h1>
+                  <p className="text-gray-600">SKU: {producto.sku}</p>
+                </div>
+              </div>
+              <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm">
+                <Edit size={20} />
+                Editar
+              </button>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Información del Producto */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-              <label className="text-sm font-medium text-gray-500">Categoría</label>
-              <p className="text-lg font-semibold text-gray-900">{producto.categoria}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Proveedor</label>
-              <p className="text-lg font-semibold text-gray-900">
-                {typeof producto.proveedor === 'object' ? producto.proveedor.nombre : producto.proveedor}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Sede</label>
-              <p className="text-lg font-semibold text-gray-900">
-                {typeof producto.sede === 'object' ? producto.sede.nombre : producto.sede}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Unidad de Medida</label>
-              <p className="text-lg font-semibold text-gray-900">{producto.unidadMedida}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Ubicación</label>
-              <p className="text-lg font-semibold text-gray-900">
-                {producto.ubicacion || 'No especificada'}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Estado</label>
-              <p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* Información del Producto */}
+          <div className="bg-white shadow-sm p-6 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Categoría</label>
+                <p className="text-lg font-semibold text-gray-900">{producto.categoria}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Proveedor</label>
+                <p className="text-lg font-semibold text-gray-900">
+                  {typeof producto.proveedor === 'object' ? producto.proveedor.nombre : producto.proveedor}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Sede</label>
+                <p className="text-lg font-semibold text-gray-900">
+                  {typeof producto.sede === 'object' ? producto.sede.nombre : producto.sede}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Unidad de Medida</label>
+                <p className="text-lg font-semibold text-gray-900">{producto.unidadMedida}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Ubicación</label>
+                <p className="text-lg font-semibold text-gray-900">
+                  {producto.ubicacion || 'No especificada'}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Estado</label>
                 <span
-                  className={`px-3 py-1 text-sm font-semibold rounded-full ${
+                  className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
                     producto.activo
                       ? 'bg-green-100 text-green-800'
                       : 'bg-gray-100 text-gray-800'
@@ -325,145 +338,99 @@ export default function DetalleProductoStockPage({
                 >
                   {producto.activo ? 'Activo' : 'Inactivo'}
                 </span>
-              </p>
+              </div>
             </div>
+
+            {producto.descripcion && (
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <label className="block text-sm font-medium text-slate-700 mb-2">Descripción</label>
+                <p className="text-gray-900">{producto.descripcion}</p>
+              </div>
+            )}
           </div>
 
-          {producto.descripcion && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <label className="text-sm font-medium text-gray-500">Descripción</label>
-              <p className="text-gray-900 mt-2">{producto.descripcion}</p>
+          {/* Información de Stock - Usando MetricCards */}
+          <MetricCards
+            data={[
+              {
+                id: 'stock-actual',
+                title: 'Stock Actual',
+                value: producto.cantidadActual,
+                color: esBajoStock ? 'danger' : 'info',
+              },
+              {
+                id: 'punto-reorden',
+                title: 'Punto de Reorden',
+                value: producto.puntoReorden,
+                color: 'warning',
+              },
+              {
+                id: 'costo-unitario',
+                title: 'Costo Unitario',
+                value: `$${producto.costoUnitario.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
+                color: 'info',
+              },
+            ]}
+          />
+
+          {esBajoStock && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-red-900">Alerta: Stock bajo mínimo</p>
+                <p className="text-xs text-red-700 mt-1">
+                  El stock actual ({producto.cantidadActual} {producto.unidadMedida}) está por debajo del punto de reorden ({producto.puntoReorden} {producto.unidadMedida})
+                </p>
+              </div>
             </div>
           )}
-        </div>
 
-        {/* Información de Stock */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-            <label className="text-sm font-medium text-gray-500">Stock Actual</label>
-            <div className="flex items-center gap-3 mt-2">
-              <TrendingUp className="w-8 h-8 text-blue-500" />
-              <div>
-                <p
-                  className={`text-3xl font-bold ${
-                    esBajoStock ? 'text-red-600' : 'text-gray-900'
-                  }`}
-                >
-                  {producto.cantidadActual}
-                </p>
-                <p className="text-sm text-gray-500">{producto.unidadMedida}</p>
-                {esBajoStock && (
-                  <p className="text-xs text-red-600 mt-1 font-medium flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    Bajo stock mínimo
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
+          {/* Estadísticas de movimientos */}
+          {estadisticasMovimientos && (
+            <MetricCards
+              data={[
+                {
+                  id: 'total-compras',
+                  title: 'Total Compras',
+                  value: estadisticasMovimientos.totalCompras,
+                  color: 'success',
+                },
+                {
+                  id: 'total-usos',
+                  title: 'Total Usos',
+                  value: estadisticasMovimientos.totalUsos,
+                  color: 'danger',
+                },
+                {
+                  id: 'ajustes',
+                  title: 'Ajustes',
+                  value: estadisticasMovimientos.totalAjustes,
+                  color: 'warning',
+                },
+                {
+                  id: 'tasa-rotacion',
+                  title: 'Tasa Rotación',
+                  value: `${estadisticasMovimientos.tasaRotacion.toFixed(1)}%`,
+                  color: 'info',
+                },
+              ]}
+            />
+          )}
 
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
-            <label className="text-sm font-medium text-gray-500">Punto de Reorden</label>
-            <div className="flex items-center gap-3 mt-2">
-              <Package className="w-8 h-8 text-orange-500" />
-              <div>
-                <p className="text-3xl font-bold text-gray-900">{producto.puntoReorden}</p>
-                <p className="text-sm text-gray-500">{producto.unidadMedida}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Diferencia: {producto.cantidadActual - producto.puntoReorden > 0 ? '+' : ''}
-                  {producto.cantidadActual - producto.puntoReorden} unidades
-                </p>
-              </div>
+          {producto.fechaCaducidad && (
+            <div className="bg-white shadow-sm p-6 rounded-xl">
+              <label className="block text-sm font-medium text-slate-700 mb-2">Fecha de Caducidad</label>
+              <p className="text-lg font-semibold text-gray-900">
+                {new Date(producto.fechaCaducidad).toLocaleDateString('es-ES', {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </p>
             </div>
-          </div>
+          )}
 
-          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
-            <label className="text-sm font-medium text-gray-500">Costo Unitario</label>
-            <div className="flex items-center gap-3 mt-2">
-              <DollarSign className="w-8 h-8 text-purple-500" />
-              <div>
-                <p className="text-3xl font-bold text-gray-900">
-                  ${producto.costoUnitario.toLocaleString('es-ES', { minimumFractionDigits: 2 })}
-                </p>
-                <p className="text-sm text-gray-500">Valor total: $
-                  {(producto.cantidadActual * producto.costoUnitario).toLocaleString('es-ES', {
-                    minimumFractionDigits: 2,
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Estadísticas de movimientos */}
-        {estadisticasMovimientos && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Compras</p>
-                  <p className="text-2xl font-bold text-green-600 mt-2">
-                    {estadisticasMovimientos.totalCompras}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Unidades adquiridas</p>
-                </div>
-                <TrendingUp className="w-10 h-10 text-green-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Usos</p>
-                  <p className="text-2xl font-bold text-red-600 mt-2">
-                    {estadisticasMovimientos.totalUsos}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Unidades consumidas</p>
-                </div>
-                <TrendingDown className="w-10 h-10 text-red-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Ajustes</p>
-                  <p className="text-2xl font-bold text-yellow-600 mt-2">
-                    {estadisticasMovimientos.totalAjustes}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Correcciones</p>
-                </div>
-                <BarChart3 className="w-10 h-10 text-yellow-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Tasa Rotación</p>
-                  <p className="text-2xl font-bold text-blue-600 mt-2">
-                    {estadisticasMovimientos.tasaRotacion.toFixed(1)}%
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Uso vs compra</p>
-                </div>
-                <Package className="w-10 h-10 text-blue-500 opacity-50" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {producto.fechaCaducidad && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <label className="text-sm font-medium text-gray-500">Fecha de Caducidad</label>
-            <p className="text-lg font-semibold text-gray-900 mt-2">
-              {new Date(producto.fechaCaducidad).toLocaleDateString('es-ES', {
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </p>
-          </div>
-        )}
-
-        {/* Historial de Movimientos */}
-        <div className="mb-6">
+          {/* Historial de Movimientos */}
           <HistorialMovimientosProducto
             movimientos={movimientos}
             loading={loadingMovimientos}

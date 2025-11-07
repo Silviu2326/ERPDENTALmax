@@ -1,4 +1,4 @@
-import { LineChart, TrendingUp } from 'lucide-react';
+import { LineChart, Loader2, TrendingUp } from 'lucide-react';
 import { EvolucionCosteMargen } from '../api/analiticaApi';
 
 interface GraficoEvolucionCosteMargenProps {
@@ -38,19 +38,19 @@ export default function GraficoEvolucionCosteMargen({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-2 rounded-lg">
-            <LineChart className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <LineChart size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución de Costes y Márgenes</h3>
-            <p className="text-sm text-gray-500">Tendencia temporal</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución de Costes y Márgenes</h3>
+            <p className="text-sm text-gray-600">Tendencia temporal</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
-          <p className="text-gray-500 mt-4">Cargando datos...</p>
+          <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando datos...</p>
         </div>
       </div>
     );
@@ -58,18 +58,20 @@ export default function GraficoEvolucionCosteMargen({
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-2 rounded-lg">
-            <LineChart className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <LineChart size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Evolución de Costes y Márgenes</h3>
-            <p className="text-sm text-gray-500">Tendencia temporal</p>
+            <h3 className="text-lg font-semibold text-gray-900">Evolución de Costes y Márgenes</h3>
+            <p className="text-sm text-gray-600">Tendencia temporal</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p>No hay datos disponibles</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <TrendingUp size={48} className="text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+          <p className="text-gray-600">No se encontraron datos de evolución para el período seleccionado</p>
         </div>
       </div>
     );
@@ -81,14 +83,14 @@ export default function GraficoEvolucionCosteMargen({
   );
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-2 rounded-lg">
-          <LineChart className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <LineChart size={20} className="text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-800">Evolución de Costes y Márgenes</h3>
-          <p className="text-sm text-gray-500">Tendencia temporal</p>
+          <h3 className="text-lg font-semibold text-gray-900">Evolución de Costes y Márgenes</h3>
+          <p className="text-sm text-gray-600">Tendencia temporal</p>
         </div>
       </div>
 
@@ -96,15 +98,15 @@ export default function GraficoEvolucionCosteMargen({
         {/* Leyenda */}
         <div className="flex items-center space-x-6 text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-1 bg-blue-500"></div>
+            <div className="w-4 h-1 bg-blue-500 rounded"></div>
             <span className="text-gray-600">Ingresos</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-1 bg-red-500"></div>
+            <div className="w-4 h-1 bg-red-500 rounded"></div>
             <span className="text-gray-600">Costes</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-1 bg-green-500"></div>
+            <div className="w-4 h-1 bg-green-500 rounded"></div>
             <span className="text-gray-600">Margen</span>
           </div>
         </div>
@@ -119,14 +121,14 @@ export default function GraficoEvolucionCosteMargen({
             return (
               <div key={index} className="space-y-1">
                 <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
-                  <span className="font-medium">{formatearFecha(item.fecha)}</span>
+                  <span className="font-medium text-gray-900">{formatearFecha(item.fecha)}</span>
                   <div className="flex items-center space-x-4">
-                    <span className="text-green-600">
+                    <span className="text-green-600 font-medium">
                       Margen: {formatearMoneda(item.margen)} ({item.margenPorcentual.toFixed(1)}%)
                     </span>
                   </div>
                 </div>
-                <div className="relative h-8 bg-gray-100 rounded overflow-hidden">
+                <div className="relative h-8 bg-slate-100 rounded-lg overflow-hidden">
                   {/* Ingresos */}
                   <div
                     className="absolute left-0 top-0 h-full bg-blue-500 opacity-60"

@@ -39,56 +39,55 @@ export default function KpiCard({
 
   const colores = {
     blue: {
-      bg: 'bg-gradient-to-br from-blue-500 to-blue-600',
-      border: 'border-blue-400',
-      text: 'text-blue-600',
+      border: 'border-blue-500',
+      iconBg: 'bg-blue-600',
+      iconColor: 'text-blue-600',
     },
     green: {
-      bg: 'bg-gradient-to-br from-green-500 to-green-600',
-      border: 'border-green-400',
-      text: 'text-green-600',
+      border: 'border-green-500',
+      iconBg: 'bg-green-600',
+      iconColor: 'text-green-600',
     },
     purple: {
-      bg: 'bg-gradient-to-br from-purple-500 to-purple-600',
-      border: 'border-purple-400',
-      text: 'text-purple-600',
+      border: 'border-purple-500',
+      iconBg: 'bg-purple-600',
+      iconColor: 'text-purple-600',
     },
     orange: {
-      bg: 'bg-gradient-to-br from-orange-500 to-orange-600',
-      border: 'border-orange-400',
-      text: 'text-orange-600',
+      border: 'border-orange-500',
+      iconBg: 'bg-orange-600',
+      iconColor: 'text-orange-600',
     },
     red: {
-      bg: 'bg-gradient-to-br from-red-500 to-red-600',
-      border: 'border-red-400',
-      text: 'text-red-600',
+      border: 'border-red-500',
+      iconBg: 'bg-red-600',
+      iconColor: 'text-red-600',
     },
   };
 
   const colorClasses = colores[color];
 
   return (
-    <div className={`bg-white rounded-xl shadow-lg border-2 ${colorClasses.border} p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1">
-            {titulo}
-          </h3>
-          <p className={`text-3xl font-bold ${colorClasses.text}`}>
-            {formatearValor(valor)}
-          </p>
-          {descripcion && (
-            <p className="text-xs text-gray-500 mt-2">{descripcion}</p>
-          )}
-        </div>
+    <div className={`bg-white rounded-xl shadow-sm p-4 border-l-4 ${colorClasses.border} transition-all hover:shadow-md`}>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-sm font-medium text-slate-700">{titulo}</h3>
         {Icon && (
-          <div className={`${colorClasses.bg} p-3 rounded-lg shadow-md`}>
-            <Icon className="w-6 h-6 text-white" />
+          <div className={`${colorClasses.iconBg} p-2 rounded-lg`}>
+            <Icon className="w-5 h-5 text-white" />
           </div>
         )}
       </div>
+      <div className="flex items-baseline gap-2 mb-2">
+        <span className="text-3xl font-bold text-gray-900">
+          {formatearValor(valor)}
+        </span>
+      </div>
+      {descripcion && (
+        <p className="text-xs text-gray-600 mt-2">{descripcion}</p>
+      )}
     </div>
   );
 }
+
 
 

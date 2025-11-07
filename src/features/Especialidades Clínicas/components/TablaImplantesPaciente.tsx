@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Eye, Plus, Calendar, Package } from 'lucide-react';
+import { Eye, Plus, Calendar, Package, Loader2, AlertCircle } from 'lucide-react';
 import { Implante, obtenerImplantesPorPaciente } from '../api/implantesApi';
 import IndicadorEstadoImplante from './IndicadorEstadoImplante';
 
@@ -48,19 +48,22 @@ export default function TablaImplantesPaciente({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow p-6">
-        <p className="text-gray-600">Cargando implantes...</p>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="text-red-600 mb-4">{error}</div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
         <button
           onClick={cargarImplantes}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
         >
           Reintentar
         </button>
@@ -69,36 +72,37 @@ export default function TablaImplantesPaciente({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+    <div className="bg-white rounded-lg shadow-sm">
+      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-blue-100 p-2 rounded-lg">
-            <Package className="w-5 h-5 text-blue-600" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <Package size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">Implantes del Paciente</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Implantes del Paciente</h3>
             <p className="text-sm text-gray-600">{implantes.length} implante(s) registrado(s)</p>
           </div>
         </div>
         {onNuevoImplante && (
           <button
             onClick={onNuevoImplante}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             Nuevo Implante
           </button>
         )}
       </div>
 
       {implantes.length === 0 ? (
-        <div className="p-12 text-center">
-          <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-600 mb-2">No hay implantes registrados para este paciente</p>
+        <div className="p-8 text-center">
+          <Package size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay implantes registrados</h3>
+          <p className="text-gray-600 mb-4">No hay implantes registrados para este paciente</p>
           {onNuevoImplante && (
             <button
               onClick={onNuevoImplante}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
             >
               Registrar Primer Implante
             </button>
@@ -109,29 +113,29 @@ export default function TablaImplantesPaciente({
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Pieza Dental
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Implante
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Fecha Colocación
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Estado
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Última Medición
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {implantes.map((implante) => (
-                <tr key={implante._id} className="hover:bg-gray-50 transition-colors">
+                <tr key={implante._id} className="hover:bg-gray-50 transition-all">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="text-sm font-medium text-gray-900">{implante.piezaDental}</span>
                   </td>
@@ -145,7 +149,7 @@ export default function TablaImplantesPaciente({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Calendar className="w-4 h-4" />
+                      <Calendar size={16} className="inline mr-1" />
                       {formatearFecha(implante.fechaColocacion)}
                     </div>
                   </td>
@@ -169,9 +173,9 @@ export default function TablaImplantesPaciente({
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button
                       onClick={() => onVerDetalle(implante)}
-                      className="flex items-center gap-1 text-blue-600 hover:text-blue-900 transition-colors"
+                      className="flex items-center gap-1 text-blue-600 hover:text-blue-900 transition-all"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye size={16} className="inline mr-1" />
                       Ver Detalle
                     </button>
                   </td>
@@ -184,5 +188,6 @@ export default function TablaImplantesPaciente({
     </div>
   );
 }
+
 
 

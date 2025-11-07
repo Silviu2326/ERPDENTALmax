@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, AlertCircle } from 'lucide-react';
+import { RefreshCw, AlertCircle, Loader2, Calendar } from 'lucide-react';
 import {
   CitaProfesional,
   obtenerAgendaProfesional,
@@ -132,7 +132,7 @@ export default function MobileAgendaView({
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="space-y-6">
       <DateNavigatorMobile
         fechaSeleccionada={fechaSeleccionada}
         vista={vista}
@@ -149,40 +149,58 @@ export default function MobileAgendaView({
         />
       )}
 
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-800">
-          {vista === 'dia' ? 'Citas del día' : 'Citas de la semana'}
-        </h2>
+      {/* Toolbar superior */}
+      <div className="flex items-center justify-end">
         <button
           onClick={cargarCitas}
-          className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
+          disabled={loading}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all text-sm font-medium shadow-sm"
           aria-label="Refrescar"
         >
-          <RefreshCw className="w-5 h-5 text-gray-600" />
+          <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+          Refrescar
         </button>
       </div>
 
+      {/* Estado de carga */}
       {loading && (
-        <div className="flex items-center justify-center py-12">
-          <RefreshCw className="w-8 h-8 text-blue-600 animate-spin" />
+        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando...</p>
         </div>
       )}
 
+      {/* Estado de error */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 flex items-center gap-2">
-          <AlertCircle className="w-5 h-5 text-red-600" />
-          <p className="text-red-800">{error}</p>
+        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={cargarCitas}
+            className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
+          >
+            Reintentar
+          </button>
         </div>
       )}
 
+      {/* Estado vacío */}
       {!loading && !error && citasFiltradas.length === 0 && (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <p className="text-gray-500">No hay citas programadas para este período</p>
+        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {vista === 'dia' ? 'No hay citas del día' : 'No hay citas de la semana'}
+          </h3>
+          <p className="text-gray-600">
+            No hay citas programadas para este período
+          </p>
         </div>
       )}
 
+      {/* Lista de citas */}
       {!loading && !error && citasFiltradas.length > 0 && (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {citasFiltradas.map((cita) => (
             <AppointmentCardMobile
               key={cita._id}
@@ -197,5 +215,6 @@ export default function MobileAgendaView({
     </div>
   );
 }
+
 
 

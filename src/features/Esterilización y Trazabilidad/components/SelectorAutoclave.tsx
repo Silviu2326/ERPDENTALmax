@@ -40,7 +40,7 @@ export default function SelectorAutoclave({
 
   return (
     <div className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
         Autoclave
       </label>
       <div className="relative">
@@ -48,8 +48,8 @@ export default function SelectorAutoclave({
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled || loading}
-          className={`w-full px-4 py-2.5 text-left bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-            disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-gray-400'
+          className={`w-full px-3 py-2.5 text-left bg-white rounded-xl ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+            disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:ring-slate-400'
           }`}
         >
           {loading ? (
@@ -73,7 +73,7 @@ export default function SelectorAutoclave({
               className="fixed inset-0 z-10"
               onClick={() => setIsOpen(false)}
             />
-            <div className="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+            <div className="absolute z-20 w-full mt-1 bg-white rounded-xl ring-1 ring-slate-200 shadow-lg max-h-60 overflow-auto">
               {autoclaves.length === 0 ? (
                 <div className="px-4 py-3 text-sm text-gray-500">
                   No hay autoclaves disponibles
@@ -107,5 +107,6 @@ export default function SelectorAutoclave({
     </div>
   );
 }
+
 
 

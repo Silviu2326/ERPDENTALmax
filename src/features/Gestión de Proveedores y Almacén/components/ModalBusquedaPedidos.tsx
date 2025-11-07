@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, X, Package, Calendar, User } from 'lucide-react';
+import { Search, X, Package, Calendar, User, AlertCircle } from 'lucide-react';
 import {
   PedidoCompra,
 } from '../api/recepcionApi';
@@ -458,10 +458,10 @@ export default function ModalBusquedaPedidos({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200/60">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-2 rounded-lg">
-              <Search className="w-5 h-5 text-white" />
+            <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+              <Search size={20} className="text-blue-600" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-gray-900">Buscar Orden de Compra</h2>
@@ -477,48 +477,50 @@ export default function ModalBusquedaPedidos({
         </div>
 
         {/* Filtros */}
-        <div className="p-6 border-b border-gray-200 bg-gray-50">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Buscar por número
-              </label>
-              <div className="flex gap-2">
+        <div className="p-6 border-b border-gray-200/60">
+          <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Buscar por número
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                    placeholder="OC-2024-001"
+                    className="flex-1 w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                    onKeyPress={(e) => e.key === 'Enter' && handleBuscar()}
+                  />
+                  <button
+                    onClick={handleBuscar}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                  >
+                    <Search size={18} />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Proveedor (opcional)
+                </label>
                 <input
                   type="text"
-                  value={busqueda}
-                  onChange={(e) => setBusqueda(e.target.value)}
-                  placeholder="OC-2024-001"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  onKeyPress={(e) => e.key === 'Enter' && handleBuscar()}
+                  value={proveedorFiltro}
+                  onChange={(e) => setProveedorFiltro(e.target.value)}
+                  placeholder="ID del proveedor"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
                 />
+              </div>
+              <div className="flex items-end">
                 <button
-                  onClick={handleBuscar}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  onClick={cargarPedidos}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70"
                 >
-                  <Search className="w-5 h-5" />
+                  Limpiar Filtros
                 </button>
               </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Proveedor (opcional)
-              </label>
-              <input
-                type="text"
-                value={proveedorFiltro}
-                onChange={(e) => setProveedorFiltro(e.target.value)}
-                placeholder="ID del proveedor"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div className="flex items-end">
-              <button
-                onClick={cargarPedidos}
-                className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                Limpiar Filtros
-              </button>
             </div>
           </div>
         </div>
@@ -528,19 +530,22 @@ export default function ModalBusquedaPedidos({
           {loading && (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <span className="ml-3 text-gray-600">Cargando...</span>
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
               {error}
             </div>
           )}
 
           {!loading && !error && pedidos.length === 0 && (
             <div className="text-center py-12">
-              <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">No se encontraron pedidos</p>
+              <Package size={48} className="text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron pedidos</h3>
+              <p className="text-gray-600">Intenta ajustar los filtros de búsqueda</p>
             </div>
           )}
 
@@ -550,22 +555,22 @@ export default function ModalBusquedaPedidos({
                 <div
                   key={pedido._id}
                   onClick={() => handleSeleccionar(pedido)}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 cursor-pointer transition-all"
+                  className="p-4 bg-white rounded-xl ring-1 ring-slate-200 hover:ring-blue-400 hover:bg-blue-50/50 cursor-pointer transition-all"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <Package className="w-5 h-5 text-blue-600" />
-                        <h3 className="font-bold text-gray-900">{pedido.numeroOrden}</h3>
+                        <Package size={18} className="text-blue-600" />
+                        <h3 className="font-semibold text-gray-900">{pedido.numeroOrden}</h3>
                         {getEstadoBadge(pedido.estado)}
                       </div>
                       <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
                         <div className="flex items-center gap-2">
-                          <User className="w-4 h-4" />
+                          <User size={16} />
                           <span>{getProveedorNombre(pedido.proveedor)}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
+                          <Calendar size={16} />
                           <span>
                             {new Date(pedido.fechaEntregaEstimada).toLocaleDateString('es-ES')}
                           </span>

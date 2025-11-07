@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Edit, Plus, Calendar, FileText, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Edit, Plus, Calendar, FileText, CheckCircle, Clock, XCircle, Loader2 } from 'lucide-react';
 import { PlanEndodoncia } from '../api/planEndodonciaApi';
 
 interface HistorialPlanesEndoPacienteProps {
@@ -20,26 +20,26 @@ export default function HistorialPlanesEndoPaciente({
   const getEstadoIcon = (estado: string) => {
     switch (estado) {
       case 'Finalizado':
-        return <CheckCircle className="w-5 h-5 text-green-600" />;
+        return <CheckCircle size={12} className="text-green-600" />;
       case 'En Progreso':
-        return <Clock className="w-5 h-5 text-blue-600" />;
+        return <Clock size={12} className="text-blue-600" />;
       case 'Planificado':
-        return <XCircle className="w-5 h-5 text-gray-600" />;
+        return <XCircle size={12} className="text-gray-600" />;
       default:
-        return <FileText className="w-5 h-5 text-gray-600" />;
+        return <FileText size={12} className="text-gray-600" />;
     }
   };
 
   const getEstadoColor = (estado: string) => {
     switch (estado) {
       case 'Finalizado':
-        return 'bg-green-100 text-green-800 border-green-300';
+        return 'bg-green-100 text-green-800 ring-green-300';
       case 'En Progreso':
-        return 'bg-blue-100 text-blue-800 border-blue-300';
+        return 'bg-blue-100 text-blue-800 ring-blue-300';
       case 'Planificado':
-        return 'bg-gray-100 text-gray-800 border-gray-300';
+        return 'bg-gray-100 text-gray-800 ring-gray-300';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-300';
+        return 'bg-gray-100 text-gray-800 ring-gray-300';
     }
   };
 
@@ -54,40 +54,40 @@ export default function HistorialPlanesEndoPaciente({
 
   if (cargando) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
         <p className="text-gray-600">Cargando historial de planes...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-800">Historial de Planes de Endodoncia</h2>
+    <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-gray-900">Historial de Planes de Endodoncia</h2>
         <button
           onClick={onNuevoPlan}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
         >
-          <Plus className="w-5 h-5" />
+          <Plus size={20} />
           <span>Nuevo Plan</span>
         </button>
       </div>
 
       {planes.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <FileText className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
             No hay planes registrados
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-4">
             Comience creando un nuevo plan de endodoncia para este paciente
           </p>
           <button
             onClick={onNuevoPlan}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
           >
-            <Plus className="w-5 h-5" />
+            <Plus size={20} />
             <span>Crear Primer Plan</span>
           </button>
         </div>
@@ -96,16 +96,16 @@ export default function HistorialPlanesEndoPaciente({
           {planes.map((plan) => (
             <div
               key={plan._id}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+              className="bg-white ring-1 ring-slate-200 rounded-xl p-4 hover:shadow-md transition-all"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       Diente {plan.diente}
                     </h3>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium border flex items-center gap-1 ${getEstadoColor(
+                      className={`px-3 py-1 rounded-full text-xs font-medium ring-1 flex items-center gap-1 ${getEstadoColor(
                         plan.estado || 'Planificado'
                       )}`}
                     >
@@ -139,12 +139,12 @@ export default function HistorialPlanesEndoPaciente({
 
                   {plan.conductometria && plan.conductometria.length > 0 && (
                     <div className="mt-3">
-                      <p className="text-sm font-medium text-gray-700 mb-1">Conductometría:</p>
+                      <p className="text-sm font-medium text-slate-700 mb-1">Conductometría:</p>
                       <div className="flex flex-wrap gap-2">
                         {plan.conductometria.map((conducto, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs font-medium"
+                            className="px-2 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-medium ring-1 ring-blue-200"
                           >
                             {conducto.nombreCanal || `Conducto ${idx + 1}`}:{' '}
                             {conducto.longitudRealTrabajo || conducto.longitudTentativa || 0}mm
@@ -156,7 +156,7 @@ export default function HistorialPlanesEndoPaciente({
 
                   {plan.notas && (
                     <div className="mt-3">
-                      <p className="text-sm font-medium text-gray-700 mb-1">Notas:</p>
+                      <p className="text-sm font-medium text-slate-700 mb-1">Notas:</p>
                       <p className="text-sm text-gray-600">{plan.notas}</p>
                     </div>
                   )}
@@ -164,7 +164,7 @@ export default function HistorialPlanesEndoPaciente({
                   <div className="flex items-center gap-4 mt-4 text-xs text-gray-500">
                     {plan.fechaCreacion && (
                       <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
+                        <Calendar size={16} />
                         <span>{formatearFecha(plan.fechaCreacion)}</span>
                       </div>
                     )}
@@ -173,10 +173,10 @@ export default function HistorialPlanesEndoPaciente({
 
                 <button
                   onClick={() => onEditarPlan(plan)}
-                  className="ml-4 p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  className="ml-4 p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                   aria-label="Editar plan"
                 >
-                  <Edit className="w-5 h-5" />
+                  <Edit size={20} />
                 </button>
               </div>
             </div>
@@ -186,5 +186,6 @@ export default function HistorialPlanesEndoPaciente({
     </div>
   );
 }
+
 
 

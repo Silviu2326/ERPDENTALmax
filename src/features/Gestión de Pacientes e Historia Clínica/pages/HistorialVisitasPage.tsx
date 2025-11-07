@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Loader2, Clock, CheckCircle, XCircle, DollarSign, TrendingUp, User, FileText } from 'lucide-react';
+import { Calendar, Loader2, Clock, CheckCircle, TrendingUp, AlertCircle } from 'lucide-react';
 import {
   obtenerVisitasByPacienteId,
   Visita,
@@ -96,188 +96,153 @@ export default function HistorialVisitasPage({ pacienteId }: HistorialVisitasPag
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
-        <p className="font-semibold">Error al cargar el historial</p>
-        <p className="mt-1">{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Calendar className="w-6 h-6 text-blue-600" />
-            Historial de Visitas
-          </h2>
-          <p className="text-gray-600 mt-1">
-            Registro cronológico completo de todas las interacciones con la clínica
-          </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Calendar size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Historial de Visitas
+                </h1>
+                <p className="text-gray-600">
+                  Registro cronológico completo de todas las interacciones con la clínica
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Filtros */}
-      <FiltrosHistorialVisitas
-        filtros={filtros}
-        onFiltrosChange={handleFiltrosChange}
-        profesionales={[]} // TODO: Obtener lista de profesionales
-      />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosHistorialVisitas
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            profesionales={[]} // TODO: Obtener lista de profesionales
+          />
 
-      {/* Estadísticas de visitas */}
-      {visitas.length > 0 && (
-        <>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Total Visitas</p>
-                  <p className="text-2xl font-bold text-blue-600">{visitas.length}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {visitas.filter(v => {
-                      const fecha = new Date(v.fechaHoraInicio);
-                      return fecha.getFullYear() === new Date().getFullYear();
-                    }).length} este año
-                  </p>
+          {/* Métricas/KPIs */}
+          {visitas.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-blue-500 transition-all hover:shadow-md">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-slate-700">Total Visitas</h3>
+                  <div className="bg-blue-100 p-2 rounded-lg">
+                    <Calendar className="w-5 h-5 text-blue-600" />
+                  </div>
                 </div>
-                <Calendar className="w-8 h-8 text-blue-500 opacity-50" />
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-3xl font-bold text-gray-900">{paginacion.totalDocs}</span>
+                </div>
+                <p className="text-xs text-gray-600">
+                  {visitas.filter(v => {
+                    const fecha = new Date(v.fechaHoraInicio);
+                    return fecha.getFullYear() === new Date().getFullYear();
+                  }).length} este año
+                </p>
               </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Completadas</p>
-                  <p className="text-2xl font-bold text-green-600">
+              <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500 transition-all hover:shadow-md">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-slate-700">Completadas</h3>
+                  <div className="bg-green-100 p-2 rounded-lg">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                </div>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-3xl font-bold text-gray-900">
                     {visitas.filter(v => v.estado === 'completada').length}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {Math.round((visitas.filter(v => v.estado === 'completada').length / visitas.length) * 100)}% del total
-                  </p>
+                  </span>
                 </div>
-                <CheckCircle className="w-8 h-8 text-green-500 opacity-50" />
+                <p className="text-xs text-gray-600">
+                  {Math.round((visitas.filter(v => v.estado === 'completada').length / (visitas.length || 1)) * 100)}% del total
+                </p>
               </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Programadas</p>
-                  <p className="text-2xl font-bold text-yellow-600">
+              <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-yellow-500 transition-all hover:shadow-md">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-slate-700">Programadas</h3>
+                  <div className="bg-yellow-100 p-2 rounded-lg">
+                    <Clock className="w-5 h-5 text-yellow-600" />
+                  </div>
+                </div>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-3xl font-bold text-gray-900">
                     {visitas.filter(v => v.estado === 'programada').length}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Pendientes</p>
+                  </span>
                 </div>
-                <Clock className="w-8 h-8 text-yellow-500 opacity-50" />
+                <p className="text-xs text-gray-600">Pendientes</p>
               </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Total Tratamientos</p>
-                  <p className="text-2xl font-bold text-purple-600">
+              <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-purple-500 transition-all hover:shadow-md">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-slate-700">Tratamientos</h3>
+                  <div className="bg-purple-100 p-2 rounded-lg">
+                    <TrendingUp className="w-5 h-5 text-purple-600" />
+                  </div>
+                </div>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-3xl font-bold text-gray-900">
                     {visitas.reduce((sum, v) => sum + (v.tratamientosRealizados?.length || 0), 0)}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Realizados</p>
+                  </span>
                 </div>
-                <TrendingUp className="w-8 h-8 text-purple-500 opacity-50" />
+                <p className="text-xs text-gray-600">Realizados</p>
               </div>
             </div>
-          </div>
-          
-          {/* Estadísticas adicionales */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-indigo-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Documentos Adjuntos</p>
-                  <p className="text-xl font-bold text-indigo-600">
-                    {visitas.reduce((sum, v) => sum + (v.documentosAdjuntos?.length || 0), 0)}
-                  </p>
-                </div>
-                <FileText className="w-6 h-6 text-indigo-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-teal-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Pagos Asociados</p>
-                  <p className="text-xl font-bold text-teal-600">
-                    {visitas.reduce((sum, v) => sum + (v.pagosAsociados?.length || 0), 0)}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {visitas.reduce((sum, v) => sum + (v.pagosAsociados?.reduce((s, p) => s + p.monto, 0) || 0), 0).toFixed(2)} €
-                  </p>
-                </div>
-                <DollarSign className="w-6 h-6 text-teal-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-pink-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Profesionales</p>
-                  <p className="text-xl font-bold text-pink-600">
-                    {new Set(visitas.map(v => v.profesional._id)).size}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Únicos</p>
-                </div>
-                <User className="w-6 h-6 text-pink-500 opacity-50" />
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-cyan-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Visitas Recientes</p>
-                  <p className="text-xl font-bold text-cyan-600">
-                    {visitas.filter(v => {
-                      const fecha = new Date(v.fechaHoraInicio);
-                      const hace30Dias = new Date();
-                      hace30Dias.setDate(hace30Dias.getDate() - 30);
-                      return fecha >= hace30Dias;
-                    }).length}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">Últimos 30 días</p>
-                </div>
-                <Calendar className="w-6 h-6 text-cyan-500 opacity-50" />
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+          )}
 
-      {/* Timeline de visitas */}
-      <VisitasTimeline
-        visitas={visitas}
-        loading={loading}
-        onVerDetalleCompleto={handleVerDetalleCompleto}
-        onVerOdontograma={handleVerOdontograma}
-        onAdjuntarDocumento={handleAdjuntarDocumento}
-      />
+          {/* Timeline de visitas */}
+          <VisitasTimeline
+            visitas={visitas}
+            loading={loading}
+            onVerDetalleCompleto={handleVerDetalleCompleto}
+            onVerOdontograma={handleVerOdontograma}
+            onAdjuntarDocumento={handleAdjuntarDocumento}
+          />
 
-      {/* Paginación */}
-      {paginacion.totalPages > 1 && (
-        <div className="flex items-center justify-between bg-white rounded-lg shadow-md p-4">
-          <div className="text-sm text-gray-700">
-            Mostrando página {paginacion.page} de {paginacion.totalPages} ({paginacion.totalDocs}{' '}
-            visitas en total)
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => handlePageChange(paginacion.page - 1)}
-              disabled={paginacion.page === 1}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Anterior
-            </button>
-            <button
-              onClick={() => handlePageChange(paginacion.page + 1)}
-              disabled={paginacion.page === paginacion.totalPages}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Siguiente
-            </button>
-          </div>
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white rounded-xl shadow-sm p-4">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => handlePageChange(paginacion.page - 1)}
+                  disabled={paginacion.page === 1}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 hover:border-slate-300"
+                >
+                  Anterior
+                </button>
+                <span className="text-sm text-slate-600 px-4">
+                  Página {paginacion.page} de {paginacion.totalPages}
+                </span>
+                <button
+                  onClick={() => handlePageChange(paginacion.page + 1)}
+                  disabled={paginacion.page === paginacion.totalPages}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 hover:border-slate-300"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Modal de Odontograma Histórico */}
       {mostrarOdontograma && (

@@ -137,105 +137,122 @@ export default function PartesAveriaPage({ onVerDetalle }: PartesAveriaPageProps
 
   if (mostrarFormulario) {
     return (
-      <div className="p-6">
-        <FormularioCrearEditarParte
-          parte={parteEditando || undefined}
-          clinicaId={clinicas[0]?._id}
-          clinicas={clinicas}
-          reportadoPor={user?._id || user?.name || ''}
-          onGuardar={handleGuardarParte}
-          onCancelar={() => {
-            setMostrarFormulario(false);
-            setParteEditando(null);
-          }}
-          modoEdicion={!!parteEditando}
-        />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <FormularioCrearEditarParte
+            parte={parteEditando || undefined}
+            clinicaId={clinicas[0]?._id}
+            clinicas={clinicas}
+            reportadoPor={user?._id || user?.name || ''}
+            onGuardar={handleGuardarParte}
+            onCancelar={() => {
+              setMostrarFormulario(false);
+              setParteEditando(null);
+            }}
+            modoEdicion={!!parteEditando}
+          />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              <AlertCircle className="w-6 h-6 text-blue-600" />
-              Partes de Avería y Correctivos
-            </h1>
-            <p className="text-sm text-gray-600 mt-1">
-              Gestión integral de incidencias en el equipamiento de la clínica
-            </p>
-          </div>
+    <div className="space-y-6">
+      {/* Toolbar superior */}
+      <div className="flex items-center justify-end">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={cargarPartes}
+            disabled={loading}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+          >
+            <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+            Actualizar
+          </button>
           <button
             onClick={handleNuevoParte}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 rounded-xl shadow-sm"
           >
-            <Plus className="w-5 h-5" />
+            <Plus size={20} />
             Nuevo Parte
           </button>
         </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-800">
-          <AlertCircle className="w-5 h-5" />
-          <span>{error}</span>
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={cargarPartes}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 rounded-xl shadow-sm"
+          >
+            Reintentar
+          </button>
         </div>
       )}
 
-      <FiltrosBusquedaPartes
-        filtros={filtros}
-        onFiltrosChange={handleFiltrosChange}
-        clinicas={clinicas}
-        equipos={equipos}
-      />
+      {/* Filtros */}
+      {!error && (
+        <FiltrosBusquedaPartes
+          filtros={filtros}
+          onFiltrosChange={handleFiltrosChange}
+          clinicas={clinicas}
+          equipos={equipos}
+        />
+      )}
 
-      <div className="mb-4 flex items-center justify-between">
-        <div className="text-sm text-gray-600">
-          Mostrando {partes.length} de {paginacion.total} partes
+      {/* Controles de vista y resumen */}
+      {!error && (
+        <div className="bg-white shadow-sm rounded-xl p-4">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="text-sm text-slate-600">
+              Mostrando {partes.length} de {paginacion.total} partes
+            </div>
+          </div>
         </div>
-        <button
-          onClick={cargarPartes}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          <RefreshCw className="w-4 h-4" />
-          Actualizar
-        </button>
-      </div>
+      )}
 
-      <TablaPartesAveria
-        partes={partes}
-        loading={loading}
-        onVerDetalle={handleVerDetalleParte}
-        onEditar={handleEditarParte}
-        onEliminar={handleEliminarParte}
-      />
+      {/* Tabla */}
+      {!error && (
+        <TablaPartesAveria
+          partes={partes}
+          loading={loading}
+          onVerDetalle={handleVerDetalleParte}
+          onEditar={handleEditarParte}
+          onEliminar={handleEliminarParte}
+        />
+      )}
 
       {/* Paginación */}
-      {paginacion.totalPages > 1 && (
-        <div className="mt-4 flex items-center justify-center gap-2">
-          <button
-            onClick={() => handleCambiarPagina(paginacion.page - 1)}
-            disabled={paginacion.page === 1}
-            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            Anterior
-          </button>
-          <span className="px-4 py-2 text-sm text-gray-700">
-            Página {paginacion.page} de {paginacion.totalPages}
-          </span>
-          <button
-            onClick={() => handleCambiarPagina(paginacion.page + 1)}
-            disabled={paginacion.page >= paginacion.totalPages}
-            className="px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            Siguiente
-          </button>
+      {!error && paginacion.totalPages > 1 && (
+        <div className="bg-white shadow-sm rounded-xl p-4">
+          <div className="flex justify-center items-center gap-2">
+            <button
+              onClick={() => handleCambiarPagina(paginacion.page - 1)}
+              disabled={paginacion.page === 1}
+              className="px-3 py-1.5 text-sm font-medium rounded-xl border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Anterior
+            </button>
+            <span className="text-sm text-slate-700 px-3">
+              Página {paginacion.page} de {paginacion.totalPages}
+            </span>
+            <button
+              onClick={() => handleCambiarPagina(paginacion.page + 1)}
+              disabled={paginacion.page >= paginacion.totalPages}
+              className="px-3 py-1.5 text-sm font-medium rounded-xl border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Siguiente
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
+
 
 

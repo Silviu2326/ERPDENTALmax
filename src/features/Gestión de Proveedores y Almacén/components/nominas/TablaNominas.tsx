@@ -1,4 +1,4 @@
-import { Eye, CheckCircle2, DollarSign } from 'lucide-react';
+import { Eye, CheckCircle2, DollarSign, Loader2 } from 'lucide-react';
 import { Nomina } from '../../api/nominasApi';
 
 interface TablaNominasProps {
@@ -58,10 +58,10 @@ export default function TablaNominas({ nominas, loading, onVerDetalle }: TablaNo
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="p-8 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando nóminas...</p>
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando...</p>
         </div>
       </div>
     );
@@ -69,10 +69,10 @@ export default function TablaNominas({ nominas, loading, onVerDetalle }: TablaNo
 
   if (nominas.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 text-center">
-        <DollarSign className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 text-lg">No se encontraron nóminas</p>
-        <p className="text-gray-500 text-sm mt-2">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+        <DollarSign size={48} className="text-gray-400 mx-auto mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron nóminas</h3>
+        <p className="text-gray-600 mb-4">
           Utiliza el panel de control para calcular nóminas de un período
         </p>
       </div>
@@ -80,10 +80,10 @@ export default function TablaNominas({ nominas, loading, onVerDetalle }: TablaNo
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+          <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Empleado
@@ -154,9 +154,9 @@ export default function TablaNominas({ nominas, loading, onVerDetalle }: TablaNo
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <button
                     onClick={() => onVerDetalle(nomina)}
-                    className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-xl transition-all"
                   >
-                    <Eye className="w-4 h-4" />
+                    <Eye size={18} />
                     Ver Detalle
                   </button>
                 </td>
@@ -168,5 +168,6 @@ export default function TablaNominas({ nominas, loading, onVerDetalle }: TablaNo
     </div>
   );
 }
+
 
 

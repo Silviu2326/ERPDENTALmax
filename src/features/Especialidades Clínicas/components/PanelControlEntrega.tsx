@@ -66,14 +66,14 @@ export default function PanelControlEntrega({
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Control de Entrega</h3>
+      <div className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">Control de Entrega</h3>
 
         {/* Estado actual */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Estado Actual</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Estado Actual</label>
           <div
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 ${getEstadoColor(
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ring-1 ${getEstadoColor(
               detallesProtesis.estadoProtesis
             )}`}
           >
@@ -84,13 +84,13 @@ export default function PanelControlEntrega({
 
         {/* Información de entrega */}
         {yaEntregado && detallesProtesis.fechaEntregaReal && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
             <div className="flex items-center gap-2 text-green-800 mb-2">
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle size={20} />
               <span className="font-semibold">Prótesis Entregada</span>
             </div>
             <div className="flex items-center gap-2 text-green-700 text-sm">
-              <Calendar className="w-4 h-4" />
+              <Calendar size={16} />
               <span>
                 Fecha de entrega: {new Date(detallesProtesis.fechaEntregaReal).toLocaleDateString('es-ES', {
                   year: 'numeric',
@@ -110,7 +110,7 @@ export default function PanelControlEntrega({
 
         {/* Botón de confirmar entrega */}
         {!yaEntregado && (
-          <div className="border-t border-gray-200 pt-4">
+          <div className="border-t border-gray-100 pt-4">
             <p className="text-sm text-gray-600 mb-4">
               Cuando la prótesis haya sido aceptada por el paciente y esté lista para la entrega final,
               confirme la entrega para actualizar el estado del tratamiento.
@@ -118,9 +118,9 @@ export default function PanelControlEntrega({
             <button
               onClick={() => setMostrarModal(true)}
               disabled={guardando}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle size={20} />
               Confirmar Entrega de Prótesis
             </button>
           </div>
@@ -128,8 +128,8 @@ export default function PanelControlEntrega({
 
         {/* Información adicional */}
         {detallesProtesis.ordenLaboratorioId && (
-          <div className="mt-6 pt-4 border-t border-gray-200">
-            <p className="text-sm text-gray-600">
+          <div className="mt-6 pt-4 border-t border-gray-100">
+            <p className="text-sm text-slate-600">
               <span className="font-medium">ID Orden Laboratorio:</span> {detallesProtesis.ordenLaboratorioId}
             </p>
           </div>
@@ -151,5 +151,6 @@ export default function PanelControlEntrega({
     </>
   );
 }
+
 
 

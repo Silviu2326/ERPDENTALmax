@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Loader2, Calendar, FileImage } from 'lucide-react';
+import { Loader2, Calendar, FileImage, AlertCircle } from 'lucide-react';
 import { obtenerEstudiosPorPaciente, RadiografiaEstudio } from '../api/radiologiaApi';
 
 interface GaleriaEstudiosPacienteProps {
@@ -66,49 +66,52 @@ export default function GaleriaEstudiosPaciente({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="flex items-center justify-center h-64 bg-white rounded-xl">
+        <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-        <p className="text-red-800">{error}</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
       </div>
     );
   }
 
   if (estudios.length === 0) {
     return (
-      <div className="p-8 text-center text-gray-500">
-        <FileImage className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-        <p>No hay estudios radiológicos disponibles para este paciente</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <FileImage size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay estudios</h3>
+        <p className="text-gray-600">No hay estudios radiológicos disponibles para este paciente</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Estudios Radiológicos</h3>
-      <div className="grid grid-cols-1 gap-3">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">Estudios Radiológicos</h3>
+      <div className="space-y-3">
         {estudios.map((estudio) => (
           <button
             key={estudio._id}
             onClick={() => onSeleccionarEstudio(estudio._id)}
-            className={`text-left p-4 rounded-lg border-2 transition-all ${
+            className={`w-full text-left p-4 rounded-xl transition-all shadow-sm ${
               estudioSeleccionadoId === estudio._id
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                ? 'bg-blue-50 ring-2 ring-blue-500 border-blue-500'
+                : 'bg-white hover:bg-gray-50 ring-1 ring-slate-200 hover:ring-slate-300'
             }`}
           >
             <div className="flex items-start justify-between mb-2">
-              <span className={`px-2 py-1 rounded text-xs font-medium ${getTipoEstudioColor(estudio.tipoEstudio)}`}>
+              <span className={`px-2 py-1 rounded-lg text-xs font-medium ${getTipoEstudioColor(estudio.tipoEstudio)}`}>
                 {estudio.tipoEstudio}
               </span>
-              <div className="flex items-center gap-1 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
+              <div className="flex items-center gap-1 text-sm text-slate-600">
+                <Calendar size={16} />
                 <span>{formatearFecha(estudio.fechaEstudio)}</span>
               </div>
             </div>
@@ -116,7 +119,7 @@ export default function GaleriaEstudiosPaciente({
               <p className="text-sm text-gray-600 mt-2">{estudio.descripcion}</p>
             )}
             {estudio.series && estudio.series.length > 0 && (
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-slate-500 mt-2">
                 {estudio.series.length} serie{estudio.series.length !== 1 ? 's' : ''}
               </p>
             )}
@@ -126,5 +129,6 @@ export default function GaleriaEstudiosPaciente({
     </div>
   );
 }
+
 
 

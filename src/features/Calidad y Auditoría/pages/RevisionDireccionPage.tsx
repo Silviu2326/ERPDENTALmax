@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, RefreshCw, Target, DollarSign, Users, Calendar, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Plus, RefreshCw, Target, DollarSign, Users, Calendar, TrendingUp, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   obtenerKPIs,
@@ -149,77 +149,71 @@ export default function RevisionDireccionPage({ onVolver }: RevisionDireccionPag
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
-              )}
-              <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                  <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                    <Target className="w-8 h-8 text-white" />
-                  </div>
-                  Revisión por la Dirección
-                </h1>
-                <p className="text-gray-600 text-lg">
-                  Dashboard analítico de alto nivel para la toma de decisiones estratégicas
-                </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+                  >
+                    <ArrowLeft size={20} className="text-gray-600" />
+                  </button>
+                )}
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Target size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Revisión por la Dirección
+                  </h1>
+                  <p className="text-gray-600">
+                    Dashboard analítico de alto nivel para la toma de decisiones estratégicas
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handleRefresh}
-                disabled={refreshing || loading}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
-              >
-                <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin' : ''}`} />
-                <span>Actualizar</span>
-              </button>
-              <button
-                onClick={() => setMostrarModalPlan(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md hover:shadow-lg"
-              >
-                <Plus className="w-5 h-5" />
-                <span>Nuevo Plan de Acción</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleRefresh}
+                  disabled={refreshing || loading}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={20} className={refreshing ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+                <button
+                  onClick={() => setMostrarModalPlan(true)}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm"
+                >
+                  <Plus size={20} />
+                  <span>Nuevo Plan de Acción</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <DashboardFiltros
-          fechaInicio={fechaInicio}
-          fechaFin={fechaFin}
-          onFechaInicioChange={setFechaInicio}
-          onFechaFinChange={setFechaFin}
-          sedeId={sedeId}
-          onSedeChange={setSedeId}
-          sedes={sedes}
-          agrupacion={agrupacion}
-          onAgrupacionChange={setAgrupacion}
-        />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
 
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-              <p className="text-gray-600">Cargando datos del dashboard...</p>
-            </div>
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando datos del dashboard...</p>
           </div>
         ) : (
           <div className="space-y-6">
             {/* KPIs */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Indicadores Clave (KPIs)</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Indicadores Clave (KPIs)</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <KPICard
                   title="Ingresos Totales"
@@ -251,6 +245,19 @@ export default function RevisionDireccionPage({ onVolver }: RevisionDireccionPag
               </div>
             </div>
 
+            {/* Filtros */}
+            <DashboardFiltros
+              fechaInicio={fechaInicio}
+              fechaFin={fechaFin}
+              onFechaInicioChange={setFechaInicio}
+              onFechaFinChange={setFechaFin}
+              sedeId={sedeId}
+              onSedeChange={setSedeId}
+              sedes={sedes}
+              agrupacion={agrupacion}
+              onAgrupacionChange={setAgrupacion}
+            />
+
             {/* Gráficos */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <GraficoTendenciasFinancieras datos={tendencias} loading={loading} />
@@ -262,7 +269,7 @@ export default function RevisionDireccionPage({ onVolver }: RevisionDireccionPag
 
             {/* Planes de Acción */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Planes de Acción</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Planes de Acción</h2>
               <TablaPlanesDeAccion
                 planes={planesAccion}
                 loading={loading}
@@ -284,5 +291,6 @@ export default function RevisionDireccionPage({ onVolver }: RevisionDireccionPag
     </div>
   );
 }
+
 
 

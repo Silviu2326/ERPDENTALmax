@@ -1,4 +1,4 @@
-import { Eye, Edit, AlertTriangle, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Eye, Edit, AlertTriangle, CheckCircle, Clock, XCircle, Loader2, Package } from 'lucide-react';
 import { ControlEsterilizacion, ResultadoControl, TipoControl } from '../api/controlesApi';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -73,23 +73,25 @@ export default function TablaHistorialControles({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Cargando controles...</p>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando controles...</p>
       </div>
     );
   }
 
   if (controles.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <p className="text-gray-600">No se encontraron controles registrados</p>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron controles</h3>
+        <p className="text-gray-600">No hay controles registrados que coincidan con los filtros aplicados</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
@@ -142,7 +144,7 @@ export default function TablaHistorialControles({
                   {control.idUsuarioRegistro.nombre} {control.idUsuarioRegistro.apellidos}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex items-center justify-end space-x-2">
+                  <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => onVerDetalle(control)}
                       className="text-blue-600 hover:text-blue-900 transition-colors p-1.5 rounded hover:bg-blue-50"
@@ -169,5 +171,6 @@ export default function TablaHistorialControles({
     </div>
   );
 }
+
 
 

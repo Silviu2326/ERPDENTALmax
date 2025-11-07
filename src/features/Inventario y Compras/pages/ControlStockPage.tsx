@@ -897,94 +897,106 @@ export default function ControlStockPage({ onVerDetalle }: ControlStockPageProps
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-600 p-3 rounded-lg">
-                <Package className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Package size={24} className="text-blue-600" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Control de Stock</h1>
-                <p className="text-gray-600 mt-1">Gestión de inventario y materiales</p>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Control de Stock
+                </h1>
+                <p className="text-gray-600">
+                  Gestión de inventario y materiales
+                </p>
               </div>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={cargarStock}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2"
-              >
-                <RefreshCw className="w-5 h-5" />
-                Actualizar
-              </button>
-              <button
-                onClick={() => setMostrarModalNuevo(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                <Plus className="w-5 h-5" />
-                Nuevo Producto
-              </button>
             </div>
           </div>
         </div>
+      </div>
 
-        {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-            {error}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <button
+              onClick={cargarStock}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all"
+            >
+              <RefreshCw size={20} />
+              Actualizar
+            </button>
+            <button
+              onClick={() => setMostrarModalNuevo(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm ml-2"
+            >
+              <Plus size={20} />
+              Nuevo Producto
+            </button>
           </div>
-        )}
 
-        {/* Resumen */}
-        <CardResumenStock productos={productos} />
-
-        {/* Filtros */}
-        <FiltrosStock
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          categorias={categorias}
-          proveedores={proveedores}
-          sedes={sedes}
-        />
-
-        {/* Tabla */}
-        <TablaStockPrincipal
-          productos={productos}
-          loading={loading}
-          onVerDetalle={onVerDetalle}
-          onAjustarStock={handleAjustarStock}
-          onEditar={handleEditar}
-        />
-
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="mt-6 flex items-center justify-between bg-white rounded-lg shadow-md p-4">
-            <div className="text-sm text-gray-700">
-              Mostrando {((filtros.page || 1) - 1) * (filtros.limit || 20) + 1} a{' '}
-              {Math.min((filtros.page || 1) * (filtros.limit || 20), total)} de {total} productos
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
+              {error}
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) - 1 })}
-                disabled={filtros.page === 1 || loading}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <span className="px-4 py-2 text-gray-700">
-                Página {filtros.page || 1} de {totalPages}
-              </span>
-              <button
-                onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) + 1 })}
-                disabled={(filtros.page || 1) >= totalPages || loading}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
+          )}
+
+          {/* Resumen */}
+          <CardResumenStock productos={productos} />
+
+          {/* Filtros */}
+          <FiltrosStock
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            categorias={categorias}
+            proveedores={proveedores}
+            sedes={sedes}
+          />
+
+          {/* Tabla */}
+          <TablaStockPrincipal
+            productos={productos}
+            loading={loading}
+            onVerDetalle={onVerDetalle}
+            onAjustarStock={handleAjustarStock}
+            onEditar={handleEditar}
+          />
+
+          {/* Paginación */}
+          {totalPages > 1 && (
+            <div className="bg-white shadow-sm rounded-xl p-4">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) - 1 })}
+                  disabled={filtros.page === 1 || loading}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="px-4 py-2 text-sm text-slate-700">
+                  Página {filtros.page || 1} de {totalPages}
+                </span>
+                <button
+                  onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) + 1 })}
+                  disabled={(filtros.page || 1) >= totalPages || loading}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Siguiente
+                </button>
+              </div>
+              <div className="text-center mt-2 text-sm text-slate-600">
+                Mostrando {((filtros.page || 1) - 1) * (filtros.limit || 20) + 1} a{' '}
+                {Math.min((filtros.page || 1) * (filtros.limit || 20), total)} de {total} productos
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+      </div>
 
         {/* Modales */}
         {mostrarModalNuevo && (

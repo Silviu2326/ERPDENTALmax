@@ -1,4 +1,4 @@
-import { Edit, Trash2, Eye, Tag, Calendar, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Edit, Trash2, Eye, Tag, Calendar, CheckCircle, XCircle, Clock, Loader2, Package } from 'lucide-react';
 import { Promocion } from '../api/promocionesApi';
 
 interface ListaPromocionesProps {
@@ -54,18 +54,19 @@ export default function ListaPromociones({
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (promociones.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-        <Tag className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 font-medium">No hay promociones disponibles</p>
-        <p className="text-gray-500 text-sm mt-1">Crea una nueva promoción para comenzar</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay promociones disponibles</h3>
+        <p className="text-gray-600 mb-4">Crea una nueva promoción para comenzar</p>
       </div>
     );
   }
@@ -75,7 +76,7 @@ export default function ListaPromociones({
       {promociones.map((promocion) => (
         <div
           key={promocion._id}
-          className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+          className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 p-4 hover:shadow-md transition-shadow"
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -88,7 +89,7 @@ export default function ListaPromociones({
                 <p className="text-gray-600 text-sm mb-3 line-clamp-2">{promocion.descripcion}</p>
               )}
 
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                 <div className="flex items-center gap-1">
                   <Tag className="w-4 h-4" />
                   <span className="font-medium">{getTipoLabel(promocion.tipo)}</span>
@@ -112,13 +113,13 @@ export default function ListaPromociones({
                 </div>
 
                 {promocion.usosMaximos && (
-                  <div className="text-gray-600">
+                  <div className="text-slate-600">
                     Usos: {promocion.usosActuales || 0} / {promocion.usosMaximos}
                   </div>
                 )}
 
                 {promocion.codigo && (
-                  <div className="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs font-mono">
+                  <div className="px-2 py-1 bg-purple-50 text-purple-700 rounded-lg text-xs font-mono ring-1 ring-purple-200">
                     {promocion.codigo}
                   </div>
                 )}
@@ -127,12 +128,12 @@ export default function ListaPromociones({
               {(promocion.tratamientosAplicables?.length || promocion.productosAplicables?.length) && (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {promocion.tratamientosAplicables && promocion.tratamientosAplicables.length > 0 && (
-                    <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                    <span className="inline-flex items-center gap-1 text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-lg ring-1 ring-blue-200">
                       {promocion.tratamientosAplicables.length} tratamiento(s)
                     </span>
                   )}
                   {promocion.productosAplicables && promocion.productosAplicables.length > 0 && (
-                    <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                    <span className="inline-flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-1 rounded-lg ring-1 ring-green-200">
                       {promocion.productosAplicables.length} producto(s)
                     </span>
                   )}
@@ -143,21 +144,21 @@ export default function ListaPromociones({
             <div className="flex gap-2 ml-4">
               <button
                 onClick={() => onVerDetalle(promocion)}
-                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                 title="Ver detalle"
               >
                 <Eye className="w-5 h-5" />
               </button>
               <button
                 onClick={() => onEditar(promocion)}
-                className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                className="p-2 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
                 title="Editar"
               >
                 <Edit className="w-5 h-5" />
               </button>
               <button
                 onClick={() => onEliminar(promocion)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-all"
                 title="Eliminar"
               >
                 <Trash2 className="w-5 h-5" />
@@ -169,5 +170,6 @@ export default function ListaPromociones({
     </div>
   );
 }
+
 
 

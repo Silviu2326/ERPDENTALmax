@@ -79,44 +79,44 @@ export default function RegistroEvolucionPediatrica({
   });
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Evolución y Seguimiento</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Evolución y Seguimiento</h3>
         {!readonly && (
           <button
             onClick={() => setMostrarFormulario(!mostrarFormulario)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             Agregar Nota
           </button>
         )}
       </div>
 
       {mostrarFormulario && (
-        <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="mb-6 p-4 bg-slate-50 rounded-2xl ring-1 ring-slate-200">
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
+                <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                  <Calendar size={16} />
                   Fecha
                 </label>
                 <input
                   type="date"
                   value={nuevaNota.fecha}
                   onChange={(e) => setNuevaNota({ ...nuevaNota, fecha: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Tipo de Nota
                 </label>
                 <select
                   value={nuevaNota.tipo}
                   onChange={(e) => setNuevaNota({ ...nuevaNota, tipo: e.target.value as NotaEvolucion['tipo'] })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 >
                   <option value="consulta">Consulta</option>
                   <option value="control">Control</option>
@@ -126,22 +126,22 @@ export default function RegistroEvolucionPediatrica({
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-                <FileText className="w-4 h-4" />
+              <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                <FileText size={16} />
                 Nota de Evolución
               </label>
               <textarea
                 value={nuevaNota.nota}
                 onChange={(e) => setNuevaNota({ ...nuevaNota, nota: e.target.value })}
                 rows={5}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Describa los hallazgos, el tratamiento realizado y las recomendaciones dadas a los padres..."
               />
             </div>
             <div className="flex gap-2">
               <button
                 onClick={handleAgregar}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 Agregar Nota
               </button>
@@ -155,7 +155,7 @@ export default function RegistroEvolucionPediatrica({
                     profesionalId,
                   });
                 }}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-medium"
               >
                 Cancelar
               </button>
@@ -171,12 +171,12 @@ export default function RegistroEvolucionPediatrica({
           evolucionOrdenada.map((nota, index) => (
             <div
               key={nota._id || index}
-              className="p-4 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+              className="p-4 rounded-lg ring-1 ring-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors"
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <Calendar size={16} />
                     <span className="font-medium">
                       {new Date(nota.fecha).toLocaleDateString('es-ES', {
                         year: 'numeric',
@@ -190,13 +190,13 @@ export default function RegistroEvolucionPediatrica({
                   </span>
                 </div>
                 {nota.profesionalNombre && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <User className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <User size={16} />
                     <span>{nota.profesionalNombre}</span>
                   </div>
                 )}
               </div>
-              <p className="text-gray-700 whitespace-pre-wrap">{nota.nota}</p>
+              <p className="text-slate-700 whitespace-pre-wrap">{nota.nota}</p>
             </div>
           ))
         )}
@@ -204,5 +204,6 @@ export default function RegistroEvolucionPediatrica({
     </div>
   );
 }
+
 
 

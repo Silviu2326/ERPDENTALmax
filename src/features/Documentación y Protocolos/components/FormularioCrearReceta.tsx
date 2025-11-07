@@ -93,14 +93,14 @@ export default function FormularioCrearReceta({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Crear Nueva Receta</h2>
-        <p className="text-gray-600">Paciente: <span className="font-semibold">{pacienteNombre}</span></p>
+        <h2 className="text-xl font-bold text-gray-900 mb-2">Crear Nueva Receta</h2>
+        <p className="text-sm text-gray-600">Paciente: <span className="font-semibold">{pacienteNombre}</span></p>
       </div>
 
       {/* Formulario para agregar medicamento */}
-      <div className="bg-gray-50 rounded-lg p-6 mb-6">
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-6 mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           {indiceEdicion !== null ? 'Editar Medicamento' : 'Agregar Medicamento'}
         </h3>
@@ -113,7 +113,7 @@ export default function FormularioCrearReceta({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Dosis <span className="text-red-500">*</span>
               </label>
               <input
@@ -121,12 +121,12 @@ export default function FormularioCrearReceta({
                 value={dosis}
                 onChange={(e) => setDosis(e.target.value)}
                 placeholder="Ej: 500mg"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Frecuencia <span className="text-red-500">*</span>
               </label>
               <input
@@ -134,12 +134,12 @@ export default function FormularioCrearReceta({
                 value={frecuencia}
                 onChange={(e) => setFrecuencia(e.target.value)}
                 placeholder="Ej: Cada 8 horas"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Duración <span className="text-red-500">*</span>
               </label>
               <input
@@ -147,13 +147,13 @@ export default function FormularioCrearReceta({
                 value={duracion}
                 onChange={(e) => setDuracion(e.target.value)}
                 placeholder="Ej: 7 días"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Indicaciones Específicas (opcional)
             </label>
             <textarea
@@ -161,16 +161,16 @@ export default function FormularioCrearReceta({
               onChange={(e) => setIndicacionesEspecificas(e.target.value)}
               placeholder="Indicaciones específicas para este medicamento..."
               rows={2}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <button
             onClick={handleAgregarMedicamento}
             disabled={!medicamentoActual || !dosis || !frecuencia || !duracion}
-            className="w-full md:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Plus className="w-5 h-5" />
+            <Plus size={20} />
             <span>{indiceEdicion !== null ? 'Actualizar Medicamento' : 'Agregar a la Receta'}</span>
           </button>
 
@@ -184,9 +184,9 @@ export default function FormularioCrearReceta({
                 setDuracion('');
                 setIndicacionesEspecificas('');
               }}
-              className="w-full md:w-auto px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors flex items-center justify-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100"
             >
-              <X className="w-5 h-5" />
+              <X size={20} />
               <span>Cancelar Edición</span>
             </button>
           )}
@@ -199,7 +199,7 @@ export default function FormularioCrearReceta({
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Medicamentos en la Receta ({medicamentos.length})
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {medicamentos.map((medicamento, index) => (
               <ItemMedicamentoReceta
                 key={index}
@@ -216,7 +216,7 @@ export default function FormularioCrearReceta({
 
       {/* Indicaciones generales */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Indicaciones Generales (opcional)
         </label>
         <textarea
@@ -224,23 +224,23 @@ export default function FormularioCrearReceta({
           onChange={(e) => setIndicacionesGenerales(e.target.value)}
           placeholder="Instrucciones generales para el paciente sobre la receta completa..."
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
         />
       </div>
 
       {/* Botones de acción */}
-      <div className="flex items-center justify-end space-x-4 pt-4 border-t border-gray-200">
+      <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
         <button
           onClick={onCancelar}
           disabled={loading}
-          className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Cancelar
         </button>
         <button
           onClick={handleGuardarReceta}
           disabled={loading || medicamentos.length === 0}
-          className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>
@@ -249,7 +249,7 @@ export default function FormularioCrearReceta({
             </>
           ) : (
             <>
-              <Save className="w-5 h-5" />
+              <Save size={20} />
               <span>Guardar Receta</span>
             </>
           )}
@@ -258,5 +258,6 @@ export default function FormularioCrearReceta({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TrendingUp, DollarSign } from 'lucide-react';
+import { TrendingUp, Loader2, BarChart3 } from 'lucide-react';
 import { CostePorTratamiento } from '../api/analiticaApi';
 
 interface GraficoCosteMargenProps {
@@ -15,19 +15,19 @@ export default function GraficoCosteMargen({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <TrendingUp size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Coste y Margen por Tratamiento</h3>
-            <p className="text-sm text-gray-500">Análisis detallado de rentabilidad</p>
+            <h3 className="text-lg font-semibold text-gray-900">Coste y Margen por Tratamiento</h3>
+            <p className="text-sm text-gray-600">Análisis detallado de rentabilidad</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="text-gray-500 mt-4">Cargando datos...</p>
+          <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando datos...</p>
         </div>
       </div>
     );
@@ -35,18 +35,20 @@ export default function GraficoCosteMargen({
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <TrendingUp size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Coste y Margen por Tratamiento</h3>
-            <p className="text-sm text-gray-500">Análisis detallado de rentabilidad</p>
+            <h3 className="text-lg font-semibold text-gray-900">Coste y Margen por Tratamiento</h3>
+            <p className="text-sm text-gray-600">Análisis detallado de rentabilidad</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p>No hay datos disponibles</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <BarChart3 size={48} className="text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+          <p className="text-gray-600">No se encontraron tratamientos para el período seleccionado</p>
         </div>
       </div>
     );
@@ -64,14 +66,14 @@ export default function GraficoCosteMargen({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-lg">
-          <TrendingUp className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <TrendingUp size={20} className="text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-800">Coste y Margen por Tratamiento</h3>
-          <p className="text-sm text-gray-500">Análisis detallado de rentabilidad</p>
+          <h3 className="text-lg font-semibold text-gray-900">Coste y Margen por Tratamiento</h3>
+          <p className="text-sm text-gray-600">Análisis detallado de rentabilidad</p>
         </div>
       </div>
 
@@ -90,10 +92,10 @@ export default function GraficoCosteMargen({
               <div className="mb-2">
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-800">
+                    <span className="text-sm font-semibold text-gray-900">
                       {tratamiento.tratamientoNombre}
                     </span>
-                    <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                    <span className="text-xs px-2 py-1 bg-slate-100 text-slate-700 rounded-lg">
                       {tratamiento.areaClinica}
                     </span>
                   </div>
@@ -101,12 +103,12 @@ export default function GraficoCosteMargen({
                     <span className="text-sm font-medium text-green-600">
                       {formatearMoneda(tratamiento.margen)}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-600">
                       ({tratamiento.margenPorcentual.toFixed(1)}%)
                     </span>
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 space-x-3">
+                <div className="text-xs text-gray-600 space-x-3">
                   <span>{tratamiento.cantidadRealizados} realizados</span>
                   <span>•</span>
                   <span>Ingresos: {formatearMoneda(tratamiento.ingresos)}</span>
@@ -131,5 +133,6 @@ export default function GraficoCosteMargen({
     </div>
   );
 }
+
 
 

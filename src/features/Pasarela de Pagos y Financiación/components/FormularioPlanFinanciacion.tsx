@@ -94,9 +94,9 @@ export default function FormularioPlanFinanciacion({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="bg-white shadow-sm rounded-xl p-6 space-y-6">
       <div className="border-b border-gray-200 pb-4">
-        <h3 className="text-lg font-bold text-gray-900">
+        <h3 className="text-lg font-semibold text-gray-900">
           {plan ? 'Editar Plan de Financiación' : 'Nuevo Plan de Financiación'}
         </h3>
       </div>
@@ -104,15 +104,15 @@ export default function FormularioPlanFinanciacion({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Nombre */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre del Plan <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             value={formData.nombre}
             onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.nombre ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+              errors.nombre ? 'ring-red-500' : 'ring-slate-300'
             }`}
             placeholder="Ej: Plan Flexible 12 meses"
           />
@@ -126,19 +126,19 @@ export default function FormularioPlanFinanciacion({
 
         {/* Descripción */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Descripción</label>
           <input
             type="text"
             value={formData.descripcion}
             onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3"
             placeholder="Descripción opcional del plan"
           />
         </div>
 
         {/* Tasa de Interés Anual */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tasa de Interés Anual (TAE) % <span className="text-red-500">*</span>
           </label>
           <input
@@ -148,8 +148,8 @@ export default function FormularioPlanFinanciacion({
             max="100"
             value={formData.tasaInteresAnual}
             onChange={(e) => setFormData({ ...formData, tasaInteresAnual: parseFloat(e.target.value) || 0 })}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.tasaInteresAnual ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+              errors.tasaInteresAnual ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.tasaInteresAnual && (
@@ -162,7 +162,7 @@ export default function FormularioPlanFinanciacion({
 
         {/* Número de Cuotas Mínimo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Número de Cuotas Mínimo <span className="text-red-500">*</span>
           </label>
           <input
@@ -170,8 +170,8 @@ export default function FormularioPlanFinanciacion({
             min="1"
             value={formData.numeroCuotasMin}
             onChange={(e) => setFormData({ ...formData, numeroCuotasMin: parseInt(e.target.value) || 1 })}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.numeroCuotasMin ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+              errors.numeroCuotasMin ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.numeroCuotasMin && (
@@ -184,7 +184,7 @@ export default function FormularioPlanFinanciacion({
 
         {/* Número de Cuotas Máximo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Número de Cuotas Máximo <span className="text-red-500">*</span>
           </label>
           <input
@@ -192,8 +192,8 @@ export default function FormularioPlanFinanciacion({
             min="1"
             value={formData.numeroCuotasMax}
             onChange={(e) => setFormData({ ...formData, numeroCuotasMax: parseInt(e.target.value) || 12 })}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.numeroCuotasMax ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+              errors.numeroCuotasMax ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.numeroCuotasMax && (
@@ -206,7 +206,7 @@ export default function FormularioPlanFinanciacion({
 
         {/* Monto Mínimo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Monto Mínimo (€) <span className="text-red-500">*</span>
           </label>
           <input
@@ -215,8 +215,8 @@ export default function FormularioPlanFinanciacion({
             min="0"
             value={formData.montoMinimo}
             onChange={(e) => setFormData({ ...formData, montoMinimo: parseFloat(e.target.value) || 0 })}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.montoMinimo ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+              errors.montoMinimo ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.montoMinimo && (
@@ -229,7 +229,7 @@ export default function FormularioPlanFinanciacion({
 
         {/* Monto Máximo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Monto Máximo (€) <span className="text-red-500">*</span>
           </label>
           <input
@@ -238,8 +238,8 @@ export default function FormularioPlanFinanciacion({
             min="0"
             value={formData.montoMaximo}
             onChange={(e) => setFormData({ ...formData, montoMaximo: parseFloat(e.target.value) || 10000 })}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.montoMaximo ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+              errors.montoMaximo ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errors.montoMaximo && (
@@ -259,7 +259,7 @@ export default function FormularioPlanFinanciacion({
             onChange={(e) => setFormData({ ...formData, requiereEntrada: e.target.checked })}
             className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <label htmlFor="requiereEntrada" className="text-sm font-medium text-gray-700">
+          <label htmlFor="requiereEntrada" className="text-sm font-medium text-slate-700">
             Requiere Pago Inicial (Entrada)
           </label>
         </div>
@@ -267,7 +267,7 @@ export default function FormularioPlanFinanciacion({
         {/* Porcentaje de Entrada */}
         {formData.requiereEntrada && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Porcentaje de Entrada (%) <span className="text-red-500">*</span>
             </label>
             <input
@@ -277,8 +277,8 @@ export default function FormularioPlanFinanciacion({
               max="100"
               value={formData.porcentajeEntrada}
               onChange={(e) => setFormData({ ...formData, porcentajeEntrada: parseFloat(e.target.value) || 0 })}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                errors.porcentajeEntrada ? 'border-red-500' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3 ${
+                errors.porcentajeEntrada ? 'ring-red-500' : 'ring-slate-300'
               }`}
             />
             {errors.porcentajeEntrada && (
@@ -292,11 +292,11 @@ export default function FormularioPlanFinanciacion({
 
         {/* Estado */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Estado</label>
           <select
             value={formData.estado}
             onChange={(e) => setFormData({ ...formData, estado: e.target.value as 'activo' | 'inactivo' })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 py-2.5 px-3"
           >
             <option value="activo">Activo</option>
             <option value="inactivo">Inactivo</option>
@@ -305,27 +305,28 @@ export default function FormularioPlanFinanciacion({
       </div>
 
       {/* Botones */}
-      <div className="flex items-center justify-end space-x-4 pt-4 border-t border-gray-200">
+      <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
         <button
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70 border border-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <X className="w-5 h-5" />
+          <X size={20} />
           <span>Cancelar</span>
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save className="w-5 h-5" />
+          <Save size={20} />
           <span>{loading ? 'Guardando...' : plan ? 'Actualizar' : 'Crear'} Plan</span>
         </button>
       </div>
     </form>
   );
 }
+
 
 

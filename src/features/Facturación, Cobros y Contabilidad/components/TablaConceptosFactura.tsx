@@ -119,9 +119,9 @@ export default function TablaConceptosFactura({
         {!showAddForm && (
           <button
             onClick={() => setShowAddForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={18} />
             <span>Agregar Concepto</span>
           </button>
         )}
@@ -129,10 +129,10 @@ export default function TablaConceptosFactura({
 
       {/* Formulario para agregar nuevo concepto */}
       {showAddForm && (
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Descripción *
               </label>
               <input
@@ -141,12 +141,12 @@ export default function TablaConceptosFactura({
                 onChange={(e) =>
                   setNuevoConcepto({ ...nuevoConcepto, descripcion: e.target.value })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
                 placeholder="Descripción del concepto"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Cantidad *
               </label>
               <input
@@ -159,11 +159,11 @@ export default function TablaConceptosFactura({
                     cantidad: parseInt(e.target.value) || 1,
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Precio Unitario *
               </label>
               <input
@@ -177,17 +177,17 @@ export default function TablaConceptosFactura({
                     precioUnitario: parseFloat(e.target.value) || 0,
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Tipo IVA
               </label>
               <select
                 value={nuevoConcepto.tipoImpuesto || ''}
                 onChange={(e) => handleTipoImpuestoChange(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
               >
                 {tiposImpuesto.map((tipo) => (
                   <option key={tipo.tipo} value={tipo.tipo}>
@@ -196,10 +196,10 @@ export default function TablaConceptosFactura({
                 ))}
               </select>
             </div>
-            <div className="flex items-end space-x-2">
+            <div className="flex items-end gap-2">
               <button
                 onClick={handleAgregarConcepto}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm"
               >
                 Agregar
               </button>
@@ -215,9 +215,9 @@ export default function TablaConceptosFactura({
                     descuento: 0,
                   });
                 }}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70"
               >
-                <X className="w-4 h-4" />
+                <X size={18} />
               </button>
             </div>
           </div>
@@ -226,38 +226,38 @@ export default function TablaConceptosFactura({
 
       {/* Tabla de conceptos */}
       {conceptos.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-slate-500">
           <p>No hay conceptos agregados. Haz clic en "Agregar Concepto" para comenzar.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-slate-200 ring-1 ring-slate-200 rounded-xl overflow-hidden">
+            <thead className="bg-slate-50">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Descripción
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Cantidad
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Precio Unitario
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Descuento
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   IVA
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Total
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase">
+                <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-slate-200">
               {conceptos.map((concepto) => (
                 <tr key={concepto.id} className="hover:bg-gray-50">
                   {editingId === concepto.id ? (
@@ -269,7 +269,7 @@ export default function TablaConceptosFactura({
                           onChange={(e) =>
                             setEditConcepto({ ...editConcepto, descripcion: e.target.value })
                           }
-                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-1.5 text-sm"
                         />
                       </td>
                       <td className="px-4 py-3">
@@ -283,7 +283,7 @@ export default function TablaConceptosFactura({
                               cantidad: parseInt(e.target.value) || 1,
                             })
                           }
-                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-1.5 text-sm"
                         />
                       </td>
                       <td className="px-4 py-3">
@@ -298,7 +298,7 @@ export default function TablaConceptosFactura({
                               precioUnitario: parseFloat(e.target.value) || 0,
                             })
                           }
-                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-1.5 text-sm"
                         />
                       </td>
                       <td className="px-4 py-3">
@@ -313,14 +313,14 @@ export default function TablaConceptosFactura({
                               descuento: parseFloat(e.target.value) || 0,
                             })
                           }
-                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-1.5 text-sm"
                         />
                       </td>
                       <td className="px-4 py-3">
                         <select
                           value={editConcepto?.tipoImpuesto || ''}
                           onChange={(e) => handleTipoImpuestoChange(e.target.value)}
-                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-2 py-1.5 text-sm"
                         >
                           {tiposImpuesto.map((tipo) => (
                             <option key={tipo.tipo} value={tipo.tipo}>
@@ -329,20 +329,20 @@ export default function TablaConceptosFactura({
                           ))}
                         </select>
                       </td>
-                      <td className="px-4 py-3 text-sm font-medium">
+                      <td className="px-4 py-3 text-sm font-medium text-gray-900">
                         {calcularTotal(editConcepto).toFixed(2)} €
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex space-x-2">
+                        <div className="flex gap-2">
                           <button
                             onClick={handleGuardarEdicion}
-                            className="text-green-600 hover:text-green-800 text-sm"
+                            className="text-sm font-medium text-green-600 hover:text-green-800 transition-colors"
                           >
                             Guardar
                           </button>
                           <button
                             onClick={handleCancelarEdicion}
-                            className="text-red-600 hover:text-red-800 text-sm"
+                            className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors"
                           >
                             Cancelar
                           </button>
@@ -366,20 +366,20 @@ export default function TablaConceptosFactura({
                         {concepto.total.toFixed(2)} €
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex space-x-2">
+                        <div className="flex gap-2">
                           <button
                             onClick={() => handleEditar(concepto)}
-                            className="text-blue-600 hover:text-blue-800"
+                            className="text-blue-600 hover:text-blue-800 transition-colors"
                             title="Editar"
                           >
-                            <Edit2 className="w-4 h-4" />
+                            <Edit2 size={18} />
                           </button>
                           <button
                             onClick={() => handleEliminar(concepto.id)}
-                            className="text-red-600 hover:text-red-800"
+                            className="text-red-600 hover:text-red-800 transition-colors"
                             title="Eliminar"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 size={18} />
                           </button>
                         </div>
                       </td>
@@ -394,5 +394,6 @@ export default function TablaConceptosFactura({
     </div>
   );
 }
+
 
 

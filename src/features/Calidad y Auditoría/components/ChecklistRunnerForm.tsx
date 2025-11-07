@@ -70,18 +70,11 @@ export default function ChecklistRunnerForm({
   const sortedItems = [...template.items].sort((a, b) => a.order - b.order);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
-      <div className="border-b border-gray-200 pb-4">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">{template.name}</h2>
-        {template.description && (
-          <p className="text-gray-600">{template.description}</p>
-        )}
-      </div>
-
+    <div className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 p-6 space-y-6">
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600" />
-          <span className="text-red-700">{error}</span>
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
+          <AlertCircle size={20} className="text-red-600" />
+          <span className="text-red-700 text-sm">{error}</span>
         </div>
       )}
 
@@ -98,31 +91,31 @@ export default function ChecklistRunnerForm({
       </div>
 
       {sortedItems.length === 0 && (
-        <div className="text-center py-8 bg-gray-50 rounded-lg">
-          <p className="text-gray-500">Esta plantilla no tiene ítems definidos</p>
+        <div className="text-center py-8 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+          <p className="text-gray-600 text-sm">Esta plantilla no tiene ítems definidos</p>
         </div>
       )}
 
       {!disabled && (
         <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-slate-600">
             {sortedItems.filter((item) => item.isRequired).length} campos obligatorios
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <button
               onClick={() => handleSave('in-progress')}
               disabled={saving}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white rounded-xl ring-1 ring-slate-200 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save className="w-4 h-4" />
+              <Save size={20} />
               Guardar Borrador
             </button>
             <button
               onClick={() => handleSave('completed')}
               disabled={saving}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <CheckCircle2 className="w-4 h-4" />
+              <CheckCircle2 size={20} />
               Completar Auditoría
             </button>
           </div>
@@ -130,9 +123,9 @@ export default function ChecklistRunnerForm({
       )}
 
       {disabled && auditInstance?.status === 'completed' && (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
-          <CheckCircle2 className="w-5 h-5 text-green-600" />
-          <span className="text-green-700 font-medium">
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
+          <CheckCircle2 size={20} className="text-green-600" />
+          <span className="text-green-700 font-medium text-sm">
             Esta auditoría ha sido completada y está bloqueada para edición
           </span>
         </div>
@@ -140,5 +133,6 @@ export default function ChecklistRunnerForm({
     </div>
   );
 }
+
 
 

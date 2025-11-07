@@ -42,12 +42,12 @@ export default function PatientSegmentBuilder({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-gray-600" />
-          <h3 className="text-lg font-medium text-gray-900">Criterios de Segmentación</h3>
+          <Filter size={20} className="text-slate-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Criterios de Segmentación</h3>
         </div>
         {pacienteCount !== null && (
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-lg">
-            <Users className="w-4 h-4 text-blue-600" />
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <Users size={16} className="text-blue-600" />
             <span className="text-sm font-medium text-blue-900">
               {loadingCount ? 'Calculando...' : `${pacienteCount} pacientes`}
             </span>
@@ -56,23 +56,23 @@ export default function PatientSegmentBuilder({
       </div>
 
       {/* Filtro por última visita */}
-      <div className="border border-gray-200 rounded-lg p-4">
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-gray-600" />
-            <label className="text-sm font-medium text-gray-700">Última Visita</label>
+            <Calendar size={16} className="text-slate-600" />
+            <label className="block text-sm font-medium text-slate-700">Última Visita</label>
           </div>
           {segmentCriteria.lastVisitDate && (
             <button
               onClick={() => removeFilter('lastVisitDate')}
-              className="text-red-600 hover:text-red-800"
+              className="text-red-600 hover:text-red-800 transition-colors"
             >
-              <X className="w-4 h-4" />
+              <X size={16} />
             </button>
           )}
         </div>
         {segmentCriteria.lastVisitDate ? (
-          <div className="pl-6 text-sm text-gray-600">
+          <div className="pl-6 text-sm text-slate-600">
             <p>
               {segmentCriteria.lastVisitDate.operator === 'before' && 'Antes de'}
               {segmentCriteria.lastVisitDate.operator === 'after' && 'Después de'}
@@ -84,7 +84,7 @@ export default function PatientSegmentBuilder({
         ) : (
           <div className="space-y-2">
             <select
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 text-sm"
               value={segmentCriteria.lastVisitDate?.operator || ''}
               onChange={(e) => {
                 const operator = e.target.value as 'before' | 'after' | 'between';
@@ -105,7 +105,7 @@ export default function PatientSegmentBuilder({
               <div className="flex gap-2">
                 <input
                   type="date"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                  className="flex-1 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 text-sm"
                   value={
                     segmentCriteria.lastVisitDate.value
                       ? new Date(segmentCriteria.lastVisitDate.value).toISOString().split('T')[0]
@@ -124,7 +124,7 @@ export default function PatientSegmentBuilder({
                 {segmentCriteria.lastVisitDate.operator === 'between' && (
                   <input
                     type="date"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                    className="flex-1 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 text-sm"
                     value={
                       segmentCriteria.lastVisitDate.value2
                         ? new Date(segmentCriteria.lastVisitDate.value2).toISOString().split('T')[0]
@@ -148,23 +148,23 @@ export default function PatientSegmentBuilder({
       </div>
 
       {/* Filtro por saldo pendiente */}
-      <div className="border border-gray-200 rounded-lg p-4">
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-gray-600" />
-            <label className="text-sm font-medium text-gray-700">Saldo Pendiente</label>
+            <DollarSign size={16} className="text-slate-600" />
+            <label className="block text-sm font-medium text-slate-700">Saldo Pendiente</label>
           </div>
           {segmentCriteria.accountBalance && (
             <button
               onClick={() => removeFilter('accountBalance')}
-              className="text-red-600 hover:text-red-800"
+              className="text-red-600 hover:text-red-800 transition-colors"
             >
-              <X className="w-4 h-4" />
+              <X size={16} />
             </button>
           )}
         </div>
         {segmentCriteria.accountBalance ? (
-          <div className="pl-6 text-sm text-gray-600">
+          <div className="pl-6 text-sm text-slate-600">
             <p>
               {segmentCriteria.accountBalance.operator === 'greater' && 'Mayor que'}
               {segmentCriteria.accountBalance.operator === 'less' && 'Menor que'}
@@ -175,7 +175,7 @@ export default function PatientSegmentBuilder({
         ) : (
           <div className="space-y-2">
             <select
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 text-sm"
               value={segmentCriteria.accountBalance?.operator || ''}
               onChange={(e) => {
                 const operator = e.target.value as 'greater' | 'less' | 'equal';
@@ -196,7 +196,7 @@ export default function PatientSegmentBuilder({
               <input
                 type="number"
                 step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 text-sm"
                 placeholder="Monto"
                 value={segmentCriteria.accountBalance.value || ''}
                 onChange={(e) =>
@@ -216,5 +216,6 @@ export default function PatientSegmentBuilder({
     </div>
   );
 }
+
 
 

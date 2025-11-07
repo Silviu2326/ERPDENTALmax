@@ -34,12 +34,12 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200 space-y-6">
+    <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
       {/* Header con Estado */}
       <div className="flex items-center justify-between pb-4 border-b border-gray-200">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Orden de Fabricación</h2>
-          <p className="text-sm text-gray-500 mt-1">ID: {orden._id}</p>
+          <h2 className="text-xl font-bold text-gray-900">Orden de Fabricación</h2>
+          <p className="text-sm text-gray-600 mt-1">ID: {orden._id}</p>
         </div>
         <span
           className={`px-4 py-2 rounded-full text-sm font-semibold border ${getEstadoBadgeColor(
@@ -51,27 +51,27 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
       </div>
 
       {/* Información del Paciente */}
-      <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-        <div className="flex items-center space-x-2 mb-3">
-          <User className="w-5 h-5 text-blue-600" />
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <User size={18} className="text-blue-600" />
           <h3 className="text-lg font-semibold text-gray-900">Información del Paciente</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-600">Nombre Completo</p>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Nombre Completo</label>
             <p className="text-base font-medium text-gray-900">
               {orden.pacienteId?.nombre} {orden.pacienteId?.apellidos}
             </p>
           </div>
           {orden.pacienteId?.dni && (
             <div>
-              <p className="text-sm text-gray-600">DNI</p>
+              <label className="block text-sm font-medium text-slate-700 mb-2">DNI</label>
               <p className="text-base font-medium text-gray-900">{orden.pacienteId.dni}</p>
             </div>
           )}
           {orden.pacienteId?.telefono && (
             <div>
-              <p className="text-sm text-gray-600">Teléfono</p>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
               <p className="text-base font-medium text-gray-900">{orden.pacienteId.telefono}</p>
             </div>
           )}
@@ -79,21 +79,21 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
       </div>
 
       {/* Información del Laboratorio */}
-      <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-        <div className="flex items-center space-x-2 mb-3">
-          <Building2 className="w-5 h-5 text-purple-600" />
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Building2 size={18} className="text-blue-600" />
           <h3 className="text-lg font-semibold text-gray-900">Laboratorio</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-600">Nombre</p>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Nombre</label>
             <p className="text-base font-medium text-gray-900">
               {orden.laboratorioId?.nombre}
             </p>
           </div>
           {orden.laboratorioId?.telefono && (
             <div>
-              <p className="text-sm text-gray-600">Teléfono</p>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
               <p className="text-base font-medium text-gray-900">
                 {orden.laboratorioId.telefono}
               </p>
@@ -101,7 +101,7 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
           )}
           {orden.laboratorioId?.contacto && (
             <div>
-              <p className="text-sm text-gray-600">Contacto</p>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Contacto</label>
               <p className="text-base font-medium text-gray-900">
                 {orden.laboratorioId.contacto}
               </p>
@@ -111,28 +111,28 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
       </div>
 
       {/* Especificaciones de Fabricación */}
-      <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-        <div className="flex items-center space-x-2 mb-3">
-          <Package className="w-5 h-5 text-green-600" />
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Package size={18} className="text-blue-600" />
           <h3 className="text-lg font-semibold text-gray-900">Especificaciones</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-600">Tipo de Prótesis</p>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Prótesis</label>
             <p className="text-base font-medium text-gray-900">
               {orden.especificaciones?.tipoProtesis || 'N/A'}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-600">Material</p>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Material</label>
             <p className="text-base font-medium text-gray-900">
               {orden.especificaciones?.material || 'N/A'}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-600">Color</p>
-            <div className="flex items-center space-x-2">
-              <Palette className="w-4 h-4 text-gray-400" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">Color</label>
+            <div className="flex items-center gap-2">
+              <Palette size={16} className="text-slate-400" />
               <p className="text-base font-medium text-gray-900">
                 {orden.especificaciones?.color || 'N/A'}
               </p>
@@ -140,7 +140,7 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
           </div>
           {orden.tratamientoId && (
             <div>
-              <p className="text-sm text-gray-600">Tratamiento</p>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Tratamiento</label>
               <p className="text-base font-medium text-gray-900">
                 {orden.tratamientoId.nombre}
               </p>
@@ -148,8 +148,8 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
           )}
         </div>
         {orden.especificaciones?.notasAdicionales && (
-          <div className="mt-4 pt-4 border-t border-green-200">
-            <p className="text-sm text-gray-600 mb-1">Notas Adicionales</p>
+          <div className="mt-4 pt-4 border-t border-slate-200">
+            <label className="block text-sm font-medium text-slate-700 mb-2">Notas Adicionales</label>
             <p className="text-base text-gray-900 whitespace-pre-wrap">
               {orden.especificaciones.notasAdicionales}
             </p>
@@ -158,21 +158,21 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
       </div>
 
       {/* Fechas */}
-      <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-        <div className="flex items-center space-x-2 mb-3">
-          <Calendar className="w-5 h-5 text-gray-600" />
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Calendar size={18} className="text-blue-600" />
           <h3 className="text-lg font-semibold text-gray-900">Fechas</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-600">Fecha de Creación</p>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Fecha de Creación</label>
             <p className="text-base font-medium text-gray-900">
               {formatearFecha(orden.fechaCreacion)}
             </p>
           </div>
           {orden.fechaEntregaEstimada && (
             <div>
-              <p className="text-sm text-gray-600">Fecha de Entrega Estimada</p>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Fecha de Entrega Estimada</label>
               <p className="text-base font-medium text-gray-900">
                 {formatearFecha(orden.fechaEntregaEstimada)}
               </p>
@@ -183,19 +183,19 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
 
       {/* Archivos Adjuntos */}
       {orden.archivosAdjuntos && orden.archivosAdjuntos.length > 0 && (
-        <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-          <div className="flex items-center space-x-2 mb-3">
-            <FileText className="w-5 h-5 text-orange-600" />
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4">
+          <div className="flex items-center gap-2 mb-4">
+            <FileText size={18} className="text-blue-600" />
             <h3 className="text-lg font-semibold text-gray-900">Archivos Adjuntos</h3>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {orden.archivosAdjuntos.map((archivo, index) => (
               <div
                 key={archivo._id || index}
-                className="flex items-center justify-between p-3 bg-white rounded-lg border border-orange-200"
+                className="flex items-center justify-between p-3 bg-white rounded-xl ring-1 ring-slate-200"
               >
-                <div className="flex items-center space-x-3">
-                  <FileText className="w-5 h-5 text-orange-600" />
+                <div className="flex items-center gap-3">
+                  <FileText size={18} className="text-blue-600" />
                   <div>
                     <p className="text-sm font-medium text-gray-900">{archivo.nombre}</p>
                     {archivo.fechaSubida && (
@@ -210,7 +210,7 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
                     href={archivo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-orange-600 hover:text-orange-700 underline"
+                    className="text-sm text-blue-600 hover:text-blue-700 underline"
                   >
                     Ver
                   </a>
@@ -223,5 +223,6 @@ export default function FichaDetalleFabricacion({ orden }: FichaDetalleFabricaci
     </div>
   );
 }
+
 
 

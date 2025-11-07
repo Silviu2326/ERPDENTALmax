@@ -65,12 +65,12 @@ export default function UploaderArea({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       className={`
-        relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200
+        relative border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-200
         ${isDragging
-          ? 'border-blue-500 bg-blue-50 scale-105'
+          ? 'border-blue-500 bg-blue-50 scale-105 ring-2 ring-blue-200'
           : disabled
-          ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
-          : 'border-gray-300 bg-gray-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer'
+          ? 'border-slate-300 bg-slate-50 cursor-not-allowed opacity-50'
+          : 'border-slate-300 bg-slate-50 hover:border-blue-400 hover:bg-blue-50 cursor-pointer'
         }
       `}
     >
@@ -84,22 +84,22 @@ export default function UploaderArea({
       />
       
       <div className="flex flex-col items-center justify-center space-y-4">
-        <div className={`p-4 rounded-full ${isDragging ? 'bg-blue-100' : 'bg-gray-100'}`}>
+        <div className={`p-4 rounded-xl ${isDragging ? 'bg-blue-100' : 'bg-slate-100'}`}>
           {isDragging ? (
-            <Upload className="w-12 h-12 text-blue-600" />
+            <Upload size={48} className="text-blue-600" />
           ) : (
-            <FileImage className="w-12 h-12 text-gray-400" />
+            <FileImage size={48} className="text-slate-400" />
           )}
         </div>
         
         <div className="space-y-2">
-          <p className="text-lg font-semibold text-gray-700">
+          <p className="text-lg font-semibold text-gray-900">
             {isDragging ? 'Suelta los archivos aquí' : 'Arrastra y suelta imágenes aquí'}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-600">
             o haz clic para seleccionar archivos
           </p>
-          <p className="text-xs text-gray-400 mt-2">
+          <p className="text-xs text-slate-500 mt-2">
             Formatos soportados: JPEG, PNG, DICOM
           </p>
         </div>
@@ -107,5 +107,6 @@ export default function UploaderArea({
     </div>
   );
 }
+
 
 

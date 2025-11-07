@@ -123,8 +123,9 @@ export default function TablaLineasPedidoRecepcion({
 
   if (lineas.length === 0) {
     return (
-      <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-        <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+      <div className="text-center py-12 bg-white rounded-xl shadow-sm">
+        <Package size={48} className="text-gray-400 mx-auto mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay líneas de pedido</h3>
         <p className="text-gray-600">No hay líneas de pedido para mostrar</p>
       </div>
     );
@@ -133,24 +134,24 @@ export default function TablaLineasPedidoRecepcion({
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+        <thead className="bg-slate-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Producto
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Cantidad Pedida
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Pendiente
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Cantidad Recibida
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Lote
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Fecha Caducidad
             </th>
           </tr>
@@ -192,12 +193,12 @@ export default function TablaLineasPedidoRecepcion({
                       onChange={(e) =>
                         handleCantidadChange(index, parseInt(e.target.value) || 0)
                       }
-                      className={`w-24 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        tieneExceso ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      className={`w-24 rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+                        tieneExceso ? 'ring-red-300 bg-red-50' : 'ring-slate-300'
                       }`}
                     />
                     {tieneExceso && (
-                      <AlertCircle className="w-4 h-4 text-red-500" title="Excede la cantidad pendiente" />
+                      <AlertCircle size={16} className="text-red-500" title="Excede la cantidad pendiente" />
                     )}
                   </div>
                 </td>
@@ -207,7 +208,7 @@ export default function TablaLineasPedidoRecepcion({
                     value={getLote(linea)}
                     onChange={(e) => handleLoteChange(index, e.target.value)}
                     placeholder="Número de lote"
-                    className="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-32 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -215,7 +216,7 @@ export default function TablaLineasPedidoRecepcion({
                     type="date"
                     value={getFechaCaducidad(linea)}
                     onChange={(e) => handleFechaCaducidadChange(index, e.target.value)}
-                    className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   />
                 </td>
               </tr>
@@ -226,5 +227,6 @@ export default function TablaLineasPedidoRecepcion({
     </div>
   );
 }
+
 
 

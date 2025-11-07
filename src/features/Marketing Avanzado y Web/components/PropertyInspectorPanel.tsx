@@ -30,7 +30,7 @@ export default function PropertyInspectorPanel({
     return (
       <div className="p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Propiedades</h2>
-        <p className="text-sm text-gray-500">Selecciona un bloque para editar sus propiedades</p>
+        <p className="text-sm text-slate-600">Selecciona un bloque para editar sus propiedades</p>
       </div>
     );
   }
@@ -40,8 +40,8 @@ export default function PropertyInspectorPanel({
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Propiedades del Bloque</h2>
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Bloque</label>
-          <div className="px-3 py-2 bg-gray-100 rounded-lg text-sm text-gray-600">
+          <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Bloque</label>
+          <div className="px-3 py-2 bg-slate-100 rounded-xl text-sm text-slate-600 ring-1 ring-slate-200">
             {bloque.tipo}
           </div>
         </div>
@@ -49,20 +49,20 @@ export default function PropertyInspectorPanel({
         {bloque.tipo === 'texto' && (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Texto</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Texto</label>
               <textarea
                 value={bloque.contenido.texto || ''}
                 onChange={(e) => handleActualizarBloque({ texto: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 rows={6}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Alineación</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Alineación</label>
               <select
                 value={bloque.contenido.alineacion || 'left'}
                 onChange={(e) => handleActualizarBloque({ alineacion: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               >
                 <option value="left">Izquierda</option>
                 <option value="center">Centro</option>
@@ -75,22 +75,22 @@ export default function PropertyInspectorPanel({
         {bloque.tipo === 'imagen' && (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">URL de la Imagen</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">URL de la Imagen</label>
               <input
                 type="text"
                 value={bloque.contenido.url || ''}
                 onChange={(e) => handleActualizarBloque({ url: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="https://..."
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Alt Text</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Alt Text</label>
               <input
                 type="text"
                 value={bloque.contenido.alt || ''}
                 onChange={(e) => handleActualizarBloque({ alt: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Descripción de la imagen"
               />
             </div>
@@ -100,20 +100,20 @@ export default function PropertyInspectorPanel({
         {bloque.tipo === 'testimonial' && (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Nombre del Cliente</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Nombre del Cliente</label>
               <input
                 type="text"
                 value={bloque.contenido.nombre || ''}
                 onChange={(e) => handleActualizarBloque({ nombre: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Testimonio</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Testimonio</label>
               <textarea
                 value={bloque.contenido.texto || ''}
                 onChange={(e) => handleActualizarBloque({ texto: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 rows={4}
               />
             </div>
@@ -123,5 +123,6 @@ export default function PropertyInspectorPanel({
     </div>
   );
 }
+
 
 

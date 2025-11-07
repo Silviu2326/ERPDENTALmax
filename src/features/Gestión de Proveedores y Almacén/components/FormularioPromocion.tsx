@@ -160,7 +160,7 @@ export default function FormularioPromocion({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Nombre */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre <span className="text-red-500">*</span>
           </label>
           <input
@@ -168,8 +168,8 @@ export default function FormularioPromocion({
             name="nombre"
             value={formData.nombre}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.nombre ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+              errores.nombre ? 'ring-red-500' : 'ring-slate-300'
             }`}
             placeholder="Ej: Descuento Verano 2024"
           />
@@ -180,15 +180,15 @@ export default function FormularioPromocion({
 
         {/* Tipo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tipo <span className="text-red-500">*</span>
           </label>
           <select
             name="tipo"
             value={formData.tipo}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.tipo ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+              errores.tipo ? 'ring-red-500' : 'ring-slate-300'
             }`}
           >
             <option value="porcentaje">Porcentaje</option>
@@ -203,7 +203,7 @@ export default function FormularioPromocion({
 
         {/* Valor */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Valor <span className="text-red-500">*</span>
           </label>
           <input
@@ -213,12 +213,12 @@ export default function FormularioPromocion({
             onChange={handleChange}
             min="0"
             step={formData.tipo === 'porcentaje' ? '1' : '0.01'}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.valor ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+              errores.valor ? 'ring-red-500' : 'ring-slate-300'
             }`}
             placeholder={formData.tipo === 'porcentaje' ? '15' : '50.00'}
           />
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-slate-500">
             {formData.tipo === 'porcentaje' ? 'Porcentaje de descuento (0-100)' : 'Monto fijo en euros'}
           </p>
           {errores.valor && (
@@ -228,7 +228,7 @@ export default function FormularioPromocion({
 
         {/* Código promocional */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Código Promocional (opcional)
           </label>
           <input
@@ -236,14 +236,14 @@ export default function FormularioPromocion({
             name="codigo"
             value={formData.codigo}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             placeholder="VERANO2024"
           />
         </div>
 
         {/* Fecha Inicio */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Fecha Inicio <span className="text-red-500">*</span>
           </label>
           <input
@@ -251,8 +251,8 @@ export default function FormularioPromocion({
             name="fechaInicio"
             value={formData.fechaInicio}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.fechaInicio ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+              errores.fechaInicio ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errores.fechaInicio && (
@@ -262,7 +262,7 @@ export default function FormularioPromocion({
 
         {/* Fecha Fin */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Fecha Fin <span className="text-red-500">*</span>
           </label>
           <input
@@ -270,8 +270,8 @@ export default function FormularioPromocion({
             name="fechaFin"
             value={formData.fechaFin}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.fechaFin ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+              errores.fechaFin ? 'ring-red-500' : 'ring-slate-300'
             }`}
           />
           {errores.fechaFin && (
@@ -281,7 +281,7 @@ export default function FormularioPromocion({
 
         {/* Usos Máximos */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Usos Máximos (opcional)
           </label>
           <input
@@ -290,8 +290,8 @@ export default function FormularioPromocion({
             value={formData.usosMaximos || ''}
             onChange={handleChange}
             min="1"
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-              errores.usosMaximos ? 'border-red-500' : 'border-gray-300'
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+              errores.usosMaximos ? 'ring-red-500' : 'ring-slate-300'
             }`}
             placeholder="Sin límite"
           />
@@ -302,14 +302,14 @@ export default function FormularioPromocion({
 
         {/* Estado */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Estado
           </label>
           <select
             name="estado"
             value={formData.estado}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           >
             <option value="activa">Activa</option>
             <option value="inactiva">Inactiva</option>
@@ -320,7 +320,7 @@ export default function FormularioPromocion({
 
       {/* Descripción */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Descripción <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -328,8 +328,8 @@ export default function FormularioPromocion({
           value={formData.descripcion}
           onChange={handleChange}
           rows={3}
-          className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-            errores.descripcion ? 'border-red-500' : 'border-gray-300'
+          className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+            errores.descripcion ? 'ring-red-500' : 'ring-slate-300'
           }`}
           placeholder="Descripción detallada de la promoción..."
         />
@@ -340,7 +340,7 @@ export default function FormularioPromocion({
 
       {/* Condiciones */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Condiciones Adicionales (opcional)
         </label>
         <textarea
@@ -348,7 +348,7 @@ export default function FormularioPromocion({
           value={formData.condiciones}
           onChange={handleChange}
           rows={2}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           placeholder="Condiciones especiales, restricciones, etc."
         />
       </div>
@@ -362,17 +362,17 @@ export default function FormularioPromocion({
           onChange={handleChange}
           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
         />
-        <label className="ml-2 text-sm font-medium text-gray-700">
+        <label className="ml-2 text-sm font-medium text-slate-700">
           Solo aplicable para nuevos pacientes
         </label>
       </div>
 
       {/* Selector de tratamientos y productos */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Tratamientos y Productos Aplicables
         </label>
-        <p className="text-xs text-gray-500 mb-3">
+        <p className="text-xs text-slate-500 mb-3">
           Si no selecciona ninguno, la promoción aplicará a todos los tratamientos y productos
         </p>
         <SelectorTratamientosProductos
@@ -386,26 +386,27 @@ export default function FormularioPromocion({
       </div>
 
       {/* Botones */}
-      <div className="flex justify-end gap-3 pt-4 border-t">
+      <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
         <button
           type="button"
           onClick={onCancelar}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50"
         >
-          <X className="w-4 h-4 inline mr-2" />
+          <X size={18} />
           Cancelar
         </button>
         <button
           type="submit"
           disabled={saving || loading}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save className="w-4 h-4 inline mr-2" />
+          <Save size={18} />
           {saving ? 'Guardando...' : promocion ? 'Actualizar' : 'Crear'}
         </button>
       </div>
     </form>
   );
 }
+
 
 

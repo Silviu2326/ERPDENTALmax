@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, Edit, Trash2, Send, Package } from 'lucide-react';
+import { Eye, Edit, Trash2, Send, Package, Loader2 } from 'lucide-react';
 import { OrdenCompra } from '../api/ordenesCompraApi';
 import BadgeEstadoOrdenCompra from './BadgeEstadoOrdenCompra';
 
@@ -53,18 +53,19 @@ export default function TablaOrdenesCompra({
 
   if (loading) {
     return (
-      <div className="text-center py-12 text-gray-500">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        Cargando órdenes de compra...
+      <div className="p-8 text-center bg-white">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando órdenes de compra...</p>
       </div>
     );
   }
 
   if (ordenes.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500">
-        <Package className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-        <p>No hay órdenes de compra registradas</p>
+      <div className="p-8 text-center bg-white">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay órdenes de compra</h3>
+        <p className="text-gray-600">No se encontraron órdenes de compra registradas</p>
       </div>
     );
   }
@@ -199,5 +200,6 @@ export default function TablaOrdenesCompra({
     </div>
   );
 }
+
 
 

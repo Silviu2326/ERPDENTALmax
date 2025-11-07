@@ -37,8 +37,8 @@ export default function InventarioPorAlmacenList({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-gray-500">Cargando inventario...</div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <div className="text-gray-600">Cargando inventario...</div>
       </div>
     );
   }
@@ -47,78 +47,75 @@ export default function InventarioPorAlmacenList({
     <div className="space-y-4">
       {/* Barra de búsqueda */}
       {onBuscar && (
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            value={busqueda}
-            onChange={handleBusquedaChange}
-            placeholder="Buscar producto por nombre, SKU o categoría..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
+        <div className="bg-white shadow-sm rounded-xl p-4 space-y-4">
+          <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+              <input
+                type="text"
+                value={busqueda}
+                onChange={handleBusquedaChange}
+                placeholder="Buscar producto por nombre, SKU o categoría..."
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+              />
+            </div>
+          </div>
+          {/* Resumen */}
+          <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+            <span>{inventarioFiltrado.length} {inventarioFiltrado.length === 1 ? 'producto encontrado' : 'productos encontrados'}</span>
+            {busqueda.trim() && (
+              <span>Total en inventario: {inventario.length}</span>
+            )}
+          </div>
         </div>
       )}
 
-      {/* Resumen */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-600">Total de productos en inventario</p>
-            <p className="text-2xl font-bold text-gray-900">{inventario.length}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-600">Productos encontrados</p>
-            <p className="text-2xl font-bold text-blue-600">{inventarioFiltrado.length}</p>
-          </div>
-        </div>
-      </div>
-
       {/* Lista de productos */}
       {inventarioFiltrado.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg border border-gray-200">
-          <Package className="w-16 h-16 text-gray-300 mb-4" />
-          <p className="text-gray-500 text-lg font-medium">
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <Package size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
             {busqueda.trim() ? 'No se encontraron productos' : 'No hay productos en este almacén'}
-          </p>
+          </h3>
           {busqueda.trim() && (
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-gray-600 mb-4">
               Intenta con otro término de búsqueda
             </p>
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl ring-1 ring-slate-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                     Producto
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                     SKU
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
                     Categoría
                   </th>
-                  <th className="px-4 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-4 py-3 text-right text-xs font-semibold text-slate-700 uppercase tracking-wider">
                     Cantidad
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-slate-200">
                 {inventarioFiltrado.map((item) => (
-                  <tr key={item.producto._id} className="hover:bg-blue-50 transition-colors">
+                  <tr key={item.producto._id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <Package className="w-4 h-4 text-blue-600" />
+                        <Package size={16} className="text-blue-600" />
                         <span className="font-medium text-gray-900">{item.producto.nombre}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
+                    <td className="px-4 py-3 text-sm text-slate-600">
                       {item.producto.sku || '-'}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
+                    <td className="px-4 py-3 text-sm text-slate-600">
                       {item.producto.categoria || '-'}
                     </td>
                     <td className="px-4 py-3 text-right">

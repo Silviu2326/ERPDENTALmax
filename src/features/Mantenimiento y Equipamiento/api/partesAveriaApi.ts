@@ -247,3 +247,4 @@ export async function obtenerEquiposDisponibles(clinicaId?: string): Promise<Equ
 }
 
 
+

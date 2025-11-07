@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, Plus, Filter, RefreshCw } from 'lucide-react';
+import { Mail, Plus, Filter, RefreshCw, Search, X, AlertCircle } from 'lucide-react';
 import {
   EmailCampaign,
   obtenerCampanas,
@@ -23,6 +23,8 @@ export default function EmailCampaignsPage() {
     limit: 20,
     sortBy: 'createdAt',
   });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   useEffect(() => {
     if (viewMode === 'list') {
@@ -254,84 +256,174 @@ export default function EmailCampaignsPage() {
     );
   }
 
+  const activeFiltersCount = filters.status ? 1 : 0;
+
+  const handleClearFilters = () => {
+    setFilters({ ...filters, status: undefined, page: 1 });
+    setSearchQuery('');
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-            <Mail className="w-6 h-6 text-white" />
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Mail size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Campañas de Email
+                </h1>
+                <p className="text-gray-600">
+                  Gestiona y analiza tus campañas de marketing por email
+                </p>
+              </div>
+            </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Campañas de Email</h2>
-            <p className="text-gray-600 text-sm mt-1">
-              Gestiona y analiza tus campañas de marketing
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={cargarCampanas}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Actualizar
-          </button>
-          <button
-            onClick={handleCrearNueva}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-          >
-            <Plus className="w-4 h-4" />
-            Nueva Campaña
-          </button>
         </div>
       </div>
 
-      {/* Filtros */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Filtros:</span>
-          </div>
-          <select
-            value={filters.status || ''}
-            onChange={(e) =>
-              setFilters({ ...filters, status: e.target.value || undefined, page: 1 })
-            }
-            className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Todos los estados</option>
-            <option value="draft">Borrador</option>
-            <option value="scheduled">Programada</option>
-            <option value="sending">Enviando</option>
-            <option value="sent">Enviada</option>
-            <option value="failed">Fallida</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Tabla de campañas */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        {error ? (
-          <div className="p-6 text-center text-red-600">
-            <p>{error}</p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end gap-2">
             <button
               onClick={cargarCampanas}
-              className="mt-4 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+              disabled={loading}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Reintentar
+              <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+              Actualizar
+            </button>
+            <button
+              onClick={handleCrearNueva}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
+            >
+              <Plus size={20} />
+              Nueva Campaña
             </button>
           </div>
-        ) : (
-          <CampaignsListTable
-            campaigns={campaigns}
-            loading={loading}
-            onEdit={handleEditar}
-            onDelete={handleEliminar}
-            onViewReport={handleVerReporte}
-          />
-        )}
+
+          {/* Sistema de Filtros */}
+          <div className="bg-white shadow-sm rounded-lg p-0 overflow-hidden">
+            <div className="px-4 py-3 space-y-4">
+              {/* Barra de búsqueda */}
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="flex gap-4">
+                  {/* Input de búsqueda */}
+                  <div className="flex-1 relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                    <input
+                      type="text"
+                      placeholder="Buscar campañas..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5 text-sm"
+                    />
+                  </div>
+                  
+                  {/* Botón de filtros */}
+                  <button
+                    onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      showAdvancedFilters || activeFiltersCount > 0
+                        ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                        : 'bg-transparent text-slate-600 hover:bg-white/70'
+                    }`}
+                  >
+                    <Filter size={18} />
+                    Filtros
+                    {activeFiltersCount > 0 && (
+                      <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-blue-600 rounded-full">
+                        {activeFiltersCount}
+                      </span>
+                    )}
+                  </button>
+                  
+                  {/* Botón limpiar (si hay filtros activos) */}
+                  {activeFiltersCount > 0 && (
+                    <button
+                      onClick={handleClearFilters}
+                      className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:bg-white/70"
+                    >
+                      <X size={18} />
+                      Limpiar
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Panel de Filtros Avanzados */}
+              {showAdvancedFilters && (
+                <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Filtro de Estado */}
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <Filter size={16} className="inline mr-1" />
+                        Estado
+                      </label>
+                      <select
+                        value={filters.status || ''}
+                        onChange={(e) =>
+                          setFilters({ ...filters, status: e.target.value || undefined, page: 1 })
+                        }
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                      >
+                        <option value="">Todos los estados</option>
+                        <option value="draft">Borrador</option>
+                        <option value="scheduled">Programada</option>
+                        <option value="sending">Enviando</option>
+                        <option value="sent">Enviada</option>
+                        <option value="failed">Fallida</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Resumen de resultados */}
+              <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+                <span>{campaigns.length} {campaigns.length === 1 ? 'campaña encontrada' : 'campañas encontradas'}</span>
+                {activeFiltersCount > 0 && (
+                  <span>{activeFiltersCount} {activeFiltersCount === 1 ? 'filtro aplicado' : 'filtros aplicados'}</span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Tabla de campañas */}
+          <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+            {error ? (
+              <div className="p-8 text-center bg-white">
+                <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+                <p className="text-gray-600 mb-4">{error}</p>
+                <button
+                  onClick={cargarCampanas}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
+                >
+                  Reintentar
+                </button>
+              </div>
+            ) : (
+              <CampaignsListTable
+                campaigns={campaigns}
+                loading={loading}
+                onEdit={handleEditar}
+                onDelete={handleEliminar}
+                onViewReport={handleVerReporte}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

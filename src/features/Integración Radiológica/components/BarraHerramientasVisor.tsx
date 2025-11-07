@@ -26,95 +26,95 @@ export default function BarraHerramientasVisor({
   herramientaActiva,
 }: BarraHerramientasVisorProps) {
   return (
-    <div className="bg-white border-b border-gray-200 p-3 flex items-center gap-2 shadow-sm">
+    <div className="bg-white border-b border-gray-200/60 p-3 flex items-center gap-2 shadow-sm">
       {/* Controles de zoom */}
-      <div className="flex items-center gap-1 border-r pr-2">
+      <div className="flex items-center gap-1 border-r border-gray-200 pr-3">
         <button
           onClick={onZoomOut}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Alejar"
         >
-          <ZoomOut className="w-5 h-5 text-gray-700" />
+          <ZoomOut size={20} className="text-slate-700" />
         </button>
         <button
           onClick={onZoomIn}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Acercar"
         >
-          <ZoomIn className="w-5 h-5 text-gray-700" />
+          <ZoomIn size={20} className="text-slate-700" />
         </button>
         <button
           onClick={onReset}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Restablecer vista"
         >
-          <Maximize className="w-5 h-5 text-gray-700" />
+          <Maximize size={20} className="text-slate-700" />
         </button>
       </div>
 
       {/* Controles de rotación */}
-      <div className="flex items-center gap-1 border-r pr-2">
+      <div className="flex items-center gap-1 border-r border-gray-200 pr-3">
         <button
           onClick={onRotate}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Rotar 90°"
         >
-          <RotateCw className="w-5 h-5 text-gray-700" />
+          <RotateCw size={20} className="text-slate-700" />
         </button>
       </div>
 
       {/* Controles de contraste */}
-      <div className="flex items-center gap-1 border-r pr-2">
+      <div className="flex items-center gap-1 border-r border-gray-200 pr-3">
         <button
           onClick={() => onAjustarContraste(-10)}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Reducir contraste"
         >
-          <Minus className="w-5 h-5 text-gray-700" />
+          <Minus size={20} className="text-slate-700" />
         </button>
         <button
           onClick={() => onAjustarContraste(10)}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Aumentar contraste"
         >
-          <Plus className="w-5 h-5 text-gray-700" />
+          <Plus size={20} className="text-slate-700" />
         </button>
       </div>
 
       {/* Herramientas de anotación */}
-      <div className="flex items-center gap-1 border-r pr-2">
+      <div className="flex items-center gap-1 border-r border-gray-200 pr-3">
         <button
           onClick={onHerramientaMedicion}
-          className={`p-2 rounded-lg transition-colors ${
+          className={`p-2 rounded-xl transition-all ${
             herramientaActiva === 'medicion'
-              ? 'bg-blue-500 text-white'
-              : 'hover:bg-gray-100 text-gray-700'
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'hover:bg-slate-100 text-slate-700'
           }`}
           title="Herramienta de medición"
         >
-          <Ruler className="w-5 h-5" />
+          <Ruler size={20} />
         </button>
         <button
           onClick={onHerramientaAnotacion}
-          className={`p-2 rounded-lg transition-colors ${
+          className={`p-2 rounded-xl transition-all ${
             herramientaActiva === 'anotacion'
-              ? 'bg-blue-500 text-white'
-              : 'hover:bg-gray-100 text-gray-700'
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'hover:bg-slate-100 text-slate-700'
           }`}
           title="Herramienta de dibujo"
         >
-          <Pen className="w-5 h-5" />
+          <Pen size={20} />
         </button>
         <button
           onClick={onHerramientaTexto}
-          className={`p-2 rounded-lg transition-colors ${
+          className={`p-2 rounded-xl transition-all ${
             herramientaActiva === 'texto'
-              ? 'bg-blue-500 text-white'
-              : 'hover:bg-gray-100 text-gray-700'
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'hover:bg-slate-100 text-slate-700'
           }`}
           title="Añadir texto"
         >
-          <Type className="w-5 h-5" />
+          <Type size={20} />
         </button>
       </div>
 
@@ -122,14 +122,15 @@ export default function BarraHerramientasVisor({
       <div className="flex items-center gap-1 ml-auto">
         <button
           onClick={onVerMetadatos}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-all"
           title="Ver metadatos DICOM"
         >
-          <Info className="w-5 h-5 text-gray-700" />
+          <Info size={20} className="text-slate-700" />
         </button>
       </div>
     </div>
   );
 }
+
 
 

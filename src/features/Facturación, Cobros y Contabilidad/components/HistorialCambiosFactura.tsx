@@ -8,20 +8,20 @@ interface HistorialCambiosFacturaProps {
 export default function HistorialCambiosFactura({ historial }: HistorialCambiosFacturaProps) {
   if (!historial || historial.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center space-x-2 mb-4">
           <History className="w-5 h-5 text-gray-600" />
           <h3 className="text-lg font-semibold text-gray-900">Historial de Cambios</h3>
         </div>
-        <div className="text-center py-8 text-gray-500">
-          <p>No hay cambios registrados en esta factura</p>
+        <div className="text-center py-8">
+          <p className="text-sm text-gray-600">No hay cambios registrados en esta factura</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="flex items-center space-x-2 mb-4">
         <History className="w-5 h-5 text-gray-600" />
         <h3 className="text-lg font-semibold text-gray-900">Historial de Cambios</h3>
@@ -37,7 +37,7 @@ export default function HistorialCambiosFactura({ historial }: HistorialCambiosF
                     {cambio.usuario.nombre}
                   </span>
                 </div>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-slate-700">
                   <span className="font-semibold">Campo:</span> {cambio.campo}
                 </p>
                 <div className="mt-2 space-y-1">
@@ -70,5 +70,6 @@ export default function HistorialCambiosFactura({ historial }: HistorialCambiosF
     </div>
   );
 }
+
 
 

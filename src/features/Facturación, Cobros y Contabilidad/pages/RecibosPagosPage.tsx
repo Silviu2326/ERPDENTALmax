@@ -158,41 +158,55 @@ export default function RecibosPagosPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Receipt className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Receipt size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Recibos y Pagos
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión de cobros y recibos de pago
+                  </p>
+                </div>
+              </div>
+              
+              {/* Toolbar */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setMostrarModalRegistro(true)}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-green-600 text-white shadow-sm hover:bg-green-700 hover:shadow-md"
+                >
+                  <Plus size={20} />
+                  <span>Registrar Pago</span>
+                </button>
+                <button
+                  onClick={cargarPagos}
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Recibos y Pagos
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Gestión de cobros y recibos de pago
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={() => setMostrarModalRegistro(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Registrar Pago</span>
-            </button>
-            <button
-              onClick={cargarPagos}
-              disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
           </div>
         </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
 
         {/* Filtros */}
         <FiltrosPagosComponent
@@ -201,94 +215,94 @@ export default function RecibosPagosPage() {
           onLimpiar={handleLimpiarFiltros}
         />
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar los datos</p>
-            <p className="text-sm">{error}</p>
-          </div>
-        )}
-
-        {/* Resumen de KPIs */}
-        {!loading && pagos.length > 0 && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
-                    <Receipt className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Total Cobrado</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                    pagos.filter(p => p.estado === 'Completado').reduce((sum, p) => sum + p.monto, 0)
-                  )}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  {pagos.filter(p => p.estado === 'Completado').length} pagos completados
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-                    <Receipt className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Total Pagos</h3>
-                <p className="text-3xl font-bold text-gray-900">{totalPagos}</p>
-                <p className="text-xs text-gray-500 mt-2">
-                  En el período seleccionado
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white">
-                    <Receipt className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Ticket Medio</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                    pagos.filter(p => p.estado === 'Completado').length > 0
-                      ? pagos.filter(p => p.estado === 'Completado').reduce((sum, p) => sum + p.monto, 0) / pagos.filter(p => p.estado === 'Completado').length
-                      : 0
-                  )}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Por pago completado
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
-                    <Receipt className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Pagos Anulados</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {pagos.filter(p => p.estado === 'Anulado').length}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  {pagos.length > 0
-                    ? Math.round((pagos.filter(p => p.estado === 'Anulado').length / pagos.length) * 100)
-                    : 0}% del total
-                </p>
-              </div>
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+              <p className="font-medium">Error al cargar los datos</p>
+              <p className="text-sm">{error}</p>
             </div>
-            
-            {/* KPIs Adicionales y Análisis */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 text-white">
-                    <Receipt className="w-6 h-6" />
+          )}
+
+          {/* Resumen de KPIs */}
+          {!loading && pagos.length > 0 && (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-green-100 rounded-xl ring-1 ring-green-200/70">
+                      <Receipt size={20} className="text-green-600" />
+                    </div>
                   </div>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Total Cobrado</h3>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                      pagos.filter(p => p.estado === 'Completado').reduce((sum, p) => sum + p.monto, 0)
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    {pagos.filter(p => p.estado === 'Completado').length} pagos completados
+                  </p>
                 </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Pagos Hoy</h3>
+
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                      <Receipt size={20} className="text-blue-600" />
+                    </div>
+                  </div>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Total Pagos</h3>
+                  <p className="text-3xl font-bold text-gray-900">{totalPagos}</p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    En el período seleccionado
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-purple-100 rounded-xl ring-1 ring-purple-200/70">
+                      <Receipt size={20} className="text-purple-600" />
+                    </div>
+                  </div>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Ticket Medio</h3>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                      pagos.filter(p => p.estado === 'Completado').length > 0
+                        ? pagos.filter(p => p.estado === 'Completado').reduce((sum, p) => sum + p.monto, 0) / pagos.filter(p => p.estado === 'Completado').length
+                        : 0
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Por pago completado
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-yellow-100 rounded-xl ring-1 ring-yellow-200/70">
+                      <Receipt size={20} className="text-yellow-600" />
+                    </div>
+                  </div>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Pagos Anulados</h3>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {pagos.filter(p => p.estado === 'Anulado').length}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    {pagos.length > 0
+                      ? Math.round((pagos.filter(p => p.estado === 'Anulado').length / pagos.length) * 100)
+                      : 0}% del total
+                  </p>
+                </div>
+              </div>
+              
+              {/* KPIs Adicionales y Análisis */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-indigo-100 rounded-xl ring-1 ring-indigo-200/70">
+                      <Receipt size={20} className="text-indigo-600" />
+                    </div>
+                  </div>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Pagos Hoy</h3>
                 <p className="text-3xl font-bold text-gray-900">
                   {pagos.filter(p => {
                     const fechaPago = new Date(p.fechaPago);
@@ -307,13 +321,13 @@ export default function RecibosPagosPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 text-white">
-                    <Receipt className="w-6 h-6" />
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-pink-100 rounded-xl ring-1 ring-pink-200/70">
+                      <Receipt size={20} className="text-pink-600" />
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Método Más Usado</h3>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Método Más Usado</h3>
                 <p className="text-2xl font-bold text-gray-900">
                   {(() => {
                     const metodos = pagos.filter(p => p.estado === 'Completado').map(p => p.metodoPago);
@@ -328,13 +342,13 @@ export default function RecibosPagosPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 text-white">
-                    <Receipt className="w-6 h-6" />
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-teal-100 rounded-xl ring-1 ring-teal-200/70">
+                      <Receipt size={20} className="text-teal-600" />
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Pagos Esta Semana</h3>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Pagos Esta Semana</h3>
                 <p className="text-3xl font-bold text-gray-900">
                   {pagos.filter(p => {
                     const fechaPago = new Date(p.fechaPago);
@@ -348,13 +362,13 @@ export default function RecibosPagosPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 text-white">
-                    <Receipt className="w-6 h-6" />
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-2 bg-cyan-100 rounded-xl ring-1 ring-cyan-200/70">
+                      <Receipt size={20} className="text-cyan-600" />
+                    </div>
                   </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Tasa de Éxito</h3>
+                  <h3 className="text-slate-700 text-sm font-medium mb-2">Tasa de Éxito</h3>
                 <p className="text-3xl font-bold text-gray-900">
                   {pagos.length > 0
                     ? Math.round((pagos.filter(p => p.estado === 'Completado').length / pagos.length) * 100)
@@ -366,9 +380,9 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Análisis por Método de Pago */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Método de Pago</h3>
+              {/* Análisis por Método de Pago */}
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Método de Pago</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {(() => {
                   const metodos = pagos.filter(p => p.estado === 'Completado').map(p => p.metodoPago);
@@ -409,9 +423,9 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Gráfico de Evolución Temporal de Pagos */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución Temporal de Pagos</h3>
+              {/* Gráfico de Evolución Temporal de Pagos */}
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución Temporal de Pagos</h3>
               <div className="space-y-4">
                 {(() => {
                   // Agrupar pagos por semana
@@ -465,9 +479,9 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Análisis de Horarios de Pago */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Horario de Pago</h3>
+              {/* Análisis de Horarios de Pago */}
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Horario de Pago</h3>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {(() => {
                   const horarios = [
@@ -508,9 +522,9 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Análisis de Pagos por Responsable */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Pagos Registrados por Responsable</h3>
+              {/* Análisis de Pagos por Responsable */}
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Pagos Registrados por Responsable</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 {(() => {
                   const responsablesMap: { [key: string]: { nombre: string; total: number; cantidad: number } } = {};
@@ -550,9 +564,9 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Análisis de Pagos por Rango de Monto */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Rango de Monto</h3>
+              {/* Análisis de Pagos por Rango de Monto */}
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Rango de Monto</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 {(() => {
                   const rangos = [
@@ -595,9 +609,9 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Comparativa de Pagos por Mes */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Pagos - Últimos 6 Meses</h3>
+              {/* Comparativa de Pagos por Mes */}
+              <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Pagos - Últimos 6 Meses</h3>
               <div className="space-y-4">
                 {(() => {
                   const meses = [];
@@ -656,10 +670,10 @@ export default function RecibosPagosPage() {
               </div>
             </div>
 
-            {/* Análisis de Pagos por Día de la Semana */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Pagos por Día de la Semana</h3>
+              {/* Análisis de Pagos por Día de la Semana */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Pagos por Día de la Semana</h3>
                 <div className="grid grid-cols-7 gap-2">
                   {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((dia, index) => {
                     const pagosDia = pagos.filter(p => {
@@ -700,10 +714,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Top 10 Pacientes por Pagos */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Pacientes por Pagos Recibidos</h3>
+              {/* Top 10 Pacientes por Pagos */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Pacientes por Pagos Recibidos</h3>
                 <div className="space-y-2">
                   {(() => {
                     const pacientesMap: { [key: string]: { nombre: string; total: number; cantidad: number } } = {};
@@ -754,10 +768,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Análisis de Pagos Parciales vs Completos */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Pagos Parciales vs Completos</h3>
+              {/* Análisis de Pagos Parciales vs Completos */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Pagos Parciales vs Completos</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
                     const pagosCompletos = pagos.filter(p => {
@@ -837,10 +851,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Análisis de Pagos Recurrentes */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Pagos Recurrentes</h3>
+              {/* Análisis de Pagos Recurrentes */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Pagos Recurrentes</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
                     <p className="text-sm font-medium text-blue-800 mb-2">Pacientes Recurrentes</p>
@@ -863,10 +877,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Análisis de Pagos por Estado de Factura */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Pagos por Estado de Factura Asociada</h3>
+              {/* Análisis de Pagos por Estado de Factura */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Pagos por Estado de Factura Asociada</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
                     const estadosFactura = [
@@ -902,10 +916,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Análisis de Pagos por Día del Mes */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Pagos por Día del Mes Actual</h3>
+              {/* Análisis de Pagos por Día del Mes */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Pagos por Día del Mes Actual</h3>
                 <div className="grid grid-cols-7 md:grid-cols-10 lg:grid-cols-15 gap-1">
                   {(() => {
                     const dias = [];
@@ -947,10 +961,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Análisis de Pagos por Responsable de Registro */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Eficiencia de Registro por Responsable</h3>
+              {/* Análisis de Pagos por Responsable de Registro */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Eficiencia de Registro por Responsable</h3>
                 <div className="space-y-3">
                   {(() => {
                     const responsables = [
@@ -989,10 +1003,10 @@ export default function RecibosPagosPage() {
               </div>
             )}
 
-            {/* Análisis de Pagos por Día de la Semana - Comparativa */}
-            {!loading && pagos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Comparativa de Pagos: Día de la Semana vs Promedio</h3>
+              {/* Análisis de Pagos por Día de la Semana - Comparativa */}
+              {!loading && pagos.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-slate-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Comparativa de Pagos: Día de la Semana vs Promedio</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((dia, index) => {
@@ -1052,38 +1066,39 @@ export default function RecibosPagosPage() {
           </>
         )}
 
-        {/* Tabla de Pagos */}
-        <TablaPagos
-          pagos={pagos}
-          loading={loading}
-          onVerRecibo={handleVerRecibo}
-          onAnularPago={handleAnularPago}
-        />
+          {/* Tabla de Pagos */}
+          <TablaPagos
+            pagos={pagos}
+            loading={loading}
+            onVerRecibo={handleVerRecibo}
+            onAnularPago={handleAnularPago}
+          />
 
-        {/* Paginación */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between bg-white rounded-xl shadow-lg border border-gray-200 px-6 py-4">
-            <div className="text-sm text-gray-700">
-              Mostrando página {filtros.page || 1} de {totalPages} ({totalPagos} pagos en total)
+          {/* Paginación */}
+          {totalPages > 1 && (
+            <div className="bg-white rounded-xl shadow-sm p-4 ring-1 ring-slate-200">
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  onClick={() => handleCambiarPagina((filtros.page || 1) - 1)}
+                  disabled={(filtros.page || 1) <= 1}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="text-sm text-slate-600 px-4">
+                  Página {filtros.page || 1} de {totalPages} ({totalPagos} pagos)
+                </span>
+                <button
+                  onClick={() => handleCambiarPagina((filtros.page || 1) + 1)}
+                  disabled={(filtros.page || 1) >= totalPages}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Siguiente
+                </button>
+              </div>
             </div>
-            <div className="flex space-x-2">
-              <button
-                onClick={() => handleCambiarPagina((filtros.page || 1) - 1)}
-                disabled={(filtros.page || 1) <= 1}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Anterior
-              </button>
-              <button
-                onClick={() => handleCambiarPagina((filtros.page || 1) + 1)}
-                disabled={(filtros.page || 1) >= totalPages}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Modal de Registro de Pago */}

@@ -149,15 +149,11 @@ export default function MaintenancePlanForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">
-          {plan ? 'Editar Plan de Mantenimiento' : 'Nuevo Plan de Mantenimiento'}
-        </h3>
-
+      <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Nombre */}
           <div className="md:col-span-2">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
               Nombre del Plan *
             </label>
             <input
@@ -166,8 +162,8 @@ export default function MaintenancePlanForm({
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.name ? 'border-red-300' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 ${
+                errores.name ? 'ring-red-300' : 'ring-slate-300'
               }`}
               placeholder="Ej: Mantenimiento Preventivo Sillón Dental 1"
               required
@@ -177,7 +173,7 @@ export default function MaintenancePlanForm({
 
           {/* Descripción */}
           <div className="md:col-span-2">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="description" className="block text-sm font-medium text-slate-700 mb-2">
               Descripción
             </label>
             <textarea
@@ -186,14 +182,14 @@ export default function MaintenancePlanForm({
               value={formData.description}
               onChange={handleChange}
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
               placeholder="Descripción del plan de mantenimiento..."
             />
           </div>
 
           {/* Equipo */}
           <div>
-            <label htmlFor="equipment" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="equipment" className="block text-sm font-medium text-slate-700 mb-2">
               Equipo *
             </label>
             <select
@@ -201,8 +197,8 @@ export default function MaintenancePlanForm({
               name="equipment"
               value={formData.equipment}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.equipment ? 'border-red-300' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 ${
+                errores.equipment ? 'ring-red-300' : 'ring-slate-300'
               }`}
               required
               disabled={loadingEquipos}
@@ -221,7 +217,7 @@ export default function MaintenancePlanForm({
 
           {/* Responsable */}
           <div>
-            <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="assignedTo" className="block text-sm font-medium text-slate-700 mb-2">
               Responsable *
             </label>
             <select
@@ -229,8 +225,8 @@ export default function MaintenancePlanForm({
               name="assignedTo"
               value={formData.assignedTo}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.assignedTo ? 'border-red-300' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 ${
+                errores.assignedTo ? 'ring-red-300' : 'ring-slate-300'
               }`}
               required
             >
@@ -248,7 +244,7 @@ export default function MaintenancePlanForm({
 
           {/* Tipo de Frecuencia */}
           <div>
-            <label htmlFor="frequencyType" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="frequencyType" className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Frecuencia *
             </label>
             <select
@@ -256,7 +252,7 @@ export default function MaintenancePlanForm({
               name="frequencyType"
               value={formData.frequencyType}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
               required
             >
               <option value="DIARIO">Diario</option>
@@ -271,7 +267,7 @@ export default function MaintenancePlanForm({
           <div>
             <label
               htmlFor="frequencyValue"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-slate-700 mb-2"
             >
               Valor de Frecuencia *
             </label>
@@ -282,12 +278,12 @@ export default function MaintenancePlanForm({
               value={formData.frequencyValue}
               onChange={handleChange}
               min="1"
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errores.frequencyValue ? 'border-red-300' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5 ${
+                errores.frequencyValue ? 'ring-red-300' : 'ring-slate-300'
               }`}
               required
             />
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-slate-500">
               Cada cuántos períodos (ej: cada 2 meses, cada 3 semanas)
             </p>
             {errores.frequencyValue && (
@@ -297,7 +293,7 @@ export default function MaintenancePlanForm({
 
           {/* Tareas */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tareas de Mantenimiento *
             </label>
             <div className="space-y-2">
@@ -307,14 +303,14 @@ export default function MaintenancePlanForm({
                     type="text"
                     value={task}
                     onChange={(e) => handleTaskChange(index, e.target.value)}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
                     placeholder="Ej: Lubricar turbina, Verificar presión de compresor..."
                   />
                   {formData.tasks.length > 1 && (
                     <button
                       type="button"
                       onClick={() => eliminarTarea(index)}
-                      className="px-3 py-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors"
+                      className="inline-flex items-center justify-center px-3 py-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-xl transition-all ring-1 ring-red-200"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -324,7 +320,7 @@ export default function MaintenancePlanForm({
               <button
                 type="button"
                 onClick={agregarTarea}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-xl transition-all ring-1 ring-blue-200"
               >
                 <Plus className="w-4 h-4" />
                 Agregar Tarea
@@ -336,11 +332,11 @@ export default function MaintenancePlanForm({
       </div>
 
       {/* Botones de acción */}
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-2">
         <button
           type="button"
           onClick={onCancel}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading}
         >
           <X className="w-4 h-4" />
@@ -348,7 +344,7 @@ export default function MaintenancePlanForm({
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading}
         >
           {loading ? (

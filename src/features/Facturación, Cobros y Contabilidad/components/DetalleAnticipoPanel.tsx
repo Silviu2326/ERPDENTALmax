@@ -33,7 +33,7 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
 
   const getMetodoPagoBadge = (metodo: string) => {
     const colores = {
-      Efectivo: 'bg-gray-100 text-gray-800',
+      Efectivo: 'bg-slate-100 text-slate-800',
       Tarjeta: 'bg-purple-100 text-purple-800',
       Transferencia: 'bg-indigo-100 text-indigo-800',
     };
@@ -47,12 +47,12 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+    <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-gray-900">Detalle del Anticipo</h3>
         <button
           onClick={onCerrar}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-gray-400 hover:text-gray-600 transition-all rounded-lg p-1.5 hover:bg-gray-100"
         >
           <XCircle className="w-6 h-6" />
         </button>
@@ -68,10 +68,10 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
         </div>
 
         {/* Monto */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+        <div className="bg-blue-50 rounded-xl p-4 ring-1 ring-blue-200">
           <div className="flex items-center space-x-3">
-            <div className="bg-blue-600 p-3 rounded-lg">
-              <DollarSign className="w-6 h-6 text-white" />
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <DollarSign className="w-5 h-5 text-blue-600" />
             </div>
             <div>
               <p className="text-sm text-gray-600">Monto del Anticipo</p>
@@ -84,11 +84,11 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
 
         {/* Información del Paciente */}
         <div className="border-t border-gray-200 pt-4">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-            <User className="w-4 h-4" />
+          <h4 className="text-sm font-medium text-slate-700 mb-3 flex items-center">
+            <User size={16} className="mr-1" />
             <span>Paciente</span>
           </h4>
-          <div className="bg-gray-50 rounded-lg p-3">
+          <div className="bg-slate-50 rounded-xl p-3">
             <p className="font-medium text-gray-900">
               {anticipo.paciente.nombre} {anticipo.paciente.apellidos}
             </p>
@@ -102,8 +102,8 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
 
         {/* Información de Fecha */}
         <div className="border-t border-gray-200 pt-4">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-            <Calendar className="w-4 h-4" />
+          <h4 className="text-sm font-medium text-slate-700 mb-3 flex items-center">
+            <Calendar size={16} className="mr-1" />
             <span>Fecha de Registro</span>
           </h4>
           <p className="text-gray-900">{fechaFormateada}</p>
@@ -112,11 +112,11 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
         {/* Plan de Tratamiento (si existe) */}
         {anticipo.planTratamiento && (
           <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-              <Receipt className="w-4 h-4" />
+            <h4 className="text-sm font-medium text-slate-700 mb-3 flex items-center">
+              <Receipt size={16} className="mr-1" />
               <span>Plan de Tratamiento</span>
             </h4>
-            <div className="bg-gray-50 rounded-lg p-3">
+            <div className="bg-slate-50 rounded-xl p-3">
               <p className="text-gray-900">{anticipo.planTratamiento.nombre}</p>
             </div>
           </div>
@@ -125,11 +125,11 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
         {/* Factura Aplicada (si existe) */}
         {anticipo.facturaAplicada && (
           <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-              <Receipt className="w-4 h-4" />
+            <h4 className="text-sm font-medium text-slate-700 mb-3 flex items-center">
+              <Receipt size={16} className="mr-1" />
               <span>Factura Aplicada</span>
             </h4>
-            <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+            <div className="bg-blue-50 rounded-xl p-3 ring-1 ring-blue-200">
               <p className="font-medium text-blue-900">
                 Factura #{anticipo.facturaAplicada.numeroFactura}
               </p>
@@ -140,11 +140,11 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
         {/* Observaciones */}
         {anticipo.observacion && (
           <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-              <FileText className="w-4 h-4" />
+            <h4 className="text-sm font-medium text-slate-700 mb-3 flex items-center">
+              <FileText size={16} className="mr-1" />
               <span>Observaciones</span>
             </h4>
-            <div className="bg-gray-50 rounded-lg p-3">
+            <div className="bg-slate-50 rounded-xl p-3">
               <p className="text-gray-700 whitespace-pre-wrap">{anticipo.observacion}</p>
             </div>
           </div>
@@ -174,5 +174,6 @@ export default function DetalleAnticipoPanel({ anticipo, onCerrar }: DetalleAnti
     </div>
   );
 }
+
 
 

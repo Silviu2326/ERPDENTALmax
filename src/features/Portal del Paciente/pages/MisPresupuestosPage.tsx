@@ -60,3 +60,4 @@ export default function MisPresupuestosPage({ onVolver, onVerDetalle }: MisPresu
 }
 
 
+

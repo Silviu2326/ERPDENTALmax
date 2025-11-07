@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, Edit, Trash2, Calendar, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Eye, Edit, Trash2, Calendar, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { MaintenancePlan } from '../api/maintenanceApi';
 
 interface MaintenancePlanListProps {
@@ -43,7 +43,7 @@ export default function MaintenancePlanList({
 
     if (!plan.isActive) {
       return (
-        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 border border-gray-300">
+        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 ring-1 ring-gray-300">
           Inactivo
         </span>
       );
@@ -51,21 +51,21 @@ export default function MaintenancePlanList({
 
     if (diffDays < 0) {
       return (
-        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800 border border-red-300 flex items-center gap-1">
+        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800 ring-1 ring-red-300 flex items-center gap-1">
           <AlertCircle className="w-3 h-3" />
           Vencido
         </span>
       );
     } else if (diffDays <= 7) {
       return (
-        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center gap-1">
+        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 ring-1 ring-yellow-300 flex items-center gap-1">
           <AlertCircle className="w-3 h-3" />
           Próximo ({diffDays} días)
         </span>
       );
     } else {
       return (
-        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 border border-green-300 flex items-center gap-1">
+        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 ring-1 ring-green-300 flex items-center gap-1">
           <CheckCircle2 className="w-3 h-3" />
           Al día
         </span>
@@ -75,59 +75,60 @@ export default function MaintenancePlanList({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (plans.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-        <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-500 text-lg font-medium">No hay planes de mantenimiento</p>
-        <p className="text-gray-400 text-sm mt-2">Crea tu primer plan para comenzar</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay planes de mantenimiento</h3>
+        <p className="text-gray-600">Crea tu primer plan para comenzar</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Plan
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Equipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Frecuencia
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Próximo Mantenimiento
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Responsable
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {plans.map((plan) => (
-              <tr key={plan._id} className="hover:bg-gray-50 transition-colors">
+              <tr key={plan._id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
                     <div className="text-sm font-medium text-gray-900">{plan.name}</div>
                     {plan.description && (
-                      <div className="text-sm text-gray-500 mt-1">{plan.description}</div>
+                      <div className="text-sm text-gray-600 mt-1">{plan.description}</div>
                     )}
                   </div>
                 </td>
@@ -135,7 +136,7 @@ export default function MaintenancePlanList({
                   <div className="text-sm text-gray-900">
                     {plan.equipment.nombre}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-600">
                     {plan.equipment.marca} {plan.equipment.modelo}
                   </div>
                 </td>
@@ -163,7 +164,7 @@ export default function MaintenancePlanList({
                     {onVerDetalle && (
                       <button
                         onClick={() => onVerDetalle(plan)}
-                        className="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50 transition-colors"
+                        className="text-blue-600 hover:text-blue-900 p-2 rounded-xl hover:bg-blue-50 transition-all"
                         title="Ver detalle"
                       >
                         <Eye className="w-4 h-4" />
@@ -172,7 +173,7 @@ export default function MaintenancePlanList({
                     {onEditar && (
                       <button
                         onClick={() => onEditar(plan)}
-                        className="text-indigo-600 hover:text-indigo-900 p-2 rounded-lg hover:bg-indigo-50 transition-colors"
+                        className="text-blue-600 hover:text-blue-900 p-2 rounded-xl hover:bg-blue-50 transition-all"
                         title="Editar"
                       >
                         <Edit className="w-4 h-4" />
@@ -181,7 +182,7 @@ export default function MaintenancePlanList({
                     {onEliminar && (
                       <button
                         onClick={() => onEliminar(plan)}
-                        className="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50 transition-colors"
+                        className="text-red-600 hover:text-red-900 p-2 rounded-xl hover:bg-red-50 transition-all"
                         title="Eliminar"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -197,5 +198,6 @@ export default function MaintenancePlanList({
     </div>
   );
 }
+
 
 

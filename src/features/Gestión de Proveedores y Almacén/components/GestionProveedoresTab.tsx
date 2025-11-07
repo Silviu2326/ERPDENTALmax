@@ -9,6 +9,7 @@ import FiltrosBusquedaProveedores from './FiltrosBusquedaProveedores';
 import ProveedoresTable from './ProveedoresTable';
 import ProveedorForm from './ProveedorForm';
 import ModalDetalleProveedor from './ModalDetalleProveedor';
+import MetricCards from './MetricCards';
 
 export default function GestionProveedoresTab() {
   const [proveedores, setProveedores] = useState<Proveedor[]>([]);
@@ -578,50 +579,51 @@ export default function GestionProveedoresTab() {
   };
 
   return (
-    <div className="p-6">
-      {/* Header con acciones */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-600">
-            <span className="font-semibold text-gray-900">{paginacion.total}</span> proveedores encontrados
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={exportarCSV}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
-            >
-              Exportar CSV
-            </button>
-            <button
-              onClick={handleNuevoProveedor}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Nuevo Proveedor</span>
-            </button>
-          </div>
-        </div>
-
-        {/* KPIs */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Activos</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{totalActivos}</div>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Inactivos</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{totalInactivos}</div>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Categorías cubiertas</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{categoriasUnicas.length}</div>
-          </div>
-        </div>
+    <div className="space-y-6">
+      {/* Toolbar Superior */}
+      <div className="flex items-center justify-end">
+        <button
+          onClick={handleNuevoProveedor}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+        >
+          <Plus size={20} className="mr-2" />
+          Nuevo Proveedor
+        </button>
       </div>
+
+      {/* KPIs/Métricas */}
+      <MetricCards
+        data={[
+          {
+            id: 'activos',
+            title: 'Activos',
+            value: totalActivos,
+            color: 'success',
+          },
+          {
+            id: 'inactivos',
+            title: 'Inactivos',
+            value: totalInactivos,
+            color: 'warning',
+          },
+          {
+            id: 'categorias',
+            title: 'Categorías cubiertas',
+            value: categoriasUnicas.length,
+            color: 'info',
+          },
+          {
+            id: 'total',
+            title: 'Total proveedores',
+            value: paginacion.total,
+            color: 'info',
+          },
+        ]}
+      />
 
       {/* Mensaje de error */}
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
           <p className="text-red-700">{error}</p>
           <button
@@ -647,13 +649,8 @@ export default function GestionProveedoresTab() {
 
       {/* Paginación */}
       {paginacion.totalPages > 1 && (
-        <div className="mt-6 flex items-center justify-between bg-white rounded-lg shadow-md p-4">
-          <div className="text-sm text-gray-700">
-            Mostrando {((filtros.page || 1) - 1) * (filtros.limit || 20) + 1} a{' '}
-            {Math.min((filtros.page || 1) * (filtros.limit || 20), paginacion.total)} de{' '}
-            {paginacion.total} proveedores
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="bg-white shadow-sm rounded-lg p-4">
+          <div className="flex justify-center items-center gap-2">
             <button
               onClick={() => handlePageChange((filtros.page || 1) - 1)}
               disabled={filtros.page === 1 || loading}
@@ -661,7 +658,7 @@ export default function GestionProveedoresTab() {
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="px-4 py-2 text-gray-700">
+            <span className="px-4 py-2 text-sm text-gray-700">
               Página {filtros.page || 1} de {paginacion.totalPages}
             </span>
             <button
@@ -671,6 +668,11 @@ export default function GestionProveedoresTab() {
             >
               <ChevronRight className="w-4 h-4" />
             </button>
+          </div>
+          <div className="text-center mt-2 text-sm text-gray-600">
+            Mostrando {((filtros.page || 1) - 1) * (filtros.limit || 20) + 1} a{' '}
+            {Math.min((filtros.page || 1) * (filtros.limit || 20), paginacion.total)} de{' '}
+            {paginacion.total} proveedores
           </div>
         </div>
       )}

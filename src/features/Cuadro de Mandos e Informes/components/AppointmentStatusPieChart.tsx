@@ -37,14 +37,14 @@ export default function AppointmentStatusPieChart({ datos }: AppointmentStatusPi
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-2 rounded-lg">
-            <Calendar className="w-5 h-5 text-white" />
+            <Calendar size={20} className="text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Estado de Citas</h3>
-            <p className="text-sm text-gray-500">Distribución por estado</p>
+            <h3 className="text-lg font-bold text-gray-900">Estado de Citas</h3>
+            <p className="text-sm text-gray-600">Distribución por estado</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-gray-500">
@@ -90,14 +90,14 @@ export default function AppointmentStatusPieChart({ datos }: AppointmentStatusPi
   );
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center space-x-3 mb-6">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-2 rounded-lg">
-          <Calendar className="w-5 h-5 text-white" />
+          <Calendar size={20} className="text-white" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-800">Estado de Citas</h3>
-          <p className="text-sm text-gray-500">Distribución por estado</p>
+          <h3 className="text-lg font-bold text-gray-900">Estado de Citas</h3>
+          <p className="text-sm text-gray-600">Distribución por estado</p>
         </div>
       </div>
 

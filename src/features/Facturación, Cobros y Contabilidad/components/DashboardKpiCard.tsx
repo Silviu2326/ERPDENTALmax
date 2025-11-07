@@ -59,13 +59,13 @@ export default function DashboardKpiCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow duration-200">
+    <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200">
       <div className="flex items-center justify-between mb-4">
         <div className={`p-3 rounded-lg bg-gradient-to-br ${getColorClasses()} text-white`}>
           {getIcon()}
         </div>
         {tendencia && (
-          <div className={`flex items-center space-x-1 text-sm ${
+          <div className={`flex items-center gap-1 text-sm ${
             tendencia.esPositivo ? 'text-green-600' : 'text-red-600'
           }`}>
             {tendencia.esPositivo ? (
@@ -79,10 +79,11 @@ export default function DashboardKpiCard({
           </div>
         )}
       </div>
-      <h3 className="text-gray-600 text-sm font-medium mb-2">{titulo}</h3>
+      <h3 className="text-slate-600 text-sm font-medium mb-2">{titulo}</h3>
       <p className="text-3xl font-bold text-gray-900">{formatearValor(valor)}</p>
     </div>
   );
 }
+
 
 

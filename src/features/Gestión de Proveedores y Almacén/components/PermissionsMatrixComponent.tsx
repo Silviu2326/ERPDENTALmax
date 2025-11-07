@@ -58,10 +58,11 @@ export default function PermissionsMatrixComponent({
 
   if (!rol) {
     return (
-      <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-8 flex items-center justify-center">
+      <div className="flex-1 bg-white rounded-lg shadow-sm ring-1 ring-slate-200 p-8 flex items-center justify-center">
         <div className="text-center">
-          <AlertCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500">Selecciona un rol para gestionar sus permisos</p>
+          <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Selecciona un rol</h3>
+          <p className="text-gray-600">Selecciona un rol para gestionar sus permisos</p>
         </div>
       </div>
     );
@@ -73,9 +74,9 @@ export default function PermissionsMatrixComponent({
   const modulos = Object.keys(permisosPorModulo).sort();
 
   return (
-    <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
+    <div className="flex-1 bg-white rounded-lg shadow-sm ring-1 ring-slate-200 flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+      <div className="p-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Permisos: {rol.nombre}</h3>
@@ -92,9 +93,9 @@ export default function PermissionsMatrixComponent({
           <button
             onClick={handleGuardar}
             disabled={!tieneCambios || guardando || loading || rol.isSystemRole}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
               tieneCambios && !guardando && !loading && !rol.isSystemRole
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-600/20'
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }`}
           >
@@ -105,13 +106,13 @@ export default function PermissionsMatrixComponent({
 
         {/* Mensajes de estado */}
         {error && (
-          <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded text-sm text-red-700 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4" />
-            {error}
+          <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{error}</span>
           </div>
         )}
         {exito && (
-          <div className="mt-3 p-2 bg-green-50 border border-green-200 rounded text-sm text-green-700">
+          <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700">
             Permisos guardados correctamente
           </div>
         )}
@@ -120,11 +121,13 @@ export default function PermissionsMatrixComponent({
       {/* Matriz de permisos */}
       <div className="flex-1 overflow-y-auto p-4">
         {modulos.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            <p>No hay permisos disponibles</p>
+          <div className="text-center py-8">
+            <AlertCircle className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay permisos disponibles</h3>
+            <p className="text-gray-600">No se encontraron permisos para mostrar</p>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4">
             {modulos.map((modulo) => {
               const permisos = permisosPorModulo[modulo];
               const todosSeleccionados = permisos.every((p) => permisosSeleccionados.has(p._id));
@@ -153,14 +156,14 @@ export default function PermissionsMatrixComponent({
               };
 
               return (
-                <div key={modulo} className="border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                <div key={modulo} className="border border-gray-200 rounded-xl overflow-hidden ring-1 ring-slate-200">
+                  <div className="bg-slate-50 px-4 py-3 border-b border-gray-200">
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold text-gray-900">{modulo}</h4>
                       <button
                         onClick={handleToggleModulo}
                         disabled={rol.isSystemRole}
-                        className={`text-xs px-3 py-1 rounded transition-colors ${
+                        className={`text-xs px-3 py-1.5 rounded-xl transition-all font-medium ${
                           rol.isSystemRole
                             ? 'text-gray-400 cursor-not-allowed'
                             : todosSeleccionados
@@ -204,7 +207,7 @@ export default function PermissionsMatrixComponent({
                           <button
                             onClick={() => handleTogglePermiso(permiso._id)}
                             disabled={rol.isSystemRole}
-                            className={`ml-4 p-2 rounded-lg transition-colors ${
+                            className={`ml-4 p-2 rounded-xl transition-all ${
                               rol.isSystemRole
                                 ? 'cursor-not-allowed opacity-50'
                                 : estaSeleccionado
@@ -232,5 +235,6 @@ export default function PermissionsMatrixComponent({
     </div>
   );
 }
+
 
 

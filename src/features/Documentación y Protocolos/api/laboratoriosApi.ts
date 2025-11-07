@@ -109,3 +109,4 @@ export async function eliminarLaboratorio(id: string): Promise<void> {
 }
 
 
+

@@ -58,72 +58,75 @@ export default function PaginacionEmpleados({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-4 py-3 flex items-center justify-between">
-      <div className="flex items-center text-sm text-gray-700">
-        <span>
-          Mostrando{' '}
-          <span className="font-medium">{(paginaActual - 1) * 10 + 1}</span> a{' '}
-          <span className="font-medium">
-            {Math.min(paginaActual * 10, totalResultados)}
-          </span>{' '}
-          de <span className="font-medium">{totalResultados}</span> resultados
-        </span>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => onPageChange(paginaActual - 1)}
-          disabled={paginaActual === 1}
-          className={`p-2 rounded-lg border transition-colors ${
-            paginaActual === 1
-              ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'
-              : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-
-        <div className="flex items-center gap-1">
-          {getPaginasVisibles().map((pagina, index) => {
-            if (pagina === '...') {
-              return (
-                <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
-                  ...
-                </span>
-              );
-            }
-
-            const numeroPagina = pagina as number;
-            return (
-              <button
-                key={numeroPagina}
-                onClick={() => onPageChange(numeroPagina)}
-                className={`px-3 py-2 rounded-lg border transition-colors ${
-                  paginaActual === numeroPagina
-                    ? 'bg-blue-600 border-blue-600 text-white font-medium'
-                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {numeroPagina}
-              </button>
-            );
-          })}
+    <div className="bg-white shadow-sm p-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center text-sm text-gray-600">
+          <span>
+            Mostrando{' '}
+            <span className="font-medium text-gray-900">{(paginaActual - 1) * 10 + 1}</span> a{' '}
+            <span className="font-medium text-gray-900">
+              {Math.min(paginaActual * 10, totalResultados)}
+            </span>{' '}
+            de <span className="font-medium text-gray-900">{totalResultados}</span> resultados
+          </span>
         </div>
 
-        <button
-          onClick={() => onPageChange(paginaActual + 1)}
-          disabled={paginaActual === totalPaginas}
-          className={`p-2 rounded-lg border transition-colors ${
-            paginaActual === totalPaginas
-              ? 'bg-gray-100 border-gray-300 text-gray-400 cursor-not-allowed'
-              : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
+        <div className="flex justify-center items-center gap-2">
+          <button
+            onClick={() => onPageChange(paginaActual - 1)}
+            disabled={paginaActual === 1}
+            className={`inline-flex items-center justify-center p-2 rounded-lg transition-all ${
+              paginaActual === 1
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-200'
+            }`}
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <div className="flex items-center gap-1">
+            {getPaginasVisibles().map((pagina, index) => {
+              if (pagina === '...') {
+                return (
+                  <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
+                    ...
+                  </span>
+                );
+              }
+
+              const numeroPagina = pagina as number;
+              return (
+                <button
+                  key={numeroPagina}
+                  onClick={() => onPageChange(numeroPagina)}
+                  className={`inline-flex items-center justify-center px-3 py-2 rounded-lg transition-all text-sm ${
+                    paginaActual === numeroPagina
+                      ? 'bg-blue-600 text-white font-medium shadow-sm'
+                      : 'bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-200'
+                  }`}
+                >
+                  {numeroPagina}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => onPageChange(paginaActual + 1)}
+            disabled={paginaActual === totalPaginas}
+            className={`inline-flex items-center justify-center p-2 rounded-lg transition-all ${
+              paginaActual === totalPaginas
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-200'
+            }`}
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+
 
 

@@ -78,3 +78,4 @@ export default function ImagenThumbnail({ imagen, onClick }: ImagenThumbnailProp
 }
 
 
+

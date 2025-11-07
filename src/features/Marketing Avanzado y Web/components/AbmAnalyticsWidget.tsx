@@ -1,4 +1,3 @@
-import { BarChart3, TrendingUp, Users, Target, Building2 } from 'lucide-react';
 import { EstadoEmpresa, EstadoCampana } from '../api/abmApi';
 
 interface AbmAnalyticsWidgetProps {
@@ -28,56 +27,45 @@ export default function AbmAnalyticsWidget({
     totalEmpresas > 0 ? ((empresasPorEstado.Cliente || 0) / totalEmpresas) * 100 : 0;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-5">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Total Empresas</p>
-            <p className="text-2xl font-bold text-gray-900">{totalEmpresas}</p>
-          </div>
-          <div className="bg-blue-100 p-3 rounded-lg">
-            <Building2 className="w-6 h-6 text-blue-600" />
-          </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-4 border-l-4 border-blue-200 transition-all hover:shadow-md">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium text-slate-700">Total Empresas</h3>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-2xl font-bold text-blue-600">{totalEmpresas}</span>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-5">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Total Contactos</p>
-            <p className="text-2xl font-bold text-gray-900">{totalContactos}</p>
-          </div>
-          <div className="bg-purple-100 p-3 rounded-lg">
-            <Users className="w-6 h-6 text-purple-600" />
-          </div>
+      <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-4 border-l-4 border-green-200 transition-all hover:shadow-md">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium text-slate-700">Total Contactos</h3>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-2xl font-bold text-green-600">{totalContactos}</span>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-5">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Total Campañas</p>
-            <p className="text-2xl font-bold text-gray-900">{totalCampanas}</p>
-          </div>
-          <div className="bg-green-100 p-3 rounded-lg">
-            <Target className="w-6 h-6 text-green-600" />
-          </div>
+      <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-4 border-l-4 border-yellow-200 transition-all hover:shadow-md">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium text-slate-700">Total Campañas</h3>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-2xl font-bold text-yellow-600">{totalCampanas}</span>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-5">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500 mb-1">Tasa de Conversión</p>
-            <p className="text-2xl font-bold text-gray-900">{tasaConversion.toFixed(1)}%</p>
-          </div>
-          <div className="bg-orange-100 p-3 rounded-lg">
-            <TrendingUp className="w-6 h-6 text-orange-600" />
-          </div>
+      <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 p-4 border-l-4 border-blue-200 transition-all hover:shadow-md">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium text-slate-700">Tasa de Conversión</h3>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-2xl font-bold text-blue-600">{tasaConversion.toFixed(1)}%</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 

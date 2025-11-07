@@ -73,29 +73,29 @@ export default function PanelIndicadoresRetencion({ plan }: PanelIndicadoresRete
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-3 rounded-lg">
-          <TrendingUp className="w-6 h-6 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <TrendingUp size={24} className="text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-800">Indicadores de Retención</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Indicadores de Retención</h3>
           <p className="text-sm text-gray-600">Resumen del plan de retención</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
         {indicadores.map((indicador, index) => {
           const Icono = indicador.icono;
           return (
             <div
               key={index}
-              className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200"
+              className="bg-white rounded-xl p-4 border border-gray-200 ring-1 ring-slate-200"
             >
               <div className={`bg-gradient-to-br ${indicador.color} p-2 rounded-lg w-fit mb-2`}>
-                <Icono className="w-5 h-5 text-white" />
+                <Icono size={20} className="text-white" />
               </div>
-              <p className="text-2xl font-bold text-gray-800">{indicador.valor}</p>
+              <p className="text-2xl font-bold text-gray-900">{indicador.valor}</p>
               <p className="text-xs text-gray-600 mt-1">{indicador.titulo}</p>
               <p className="text-xs text-gray-500">{indicador.unidad}</p>
             </div>
@@ -107,12 +107,12 @@ export default function PanelIndicadoresRetencion({ plan }: PanelIndicadoresRete
       <div className="border-t border-gray-200 pt-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-700">Estado del Plan</p>
+            <p className="text-sm font-medium text-slate-700">Estado del Plan</p>
             <span
-              className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${
+              className={`inline-flex items-center gap-1 mt-1 px-3 py-1 rounded-full text-xs font-medium border ${
                 plan.estado === 'Activo'
-                  ? 'bg-green-100 text-green-800 border border-green-300'
-                  : 'bg-gray-100 text-gray-800 border border-gray-300'
+                  ? 'bg-green-100 text-green-800 border-green-300'
+                  : 'bg-gray-100 text-gray-800 border-gray-300'
               }`}
             >
               {plan.estado}
@@ -120,7 +120,7 @@ export default function PanelIndicadoresRetencion({ plan }: PanelIndicadoresRete
           </div>
           {proximoSeguimiento && (
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-700">Próximo Seguimiento</p>
+              <p className="text-sm font-medium text-slate-700">Próximo Seguimiento</p>
               <p className="text-sm text-blue-600 font-semibold mt-1">
                 {new Date(proximoSeguimiento.fechaCita).toLocaleDateString('es-ES', {
                   year: 'numeric',
@@ -136,7 +136,7 @@ export default function PanelIndicadoresRetencion({ plan }: PanelIndicadoresRete
       {/* Alertas */}
       {seguimientosCancelados > 0 && (
         <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start gap-2">
-          <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+          <AlertCircle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-yellow-800">
               {seguimientosCancelados} seguimiento(s) cancelado(s)
@@ -150,5 +150,6 @@ export default function PanelIndicadoresRetencion({ plan }: PanelIndicadoresRete
     </div>
   );
 }
+
 
 

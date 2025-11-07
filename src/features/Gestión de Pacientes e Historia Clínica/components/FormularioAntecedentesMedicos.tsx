@@ -96,7 +96,7 @@ export default function FormularioAntecedentesMedicos({
       )}
 
       {/* Sección de Alergias */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-4">
         <ListaAlergiasPaciente
           alergias={formData.alergias}
           onAlergiasChange={handleAlergiasChange}
@@ -104,7 +104,7 @@ export default function FormularioAntecedentesMedicos({
       </div>
 
       {/* Sección de Condiciones Médicas */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-4">
         <ListaCondicionesMedicas
           antecedentes={formData.antecedentes}
           onAntecedentesChange={handleAntecedentesChange}
@@ -112,18 +112,18 @@ export default function FormularioAntecedentesMedicos({
       </div>
 
       {/* Sección de Medicación Actual */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Pill className="w-5 h-5 text-blue-600" />
+            <Pill size={20} className="text-blue-600" />
             <h3 className="text-lg font-semibold text-gray-900">Medicación Actual</h3>
           </div>
           {!mostrarFormularioMedicacion && (
             <button
               onClick={() => setMostrarFormularioMedicacion(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={20} className="mr-2" />
               Agregar Medicación
             </button>
           )}
@@ -131,10 +131,10 @@ export default function FormularioAntecedentesMedicos({
 
         {/* Formulario para nueva medicación */}
         {mostrarFormularioMedicacion && (
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3 mb-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-4 space-y-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Nombre del Medicamento *
                 </label>
                 <input
@@ -143,19 +143,19 @@ export default function FormularioAntecedentesMedicos({
                   onChange={(e) =>
                     setNuevaMedicacion({ ...nuevaMedicacion, nombre: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   placeholder="Ej: Metformina, Aspirina..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Dosis</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Dosis</label>
                 <input
                   type="text"
                   value={nuevaMedicacion.dosis || ''}
                   onChange={(e) =>
                     setNuevaMedicacion({ ...nuevaMedicacion, dosis: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   placeholder="Ej: 500mg 2 veces al día..."
                 />
               </div>
@@ -163,7 +163,7 @@ export default function FormularioAntecedentesMedicos({
             <div className="flex gap-2">
               <button
                 onClick={handleAgregarMedicacion}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
               >
                 Agregar
               </button>
@@ -172,7 +172,7 @@ export default function FormularioAntecedentesMedicos({
                   setMostrarFormularioMedicacion(false);
                   setNuevaMedicacion({ nombre: '', dosis: '' });
                 }}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-200 text-slate-700 hover:bg-slate-300"
               >
                 Cancelar
               </button>
@@ -184,11 +184,11 @@ export default function FormularioAntecedentesMedicos({
         {formData.medicacionActual.length === 0 ? (
           <p className="text-gray-500 text-sm py-4">No hay medicación registrada</p>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {formData.medicacionActual.map((medicacion, index) => (
               <div
                 key={index}
-                className="bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-center justify-between"
+                className="bg-slate-50 ring-1 ring-slate-200 rounded-xl p-3 flex items-center justify-between"
               >
                 <div>
                   <h4 className="font-semibold text-gray-900">{medicacion.nombre}</h4>
@@ -198,10 +198,10 @@ export default function FormularioAntecedentesMedicos({
                 </div>
                 <button
                   onClick={() => handleEliminarMedicacion(index)}
-                  className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors"
+                  className="p-1.5 text-red-600 hover:bg-red-50 rounded-xl transition-all"
                   aria-label="Eliminar medicación"
                 >
-                  <X className="w-4 h-4" />
+                  <X size={16} />
                 </button>
               </div>
             ))}
@@ -210,9 +210,9 @@ export default function FormularioAntecedentesMedicos({
       </div>
 
       {/* Sección de Notas Generales */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Notas Generales
           </label>
           <textarea
@@ -221,7 +221,7 @@ export default function FormularioAntecedentesMedicos({
               setFormData({ ...formData, notasGenerales: e.target.value })
             }
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             placeholder="Notas adicionales sobre la historia médica del paciente..."
           />
         </div>
@@ -232,14 +232,15 @@ export default function FormularioAntecedentesMedicos({
         <button
           onClick={handleGuardar}
           disabled={guardando}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+          className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Save className="w-5 h-5" />
+          <Save size={20} className="mr-2" />
           {guardando ? 'Guardando...' : 'Guardar Historia Médica'}
         </button>
       </div>
     </div>
   );
 }
+
 
 

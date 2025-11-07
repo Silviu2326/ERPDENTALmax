@@ -20,11 +20,11 @@ export default function ResumenTotalCostes({
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div
             key={i}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+            className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-200"
           >
             <div className="animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
@@ -83,30 +83,56 @@ export default function ResumenTotalCostes({
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {tarjetas.map((tarjeta, index) => {
         const Icono = tarjeta.icono;
+        // Mapear colores a variantes de la guía
+        let borderColor = 'border-blue-200';
+        let textColor = 'text-blue-600';
+        
+        if (tarjeta.color === 'text-green-600') {
+          borderColor = 'border-green-200';
+          textColor = 'text-green-600';
+        } else if (tarjeta.color === 'text-orange-600') {
+          borderColor = 'border-yellow-200';
+          textColor = 'text-yellow-600';
+        } else if (tarjeta.color === 'text-purple-600') {
+          borderColor = 'border-blue-200';
+          textColor = 'text-blue-600';
+        } else if (tarjeta.color === 'text-red-600') {
+          borderColor = 'border-red-200';
+          textColor = 'text-red-600';
+        } else if (tarjeta.color === 'text-indigo-600') {
+          borderColor = 'border-blue-200';
+          textColor = 'text-blue-600';
+        }
+        
         return (
           <div
             key={index}
-            className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 ${tarjeta.bgColor}`}
+            className={`bg-white rounded-xl shadow-sm p-4 border-l-4 ${borderColor} transition-all hover:shadow-md`}
           >
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-gray-600">
+              <h3 className="text-sm font-medium text-slate-700">
                 {tarjeta.titulo}
               </h3>
-              <Icono className={`w-5 h-5 ${tarjeta.color}`} />
+              <div className={`${tarjeta.bgColor} p-2 rounded-lg`}>
+                <Icono className={`w-5 h-5 ${textColor}`} />
+              </div>
             </div>
-            <p className="text-2xl font-bold text-gray-900">
-              {tarjeta.esNumero
-                ? tarjeta.valor.toLocaleString('es-ES')
-                : formatearMoneda(tarjeta.valor)}
-            </p>
+            <div className="flex items-baseline gap-2">
+              <span className={`text-2xl font-bold ${textColor}`}>
+                {tarjeta.esNumero
+                  ? tarjeta.valor.toLocaleString('es-ES')
+                  : formatearMoneda(tarjeta.valor)}
+              </span>
+            </div>
           </div>
         );
       })}
     </div>
   );
 }
+
 
 

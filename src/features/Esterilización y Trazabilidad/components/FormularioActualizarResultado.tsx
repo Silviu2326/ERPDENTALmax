@@ -47,8 +47,8 @@ export default function FormularioActualizarResultado({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h3 className="text-xl font-bold text-gray-900 mb-6">
         Actualizar Resultado del Control
       </h3>
 
@@ -71,13 +71,13 @@ export default function FormularioActualizarResultado({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Resultado */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Resultado *
             </label>
             <select
               value={resultado}
               onChange={(e) => setResultado(e.target.value as ResultadoControl)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             >
               {control.resultado === 'pendiente' && (
@@ -96,7 +96,7 @@ export default function FormularioActualizarResultado({
 
           {/* Fecha de Resultado */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Resultado *
             </label>
             <input
@@ -104,7 +104,7 @@ export default function FormularioActualizarResultado({
               value={fechaResultado}
               onChange={(e) => setFechaResultado(e.target.value)}
               max={new Date().toISOString().split('T')[0]}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             />
           </div>
@@ -112,7 +112,7 @@ export default function FormularioActualizarResultado({
 
         {/* Observaciones */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Observaciones
             {(resultado === 'positivo' || resultado === 'fallido') && (
               <span className="text-red-600 ml-1">(Recomendado)</span>
@@ -123,23 +123,23 @@ export default function FormularioActualizarResultado({
             onChange={(e) => setObservaciones(e.target.value)}
             rows={4}
             placeholder="Agregue observaciones sobre el resultado del control..."
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         {/* Botones */}
-        <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+        <div className="flex justify-end gap-2 pt-4 border-t border-gray-100">
           <button
             type="button"
             onClick={onCancelar}
-            className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
           >
             <X className="w-5 h-5" />
             <span>Cancelar</span>
           </button>
           <button
             type="submit"
-            className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
           >
             <Save className="w-5 h-5" />
             <span>Guardar Resultado</span>
@@ -149,5 +149,6 @@ export default function FormularioActualizarResultado({
     </div>
   );
 }
+
 
 

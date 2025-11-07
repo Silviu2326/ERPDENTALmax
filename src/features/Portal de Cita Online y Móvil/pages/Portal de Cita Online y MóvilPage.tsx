@@ -1,3 +1,4 @@
+import { Calendar } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import MobileAgendaView from '../components/MobileAgendaView';
 import ReceptionMobileAgendaPage from './ReceptionMobileAgendaPage';
@@ -28,15 +29,33 @@ export default function PortalDeCitaOnlineYMovilPage() {
     : undefined;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white shadow-sm border-b px-4 py-4 mb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Agenda Mobile</h1>
-          <p className="text-sm text-gray-600 mt-1">
-            Vista profesional optimizada para dispositivos móviles
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Calendar size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Portal de Cita Online y Móvil
+                </h1>
+                <p className="text-gray-600">
+                  Vista profesional optimizada para dispositivos móviles
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         <MobileAgendaView
           profesionalId={profesionalId}
           mostrarFiltroProfesional={mostrarFiltroProfesional}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FileText, AlertTriangle, Calendar, CheckCircle, XCircle } from 'lucide-react';
+import { FileText, AlertTriangle, Calendar, CheckCircle, XCircle, Loader2, AlertCircle } from 'lucide-react';
 import { Contrato } from '../../api/crmApi';
 
 export default function ContratosActivosTable() {
@@ -159,31 +159,28 @@ export default function ContratosActivosTable() {
 
   if (loading && contratos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <div className="animate-pulse space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-16 bg-gray-200 rounded"></div>
-          ))}
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200">
-      <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+    <div className="bg-white rounded-xl shadow-sm">
+      <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">Contratos por Vencer</h3>
+          <h3 className="text-xl font-bold text-gray-900">Contratos por Vencer</h3>
           <p className="text-sm text-gray-600 mt-1">
             Contratos que vencen en los próximos {diasLimite} días
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-600">Días límite:</label>
+          <label className="text-sm font-medium text-slate-700">Días límite:</label>
           <select
             value={diasLimite}
             onChange={(e) => setDiasLimite(Number(e.target.value))}
-            className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+            className="rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
           >
             <option value={30}>30 días</option>
             <option value={60}>60 días</option>
@@ -192,36 +189,39 @@ export default function ContratosActivosTable() {
         </div>
       </div>
 
-      {error && !contratos.length && (
-        <div className="p-6 text-red-600">{error}</div>
-      )}
-
-      {contratos.length === 0 ? (
-        <div className="p-8 text-center text-gray-500">
-          <FileText className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p>No hay contratos próximos a vencer</p>
+      {error && !contratos.length && !loading ? (
+        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+        </div>
+      ) : contratos.length === 0 ? (
+        <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay contratos próximos a vencer</h3>
+          <p className="text-gray-600">Todos los contratos están vigentes más allá del período seleccionado</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Proveedor
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Fecha Inicio
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Fecha Fin
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Días Restantes
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Estado
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   Términos
                 </th>
               </tr>
@@ -238,15 +238,15 @@ export default function ContratosActivosTable() {
                         {contrato.proveedor?.nombreComercial || 'Proveedor'}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <Calendar size={16} className="text-slate-400" />
                         {formatearFecha(contrato.fechaInicio)}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <Calendar size={16} className="text-slate-400" />
                         {formatearFecha(contrato.fechaFin)}
                       </div>
                     </td>
@@ -257,7 +257,7 @@ export default function ContratosActivosTable() {
                             ? 'text-yellow-600'
                             : diasRestantes < 0
                             ? 'text-red-600'
-                            : 'text-gray-600'
+                            : 'text-slate-600'
                         }`}
                       >
                         {diasRestantes < 0
@@ -269,11 +269,11 @@ export default function ContratosActivosTable() {
                       <span
                         className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${estadoBadge.color}`}
                       >
-                        <Icon className="w-3 h-3" />
+                        <Icon size={12} />
                         {estadoBadge.label}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">
+                    <td className="px-6 py-4 text-sm text-slate-600 max-w-xs truncate">
                       {contrato.terminos}
                     </td>
                   </tr>

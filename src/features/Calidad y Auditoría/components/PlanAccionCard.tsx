@@ -17,7 +17,6 @@ export default function PlanAccionCard({
   readonly = false,
 }: PlanAccionCardProps) {
   const tipoLabel = tipo === 'correctiva' ? 'Correctivas' : 'Preventivas';
-  const tipoColor = tipo === 'correctiva' ? 'blue' : 'green';
 
   const formatFecha = (fecha: string) => {
     return new Date(fecha).toLocaleDateString('es-ES', {
@@ -60,8 +59,8 @@ export default function PlanAccionCard({
 
   if (acciones.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-white shadow-sm p-6 rounded-xl">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">
           Acciones {tipoLabel}
         </h3>
         <div className="text-center py-8 text-gray-500">
@@ -72,14 +71,14 @@ export default function PlanAccionCard({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+    <div className="bg-white shadow-sm p-6 rounded-xl">
       <div className="flex items-center justify-between mb-4">
-        <h3 className={`text-lg font-semibold text-gray-900 flex items-center gap-2`}>
-          <div className={`p-2 rounded-lg bg-${tipoColor}-100`}>
+        <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <div className={`p-2 rounded-xl ring-1 ${tipo === 'correctiva' ? 'bg-blue-100 ring-blue-200/70' : 'bg-green-100 ring-green-200/70'}`}>
             {tipo === 'correctiva' ? (
-              <CheckCircle className={`w-5 h-5 text-${tipoColor}-600`} />
+              <CheckCircle size={20} className="text-blue-600" />
             ) : (
-              <AlertCircle className={`w-5 h-5 text-${tipoColor}-600`} />
+              <AlertCircle size={20} className="text-green-600" />
             )}
           </div>
           Acciones {tipoLabel}
@@ -97,12 +96,12 @@ export default function PlanAccionCard({
           return (
             <div
               key={accion._id || index}
-              className={`border rounded-lg p-4 ${estado.bgColor} border-gray-200`}
+              className={`rounded-xl p-4 ring-1 ${estado.bgColor} ring-slate-200`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <EstadoIcon className={`w-4 h-4 ${estado.color}`} />
+                    <EstadoIcon size={16} className={estado.color} />
                     <span className={`text-sm font-medium ${estado.color}`}>
                       {estado.label}
                     </span>
@@ -110,24 +109,24 @@ export default function PlanAccionCard({
                   <p className="text-gray-900 mb-3">{accion.descripcion}</p>
                   <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
                     <div className="flex items-center gap-1">
-                      <User className="w-4 h-4" />
+                      <User size={16} />
                       <span>Responsable: {accion.responsable || 'No asignado'}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
+                      <Calendar size={16} />
                       <span className={isVencida(accion.fecha_limite) && !accion.completada ? 'text-red-600 font-medium' : ''}>
                         Vence: {formatFecha(accion.fecha_limite)}
                       </span>
                     </div>
                     {accion.fecha_completada && (
                       <div className="flex items-center gap-1 text-green-600">
-                        <CheckCircle className="w-4 h-4" />
+                        <CheckCircle size={16} />
                         <span>Completada: {formatFecha(accion.fecha_completada)}</span>
                       </div>
                     )}
                   </div>
                   {accion.observaciones && (
-                    <div className="mt-3 p-2 bg-white rounded border border-gray-200">
+                    <div className="mt-3 p-3 bg-white rounded-xl ring-1 ring-slate-200">
                       <p className="text-sm text-gray-700">
                         <strong>Observaciones:</strong> {accion.observaciones}
                       </p>
@@ -139,7 +138,7 @@ export default function PlanAccionCard({
                     {onEditar && (
                       <button
                         onClick={() => onEditar(accion)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                         title="Editar acción"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,10 +149,10 @@ export default function PlanAccionCard({
                     {!accion.completada && onMarcarCompletada && accion._id && (
                       <button
                         onClick={() => onMarcarCompletada(accion._id!)}
-                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-xl transition-all"
                         title="Marcar como completada"
                       >
-                        <CheckCircle className="w-4 h-4" />
+                        <CheckCircle size={16} />
                       </button>
                     )}
                   </div>
@@ -166,5 +165,6 @@ export default function PlanAccionCard({
     </div>
   );
 }
+
 
 

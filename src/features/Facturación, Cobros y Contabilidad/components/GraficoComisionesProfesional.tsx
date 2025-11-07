@@ -18,12 +18,10 @@ export default function GraficoComisionesProfesional({
 
   if (reportes.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <TrendingUp className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay datos para mostrar</p>
-          <p className="text-sm">Ajusta los filtros para ver resultados</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 p-8 text-center">
+        <TrendingUp size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos para mostrar</h3>
+        <p className="text-gray-600 mb-4">Ajusta los filtros para ver resultados</p>
       </div>
     );
   }
@@ -42,25 +40,27 @@ export default function GraficoComisionesProfesional({
   const anchoTotal = reportes.length * (anchoBarra * 2 + espacioEntreBarras + espacioEntreGrupos) + 60;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 p-6">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-2">
-          <TrendingUp className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-800">
+        <div className="flex items-center gap-2">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <TrendingUp size={18} className="text-blue-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900">
             Comisiones por Profesional
           </h3>
         </div>
       </div>
 
       {/* Leyenda */}
-      <div className="flex items-center space-x-4 mb-6">
-        <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-amber-500 rounded"></div>
-          <span className="text-sm text-gray-700">Comisiones Pendientes</span>
+          <span className="text-sm text-slate-700">Comisiones Pendientes</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-green-500 rounded"></div>
-          <span className="text-sm text-gray-700">Comisiones Liquidadas</span>
+          <span className="text-sm text-slate-700">Comisiones Liquidadas</span>
         </div>
       </div>
 
@@ -147,25 +147,25 @@ export default function GraficoComisionesProfesional({
       {/* Tabla de datos debajo del gráfico */}
       <div className="mt-6 overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-4 py-2 text-left text-xs font-medium text-slate-700 uppercase">
                 Profesional
               </th>
-              <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">
+              <th className="px-4 py-2 text-right text-xs font-medium text-slate-700 uppercase">
                 Pendientes
               </th>
-              <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">
+              <th className="px-4 py-2 text-right text-xs font-medium text-slate-700 uppercase">
                 Liquidadas
               </th>
-              <th className="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase">
+              <th className="px-4 py-2 text-right text-xs font-medium text-slate-700 uppercase">
                 Total
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-slate-200">
             {reportes.map((reporte) => (
-              <tr key={reporte.profesional._id} className="hover:bg-gray-50">
+              <tr key={reporte.profesional._id} className="hover:bg-slate-50">
                 <td className="px-4 py-2 text-gray-900">
                   {reporte.profesional.nombre} {reporte.profesional.apellidos}
                 </td>
@@ -186,24 +186,24 @@ export default function GraficoComisionesProfesional({
 
       {/* Resumen */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-          <p className="text-sm font-medium text-gray-700 mb-1">Total Comisiones</p>
+        <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+          <p className="text-sm font-medium text-slate-700 mb-1">Total Comisiones</p>
           <p className="text-2xl font-bold text-blue-600">
             {formatearMoneda(
               reportes.reduce((sum, r) => sum + r.totalComisiones, 0)
             )}
           </p>
         </div>
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-4 border border-amber-200">
-          <p className="text-sm font-medium text-gray-700 mb-1">Pendientes</p>
+        <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+          <p className="text-sm font-medium text-slate-700 mb-1">Pendientes</p>
           <p className="text-2xl font-bold text-amber-600">
             {formatearMoneda(
               reportes.reduce((sum, r) => sum + r.totalComisionesPendientes, 0)
             )}
           </p>
         </div>
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
-          <p className="text-sm font-medium text-gray-700 mb-1">Liquidadas</p>
+        <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+          <p className="text-sm font-medium text-slate-700 mb-1">Liquidadas</p>
           <p className="text-2xl font-bold text-green-600">
             {formatearMoneda(
               reportes.reduce((sum, r) => sum + r.totalComisionesLiquidadas, 0)

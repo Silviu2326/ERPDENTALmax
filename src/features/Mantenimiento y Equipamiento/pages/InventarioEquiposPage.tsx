@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, RefreshCw } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import {
   obtenerEquipos,
   crearEquipo,
   actualizarEquipo,
-  eliminarEquipo,
   EquipoClinico,
   FiltrosEquipos,
   NuevoEquipo,
@@ -99,38 +98,34 @@ export default function InventarioEquiposPage({ onVolver }: InventarioEquiposPag
 
   if (mostrarFormulario) {
     return (
-      <div className="p-6">
-        <FormularioEquipo
-          equipo={equipoEditando}
-          onGuardar={handleGuardarEquipo}
-          onCancelar={handleCancelarFormulario}
-          sedes={sedes}
-          proveedores={proveedores}
-        />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <FormularioEquipo
+            equipo={equipoEditando}
+            onGuardar={handleGuardarEquipo}
+            onCancelar={handleCancelarFormulario}
+            sedes={sedes}
+            proveedores={proveedores}
+          />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Inventario de Equipos Clínicos</h1>
-          <p className="text-gray-600 mt-1">
-            Gestiona el inventario de equipos y dispositivos médicos de la clínica
-          </p>
-        </div>
-        {puedeEditar && (
+    <div className="space-y-6">
+      {/* Toolbar superior */}
+      {puedeEditar && (
+        <div className="flex items-center justify-end">
           <button
             onClick={handleNuevoEquipo}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 rounded-xl shadow-sm"
           >
-            <Plus className="w-5 h-5" />
+            <Plus size={20} />
             Añadir Nuevo Equipo
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Filtros */}
       <FiltrosBusquedaEquipos
@@ -138,6 +133,19 @@ export default function InventarioEquiposPage({ onVolver }: InventarioEquiposPag
         onFiltrosChange={setFiltros}
         sedes={sedes}
       />
+
+      {/* Controles de vista y resumen */}
+      {paginacion && (
+        <div className="bg-white shadow-sm rounded-xl p-4">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="text-sm text-slate-600">
+              Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
+              {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
+              {paginacion.total} equipos
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabla */}
       <TablaInventarioEquipos
@@ -151,27 +159,22 @@ export default function InventarioEquiposPage({ onVolver }: InventarioEquiposPag
 
       {/* Paginación */}
       {paginacion && paginacion.totalPages > 1 && (
-        <div className="mt-6 flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-gray-200">
-          <div className="text-sm text-gray-700">
-            Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
-            {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
-            {paginacion.total} equipos
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="bg-white shadow-sm rounded-xl p-4">
+          <div className="flex justify-center items-center gap-2">
             <button
               onClick={() => handleCambiarPagina(paginacion.page - 1)}
               disabled={paginacion.page === 1}
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="px-3 py-1.5 text-sm font-medium rounded-xl border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Anterior
             </button>
-            <span className="text-sm text-gray-700">
+            <span className="text-sm text-slate-700 px-3">
               Página {paginacion.page} de {paginacion.totalPages}
             </span>
             <button
               onClick={() => handleCambiarPagina(paginacion.page + 1)}
               disabled={paginacion.page >= paginacion.totalPages}
-              className="px-3 py-1 border border-gray-300 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="px-3 py-1.5 text-sm font-medium rounded-xl border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Siguiente
             </button>
@@ -181,10 +184,10 @@ export default function InventarioEquiposPage({ onVolver }: InventarioEquiposPag
 
       {/* Botón volver (si se proporciona) */}
       {onVolver && (
-        <div className="mt-6">
+        <div className="flex items-center justify-start">
           <button
             onClick={onVolver}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-4 py-2 text-sm font-medium border border-slate-300 rounded-xl text-slate-700 hover:bg-slate-50 transition-colors"
           >
             Volver
           </button>
@@ -193,5 +196,6 @@ export default function InventarioEquiposPage({ onVolver }: InventarioEquiposPag
     </div>
   );
 }
+
 
 

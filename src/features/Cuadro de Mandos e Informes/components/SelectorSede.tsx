@@ -24,8 +24,8 @@ export default function SelectorSede({
   }));
 
   return (
-    <div className="flex items-center space-x-2">
-      <Building2 className="w-5 h-5 text-blue-600" />
+    <div className="flex items-center gap-2">
+      <Building2 size={18} className="text-slate-600" />
       <ClinicSelector
         clinicas={clinicas}
         clinicaSeleccionada={sedeSeleccionada}
@@ -35,5 +35,6 @@ export default function SelectorSede({
     </div>
   );
 }
+
 
 

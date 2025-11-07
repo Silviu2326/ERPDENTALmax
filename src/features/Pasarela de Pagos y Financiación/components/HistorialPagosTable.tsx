@@ -105,29 +105,25 @@ export default function HistorialPagosTable({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-          <span className="ml-3 text-gray-600">Cargando pagos...</span>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (pagos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200">
-        <div className="text-center py-12">
-          <CreditCard className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay pagos registrados</h3>
-          <p className="text-gray-600">El historial de pagos aparecerá aquí cuando se registren transacciones</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <CreditCard size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay pagos registrados</h3>
+        <p className="text-gray-600 mb-4">El historial de pagos aparecerá aquí cuando se registren transacciones</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -195,9 +191,9 @@ export default function HistorialPagosTable({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-2">
                     {getEstadoIcon(pago.estado)}
-                    <span className={`ml-2 px-2.5 py-1 rounded-full text-xs font-medium border ${getEstadoColor(pago.estado)}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ring-1 ${getEstadoColor(pago.estado)}`}>
                       {pago.estado.charAt(0).toUpperCase() + pago.estado.slice(1)}
                     </span>
                   </div>
@@ -226,27 +222,27 @@ export default function HistorialPagosTable({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-2">
                     {onVerDetalle && (
                       <button
                         onClick={() => onVerDetalle(pago)}
-                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition-all"
                         title="Ver detalle"
                       >
-                        <Eye className="w-5 h-5" />
+                        <Eye size={20} />
                       </button>
                     )}
                     {onGenerarRecibo && pago._id && (
                       <button
                         onClick={() => handleGenerarRecibo(pago._id!)}
                         disabled={generandoRecibo === pago._id}
-                        className="text-green-600 hover:text-green-800 p-2 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="text-green-600 hover:text-green-800 p-2 hover:bg-green-50 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         title="Descargar recibo"
                       >
                         {generandoRecibo === pago._id ? (
-                          <Loader2 className="w-5 h-5 animate-spin" />
+                          <Loader2 size={20} className="animate-spin" />
                         ) : (
-                          <Download className="w-5 h-5" />
+                          <Download size={20} />
                         )}
                       </button>
                     )}
@@ -260,5 +256,6 @@ export default function HistorialPagosTable({
     </div>
   );
 }
+
 
 

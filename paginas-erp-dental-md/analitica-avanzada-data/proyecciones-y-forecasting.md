@@ -140,3 +140,4 @@ _id: ObjectId, fechaRegistro: Date, sedeId: ObjectId
 - Seguridad: El endpoint de la API debe estar protegido por un middleware que verifique el rol del usuario. En un entorno multisede, se debe validar que el 'sedeId' solicitado corresponda a una sede a la que el usuario tiene acceso.
 
 
+

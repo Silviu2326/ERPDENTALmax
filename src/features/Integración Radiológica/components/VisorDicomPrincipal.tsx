@@ -118,25 +118,27 @@ export default function VisorDicomPrincipal({ estudioId, onError }: VisorDicomPr
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full bg-gray-100">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="flex flex-col items-center justify-center h-full bg-gray-50 p-8">
+        <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center h-full bg-gray-100 p-8">
-        <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
-        <p className="text-red-800 text-center">{error}</p>
+      <div className="flex flex-col items-center justify-center h-full bg-gray-50 p-8">
+        <AlertCircle size={48} className="text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4 text-center">{error}</p>
       </div>
     );
   }
 
   if (!estudio) {
     return (
-      <div className="flex items-center justify-center h-full bg-gray-100">
-        <p className="text-gray-500">No hay estudio seleccionado</p>
+      <div className="flex flex-col items-center justify-center h-full bg-gray-50 p-8">
+        <p className="text-gray-600">No hay estudio seleccionado</p>
       </div>
     );
   }
@@ -161,19 +163,19 @@ export default function VisorDicomPrincipal({ estudioId, onError }: VisorDicomPr
           <>
             <button
               onClick={handleImagenAnterior}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 transition-colors shadow-sm"
               title="Imagen anterior"
             >
               ←
             </button>
             <button
               onClick={handleSiguienteImagen}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 transition-colors shadow-sm"
               title="Siguiente imagen"
             >
               →
             </button>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-xl text-sm font-medium">
               {imagenActual + 1} / {totalImagenes}
             </div>
           </>
@@ -191,5 +193,6 @@ export type VisorDicomControls = {
   reset: () => void;
   ajustarContraste: (incremento: number) => void;
 };
+
 
 

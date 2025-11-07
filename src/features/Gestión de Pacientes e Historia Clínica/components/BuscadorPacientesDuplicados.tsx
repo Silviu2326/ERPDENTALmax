@@ -71,10 +71,10 @@ export default function BuscadorPacientesDuplicados({
   return (
     <div className="mb-4">
       {mostrarAlerta && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <div className="flex items-start justify-between">
-            <div className="flex items-start space-x-3 flex-1">
-              <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-3 flex-1">
+              <AlertTriangle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
                 <h4 className="font-semibold text-yellow-800 mb-2">
                   Se encontraron {pacientesDuplicados.length} paciente(s) similar(es)
@@ -83,9 +83,9 @@ export default function BuscadorPacientesDuplicados({
                   {pacientesDuplicados.map((paciente) => (
                     <div
                       key={paciente._id}
-                      className="bg-white rounded-lg p-3 border border-yellow-300 flex items-center space-x-3"
+                      className="bg-white rounded-xl p-3 border border-yellow-300 flex items-center gap-3"
                     >
-                      <User className="w-4 h-4 text-gray-500" />
+                      <User size={16} className="text-gray-500" />
                       <div className="flex-1">
                         <p className="font-medium text-gray-900">
                           {paciente.nombre} {paciente.apellidos}
@@ -110,10 +110,10 @@ export default function BuscadorPacientesDuplicados({
             </div>
             <button
               onClick={() => setMostrarAlerta(false)}
-              className="text-yellow-600 hover:text-yellow-800 ml-2 flex-shrink-0"
+              className="text-yellow-600 hover:text-yellow-800 flex-shrink-0 transition-all"
               aria-label="Cerrar alerta"
             >
-              <X className="w-5 h-5" />
+              <X size={20} />
             </button>
           </div>
         </div>
@@ -121,5 +121,6 @@ export default function BuscadorPacientesDuplicados({
     </div>
   );
 }
+
 
 

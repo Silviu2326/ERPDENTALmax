@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Plus, RefreshCw } from 'lucide-react';
+import { FileText, Plus, RefreshCw, AlertCircle, Loader2 } from 'lucide-react';
 import ReportBuilderWizard from '../components/ReportBuilderWizard';
 import SavedReportsList from '../components/SavedReportsList';
 import {
@@ -73,70 +73,78 @@ export default function InformesConfigurablesPage() {
   };
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
-      {viewMode === 'list' && (
-        <>
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  Informes Configurables
-                </h1>
-                <p className="text-gray-600">
-                  Crea y gestiona informes personalizados para analizar los datos de tu clínica
-                </p>
-              </div>
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={loadSavedReports}
-                  disabled={loading}
-                  className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
-                >
-                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                  <span>Actualizar</span>
-                </button>
-                <button
-                  onClick={handleNewReport}
-                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Nuevo Informe</span>
-                </button>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {(viewMode === 'list' || viewMode === 'builder') && (
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <FileText size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      {viewMode === 'list'
+                        ? 'Informes Configurables'
+                        : selectedReportId
+                        ? 'Editar Informe'
+                        : 'Nuevo Informe'}
+                    </h1>
+                    <p className="text-gray-600">
+                      {viewMode === 'list'
+                        ? 'Crea y gestiona informes personalizados para analizar los datos de tu clínica'
+                        : 'Utiliza el asistente para crear un informe personalizado'}
+                    </p>
+                  </div>
+                </div>
+                {viewMode === 'list' && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={loadSavedReports}
+                      disabled={loading}
+                      className="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                      <span>Actualizar</span>
+                    </button>
+                    <button
+                      onClick={handleNewReport}
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      <Plus size={20} />
+                      <span>Nuevo Informe</span>
+                    </button>
+                  </div>
+                )}
+                {viewMode === 'builder' && (
+                  <button
+                    onClick={handleBackToList}
+                    className="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                  >
+                    <span>Volver a Lista</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
-
-          <SavedReportsList
-            reports={savedReports}
-            loading={loading}
-            onRunReport={handleRunReport}
-            onEditReport={handleEditReport}
-            onDeleteReport={handleDeleteReport}
-          />
-        </>
+        </div>
       )}
 
-      {viewMode === 'builder' && (
-        <>
-          <div className="mb-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  {selectedReportId ? 'Editar Informe' : 'Nuevo Informe'}
-                </h1>
-                <p className="text-gray-600">
-                  Utiliza el asistente para crear un informe personalizado
-                </p>
-              </div>
-              <button
-                onClick={handleBackToList}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                Volver a Lista
-              </button>
-            </div>
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {viewMode === 'list' && (
+          <div className="space-y-6">
+            <SavedReportsList
+              reports={savedReports}
+              loading={loading}
+              onRunReport={handleRunReport}
+              onEditReport={handleEditReport}
+              onDeleteReport={handleDeleteReport}
+            />
           </div>
+        )}
 
+        {viewMode === 'builder' && (
           <ReportBuilderWizard
             onSave={handleReportSaved}
             initialConfig={
@@ -145,12 +153,12 @@ export default function InformesConfigurablesPage() {
                 : undefined
             }
           />
-        </>
-      )}
+        )}
 
-      {viewMode === 'view' && selectedReportId && (
-        <ViewReportPage reportId={selectedReportId} onBack={handleBackToList} />
-      )}
+        {viewMode === 'view' && selectedReportId && (
+          <ViewReportPage reportId={selectedReportId} onBack={handleBackToList} />
+        )}
+      </div>
     </div>
   );
 }
@@ -203,22 +211,22 @@ function ViewReportPage({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="text-center">
-          <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Cargando informe...</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando informe...</p>
       </div>
     );
   }
 
   if (!report) {
     return (
-      <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 text-center">
-        <p className="text-red-800 font-semibold">No se pudo cargar el informe</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">No se pudo cargar el informe</p>
         <button
           onClick={onBack}
-          className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Volver
         </button>
@@ -227,40 +235,49 @@ function ViewReportPage({
   }
 
   return (
-    <>
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{report.nombre}</h1>
-            {report.descripcion && (
-              <p className="text-gray-600">{report.descripcion}</p>
-            )}
-          </div>
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={() => generateReportData(report.configuracion)}
-              disabled={generating}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-            >
-              <RefreshCw className={`w-4 h-4 ${generating ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-            <button
-              onClick={onBack}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              Volver
-            </button>
+    <div className="space-y-6">
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileText size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {report.nombre}
+                  </h1>
+                  {report.descripcion && (
+                    <p className="text-gray-600">{report.descripcion}</p>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => generateReportData(report.configuracion)}
+                  disabled={generating}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={20} className={generating ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+                <button
+                  onClick={onBack}
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                >
+                  <span>Volver</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {generating ? (
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Generando informe...</p>
-          </div>
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Generando informe...</p>
         </div>
       ) : reportData ? (
         <div className="space-y-6">
@@ -294,19 +311,21 @@ function ViewReportPage({
           )}
         </div>
       ) : (
-        <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-12 text-center">
-          <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">No hay datos para mostrar</p>
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin datos</h3>
+          <p className="text-gray-600 mb-4">No hay datos para mostrar</p>
           <button
             onClick={() => generateReportData(report.configuracion)}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Generar Informe
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
+
 
 

@@ -91,13 +91,13 @@ export default function FormularioRegistroAjuste({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Registrar Nuevo Ajuste</h3>
+    <div className="bg-white shadow-sm rounded-xl p-6">
+      <h3 className="text-xl font-bold text-gray-900 mb-6">Registrar Nuevo Ajuste</h3>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Fecha del ajuste */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Fecha del Ajuste <span className="text-red-500">*</span>
           </label>
           <input
@@ -105,25 +105,25 @@ export default function FormularioRegistroAjuste({
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
           />
         </div>
 
         {/* Zonas ajustadas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Zonas Ajustadas <span className="text-red-500">*</span>
           </label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4">
             {ZONAS_AJUSTE.map((zona) => (
               <button
                 key={zona}
                 type="button"
                 onClick={() => handleToggleZona(zona)}
-                className={`px-3 py-2 rounded-lg border-2 text-sm transition-all ${
+                className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ring-1 ${
                   zonasSeleccionadas.includes(zona)
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
+                    ? 'bg-blue-600 text-white ring-blue-600 shadow-sm'
+                    : 'bg-white text-slate-700 ring-slate-300 hover:ring-blue-400 hover:bg-blue-50'
                 }`}
               >
                 {zona}
@@ -132,13 +132,13 @@ export default function FormularioRegistroAjuste({
           </div>
           
           {/* Zona personalizada */}
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-2 mb-4">
             <input
               type="text"
               value={zonaPersonalizada}
               onChange={(e) => setZonaPersonalizada(e.target.value)}
               placeholder="Agregar zona personalizada..."
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
@@ -149,9 +149,9 @@ export default function FormularioRegistroAjuste({
             <button
               type="button"
               onClick={handleAgregarZonaPersonalizada}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={18} />
               Agregar
             </button>
           </div>
@@ -162,15 +162,15 @@ export default function FormularioRegistroAjuste({
               {zonasSeleccionadas.map((zona) => (
                 <span
                   key={zona}
-                  className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                  className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
                 >
                   {zona}
                   <button
                     type="button"
                     onClick={() => handleEliminarZona(zona)}
-                    className="text-blue-600 hover:text-blue-800"
+                    className="text-blue-600 hover:text-blue-800 transition-colors"
                   >
-                    <Trash2 className="w-3 h-3" />
+                    <Trash2 size={12} />
                   </button>
                 </span>
               ))}
@@ -180,7 +180,7 @@ export default function FormularioRegistroAjuste({
 
         {/* Descripción del ajuste */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Descripción del Ajuste <span className="text-red-500">*</span>
           </label>
           <textarea
@@ -189,13 +189,13 @@ export default function FormularioRegistroAjuste({
             required
             rows={4}
             placeholder="Describa detalladamente los ajustes realizados en la prótesis..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           />
         </div>
 
         {/* Feedback del paciente */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Feedback del Paciente
           </label>
           <textarea
@@ -203,27 +203,27 @@ export default function FormularioRegistroAjuste({
             onChange={(e) => setFeedbackPaciente(e.target.value)}
             rows={3}
             placeholder="Comentarios o quejas del paciente sobre la prótesis..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           />
         </div>
 
         {/* Botones */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex gap-2 mt-auto pt-4 border-t border-gray-100">
           <button
             type="submit"
             disabled={guardando}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
           >
-            <Save className="w-5 h-5" />
+            <Save size={20} />
             {guardando ? 'Guardando...' : 'Guardar Ajuste'}
           </button>
           <button
             type="button"
             onClick={onCancelar}
             disabled={guardando}
-            className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
             Cancelar
           </button>
         </div>
@@ -231,5 +231,6 @@ export default function FormularioRegistroAjuste({
     </div>
   );
 }
+
 
 

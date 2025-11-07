@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, Phone, Mail, Calendar, DollarSign, CheckSquare, Square } from 'lucide-react';
+import { User, Phone, Mail, Calendar, DollarSign, CheckSquare, Square, Loader2 } from 'lucide-react';
 import { PacienteLista } from '../api/listasPacientesApi';
 
 interface TablaResultadosPacientesProps {
@@ -59,32 +59,28 @@ export default function TablaResultadosPacientes({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-12">
-        <div className="flex flex-col items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Cargando pacientes...</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando pacientes...</p>
       </div>
     );
   }
 
   if (pacientes.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-12">
-        <div className="flex flex-col items-center justify-center text-gray-500">
-          <User className="w-16 h-16 mb-4 text-gray-300" />
-          <p className="text-lg font-medium">No se encontraron pacientes</p>
-          <p className="text-sm mt-2">Ajusta los filtros para obtener resultados</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <User size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron pacientes</h3>
+        <p className="text-gray-600 mb-4">Ajusta los filtros para obtener resultados</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
               <th className="px-4 py-3 text-left">
                 <button
@@ -94,14 +90,14 @@ export default function TablaResultadosPacientes({
                   {todosSeleccionados ? (
                     <CheckSquare className="w-5 h-5 text-blue-600" />
                   ) : (
-                    <Square className="w-5 h-5 text-gray-400" />
+                    <Square className="w-5 h-5 text-slate-400" />
                   )}
                 </button>
               </th>
               <th className="px-4 py-3 text-left">
                 <button
                   onClick={() => handleSort('apellidos')}
-                  className="flex items-center gap-2 font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-600 transition-colors"
                 >
                   Nombre Completo
                   {getSortIcon('apellidos') && <span className="text-blue-600">{getSortIcon('apellidos')}</span>}
@@ -110,17 +106,17 @@ export default function TablaResultadosPacientes({
               <th className="px-4 py-3 text-left">
                 <button
                   onClick={() => handleSort('dni')}
-                  className="flex items-center gap-2 font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-600 transition-colors"
                 >
                   DNI/NIE
                   {getSortIcon('dni') && <span className="text-blue-600">{getSortIcon('dni')}</span>}
                 </button>
               </th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">Contacto</th>
+              <th className="px-4 py-3 text-left font-semibold text-slate-700">Contacto</th>
               <th className="px-4 py-3 text-left">
                 <button
                   onClick={() => handleSort('ultimaVisita')}
-                  className="flex items-center gap-2 font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-600 transition-colors"
                 >
                   Última Visita
                   {getSortIcon('ultimaVisita') && <span className="text-blue-600">{getSortIcon('ultimaVisita')}</span>}
@@ -129,7 +125,7 @@ export default function TablaResultadosPacientes({
               <th className="px-4 py-3 text-left">
                 <button
                   onClick={() => handleSort('saldo')}
-                  className="flex items-center gap-2 font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-600 transition-colors"
                 >
                   Saldo
                   {getSortIcon('saldo') && <span className="text-blue-600">{getSortIcon('saldo')}</span>}
@@ -137,7 +133,7 @@ export default function TablaResultadosPacientes({
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-slate-200">
             {pacientes.map((paciente) => {
               const estaSeleccionado = pacientesSeleccionados.has(paciente._id);
               return (
@@ -153,7 +149,7 @@ export default function TablaResultadosPacientes({
                       {estaSeleccionado ? (
                         <CheckSquare className="w-5 h-5 text-blue-600" />
                       ) : (
-                        <Square className="w-5 h-5 text-gray-400" />
+                        <Square className="w-5 h-5 text-slate-400" />
                       )}
                     </button>
                   </td>
@@ -169,38 +165,38 @@ export default function TablaResultadosPacientes({
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
+                  <td className="px-4 py-3 text-sm text-slate-600">
                     {paciente.dni || '-'}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
+                  <td className="px-4 py-3 text-sm text-slate-600">
                     <div className="flex flex-col gap-1">
                       {paciente.telefono && (
                         <div className="flex items-center gap-1">
-                          <Phone className="w-3 h-3 text-gray-400" />
+                          <Phone className="w-3 h-3 text-slate-400" />
                           <span>{paciente.telefono}</span>
                         </div>
                       )}
                       {paciente.email && (
                         <div className="flex items-center gap-1">
-                          <Mail className="w-3 h-3 text-gray-400" />
+                          <Mail className="w-3 h-3 text-slate-400" />
                           <span className="text-xs">{paciente.email}</span>
                         </div>
                       )}
                       {!paciente.telefono && !paciente.email && (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-slate-400">-</span>
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">
+                  <td className="px-4 py-3 text-sm text-slate-600">
                     <div className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-gray-400" />
+                      <Calendar className="w-3 h-3 text-slate-400" />
                       {formatearFecha(paciente.ultimaVisita)}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-sm">
                     <div className="flex items-center gap-1">
-                      <DollarSign className="w-3 h-3 text-gray-400" />
-                      <span className={paciente.saldo && paciente.saldo > 0 ? 'text-red-600 font-medium' : 'text-gray-600'}>
+                      <DollarSign className="w-3 h-3 text-slate-400" />
+                      <span className={paciente.saldo && paciente.saldo > 0 ? 'text-red-600 font-medium' : 'text-slate-600'}>
                         {formatearSaldo(paciente.saldo)}
                       </span>
                     </div>
@@ -213,7 +209,7 @@ export default function TablaResultadosPacientes({
       </div>
       {algunosSeleccionados && (
         <div className="bg-blue-50 border-t border-blue-200 px-4 py-3">
-          <p className="text-sm text-blue-700 font-medium">
+          <p className="text-sm text-blue-900 font-medium">
             {pacientesSeleccionados.size} paciente(s) seleccionado(s)
           </p>
         </div>
@@ -221,5 +217,6 @@ export default function TablaResultadosPacientes({
     </div>
   );
 }
+
 
 

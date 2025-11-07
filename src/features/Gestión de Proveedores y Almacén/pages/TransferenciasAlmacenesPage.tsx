@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, RefreshCw } from 'lucide-react';
+import { Plus, Search, Filter, RefreshCw, ArrowRightLeft, ChevronDown, ChevronUp, X } from 'lucide-react';
 import TablaTransferencias from '../components/TablaTransferencias';
 import FormularioNuevaTransferencia from '../components/FormularioNuevaTransferencia';
 import ModalConfirmarRecepcion from '../components/ModalConfirmarRecepcion';
@@ -27,6 +27,7 @@ export default function TransferenciasAlmacenesPage({
     limit: 20,
   });
   const [totalPages, setTotalPages] = useState(1);
+  const [totalTransferencias, setTotalTransferencias] = useState(0);
   const [almacenes, setAlmacenes] = useState<Almacen[]>([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [busqueda, setBusqueda] = useState('');
@@ -34,7 +35,7 @@ export default function TransferenciasAlmacenesPage({
   useEffect(() => {
     cargarTransferencias();
     cargarAlmacenes();
-  }, [filtros]);
+  }, [filtros, busqueda]);
 
   const cargarTransferencias = async () => {
     setLoading(true);
@@ -483,6 +484,7 @@ export default function TransferenciasAlmacenesPage({
 
       setTransferencias(transferenciasPaginadas);
       setTotalPages(totalPagesCalculado);
+      setTotalTransferencias(total);
     } catch (error) {
       console.error('Error al cargar transferencias:', error);
       setTransferencias([]);
@@ -618,193 +620,256 @@ export default function TransferenciasAlmacenesPage({
       page: 1,
       limit: 20,
     });
+    setBusqueda('');
     setMostrarFiltros(false);
   };
 
+  const filtrosActivos = 
+    (filtros.estado ? 1 : 0) +
+    (filtros.origenId ? 1 : 0) +
+    (filtros.destinoId ? 1 : 0) +
+    (filtros.fechaInicio ? 1 : 0) +
+    (filtros.fechaFin ? 1 : 0);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Transferencias entre Almacenes</h1>
-              <p className="text-gray-600 mt-1">
-                Gestiona el movimiento de productos entre almacenes
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <ArrowRightLeft size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Transferencias entre Almacenes
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona el movimiento de productos entre almacenes
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setMostrarFormulario(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium"
+              >
+                <Plus size={20} />
+                Nueva Transferencia
+              </button>
             </div>
-            <button
-              onClick={() => setMostrarFormulario(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-            >
-              <Plus className="w-5 h-5" />
-              Nueva Transferencia
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* Filtros y Búsqueda */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 mb-6">
-          <div className="flex items-center gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                placeholder="Buscar por código de transferencia..."
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* Filtros y Búsqueda */}
+          <div className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200">
+            <div className="space-y-4 p-4">
+              {/* Barra de búsqueda */}
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="flex gap-4">
+                  {/* Input de búsqueda */}
+                  <div className="flex-1 relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      value={busqueda}
+                      onChange={(e) => setBusqueda(e.target.value)}
+                      placeholder="Buscar por código de transferencia..."
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+                    />
+                  </div>
+                  
+                  {/* Botón de filtros */}
+                  <button
+                    onClick={() => setMostrarFiltros(!mostrarFiltros)}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 ring-1 ring-slate-200"
+                  >
+                    <Filter size={18} />
+                    <span>Filtros</span>
+                    {filtrosActivos > 0 && (
+                      <span className="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium bg-blue-600 text-white rounded-full">
+                        {filtrosActivos}
+                      </span>
+                    )}
+                    {mostrarFiltros ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </button>
+                  
+                  {/* Botón limpiar (si hay filtros activos) */}
+                  {filtrosActivos > 0 && (
+                    <button
+                      onClick={limpiarFiltros}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 ring-1 ring-slate-200"
+                    >
+                      <X size={18} />
+                      <span>Limpiar</span>
+                    </button>
+                  )}
+                  
+                  {/* Botón actualizar */}
+                  <button
+                    onClick={cargarTransferencias}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 ring-1 ring-slate-200"
+                  >
+                    <RefreshCw size={18} />
+                    <span>Actualizar</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Panel de filtros avanzados */}
+              {mostrarFiltros && (
+                <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <Filter size={16} className="inline mr-1" />
+                        Estado
+                      </label>
+                      <select
+                        value={filtros.estado || ''}
+                        onChange={(e) =>
+                          setFiltros({ ...filtros, estado: e.target.value as EstadoTransferencia || undefined })
+                        }
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                      >
+                        <option value="">Todos</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Completada">Completada</option>
+                        <option value="Cancelada">Cancelada</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Almacén Origen
+                      </label>
+                      <select
+                        value={filtros.origenId || ''}
+                        onChange={(e) => setFiltros({ ...filtros, origenId: e.target.value || undefined })}
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                      >
+                        <option value="">Todos</option>
+                        {almacenes.map((almacen) => (
+                          <option key={almacen._id} value={almacen._id}>
+                            {almacen.nombre}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Almacén Destino
+                      </label>
+                      <select
+                        value={filtros.destinoId || ''}
+                        onChange={(e) => setFiltros({ ...filtros, destinoId: e.target.value || undefined })}
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                      >
+                        <option value="">Todos</option>
+                        {almacenes.map((almacen) => (
+                          <option key={almacen._id} value={almacen._id}>
+                            {almacen.nombre}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  
+                  {/* Resumen de resultados */}
+                  <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+                    <span>{totalTransferencias} transferencias encontradas</span>
+                    <span>{filtrosActivos} filtros aplicados</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Tabla de Transferencias */}
+          <div className="bg-white shadow-sm rounded-xl ring-1 ring-slate-200 overflow-hidden">
+            <TablaTransferencias
+              transferencias={transferencias}
+              loading={loading}
+              onVerDetalle={handleVerDetalle}
+              onConfirmarRecepcion={handleAbrirModalConfirmar}
+              onCancelar={handleCancelarTransferencia}
+            />
+
+            {/* Paginación */}
+            {totalPages > 1 && (
+              <div className="p-4 bg-white shadow-sm">
+                <div className="flex justify-center items-center gap-2">
+                  <button
+                    onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) - 1 })}
+                    disabled={filtros.page === 1}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-100 ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Anterior
+                  </button>
+                  <span className="text-sm text-slate-600 px-4">
+                    Página {filtros.page || 1} de {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) + 1 })}
+                    disabled={filtros.page === totalPages}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-100 ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Modal de Nueva Transferencia */}
+      {mostrarFormulario && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto ring-1 ring-slate-200">
+            <div className="sticky top-0 bg-white/80 backdrop-blur border-b border-gray-200/60 px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                  <Plus size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Nueva Transferencia</h2>
+                  <p className="text-sm text-gray-600">Crear una nueva transferencia entre almacenes</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setMostrarFormulario(false)}
+                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-6">
+              <FormularioNuevaTransferencia
+                onGuardar={handleNuevaTransferencia}
+                onCancelar={() => setMostrarFormulario(false)}
               />
             </div>
-            <button
-              onClick={() => setMostrarFiltros(!mostrarFiltros)}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
-            >
-              <Filter className="w-4 h-4" />
-              Filtros
-            </button>
-            <button
-              onClick={cargarTransferencias}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
-            >
-              <RefreshCw className="w-4 h-4" />
-              Actualizar
-            </button>
           </div>
-
-          {mostrarFiltros && (
-            <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-                <select
-                  value={filtros.estado || ''}
-                  onChange={(e) =>
-                    setFiltros({ ...filtros, estado: e.target.value as EstadoTransferencia || undefined })
-                  }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="">Todos</option>
-                  <option value="Pendiente">Pendiente</option>
-                  <option value="Completada">Completada</option>
-                  <option value="Cancelada">Cancelada</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Almacén Origen</label>
-                <select
-                  value={filtros.origenId || ''}
-                  onChange={(e) => setFiltros({ ...filtros, origenId: e.target.value || undefined })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="">Todos</option>
-                  {almacenes.map((almacen) => (
-                    <option key={almacen._id} value={almacen._id}>
-                      {almacen.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Almacén Destino</label>
-                <select
-                  value={filtros.destinoId || ''}
-                  onChange={(e) => setFiltros({ ...filtros, destinoId: e.target.value || undefined })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="">Todos</option>
-                  {almacenes.map((almacen) => (
-                    <option key={almacen._id} value={almacen._id}>
-                      {almacen.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex items-end gap-2">
-                <button
-                  onClick={aplicarFiltros}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Aplicar
-                </button>
-                <button
-                  onClick={limpiarFiltros}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Limpiar
-                </button>
-              </div>
-            </div>
-          )}
         </div>
+      )}
 
-        {/* Tabla de Transferencias */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-          <TablaTransferencias
-            transferencias={transferencias}
-            loading={loading}
-            onVerDetalle={handleVerDetalle}
-            onConfirmarRecepcion={handleAbrirModalConfirmar}
-            onCancelar={handleCancelarTransferencia}
-          />
-
-          {/* Paginación */}
-          {totalPages > 1 && (
-            <div className="px-4 py-4 border-t border-gray-200 flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                Página {filtros.page || 1} de {totalPages}
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) - 1 })}
-                  disabled={filtros.page === 1}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Anterior
-                </button>
-                <button
-                  onClick={() => setFiltros({ ...filtros, page: (filtros.page || 1) + 1 })}
-                  disabled={filtros.page === totalPages}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Siguiente
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Modal de Nueva Transferencia */}
-        {mostrarFormulario && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-900">Nueva Transferencia</h2>
-                <button
-                  onClick={() => setMostrarFormulario(false)}
-                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  ×
-                </button>
-              </div>
-              <div className="p-6">
-                <FormularioNuevaTransferencia
-                  onGuardar={handleNuevaTransferencia}
-                  onCancelar={() => setMostrarFormulario(false)}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Modal de Confirmar Recepción */}
-        {transferenciaAConfirmar && (
-          <ModalConfirmarRecepcion
-            transferencia={transferenciaAConfirmar}
-            onConfirmar={handleConfirmarRecepcion}
-            onCancelar={() => setTransferenciaAConfirmar(null)}
-          />
-        )}
-      </div>
+      {/* Modal de Confirmar Recepción */}
+      {transferenciaAConfirmar && (
+        <ModalConfirmarRecepcion
+          transferencia={transferenciaAConfirmar}
+          onConfirmar={handleConfirmarRecepcion}
+          onCancelar={() => setTransferenciaAConfirmar(null)}
+        />
+      )}
     </div>
   );
 }

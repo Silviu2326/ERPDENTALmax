@@ -16,27 +16,27 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
     switch (bandeja.estado) {
       case 'Disponible':
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <CheckCircle className="w-4 h-4 mr-1" />
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 ring-1 ring-green-200">
+            <CheckCircle size={12} />
             Disponible
           </span>
         );
       case 'En uso':
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 ring-1 ring-blue-200">
             En uso
           </span>
         );
       case 'Contaminada':
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
-            <XCircle className="w-4 h-4 mr-1" />
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 ring-1 ring-red-200">
+            <XCircle size={12} />
             Contaminada
           </span>
         );
       case 'En proceso':
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 ring-1 ring-yellow-200">
             En proceso
           </span>
         );
@@ -56,15 +56,15 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <div className="p-3 bg-blue-100 rounded-lg">
-            <Package className="w-6 h-6 text-blue-600" />
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <Package size={24} className="text-blue-600" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{bandeja.nombre}</h3>
-            <p className="text-sm text-gray-500">Código: {bandeja.codigoUnico}</p>
+            <p className="text-sm text-gray-600">Código: {bandeja.codigoUnico}</p>
           </div>
         </div>
         {getEstadoBadge()}
@@ -72,10 +72,10 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
 
       {/* Alertas de validación */}
       {estaVencida && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+        <div className="mb-4 p-3 bg-red-50 ring-1 ring-red-200 rounded-2xl flex items-start space-x-2">
+          <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-medium text-red-800">Bandeja vencida</p>
+            <p className="text-sm font-medium text-red-800">Bandeja vencida</p>
             <p className="text-sm text-red-700">
               Esta bandeja no puede ser asignada. La fecha de vencimiento ha pasado.
             </p>
@@ -84,10 +84,10 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
       )}
 
       {proximaAVencerse && !estaVencida && (
-        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start space-x-2">
-          <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+        <div className="mb-4 p-3 bg-yellow-50 ring-1 ring-yellow-200 rounded-2xl flex items-start space-x-2">
+          <AlertCircle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-medium text-yellow-800">Advertencia</p>
+            <p className="text-sm font-medium text-yellow-800">Advertencia</p>
             <p className="text-sm text-yellow-700">
               Esta bandeja está próxima a vencer. Verifique la fecha de vencimiento.
             </p>
@@ -96,10 +96,10 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
       )}
 
       {bandeja.estado !== 'Disponible' && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+        <div className="mb-4 p-3 bg-red-50 ring-1 ring-red-200 rounded-2xl flex items-start space-x-2">
+          <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="font-medium text-red-800">Bandeja no disponible</p>
+            <p className="text-sm font-medium text-red-800">Bandeja no disponible</p>
             <p className="text-sm text-red-700">
               El estado actual de la bandeja no permite su asignación.
             </p>
@@ -109,16 +109,16 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
 
       {/* Información detallada */}
       <div className="space-y-3">
-        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-          <Calendar className="w-5 h-5 text-gray-600" />
+        <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+          <Calendar size={20} className="text-gray-600" />
           <div className="flex-1">
             <p className="text-sm text-gray-600">Fecha de Esterilización</p>
             <p className="font-medium text-gray-900">{formatearFecha(fechaEsterilizacion)}</p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-          <Calendar className="w-5 h-5 text-gray-600" />
+        <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+          <Calendar size={20} className="text-gray-600" />
           <div className="flex-1">
             <p className="text-sm text-gray-600">Fecha de Vencimiento</p>
             <p className={`font-medium ${estaVencida ? 'text-red-600' : 'text-gray-900'}`}>
@@ -128,8 +128,8 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
         </div>
 
         {bandeja.cicloEsterilizacionId && (
-          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-            <Package className="w-5 h-5 text-gray-600" />
+          <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+            <Package size={20} className="text-gray-600" />
             <div className="flex-1">
               <p className="text-sm text-gray-600">Ciclo de Esterilización</p>
               <p className="font-medium text-gray-900">{bandeja.cicloEsterilizacionId}</p>
@@ -140,9 +140,9 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
 
       {/* Indicador de validez */}
       {!estaVencida && bandeja.estado === 'Disponible' && (
-        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-          <div className="flex items-center space-x-2">
-            <CheckCircle className="w-5 h-5 text-green-600" />
+        <div className="mt-4 p-3 bg-green-50 ring-1 ring-green-200 rounded-2xl">
+          <div className="flex items-center gap-2">
+            <CheckCircle size={20} className="text-green-600" />
             <p className="text-sm font-medium text-green-800">
               Esta bandeja es válida y puede ser asignada
             </p>
@@ -152,5 +152,6 @@ export default function DetalleBandejaScaneada({ bandeja }: DetalleBandejaScanea
     </div>
   );
 }
+
 
 

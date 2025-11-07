@@ -124,10 +124,12 @@ export default function FirmaPresupuestoPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">Cargando presupuesto...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto mb-4" />
+            <p className="text-gray-600">Cargando presupuesto...</p>
+          </div>
         </div>
       </div>
     );
@@ -135,17 +137,15 @@ export default function FirmaPresupuestoPage({
 
   if (error && !presupuesto) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md border border-red-200 p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <AlertCircle className="w-6 h-6 text-red-600" />
-              <h2 className="text-xl font-bold text-gray-900">Error</h2>
-            </div>
-            <p className="text-gray-700 mb-4">{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
             <button
               onClick={handleVolver}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Volver</span>
@@ -158,37 +158,33 @@ export default function FirmaPresupuestoPage({
 
   if (firmaCompletada) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md border border-green-200 p-8 text-center">
-            <div className="mb-6">
-              <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-12 h-12 text-green-600" />
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Presupuesto Firmado Exitosamente</h2>
-              <p className="text-gray-600">
-                El presupuesto ha sido firmado y su estado ha cambiado a 'Aceptado'
-              </p>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <CheckCircle2 className="w-12 h-12 text-green-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Presupuesto Firmado Exitosamente</h3>
+            <p className="text-gray-600 mb-4">
+              El presupuesto ha sido firmado y su estado ha cambiado a 'Aceptado'
+            </p>
             {presupuesto && (
-              <div className="mb-6">
+              <div className="mb-4">
                 <EstadoPresupuestoBadge estado="Aceptado" size="lg" />
               </div>
             )}
-            <div className="flex justify-center space-x-3">
+            <div className="flex justify-center gap-2 mt-4">
               <button
                 onClick={handleVolver}
-                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4" />
                 <span>Volver</span>
               </button>
               {presupuesto?.documentoFirmadoURL && (
                 <button
                   onClick={handleDescargarPDF}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
                 >
-                  <FileText className="w-5 h-5" />
+                  <FileText className="w-4 h-4" />
                   <span>Ver Documento Firmado</span>
                 </button>
               )}
@@ -200,88 +196,106 @@ export default function FirmaPresupuestoPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={handleVolver}
-            className="mb-4 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Volver</span>
-          </button>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Firma de Presupuesto</h1>
-                {presupuesto && (
-                  <div className="flex items-center space-x-3 mt-2">
+              
+              {/* Título y descripción */}
+              <div className="flex-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Firma de Presupuesto
+                </h1>
+                {presupuesto ? (
+                  <div className="flex items-center gap-3 mt-2">
                     <p className="text-gray-600">
                       Presupuesto #{presupuesto.numeroPresupuesto}
                     </p>
                     <EstadoPresupuestoBadge estado={presupuesto.estado} />
                   </div>
+                ) : (
+                  <p className="text-gray-600">
+                    Revisa y firma el presupuesto del paciente
+                  </p>
                 )}
               </div>
-            </div>
-          </div>
-        </div>
 
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
-            <AlertCircle className="w-5 h-5 text-red-600" />
-            <p className="text-red-800">{error}</p>
-          </div>
-        )}
-
-        {presupuesto && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Panel izquierdo: Información del paciente */}
-            <div className="lg:col-span-1 space-y-6">
-              <InformacionPacientePresupuesto presupuesto={presupuesto} />
-            </div>
-
-            {/* Panel central: Vista del presupuesto */}
-            <div className="lg:col-span-2 space-y-6">
-              <VisorPresupuestoPDF
-                presupuesto={presupuesto}
-                loading={loading}
-                onDescargarPDF={handleDescargarPDF}
-                onImprimir={handleImprimir}
-              />
-
-              {/* Panel de firma */}
-              {presupuesto.estado === 'Presentado' && (
-                <PanelFirmaDigital
-                  onFirmar={handleFirmar}
-                  nombrePaciente={`${presupuesto.paciente.nombre} ${presupuesto.paciente.apellidos}`}
-                  disabled={firmando}
-                  loading={firmando}
-                />
+              {/* Botón volver */}
+              {onVolver && (
+                <button
+                  onClick={handleVolver}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/70 rounded-xl transition-all"
+                >
+                  <ArrowLeft size={18} />
+                  <span>Volver</span>
+                </button>
               )}
             </div>
           </div>
-        )}
-
-        {/* Modal de confirmación */}
-        <ModalConfirmacionFirma
-          isOpen={mostrarModalConfirmacion}
-          onClose={() => setMostrarModalConfirmacion(false)}
-          onConfirmar={handleConfirmarFirma}
-          nombrePaciente={
-            presupuesto
-              ? `${presupuesto.paciente.nombre} ${presupuesto.paciente.apellidos}`
-              : undefined
-          }
-          numeroPresupuesto={presupuesto?.numeroPresupuesto}
-          total={presupuesto?.total}
-          loading={firmando}
-        />
+        </div>
       </div>
+
+      {/* Contenido Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {error && (
+            <div className="bg-white shadow-sm rounded-lg p-4 border-l-4 border-red-500 flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <p className="text-red-800">{error}</p>
+            </div>
+          )}
+
+          {presupuesto && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Panel izquierdo: Información del paciente */}
+              <div className="lg:col-span-1">
+                <InformacionPacientePresupuesto presupuesto={presupuesto} />
+              </div>
+
+              {/* Panel central: Vista del presupuesto */}
+              <div className="lg:col-span-2 space-y-6">
+                <VisorPresupuestoPDF
+                  presupuesto={presupuesto}
+                  loading={loading}
+                  onDescargarPDF={handleDescargarPDF}
+                  onImprimir={handleImprimir}
+                />
+
+                {/* Panel de firma */}
+                {presupuesto.estado === 'Presentado' && (
+                  <PanelFirmaDigital
+                    onFirmar={handleFirmar}
+                    nombrePaciente={`${presupuesto.paciente.nombre} ${presupuesto.paciente.apellidos}`}
+                    disabled={firmando}
+                    loading={firmando}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Modal de confirmación */}
+      <ModalConfirmacionFirma
+        isOpen={mostrarModalConfirmacion}
+        onClose={() => setMostrarModalConfirmacion(false)}
+        onConfirmar={handleConfirmarFirma}
+        nombrePaciente={
+          presupuesto
+            ? `${presupuesto.paciente.nombre} ${presupuesto.paciente.apellidos}`
+            : undefined
+        }
+        numeroPresupuesto={presupuesto?.numeroPresupuesto}
+        total={presupuesto?.total}
+        loading={firmando}
+      />
     </div>
   );
 }

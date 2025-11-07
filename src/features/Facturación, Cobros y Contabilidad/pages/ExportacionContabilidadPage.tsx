@@ -193,192 +193,201 @@ export default function ExportacionContabilidadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Download className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Exportación a Contabilidad</h1>
-              <p className="text-gray-600 mt-1">
-                Exporte datos financieros en formatos compatibles con software de contabilidad
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Download size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Exportación a Contabilidad
+                </h1>
+                <p className="text-gray-600">
+                  Exporte datos financieros en formatos compatibles con software de contabilidad
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Mensajes de estado */}
-        {mensajeExito && (
-          <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center space-x-2">
-            <CheckCircle className="w-5 h-5 flex-shrink-0" />
-            <div>
-              <p className="font-medium">¡Exportación completada!</p>
-              <p className="text-sm">{mensajeExito}</p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* Mensajes de estado */}
+          {mensajeExito && (
+            <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl flex items-center space-x-2 ring-1 ring-green-200/50">
+              <CheckCircle className="w-5 h-5 flex-shrink-0" />
+              <div>
+                <p className="font-medium">¡Exportación completada!</p>
+                <p className="text-sm">{mensajeExito}</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center space-x-2">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <div>
-              <p className="font-medium">Error</p>
-              <p className="text-sm">{error}</p>
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl flex items-center space-x-2 ring-1 ring-red-200/50">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <div>
+                <p className="font-medium">Error</p>
+                <p className="text-sm">{error}</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Resumen de Estadísticas */}
-        {previsualizacion && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              {previsualizacion.facturas && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-                      <Download className="w-6 h-6" />
+          {/* Resumen de Estadísticas */}
+          {previsualizacion && (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {previsualizacion.facturas && (
+                  <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-blue-500 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-medium text-slate-700">Facturas</h3>
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Download className="w-5 h-5 text-blue-600" />
+                      </div>
+                    </div>
+                    <p className="text-3xl font-bold text-gray-900 mb-2">{previsualizacion.facturas.total}</p>
+                    <p className="text-xs text-gray-600">
+                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                        previsualizacion.facturas.totalImporte
+                      )}
+                    </p>
+                  </div>
+                )}
+                {previsualizacion.cobros && (
+                  <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-medium text-slate-700">Cobros</h3>
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <Download className="w-5 h-5 text-green-600" />
+                      </div>
+                    </div>
+                    <p className="text-3xl font-bold text-gray-900 mb-2">{previsualizacion.cobros.total}</p>
+                    <p className="text-xs text-gray-600">
+                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                        previsualizacion.cobros.totalImporte
+                      )}
+                    </p>
+                  </div>
+                )}
+                {previsualizacion.gastos && (
+                  <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-red-500 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-medium text-slate-700">Gastos</h3>
+                      <div className="p-2 bg-red-100 rounded-lg">
+                        <Download className="w-5 h-5 text-red-600" />
+                      </div>
+                    </div>
+                    <p className="text-3xl font-bold text-gray-900 mb-2">{previsualizacion.gastos.total}</p>
+                    <p className="text-xs text-gray-600">
+                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                        previsualizacion.gastos.totalImporte
+                      )}
+                    </p>
+                  </div>
+                )}
+                <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-purple-500 hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-slate-700">Total Registros</h3>
+                    <div className="p-2 bg-purple-100 rounded-lg">
+                      <Download className="w-5 h-5 text-purple-600" />
                     </div>
                   </div>
-                  <h3 className="text-gray-600 text-sm font-medium mb-2">Facturas</h3>
-                  <p className="text-3xl font-bold text-gray-900">{previsualizacion.facturas.total}</p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                      previsualizacion.facturas.totalImporte
-                    )}
+                  <p className="text-3xl font-bold text-gray-900 mb-2">
+                    {(previsualizacion.facturas?.total || 0) + 
+                     (previsualizacion.cobros?.total || 0) + 
+                     (previsualizacion.gastos?.total || 0)}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Registros a exportar
                   </p>
                 </div>
-              )}
-              {previsualizacion.cobros && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
-                      <Download className="w-6 h-6" />
+              </div>
+
+              {/* KPIs Adicionales */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-indigo-500 hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-slate-700">Balance Neto</h3>
+                    <div className="p-2 bg-indigo-100 rounded-lg">
+                      <Download className="w-5 h-5 text-indigo-600" />
                     </div>
                   </div>
-                  <h3 className="text-gray-600 text-sm font-medium mb-2">Cobros</h3>
-                  <p className="text-3xl font-bold text-gray-900">{previsualizacion.cobros.total}</p>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-3xl font-bold text-gray-900 mb-2">
                     {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                      previsualizacion.cobros.totalImporte
+                      (previsualizacion.cobros?.totalImporte || 0) - (previsualizacion.gastos?.totalImporte || 0)
                     )}
                   </p>
+                  <p className="text-xs text-gray-600">
+                    Ingresos - Gastos
+                  </p>
                 </div>
-              )}
-              {previsualizacion.gastos && (
-                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white">
-                      <Download className="w-6 h-6" />
+
+                <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-pink-500 hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-slate-700">Tasa de Cobro</h3>
+                    <div className="p-2 bg-pink-100 rounded-lg">
+                      <Download className="w-5 h-5 text-pink-600" />
                     </div>
                   </div>
-                  <h3 className="text-gray-600 text-sm font-medium mb-2">Gastos</h3>
-                  <p className="text-3xl font-bold text-gray-900">{previsualizacion.gastos.total}</p>
-                  <p className="text-xs text-gray-500 mt-2">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                      previsualizacion.gastos.totalImporte
-                    )}
+                  <p className="text-3xl font-bold text-gray-900 mb-2">
+                    {previsualizacion.facturas?.totalImporte && previsualizacion.facturas.totalImporte > 0
+                      ? Math.round((previsualizacion.cobros?.totalImporte || 0) / previsualizacion.facturas.totalImporte * 100)
+                      : 0}%
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Cobros vs Facturación
                   </p>
                 </div>
-              )}
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white">
-                    <Download className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Total Registros</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {(previsualizacion.facturas?.total || 0) + 
-                   (previsualizacion.cobros?.total || 0) + 
-                   (previsualizacion.gastos?.total || 0)}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Registros a exportar
-                </p>
-              </div>
-            </div>
 
-            {/* KPIs Adicionales */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 text-white">
-                    <Download className="w-6 h-6" />
+                <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-teal-500 hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-slate-700">Ticket Medio Factura</h3>
+                    <div className="p-2 bg-teal-100 rounded-lg">
+                      <Download className="w-5 h-5 text-teal-600" />
+                    </div>
                   </div>
+                  <p className="text-3xl font-bold text-gray-900 mb-2">
+                    {previsualizacion.facturas?.total && previsualizacion.facturas.total > 0
+                      ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(
+                          previsualizacion.facturas.totalImporte / previsualizacion.facturas.total
+                        )
+                      : '€0'}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Por factura
+                  </p>
                 </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Balance Neto</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                    (previsualizacion.cobros?.totalImporte || 0) - (previsualizacion.gastos?.totalImporte || 0)
-                  )}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Ingresos - Gastos
-                </p>
-              </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 text-white">
-                    <Download className="w-6 h-6" />
+                <div className="bg-white rounded-xl shadow-sm p-4 border-l-4 border-cyan-500 hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-slate-700">Ticket Medio Cobro</h3>
+                    <div className="p-2 bg-cyan-100 rounded-lg">
+                      <Download className="w-5 h-5 text-cyan-600" />
+                    </div>
                   </div>
+                  <p className="text-3xl font-bold text-gray-900 mb-2">
+                    {previsualizacion.cobros?.total && previsualizacion.cobros.total > 0
+                      ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(
+                          previsualizacion.cobros.totalImporte / previsualizacion.cobros.total
+                        )
+                      : '€0'}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    Por cobro
+                  </p>
                 </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Tasa de Cobro</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {previsualizacion.facturas?.totalImporte && previsualizacion.facturas.totalImporte > 0
-                    ? Math.round((previsualizacion.cobros?.totalImporte || 0) / previsualizacion.facturas.totalImporte * 100)
-                    : 0}%
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Cobros vs Facturación
-                </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 text-white">
-                    <Download className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Ticket Medio Factura</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {previsualizacion.facturas?.total && previsualizacion.facturas.total > 0
-                    ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(
-                        previsualizacion.facturas.totalImporte / previsualizacion.facturas.total
-                      )
-                    : '€0'}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Por factura
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 text-white">
-                    <Download className="w-6 h-6" />
-                  </div>
-                </div>
-                <h3 className="text-gray-600 text-sm font-medium mb-2">Ticket Medio Cobro</h3>
-                <p className="text-3xl font-bold text-gray-900">
-                  {previsualizacion.cobros?.total && previsualizacion.cobros.total > 0
-                    ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(
-                        previsualizacion.cobros.totalImporte / previsualizacion.cobros.total
-                      )
-                    : '€0'}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Por cobro
-                </p>
-              </div>
-            </div>
-
-            {/* Análisis Comparativo */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis Comparativo del Período</h3>
+              {/* Análisis Comparativo */}
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis Comparativo del Período</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
                   <p className="text-sm font-medium text-blue-800 mb-2">Facturación Total</p>
@@ -431,10 +440,10 @@ export default function ExportacionContabilidadPage() {
               </div>
             </div>
 
-            {/* Gráfico de Distribución de Datos */}
-            {previsualizacion && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Datos a Exportar</h3>
+              {/* Gráfico de Distribución de Datos */}
+              {previsualizacion && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Datos a Exportar</h3>
                 <div className="space-y-4">
                   {(() => {
                     const totalRegistros = (previsualizacion.facturas?.total || 0) + 
@@ -504,10 +513,10 @@ export default function ExportacionContabilidadPage() {
               </div>
             )}
 
-            {/* Análisis de Exportaciones por Formato */}
-            {previsualizacion && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Formatos de Exportación Disponibles</h3>
+              {/* Análisis de Exportaciones por Formato */}
+              {previsualizacion && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Formatos de Exportación Disponibles</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
                     const formatos = [
@@ -538,10 +547,10 @@ export default function ExportacionContabilidadPage() {
               </div>
             )}
 
-            {/* Análisis de Volumen de Datos */}
-            {previsualizacion && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Volumen de Datos a Exportar</h3>
+              {/* Análisis de Volumen de Datos */}
+              {previsualizacion && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Volumen de Datos a Exportar</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
                     <p className="text-sm font-medium text-blue-800 mb-2">Tamaño Estimado (CSV)</p>
@@ -578,10 +587,10 @@ export default function ExportacionContabilidadPage() {
               </div>
             )}
 
-            {/* Análisis de Exportaciones por Tipo de Dato */}
-            {previsualizacion && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis Detallado por Tipo de Dato</h3>
+              {/* Análisis de Exportaciones por Tipo de Dato */}
+              {previsualizacion && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis Detallado por Tipo de Dato</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {previsualizacion.facturas && (
                     <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
@@ -668,10 +677,10 @@ export default function ExportacionContabilidadPage() {
               </div>
             )}
 
-            {/* Análisis de Exportaciones Históricas */}
-            {previsualizacion && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Estadísticas de Exportaciones - Últimos 6 Meses</h3>
+              {/* Análisis de Exportaciones Históricas */}
+              {previsualizacion && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Estadísticas de Exportaciones - Últimos 6 Meses</h3>
                 <div className="space-y-3">
                   {(() => {
                     const meses = [];
@@ -728,39 +737,40 @@ export default function ExportacionContabilidadPage() {
           </>
         )}
 
-        {/* Contenido principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Formulario de Exportación */}
-          <div>
-            <FormularioExportacion
-              parametros={parametros}
-              onParametrosChange={setParametros}
-              onGenerarExportacion={handleGenerarExportacion}
-              loading={generandoExportacion}
-            />
+          {/* Contenido principal */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Formulario de Exportación */}
+            <div>
+              <FormularioExportacion
+                parametros={parametros}
+                onParametrosChange={setParametros}
+                onGenerarExportacion={handleGenerarExportacion}
+                loading={generandoExportacion}
+              />
+            </div>
+
+            {/* Previsualización */}
+            <div>
+              <PrevisualizacionDatosExportar
+                datos={previsualizacion}
+                loading={loadingPrevisualizacion}
+              />
+            </div>
           </div>
 
-          {/* Previsualización */}
-          <div>
-            <PrevisualizacionDatosExportar
-              datos={previsualizacion}
-              loading={loadingPrevisualizacion}
-            />
-          </div>
-        </div>
-
-        {/* Información adicional */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-            <div className="text-sm text-blue-800">
-              <p className="font-medium mb-1">Información importante:</p>
-              <ul className="list-disc list-inside space-y-1 text-blue-700">
-                <li>Los archivos generados se descargarán automáticamente en su navegador</li>
-                <li>Los archivos exportados contienen información financiera sensible - manténgalos seguros</li>
-                <li>Los archivos temporales se eliminan automáticamente después de 24 horas</li>
-                <li>Para exportaciones de grandes volúmenes, el proceso puede tardar varios minutos</li>
-              </ul>
+          {/* Información adicional */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 ring-1 ring-blue-200/50">
+            <div className="flex items-start space-x-3">
+              <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-blue-800">
+                <p className="font-medium mb-1">Información importante:</p>
+                <ul className="list-disc list-inside space-y-1 text-blue-700">
+                  <li>Los archivos generados se descargarán automáticamente en su navegador</li>
+                  <li>Los archivos exportados contienen información financiera sensible - manténgalos seguros</li>
+                  <li>Los archivos temporales se eliminan automáticamente después de 24 horas</li>
+                  <li>Para exportaciones de grandes volúmenes, el proceso puede tardar varios minutos</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

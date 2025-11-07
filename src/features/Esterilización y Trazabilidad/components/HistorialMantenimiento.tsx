@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Wrench, FileText, DollarSign, User, Download, Plus } from 'lucide-react';
+import { Calendar, Wrench, FileText, DollarSign, User, Download, Plus, AlertCircle } from 'lucide-react';
 import { MantenimientoAutoclave, obtenerMantenimientosAutoclave } from '../api/mantenimientoAutoclaveApi';
 import FormularioRegistroMantenimiento from './FormularioRegistroMantenimiento';
 
@@ -67,7 +67,7 @@ export default function HistorialMantenimiento({
 
   if (mostrarFormulario) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6">
         <FormularioRegistroMantenimiento
           autoclaveId={autoclaveId}
           onGuardar={handleMantenimientoRegistrado}
@@ -79,50 +79,57 @@ export default function HistorialMantenimiento({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Cargando historial...</p>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600">Cargando historial...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6">
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-sm text-red-800">{error}</p>
-          <button
-            onClick={cargarMantenimientos}
-            className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
-          >
-            Reintentar
-          </button>
+          <div className="flex items-start space-x-3">
+            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-sm text-red-800 mb-4">{error}</p>
+              <button
+                onClick={cargarMantenimientos}
+                className="text-sm text-red-600 hover:text-red-800 underline"
+              >
+                Reintentar
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm">
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-900">Historial de Mantenimientos</h3>
         <button
           onClick={() => setMostrarFormulario(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 text-sm"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm"
         >
-          <Plus className="w-4 h-4" />
+          <Plus size={16} />
           <span>Registrar Mantenimiento</span>
         </button>
       </div>
 
       <div className="divide-y divide-gray-200">
         {mantenimientos.length === 0 ? (
-          <div className="p-12 text-center text-gray-500">
-            <Wrench className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-            <p>No hay registros de mantenimiento para este autoclave</p>
+          <div className="p-12 text-center">
+            <Wrench className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay registros de mantenimiento</h3>
+            <p className="text-gray-600 mb-4">Aún no se han registrado mantenimientos para este autoclave</p>
             <button
               onClick={() => setMostrarFormulario(true)}
-              className="mt-4 text-blue-600 hover:text-blue-800 text-sm font-medium"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
             >
               Registrar el primer mantenimiento
             </button>
@@ -132,7 +139,7 @@ export default function HistorialMantenimiento({
             <div key={mantenimiento._id} className="p-6 hover:bg-gray-50 transition-colors">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
+                  <div className="flex items-center gap-3 mb-2">
                     <div
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         mantenimiento.tipoMantenimiento === 'preventivo'
@@ -168,7 +175,7 @@ export default function HistorialMantenimiento({
                   {mantenimiento.documentosAdjuntos &&
                     mantenimiento.documentosAdjuntos.length > 0 && (
                       <div className="mt-4">
-                        <p className="text-xs font-medium text-gray-500 mb-2">Documentos adjuntos:</p>
+                        <p className="text-xs font-medium text-slate-500 mb-2">Documentos adjuntos:</p>
                         <div className="flex flex-wrap gap-2">
                           {mantenimiento.documentosAdjuntos.map((doc, index) => (
                             <a
@@ -176,7 +183,7 @@ export default function HistorialMantenimiento({
                               href={doc.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs"
+                              className="inline-flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors text-xs ring-1 ring-slate-200"
                             >
                               <FileText className="w-3 h-3 mr-1" />
                               {doc.nombre}
@@ -195,5 +202,6 @@ export default function HistorialMantenimiento({
     </div>
   );
 }
+
 
 

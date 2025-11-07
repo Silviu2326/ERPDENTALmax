@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Mail, Phone, Users, Plus, Clock } from 'lucide-react';
+import { Mail, Phone, Users, Plus, Clock, AlertCircle, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Comunicacion,
   FiltrosComunicaciones,
@@ -187,6 +187,16 @@ export default function HistorialComunicacionList({
     }
   };
 
+  if (error && comunicaciones.length === 0 && !loading) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
+      </div>
+    );
+  }
+
   const handleCrearComunicacion = async (datos: Omit<Comunicacion, '_id' | 'createdAt'>) => {
     try {
       // Simular delay de API
@@ -240,101 +250,104 @@ export default function HistorialComunicacionList({
 
   if (loading && comunicaciones.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <div className="animate-pulse space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-20 bg-gray-200 rounded"></div>
-          ))}
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow-md border border-gray-200">
-        <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+      <div className="bg-white rounded-xl shadow-sm">
+        <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Historial de Comunicaciones</h3>
+            <h3 className="text-xl font-bold text-gray-900">Historial de Comunicaciones</h3>
             <p className="text-sm text-gray-600 mt-1">
               Registro de todas las interacciones con proveedores
             </p>
           </div>
           <button
             onClick={() => setMostrarModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             <span>Registrar Comunicación</span>
           </button>
         </div>
 
-        <div className="divide-y divide-gray-200">
-          {comunicaciones.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
-              <Mail className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-              <p>No hay comunicaciones registradas</p>
+        <div>
+          {comunicaciones.length === 0 && !loading ? (
+            <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+              <Mail size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay comunicaciones registradas</h3>
+              <p className="text-gray-600 mb-4">Comienza registrando tu primera comunicación con un proveedor</p>
               <button
                 onClick={() => setMostrarModal(true)}
-                className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm ring-1 ring-blue-600/20 font-medium"
               >
-                Registrar la primera comunicación
+                <Plus size={20} />
+                <span>Registrar Comunicación</span>
               </button>
             </div>
           ) : (
-            comunicaciones.map((comunicacion) => (
-              <div key={comunicacion._id} className="p-6 hover:bg-gray-50 transition-colors">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-1">{getIconoTipo(comunicacion.tipo)}</div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <h4 className="font-semibold text-gray-900">
-                          {comunicacion.proveedor?.nombreComercial || 'Proveedor'}
-                        </h4>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${getBadgeColor(
-                            comunicacion.tipo
-                          )}`}
-                        >
-                          {comunicacion.tipo}
-                        </span>
+            <div className="space-y-4 p-4">
+              {comunicaciones.map((comunicacion) => (
+                <div key={comunicacion._id} className="p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 mt-1">{getIconoTipo(comunicacion.tipo)}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <h4 className="font-semibold text-gray-900">
+                            {comunicacion.proveedor?.nombreComercial || 'Proveedor'}
+                          </h4>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${getBadgeColor(
+                              comunicacion.tipo
+                            )}`}
+                          >
+                            {comunicacion.tipo}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <Clock size={16} />
+                          {formatearFecha(comunicacion.fecha)}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <Clock className="w-4 h-4" />
-                        {formatearFecha(comunicacion.fecha)}
-                      </div>
+                      <p className="text-gray-700 mb-2">{comunicacion.resumen}</p>
+                      <p className="text-xs text-gray-500">
+                        Registrado por: {comunicacion.usuario?.nombre || 'Usuario'}
+                      </p>
                     </div>
-                    <p className="text-gray-700 mb-2">{comunicacion.resumen}</p>
-                    <p className="text-xs text-gray-500">
-                      Registrado por: {comunicacion.usuario?.nombre || 'Usuario'}
-                    </p>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
         {totalPages > 1 && (
-          <div className="p-4 border-t border-gray-200 flex items-center justify-between">
-            <button
-              onClick={() => setPage(page - 1)}
-              disabled={page === 1}
-              className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Anterior
-            </button>
-            <span className="text-sm text-gray-600">
-              Página {page} de {totalPages}
-            </span>
-            <button
-              onClick={() => setPage(page + 1)}
-              disabled={page >= totalPages}
-              className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Siguiente
-            </button>
+          <div className="bg-white rounded-xl shadow-sm p-4">
+            <div className="flex justify-center items-center gap-2">
+              <button
+                onClick={() => setPage(page - 1)}
+                disabled={page === 1}
+                className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <span className="px-4 py-2 text-sm text-slate-700">
+                Página {page} de {totalPages}
+              </span>
+              <button
+                onClick={() => setPage(page + 1)}
+                disabled={page >= totalPages}
+                className="inline-flex items-center justify-center p-2 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-slate-200"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
           </div>
         )}
       </div>

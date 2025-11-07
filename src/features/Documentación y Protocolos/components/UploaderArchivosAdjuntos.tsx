@@ -100,10 +100,6 @@ export default function UploaderArchivosAdjuntos({
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Archivos Adjuntos
-      </label>
-
       {/* Zona de subida */}
       {!disabled && onArchivosSubidos && (
         <div
@@ -112,11 +108,11 @@ export default function UploaderArchivosAdjuntos({
           onDragOver={handleDrag}
           onDrop={handleDrop}
           className={`
-            border-2 border-dashed rounded-lg p-6 text-center transition-colors
+            border-2 border-dashed rounded-2xl p-6 text-center transition-all
             ${
               dragActive
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-gray-300 hover:border-gray-400 bg-gray-50'
+                ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+                : 'border-slate-300 hover:border-slate-400 bg-slate-50'
             }
             ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           `}
@@ -129,13 +125,13 @@ export default function UploaderArchivosAdjuntos({
             className="hidden"
             disabled={disabled || uploading}
           />
-          <Upload className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+          <Upload className="w-12 h-12 text-slate-400 mx-auto mb-2" />
           <p className="text-sm text-gray-600 mb-1">
             Arrastre archivos aquí o{' '}
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-blue-600 hover:text-blue-800 underline"
+              className="text-blue-600 hover:text-blue-800 underline font-medium"
               disabled={disabled || uploading}
             >
               seleccione archivos
@@ -145,26 +141,26 @@ export default function UploaderArchivosAdjuntos({
             Tamaño máximo por archivo: {maxSizeMB}MB
           </p>
           {uploading && (
-            <p className="mt-2 text-sm text-blue-600">Subiendo archivos...</p>
+            <p className="mt-2 text-sm text-blue-600 font-medium">Subiendo archivos...</p>
           )}
         </div>
       )}
 
       {/* Lista de archivos */}
       {archivos.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {archivos.map((archivo) => (
             <div
               key={archivo._id || archivo.nombreArchivo}
-              className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+              className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm ring-1 ring-gray-200 hover:shadow-md transition-all"
             >
-              <div className="flex items-center space-x-3 flex-1 min-w-0">
-                <File className="w-5 h-5 text-gray-400 flex-shrink-0" />
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <File className="w-5 h-5 text-slate-400 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
                     {archivo.nombreArchivo}
                   </p>
-                  <div className="flex items-center space-x-2 text-xs text-gray-500">
+                  <div className="flex items-center gap-2 text-xs text-gray-600 mt-1">
                     <span>{formatearTamaño(archivo.tamaño)}</span>
                     {archivo.fechaSubida && (
                       <>
@@ -178,26 +174,26 @@ export default function UploaderArchivosAdjuntos({
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center gap-2">
                 {archivo.url && (
                   <a
                     href={archivo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
                     title="Descargar"
                   >
-                    <Download className="w-4 h-4" />
+                    <Download size={18} />
                   </a>
                 )}
                 {onEliminarArchivo && archivo._id && !disabled && (
                   <button
                     type="button"
                     onClick={() => handleEliminar(archivo._id!)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
+                    className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                     title="Eliminar"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 size={18} />
                   </button>
                 )}
               </div>
@@ -207,12 +203,13 @@ export default function UploaderArchivosAdjuntos({
       )}
 
       {archivos.length === 0 && !onArchivosSubidos && (
-        <p className="text-sm text-gray-500 text-center py-4">
+        <p className="text-sm text-gray-600 text-center py-4">
           No hay archivos adjuntos
         </p>
       )}
     </div>
   );
 }
+
 
 

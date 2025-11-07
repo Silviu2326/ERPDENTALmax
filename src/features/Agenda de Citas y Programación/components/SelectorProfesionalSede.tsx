@@ -58,23 +58,23 @@ export default function SelectorProfesionalSede({
   return (
     <div className="space-y-4">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="h-5 w-5" />
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center space-x-2">
+          <AlertCircle size={20} />
           <span>{error}</span>
         </div>
       )}
 
       <div>
-        <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-          <Building2 className="w-4 h-4" />
-          <span>Sede {required && '*'}</span>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          <Building2 size={16} className="inline mr-1" />
+          Sede {required && '*'}
         </label>
         <select
           value={sedeId}
           onChange={(e) => onSedeChange(e.target.value)}
           disabled={disabled}
           required={required}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100 disabled:cursor-not-allowed"
         >
           <option value="">Seleccionar sede</option>
           {sedesDisponibles.map((sede) => (
@@ -86,16 +86,16 @@ export default function SelectorProfesionalSede({
       </div>
 
       <div>
-        <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-          <Stethoscope className="w-4 h-4" />
-          <span>Profesional {required && '*'}</span>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          <Stethoscope size={16} className="inline mr-1" />
+          Profesional {required && '*'}
         </label>
         <select
           value={profesionalId}
           onChange={(e) => onProfesionalChange(e.target.value)}
           disabled={disabled || loading || !sedeId}
           required={required}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100 disabled:cursor-not-allowed"
         >
           <option value="">
             {loading ? 'Cargando...' : !sedeId ? 'Primero seleccione una sede' : 'Seleccionar profesional'}
@@ -110,5 +110,6 @@ export default function SelectorProfesionalSede({
     </div>
   );
 }
+
 
 

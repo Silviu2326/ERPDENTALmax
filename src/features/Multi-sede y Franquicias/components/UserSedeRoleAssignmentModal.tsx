@@ -120,7 +120,7 @@ export default function UserSedeRoleAssignmentModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div className="p-6 border-b border-gray-200 flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-gray-900">Asignar Usuarios a Roles</h2>
@@ -130,7 +130,7 @@ export default function UserSedeRoleAssignmentModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 rounded-lg transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 rounded-xl transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -138,17 +138,17 @@ export default function UserSedeRoleAssignmentModal({
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Buscar y asignar usuario */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Nueva Asignación</h3>
+          <div className="bg-slate-50 rounded-2xl ring-1 ring-slate-200 p-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Nueva Asignación</h3>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Buscar Usuario
                 </label>
-                <div className="flex space-x-2">
+                <div className="flex gap-4">
                   <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
                       type="text"
                       value={searchQuery}
@@ -159,20 +159,20 @@ export default function UserSedeRoleAssignmentModal({
                         }
                       }}
                       placeholder="Buscar por nombre o email..."
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
                     />
                   </div>
                   <button
                     onClick={handleSearch}
                     disabled={searching}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 shadow-sm ring-1 ring-blue-600/20 font-medium"
                   >
                     {searching ? 'Buscando...' : 'Buscar'}
                   </button>
                 </div>
 
                 {searchResults.length > 0 && (
-                  <div className="mt-2 border border-gray-200 rounded-lg bg-white max-h-48 overflow-y-auto">
+                  <div className="mt-2 border border-gray-200 rounded-xl bg-white max-h-48 overflow-y-auto">
                     {searchResults.map((user) => (
                       <button
                         key={user._id}
@@ -189,7 +189,7 @@ export default function UserSedeRoleAssignmentModal({
                 )}
 
                 {selectedUser && (
-                  <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-xl">
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-medium text-gray-900">{selectedUser.name}</div>
@@ -197,7 +197,7 @@ export default function UserSedeRoleAssignmentModal({
                       </div>
                       <button
                         onClick={() => setSelectedUser(null)}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-red-600 hover:text-red-700 rounded-lg p-1 hover:bg-red-50 transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -207,13 +207,13 @@ export default function UserSedeRoleAssignmentModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Seleccionar Rol
                 </label>
                 <select
                   value={selectedRole}
                   onChange={(e) => setSelectedRole(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
                 >
                   <option value="">Selecciona un rol</option>
                   {roles.map((role) => (
@@ -227,9 +227,9 @@ export default function UserSedeRoleAssignmentModal({
               <button
                 onClick={handleAssign}
                 disabled={!selectedUser || !selectedRole || assigning}
-                className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-green-600/20 font-medium"
               >
-                <UserPlus className="w-4 h-4" />
+                <UserPlus size={20} />
                 <span>{assigning ? 'Asignando...' : 'Asignar Rol'}</span>
               </button>
             </div>
@@ -237,30 +237,30 @@ export default function UserSedeRoleAssignmentModal({
 
           {/* Lista de asignaciones existentes */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Asignaciones Actuales</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Asignaciones Actuales</h3>
             {assignments.length === 0 ? (
-              <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-lg">
-                No hay asignaciones en esta sede
+              <div className="text-center py-8 text-gray-500 bg-slate-50 rounded-xl">
+                <p className="text-gray-600">No hay asignaciones en esta sede</p>
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {assignments.map((assignment) => (
                   <div
                     key={assignment._id}
-                    className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:shadow-sm transition-shadow"
+                    className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:shadow-sm transition-shadow"
                   >
                     <div className="flex-1">
                       <div className="font-medium text-gray-900">{assignment.user.name}</div>
                       <div className="text-sm text-gray-600">{assignment.user.email}</div>
                       <div className="mt-1">
-                        <span className="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-lg">
                           {assignment.role.name}
                         </span>
                       </div>
                     </div>
                     <button
                       onClick={() => handleRemoveAssignment(assignment._id)}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors ml-4"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors ml-4"
                       title="Eliminar asignación"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -275,5 +275,6 @@ export default function UserSedeRoleAssignmentModal({
     </div>
   );
 }
+
 
 

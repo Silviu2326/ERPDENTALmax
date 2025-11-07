@@ -30,10 +30,10 @@ export default function TablaDetalleInasistencias({
 }: TablaDetalleInasistenciasProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Detalle de Inasistencias</h3>
+      <div className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">Detalle de Inasistencias</h3>
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
         </div>
       </div>
     );
@@ -41,8 +41,8 @@ export default function TablaDetalleInasistencias({
 
   if (inasistencias.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Detalle de Inasistencias</h3>
+      <div className="bg-white shadow-sm rounded-xl p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">Detalle de Inasistencias</h3>
         <div className="flex flex-col items-center justify-center py-12 text-gray-500">
           <p>No hay inasistencias registradas en el período seleccionado</p>
         </div>
@@ -69,10 +69,10 @@ export default function TablaDetalleInasistencias({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-gray-800">Detalle de Inasistencias</h3>
-        <span className="text-sm text-gray-500">
+        <h3 className="text-lg font-bold text-gray-900">Detalle de Inasistencias</h3>
+        <span className="text-sm text-slate-600">
           Total: {inasistencias.length} inasistencia{inasistencias.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -131,5 +131,6 @@ export default function TablaDetalleInasistencias({
     </div>
   );
 }
+
 
 

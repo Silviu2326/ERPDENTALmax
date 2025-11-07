@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, ChevronDown, ChevronUp } from 'lucide-react';
+import { FileText, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { CostePorTratamiento } from '../api/analiticaApi';
 
 interface TablaDetalleCosteTratamientoProps {
@@ -54,19 +54,19 @@ export default function TablaDetalleCosteTratamiento({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-lg">
-            <FileText className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <FileText size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Detalle de Costes</h3>
-            <p className="text-sm text-gray-500">Desglose por tratamiento</p>
+            <h3 className="text-lg font-semibold text-gray-900">Detalle de Costes</h3>
+            <p className="text-sm text-gray-600">Desglose por tratamiento</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-          <p className="text-gray-500 mt-4">Cargando datos...</p>
+          <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando datos...</p>
         </div>
       </div>
     );
@@ -74,70 +74,72 @@ export default function TablaDetalleCosteTratamiento({
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-lg">
-            <FileText className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <FileText size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Detalle de Costes</h3>
-            <p className="text-sm text-gray-500">Desglose por tratamiento</p>
+            <h3 className="text-lg font-semibold text-gray-900">Detalle de Costes</h3>
+            <p className="text-sm text-gray-600">Desglose por tratamiento</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p>No hay datos disponibles</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <FileText size={48} className="text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+          <p className="text-gray-600">No se encontraron tratamientos para el período seleccionado</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-lg">
-          <FileText className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <FileText size={20} className="text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-800">Detalle de Costes</h3>
-          <p className="text-sm text-gray-500">Desglose por tratamiento</p>
+          <h3 className="text-lg font-semibold text-gray-900">Detalle de Costes</h3>
+          <p className="text-sm text-gray-600">Desglose por tratamiento</p>
         </div>
       </div>
 
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tratamiento
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => handleSort('ingresos')}
               >
                 Ingresos {sortField === 'ingresos' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => handleSort('costeTotal')}
               >
                 Coste Total {sortField === 'costeTotal' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => handleSort('margen')}
               >
                 Margen {sortField === 'margen' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider cursor-pointer hover:bg-slate-100 transition-colors"
                 onClick={() => handleSort('margenPorcentual')}
               >
                 Margen % {sortField === 'margenPorcentual' && (sortDirection === 'asc' ? '↑' : '↓')}
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Cantidad
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Detalle
               </th>
             </tr>
@@ -146,19 +148,19 @@ export default function TablaDetalleCosteTratamiento({
             {datosOrdenados.map((tratamiento) => {
               const isExpanded = expandedRows.has(tratamiento.tratamientoId);
               return (
-                <tr key={tratamiento.tratamientoId} className="hover:bg-gray-50">
+                <tr key={tratamiento.tratamientoId} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div>
                       <div className="text-sm font-medium text-gray-900">
                         {tratamiento.tratamientoNombre}
                       </div>
-                      <div className="text-xs text-gray-500">{tratamiento.areaClinica}</div>
+                      <div className="text-xs text-gray-600">{tratamiento.areaClinica}</div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {formatearMoneda(tratamiento.ingresos)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium">
                     {formatearMoneda(tratamiento.costeTotal)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
@@ -183,16 +185,16 @@ export default function TablaDetalleCosteTratamiento({
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <button
                       onClick={() => toggleRow(tratamiento.tratamientoId)}
-                      className="text-blue-600 hover:text-blue-800 flex items-center space-x-1"
+                      className="text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors"
                     >
                       {isExpanded ? (
                         <>
-                          <ChevronUp className="w-4 h-4" />
+                          <ChevronUp size={16} />
                           <span>Ocultar</span>
                         </>
                       ) : (
                         <>
-                          <ChevronDown className="w-4 h-4" />
+                          <ChevronDown size={16} />
                           <span>Ver</span>
                         </>
                       )}
@@ -211,30 +213,30 @@ export default function TablaDetalleCosteTratamiento({
         return (
           <div
             key={`detail-${tratamiento.tratamientoId}`}
-            className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200"
+            className="mt-4 p-4 bg-slate-50 rounded-xl ring-1 ring-slate-200"
           >
-            <h4 className="font-semibold text-gray-800 mb-3">Desglose de Costes</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">Desglose de Costes</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <p className="text-xs text-gray-500 mb-1">Coste Materiales</p>
+                <p className="text-xs text-gray-600 mb-1">Coste Materiales</p>
                 <p className="text-sm font-medium text-gray-900">
                   {formatearMoneda(tratamiento.costeMateriales)}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 mb-1">Coste Laboratorio</p>
+                <p className="text-xs text-gray-600 mb-1">Coste Laboratorio</p>
                 <p className="text-sm font-medium text-gray-900">
                   {formatearMoneda(tratamiento.costeLaboratorio)}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 mb-1">Coste Personal</p>
+                <p className="text-xs text-gray-600 mb-1">Coste Personal</p>
                 <p className="text-sm font-medium text-gray-900">
                   {formatearMoneda(tratamiento.costePersonal)}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 mb-1">Precio Unitario</p>
+                <p className="text-xs text-gray-600 mb-1">Precio Unitario</p>
                 <p className="text-sm font-medium text-gray-900">
                   {formatearMoneda(tratamiento.precioUnitario)}
                 </p>
@@ -246,5 +248,6 @@ export default function TablaDetalleCosteTratamiento({
     </div>
   );
 }
+
 
 

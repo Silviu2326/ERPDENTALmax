@@ -74,12 +74,12 @@ export default function ModalRegistrarAnticipo({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg">
-              <DollarSign className="w-6 h-6 text-white" />
+        <div className="flex items-center justify-between p-6 border-b border-gray-200/60">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+              <DollarSign size={24} className="text-blue-600" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-gray-900">Registrar Nuevo Anticipo</h2>
@@ -88,7 +88,7 @@ export default function ModalRegistrarAnticipo({
           </div>
           <button
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 transition-all rounded-lg p-1.5 hover:bg-gray-100"
           >
             <X className="w-6 h-6" />
           </button>
@@ -98,8 +98,8 @@ export default function ModalRegistrarAnticipo({
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Mensaje de error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-              <p className="font-medium">Error</p>
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl">
+              <p className="font-medium text-sm">Error</p>
               <p className="text-sm">{error}</p>
             </div>
           )}
@@ -116,53 +116,45 @@ export default function ModalRegistrarAnticipo({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Monto */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Monto *
+              <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center">
+                <DollarSign size={16} className="inline mr-1" />
+                <span>Monto *</span>
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <DollarSign className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={monto}
-                  onChange={(e) => setMonto(e.target.value)}
-                  placeholder="0.00"
-                  required
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={monto}
+                onChange={(e) => setMonto(e.target.value)}
+                placeholder="0.00"
+                required
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-3 pr-3 py-2.5"
+              />
             </div>
 
             {/* Método de Pago */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Método de Pago *
+              <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center">
+                <CreditCard size={16} className="inline mr-1" />
+                <span>Método de Pago *</span>
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <CreditCard className="h-5 w-5 text-gray-400" />
-                </div>
-                <select
-                  value={metodoPago}
-                  onChange={(e) => setMetodoPago(e.target.value as 'Efectivo' | 'Tarjeta' | 'Transferencia')}
-                  required
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
-                >
-                  <option value="Efectivo">Efectivo</option>
-                  <option value="Tarjeta">Tarjeta</option>
-                  <option value="Transferencia">Transferencia</option>
-                </select>
-              </div>
+              <select
+                value={metodoPago}
+                onChange={(e) => setMetodoPago(e.target.value as 'Efectivo' | 'Tarjeta' | 'Transferencia')}
+                required
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+              >
+                <option value="Efectivo">Efectivo</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Transferencia">Transferencia</option>
+              </select>
             </div>
           </div>
 
           {/* Observaciones */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
-              <FileText className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center">
+              <FileText size={16} className="inline mr-1" />
               <span>Observaciones</span>
             </label>
             <textarea
@@ -170,24 +162,24 @@ export default function ModalRegistrarAnticipo({
               onChange={(e) => setObservacion(e.target.value)}
               rows={3}
               placeholder="Notas adicionales sobre el anticipo (opcional)"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           {/* Botones */}
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-200">
             <button
               type="button"
               onClick={handleClose}
               disabled={loading}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading || !pacienteSeleccionado || !monto}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>
@@ -196,7 +188,7 @@ export default function ModalRegistrarAnticipo({
                 </>
               ) : (
                 <>
-                  <DollarSign className="w-4 h-4" />
+                  <DollarSign size={20} />
                   <span>Registrar Anticipo</span>
                 </>
               )}
@@ -207,5 +199,6 @@ export default function ModalRegistrarAnticipo({
     </div>
   );
 }
+
 
 

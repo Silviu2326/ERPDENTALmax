@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Download, RefreshCw, CheckCircle2, Eye } from 'lucide-react';
+import { FileText, Download, RefreshCw, CheckCircle2, Eye, History, Plus } from 'lucide-react';
 import {
   Tratamiento,
   Liquidacion,
@@ -255,209 +255,229 @@ export default function LiquidacionMutuasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <FileText className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Liquidación de Mutuas/Seguros
+                </h1>
+                <p className="text-gray-600">
+                  Gestión de liquidaciones y cobros a compañías de seguros
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Liquidación de Mutuas/Seguros</h1>
-              <p className="text-gray-600 mt-1">
-                Gestión de liquidaciones y cobros a compañías de seguros
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={() => setVista('nueva')}
-              className={`px-4 py-2 rounded-lg transition-colors font-medium ${
-                vista === 'nueva'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              Nueva Liquidación
-            </button>
-            <button
-              onClick={() => setVista('historial')}
-              className={`px-4 py-2 rounded-lg transition-colors font-medium ${
-                vista === 'historial'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              Historial
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error</p>
-            <p className="text-sm">{error}</p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Sistema de Tabs */}
+          <div className="bg-white shadow-sm rounded-lg p-0">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Secciones"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                <button
+                  onClick={() => setVista('nueva')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'nueva'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Plus size={18} className={vista === 'nueva' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Nueva Liquidación</span>
+                </button>
+                <button
+                  onClick={() => setVista('historial')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'historial'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <History size={18} className={vista === 'historial' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Historial</span>
+                </button>
+              </div>
+            </div>
           </div>
-        )}
 
-        {vista === 'nueva' ? (
-          <>
-            {/* Filtros */}
-            <FiltroLiquidacion
-              filtros={filtros || { mutuaId: '', fechaDesde: '', fechaHasta: '' }}
-              onFiltrosChange={handleFiltrosChange}
-              mutuas={mutuas}
-              loading={loading}
-            />
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+              <p className="font-medium">Error</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
 
-            {/* Resumen de KPIs */}
-            {!loading && tratamientos.length > 0 && (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-                        <FileText className="w-6 h-6" />
+          {vista === 'nueva' ? (
+            <>
+              {/* Filtros */}
+              <FiltroLiquidacion
+                filtros={filtros || { mutuaId: '', fechaDesde: '', fechaHasta: '' }}
+                onFiltrosChange={handleFiltrosChange}
+                mutuas={mutuas}
+                loading={loading}
+              />
+
+              {/* Resumen de KPIs */}
+              {!loading && tratamientos.length > 0 && (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-blue-100 rounded-lg">
+                          <FileText size={20} className="text-blue-600" />
+                        </div>
                       </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Total Tratamientos</h3>
+                      <p className="text-3xl font-bold text-gray-900">{tratamientos.length}</p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Tratamientos pendientes
+                      </p>
                     </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Total Tratamientos</h3>
-                    <p className="text-3xl font-bold text-gray-900">{tratamientos.length}</p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      Tratamientos pendientes
-                    </p>
+
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-green-100 rounded-lg">
+                          <FileText size={20} className="text-green-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Importe Total</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                          tratamientos.reduce((sum, t) => sum + t.importeTotal, 0)
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Suma de todos los tratamientos
+                      </p>
+                    </div>
+
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-purple-100 rounded-lg">
+                          <FileText size={20} className="text-purple-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Importe Mutua</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                          tratamientos.reduce((sum, t) => sum + t.importeMutua, 0)
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        A cobrar a la mutua
+                      </p>
+                    </div>
+
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-yellow-100 rounded-lg">
+                          <FileText size={20} className="text-yellow-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Importe Paciente</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                          tratamientos.reduce((sum, t) => sum + t.importePaciente, 0)
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        A cobrar al paciente
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
-                        <FileText className="w-6 h-6" />
+                  {/* KPIs Adicionales */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-indigo-100 rounded-lg">
+                          <FileText size={20} className="text-indigo-600" />
+                        </div>
                       </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Ticket Medio</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                          tratamientos.length > 0
+                            ? tratamientos.reduce((sum, t) => sum + t.importeTotal, 0) / tratamientos.length
+                            : 0
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Por tratamiento
+                      </p>
                     </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Importe Total</h3>
-                    <p className="text-3xl font-bold text-green-600">
-                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                        tratamientos.reduce((sum, t) => sum + t.importeTotal, 0)
-                      )}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      Suma de todos los tratamientos
-                    </p>
+
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-pink-100 rounded-lg">
+                          <FileText size={20} className="text-pink-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">% Cobertura Mutua</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {tratamientos.reduce((sum, t) => sum + t.importeTotal, 0) > 0
+                          ? Math.round((tratamientos.reduce((sum, t) => sum + t.importeMutua, 0) / tratamientos.reduce((sum, t) => sum + t.importeTotal, 0)) * 100)
+                          : 0}%
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Cobertura promedio
+                      </p>
+                    </div>
+
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-teal-100 rounded-lg">
+                          <FileText size={20} className="text-teal-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Tratamientos Seleccionados</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {tratamientosSeleccionados.length}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        {tratamientos.length > 0
+                          ? Math.round((tratamientosSeleccionados.length / tratamientos.length) * 100)
+                          : 0}% del total
+                      </p>
+                    </div>
+
+                    <div className="bg-white shadow-sm rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2 bg-cyan-100 rounded-lg">
+                          <FileText size={20} className="text-cyan-600" />
+                        </div>
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-700 mb-2">Importe Seleccionado</h3>
+                      <p className="text-3xl font-bold text-gray-900">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
+                          tratamientosSeleccionados.reduce((sum, t) => sum + t.importeMutua, 0)
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        A liquidar
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Importe Mutua</h3>
-                    <p className="text-3xl font-bold text-purple-600">
-                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                        tratamientos.reduce((sum, t) => sum + t.importeMutua, 0)
-                      )}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      A cobrar a la mutua
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Importe Paciente</h3>
-                    <p className="text-3xl font-bold text-yellow-600">
-                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                        tratamientos.reduce((sum, t) => sum + t.importePaciente, 0)
-                      )}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      A cobrar al paciente
-                    </p>
-                  </div>
-                </div>
-
-                {/* KPIs Adicionales */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 text-white">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Ticket Medio</h3>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                        tratamientos.length > 0
-                          ? tratamientos.reduce((sum, t) => sum + t.importeTotal, 0) / tratamientos.length
-                          : 0
-                      )}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      Por tratamiento
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 text-white">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">% Cobertura Mutua</h3>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {tratamientos.reduce((sum, t) => sum + t.importeTotal, 0) > 0
-                        ? Math.round((tratamientos.reduce((sum, t) => sum + t.importeMutua, 0) / tratamientos.reduce((sum, t) => sum + t.importeTotal, 0)) * 100)
-                        : 0}%
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      Cobertura promedio
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 text-white">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Tratamientos Seleccionados</h3>
-                    <p className="text-3xl font-bold text-gray-900">
-                      {tratamientosSeleccionados.length}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      {tratamientos.length > 0
-                        ? Math.round((tratamientosSeleccionados.length / tratamientos.length) * 100)
-                        : 0}% del total
-                    </p>
-                  </div>
-
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 text-white">
-                        <FileText className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-600 text-sm font-medium mb-2">Importe Seleccionado</h3>
-                    <p className="text-3xl font-bold text-cyan-600">
-                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(
-                        tratamientosSeleccionados.reduce((sum, t) => sum + t.importeMutua, 0)
-                      )}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      A liquidar
-                    </p>
-                  </div>
-                </div>
-
-                {/* Análisis por Tipo de Prestación */}
-                {tratamientos.length > 0 && (
-                  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Tipo de Prestación</h3>
+                  {/* Análisis por Tipo de Prestación */}
+                  {tratamientos.length > 0 && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Tipo de Prestación</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {(() => {
                         const prestaciones: { [key: string]: { count: number; total: number; mutua: number } } = {};
@@ -505,10 +525,10 @@ export default function LiquidacionMutuasPage() {
                   </div>
                 )}
 
-            {/* Top 10 Pacientes por Importe Mutua */}
-            {tratamientos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Pacientes por Importe a Cobrar a Mutua</h3>
+                  {/* Top 10 Pacientes por Importe Mutua */}
+                  {tratamientos.length > 0 && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Pacientes por Importe a Cobrar a Mutua</h3>
                 <div className="space-y-2">
                   {(() => {
                     const pacientesMap: { [key: string]: { nombre: string; total: number; cantidad: number } } = {};
@@ -559,10 +579,10 @@ export default function LiquidacionMutuasPage() {
               </div>
             )}
 
-            {/* Análisis de Cobertura por Prestación */}
-            {tratamientos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Cobertura por Tipo de Prestación</h3>
+                  {/* Análisis de Cobertura por Prestación */}
+                  {tratamientos.length > 0 && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Cobertura por Tipo de Prestación</h3>
                 <div className="space-y-3">
                   {(() => {
                     const prestacionesMap: { [key: string]: { nombre: string; total: number; mutua: number; paciente: number; cantidad: number } } = {};
@@ -620,10 +640,10 @@ export default function LiquidacionMutuasPage() {
               </div>
             )}
 
-            {/* Análisis de Tratamientos por Rango de Cobertura */}
-            {tratamientos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Tratamientos por Rango de Cobertura</h3>
+                  {/* Análisis de Tratamientos por Rango de Cobertura */}
+                  {tratamientos.length > 0 && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Tratamientos por Rango de Cobertura</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
                     const rangosCobertura = [
@@ -665,10 +685,10 @@ export default function LiquidacionMutuasPage() {
               </div>
             )}
 
-            {/* Análisis de Tratamientos por Día de la Semana */}
-            {tratamientos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Tratamientos por Día de la Semana</h3>
+                  {/* Análisis de Tratamientos por Día de la Semana */}
+                  {tratamientos.length > 0 && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Tratamientos por Día de la Semana</h3>
                 <div className="grid grid-cols-7 gap-2">
                   {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((dia, index) => {
                     const tratamientosDia = tratamientos.filter(t => {
@@ -707,10 +727,10 @@ export default function LiquidacionMutuasPage() {
               </div>
             )}
 
-            {/* Análisis de Tratamientos por Mes */}
-            {tratamientos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Tratamientos - Últimos 6 Meses</h3>
+                  {/* Análisis de Tratamientos por Mes */}
+                  {tratamientos.length > 0 && (
+                    <div className="bg-white shadow-sm rounded-lg p-6 border border-gray-200">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Tratamientos - Últimos 6 Meses</h3>
                 <div className="space-y-3">
                   {(() => {
                     const meses = [];
@@ -781,59 +801,60 @@ export default function LiquidacionMutuasPage() {
               </>
             )}
 
-            {/* Tabla de tratamientos y Resumen */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <TablaTratamientosPendientes
-                  tratamientos={tratamientos}
-                  tratamientosSeleccionados={tratamientosSeleccionadosIds}
-                  onToggleTratamiento={handleToggleTratamiento}
-                  onToggleTodos={handleToggleTodos}
-                  loading={loading}
-                />
+              {/* Tabla de tratamientos y Resumen */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <TablaTratamientosPendientes
+                    tratamientos={tratamientos}
+                    tratamientosSeleccionados={tratamientosSeleccionadosIds}
+                    onToggleTratamiento={handleToggleTratamiento}
+                    onToggleTodos={handleToggleTodos}
+                    loading={loading}
+                  />
+                </div>
+                <div>
+                  <ResumenLiquidacion
+                    tratamientosSeleccionados={tratamientosSeleccionados}
+                    loading={loading}
+                  />
+                </div>
               </div>
-              <div>
-                <ResumenLiquidacion
-                  tratamientosSeleccionados={tratamientosSeleccionados}
-                  loading={loading}
-                />
-              </div>
-            </div>
 
-            {/* Botón Generar Liquidación */}
-            {tratamientosSeleccionadosIds.length > 0 && (
-              <div className="flex justify-end">
-                <button
-                  onClick={handleGenerarLiquidacion}
-                  disabled={loading || !filtros}
-                  className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-md font-semibold flex items-center space-x-2"
-                >
-                  <CheckCircle2 className="w-5 h-5" />
-                  <span>Generar Liquidación</span>
-                </button>
-              </div>
-            )}
-          </>
-        ) : (
-          <HistorialLiquidaciones
-            onVerDetalle={handleVerDetalle}
-            onConciliarPago={handleAbrirConciliarPago}
-          />
-        )}
+              {/* Botón Generar Liquidación */}
+              {tratamientosSeleccionadosIds.length > 0 && (
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleGenerarLiquidacion}
+                    disabled={loading || !filtros}
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm font-semibold flex items-center space-x-2"
+                  >
+                    <CheckCircle2 size={20} className="mr-2" />
+                    <span>Generar Liquidación</span>
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <HistorialLiquidaciones
+              onVerDetalle={handleVerDetalle}
+              onConciliarPago={handleAbrirConciliarPago}
+            />
+          )}
 
-        {/* Modal Conciliar Pago */}
-        {mostrarModalConciliar && liquidacionConciliar && (
-          <ModalConciliarPago
-            isOpen={mostrarModalConciliar}
-            onClose={() => {
-              setMostrarModalConciliar(false);
-              setLiquidacionConciliar(null);
-            }}
-            onConfirmar={handleConciliarPago}
-            importeTotal={liquidacionConciliar.importeTotal}
-            liquidacionCodigo={liquidacionConciliar.codigo}
-          />
-        )}
+          {/* Modal Conciliar Pago */}
+          {mostrarModalConciliar && liquidacionConciliar && (
+            <ModalConciliarPago
+              isOpen={mostrarModalConciliar}
+              onClose={() => {
+                setMostrarModalConciliar(false);
+                setLiquidacionConciliar(null);
+              }}
+              onConfirmar={handleConciliarPago}
+              importeTotal={liquidacionConciliar.importeTotal}
+              liquidacionCodigo={liquidacionConciliar.codigo}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -43,19 +43,24 @@ export default function PanelResumenFacturacionLab({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-200 rounded w-1/3"></div>
-          <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="bg-white shadow-sm rounded-lg p-6">
+            <div className="animate-pulse space-y-3">
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div className="h-8 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Total General */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Total Facturado</p>
@@ -66,14 +71,14 @@ export default function PanelResumenFacturacionLab({
               {resumen.cantidadTotal} {resumen.cantidadTotal === 1 ? 'factura' : 'facturas'}
             </p>
           </div>
-          <div className="bg-blue-100 p-3 rounded-full">
+          <div className="bg-blue-100 p-3 rounded-xl ring-1 ring-blue-200/70">
             <TrendingUp className="w-6 h-6 text-blue-600" />
           </div>
         </div>
       </div>
 
       {/* Pendientes */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Pendientes de Pago</p>
@@ -84,14 +89,14 @@ export default function PanelResumenFacturacionLab({
               {resumen.cantidadPendientes} {resumen.cantidadPendientes === 1 ? 'factura' : 'facturas'}
             </p>
           </div>
-          <div className="bg-yellow-100 p-3 rounded-full">
+          <div className="bg-yellow-100 p-3 rounded-xl ring-1 ring-yellow-200/70">
             <Clock className="w-6 h-6 text-yellow-600" />
           </div>
         </div>
       </div>
 
       {/* Pagadas */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Pagadas</p>
@@ -102,14 +107,14 @@ export default function PanelResumenFacturacionLab({
               {resumen.cantidadPagadas} {resumen.cantidadPagadas === 1 ? 'factura' : 'facturas'}
             </p>
           </div>
-          <div className="bg-green-100 p-3 rounded-full">
+          <div className="bg-green-100 p-3 rounded-xl ring-1 ring-green-200/70">
             <CheckCircle className="w-6 h-6 text-green-600" />
           </div>
         </div>
       </div>
 
       {/* Vencidas */}
-      <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">Vencidas</p>
@@ -120,7 +125,7 @@ export default function PanelResumenFacturacionLab({
               {resumen.cantidadVencidas} {resumen.cantidadVencidas === 1 ? 'factura' : 'facturas'}
             </p>
           </div>
-          <div className="bg-red-100 p-3 rounded-full">
+          <div className="bg-red-100 p-3 rounded-xl ring-1 ring-red-200/70">
             <AlertCircle className="w-6 h-6 text-red-600" />
           </div>
         </div>
@@ -128,5 +133,6 @@ export default function PanelResumenFacturacionLab({
     </div>
   );
 }
+
 
 

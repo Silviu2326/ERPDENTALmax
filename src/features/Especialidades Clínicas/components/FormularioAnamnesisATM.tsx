@@ -84,29 +84,29 @@ export default function FormularioAnamnesisATM({
   const interpretacion = indiceFonseca !== null ? interpretarIndiceFonseca(indiceFonseca) : null;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Nueva Evaluación de ATM</h2>
-        <div className="flex items-center gap-2 mt-4">
-          {[1, 2, 3, 4, 5].map((paso) => (
-            <button
-              key={paso}
-              onClick={() => handleCambiarPaso(paso)}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                pasoActual === paso
-                  ? 'bg-blue-600 text-white'
-                  : paso < pasoActual
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-gray-100 text-gray-600'
-              }`}
-            >
-              {paso === 1 && 'Anamnesis'}
-              {paso === 2 && 'Examen Clínico'}
-              {paso === 3 && 'Diagnóstico'}
-              {paso === 4 && 'Plan de Tratamiento'}
-              {paso === 5 && 'Revisión'}
-            </button>
-          ))}
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Nueva Evaluación de ATM</h2>
+        <div className="rounded-2xl bg-slate-100 p-1">
+          <div className="flex items-center gap-2">
+            {[1, 2, 3, 4, 5].map((paso) => (
+              <button
+                key={paso}
+                onClick={() => handleCambiarPaso(paso)}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                  pasoActual === paso
+                    ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                }`}
+              >
+                {paso === 1 && 'Anamnesis'}
+                {paso === 2 && 'Examen Clínico'}
+                {paso === 3 && 'Diagnóstico'}
+                {paso === 4 && 'Plan de Tratamiento'}
+                {paso === 5 && 'Revisión'}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -114,24 +114,24 @@ export default function FormularioAnamnesisATM({
       {pasoActual === 1 && (
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Motivo de Consulta
             </label>
             <textarea
               value={motivoConsulta}
               onChange={(e) => setMotivoConsulta(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               rows={3}
               placeholder="Describa el motivo principal de la consulta..."
             />
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Cuestionario de Fonseca</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Cuestionario de Fonseca</h3>
             <div className="space-y-4">
               {preguntasFonseca.map((pregunta) => (
                 <div key={pregunta.id} className="border-b border-gray-200 pb-4">
-                  <p className="text-sm font-medium text-gray-700 mb-2">{pregunta.pregunta}</p>
+                  <p className="text-sm font-medium text-slate-700 mb-2">{pregunta.pregunta}</p>
                   <div className="flex gap-4">
                     {['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'].map((opcion, index) => (
                       <label key={index} className="flex items-center gap-2 cursor-pointer">
@@ -143,7 +143,7 @@ export default function FormularioAnamnesisATM({
                           onChange={() => setRespuestasFonseca({ ...respuestasFonseca, [pregunta.id]: index })}
                           className="w-4 h-4 text-blue-600"
                         />
-                        <span className="text-sm text-gray-600">{opcion}</span>
+                        <span className="text-sm text-slate-600">{opcion}</span>
                       </label>
                     ))}
                   </div>
@@ -152,7 +152,7 @@ export default function FormularioAnamnesisATM({
             </div>
 
             {interpretacion && (
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <div className="mt-4 p-4 bg-blue-50 rounded-xl ring-1 ring-blue-200">
                 <p className="text-sm font-medium text-blue-800">
                   Índice de Fonseca: {indiceFonseca!.toFixed(1)}% - {interpretacion.descripcion}
                 </p>
@@ -161,13 +161,13 @@ export default function FormularioAnamnesisATM({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Detalles Adicionales de la Anamnesis
             </label>
             <textarea
               value={detallesAnamnesis}
               onChange={(e) => setDetallesAnamnesis(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               rows={4}
               placeholder="Información adicional relevante..."
             />
@@ -179,7 +179,7 @@ export default function FormularioAnamnesisATM({
       {pasoActual === 2 && (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Mapa de Dolor y Palpación Muscular</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Mapa de Dolor y Palpación Muscular</h3>
             <DiagramaMuscularInteractivo
               mapaDolor={mapaDolor}
               palpaciones={palpaciones}
@@ -190,7 +190,7 @@ export default function FormularioAnamnesisATM({
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Ruidos Articulares</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Ruidos Articulares</h3>
             <div className="space-y-3">
               <label className="flex items-center gap-2">
                 <input
@@ -205,7 +205,7 @@ export default function FormularioAnamnesisATM({
                   }}
                   className="w-4 h-4 text-blue-600"
                 />
-                <span className="text-sm text-gray-700">Clic - Lado Derecho</span>
+                <span className="text-sm text-slate-700">Clic - Lado Derecho</span>
               </label>
               <label className="flex items-center gap-2">
                 <input
@@ -220,7 +220,7 @@ export default function FormularioAnamnesisATM({
                   }}
                   className="w-4 h-4 text-blue-600"
                 />
-                <span className="text-sm text-gray-700">Clic - Lado Izquierdo</span>
+                <span className="text-sm text-slate-700">Clic - Lado Izquierdo</span>
               </label>
               <label className="flex items-center gap-2">
                 <input
@@ -235,7 +235,7 @@ export default function FormularioAnamnesisATM({
                   }}
                   className="w-4 h-4 text-blue-600"
                 />
-                <span className="text-sm text-gray-700">Crepito - Lado Derecho</span>
+                <span className="text-sm text-slate-700">Crepito - Lado Derecho</span>
               </label>
               <label className="flex items-center gap-2">
                 <input
@@ -250,7 +250,7 @@ export default function FormularioAnamnesisATM({
                   }}
                   className="w-4 h-4 text-blue-600"
                 />
-                <span className="text-sm text-gray-700">Crepito - Lado Izquierdo</span>
+                <span className="text-sm text-slate-700">Crepito - Lado Izquierdo</span>
               </label>
             </div>
           </div>
@@ -258,7 +258,7 @@ export default function FormularioAnamnesisATM({
           <div>
             <button
               onClick={() => setMostrarModalMovimiento(true)}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium"
             >
               Registrar Rangos de Movimiento Mandibular
             </button>
@@ -270,13 +270,13 @@ export default function FormularioAnamnesisATM({
       {pasoActual === 3 && (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Diagnóstico (DC/TMD)</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Diagnóstico (DC/TMD)</h3>
             <div className="space-y-3">
               <div className="flex gap-3">
                 <input
                   type="text"
                   placeholder="Código (ej: Ia, Ib, IIa...)"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
                       const target = e.target as HTMLInputElement;
@@ -299,7 +299,7 @@ export default function FormularioAnamnesisATM({
                       nuevosDiagnosticos[index].codigo = e.target.value;
                       setDiagnostico(nuevosDiagnosticos);
                     }}
-                    className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-24 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                     placeholder="Código"
                   />
                   <input
@@ -310,12 +310,12 @@ export default function FormularioAnamnesisATM({
                       nuevosDiagnosticos[index].descripcion = e.target.value;
                       setDiagnostico(nuevosDiagnosticos);
                     }}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                     placeholder="Descripción"
                   />
                   <button
                     onClick={() => setDiagnostico(diagnostico.filter((_, i) => i !== index))}
-                    className="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                    className="px-3 py-2 bg-red-100 text-red-700 rounded-xl hover:bg-red-200 transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -328,24 +328,24 @@ export default function FormularioAnamnesisATM({
 
       {/* Paso 4: Plan de Tratamiento */}
       {pasoActual === 4 && (
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Plan de Tratamiento
-          </label>
-          <textarea
-            value={planTratamiento}
-            onChange={(e) => setPlanTratamiento(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            rows={8}
-            placeholder="Describa el plan de tratamiento propuesto..."
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Plan de Tratamiento
+            </label>
+            <textarea
+              value={planTratamiento}
+              onChange={(e) => setPlanTratamiento(e.target.value)}
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+              rows={8}
+              placeholder="Describa el plan de tratamiento propuesto..."
+            />
+          </div>
       )}
 
       {/* Paso 5: Revisión */}
       {pasoActual === 5 && (
         <div className="space-y-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
+          <div className="bg-blue-50 p-4 rounded-xl ring-1 ring-blue-200">
             <h3 className="font-semibold text-blue-800 mb-2">Resumen de la Evaluación</h3>
             <div className="space-y-2 text-sm text-blue-700">
               <p><strong>Motivo:</strong> {motivoConsulta || 'No especificado'}</p>
@@ -363,16 +363,16 @@ export default function FormularioAnamnesisATM({
       <div className="flex justify-between mt-6 pt-6 border-t border-gray-200">
         <button
           onClick={onCancelar}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-slate-200 text-slate-700 rounded-xl hover:bg-slate-300 transition-colors font-medium"
         >
-          <X className="w-5 h-5" />
+          <X size={20} />
           Cancelar
         </button>
         <div className="flex gap-3">
           {pasoActual > 1 && (
             <button
               onClick={() => setPasoActual(pasoActual - 1)}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl hover:bg-slate-300 transition-colors font-medium"
             >
               Anterior
             </button>
@@ -380,16 +380,16 @@ export default function FormularioAnamnesisATM({
           {pasoActual < 5 ? (
             <button
               onClick={() => setPasoActual(pasoActual + 1)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium"
             >
               Siguiente
             </button>
           ) : (
             <button
               onClick={handleGuardar}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-medium"
             >
-              <Save className="w-5 h-5" />
+              <Save size={20} />
               Guardar Evaluación
             </button>
           )}
@@ -407,5 +407,6 @@ export default function FormularioAnamnesisATM({
     </div>
   );
 }
+
 
 

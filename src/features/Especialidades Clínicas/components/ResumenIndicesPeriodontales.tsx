@@ -13,10 +13,13 @@ interface ResumenIndicesPeriodontalesProps {
 export default function ResumenIndicesPeriodontales({ indices }: ResumenIndicesPeriodontalesProps) {
   if (!indices) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-4">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Índices Periodontales</h3>
-        <div className="text-center py-8 text-gray-500">
-          <p className="text-sm">No hay datos para calcular</p>
+      <div className="bg-white rounded-xl shadow-sm p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Activity size={20} className="text-blue-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Índices Periodontales</h3>
+        </div>
+        <div className="p-8 text-center">
+          <p className="text-sm text-gray-600">No hay datos para calcular</p>
         </div>
       </div>
     );
@@ -47,17 +50,17 @@ export default function ResumenIndicesPeriodontales({ indices }: ResumenIndicesP
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-4">
+    <div className="bg-white rounded-xl shadow-sm p-4">
       <div className="flex items-center gap-2 mb-4">
-        <Activity className="w-5 h-5 text-blue-600" />
-        <h3 className="text-lg font-semibold text-gray-800">Índices Periodontales</h3>
+        <Activity size={20} className="text-blue-600" />
+        <h3 className="text-lg font-semibold text-gray-900">Índices Periodontales</h3>
       </div>
 
       <div className="space-y-4">
         {/* Índice de Sangrado */}
-        <div className={`p-4 rounded-lg ${getColorSangrado(indices.porcentajeSangrado)}`}>
+        <div className={`p-4 rounded-xl ring-1 ring-current/20 ${getColorSangrado(indices.porcentajeSangrado)}`}>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold">Índice de Sangrado al Sondaje</span>
+            <span className="font-semibold text-gray-900">Índice de Sangrado al Sondaje</span>
             <span className="text-2xl font-bold">{indices.porcentajeSangrado.toFixed(1)}%</span>
           </div>
           <div className="w-full bg-white/50 rounded-full h-2 mb-2">
@@ -70,9 +73,9 @@ export default function ResumenIndicesPeriodontales({ indices }: ResumenIndicesP
         </div>
 
         {/* Índice de Placa */}
-        <div className={`p-4 rounded-lg ${getColorPlaca(indices.porcentajePlaca)}`}>
+        <div className={`p-4 rounded-xl ring-1 ring-current/20 ${getColorPlaca(indices.porcentajePlaca)}`}>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold">Índice de Placa Bacteriana</span>
+            <span className="font-semibold text-gray-900">Índice de Placa Bacteriana</span>
             <span className="text-2xl font-bold">{indices.porcentajePlaca.toFixed(1)}%</span>
           </div>
           <div className="w-full bg-white/50 rounded-full h-2 mb-2">
@@ -85,10 +88,10 @@ export default function ResumenIndicesPeriodontales({ indices }: ResumenIndicesP
         </div>
 
         {/* Resumen general */}
-        <div className="bg-gray-50 p-3 rounded-lg">
-          <div className="text-sm text-gray-600 space-y-1">
+        <div className="bg-slate-50 p-4 rounded-xl ring-1 ring-slate-200">
+          <div className="text-sm text-slate-600">
             <p>
-              <span className="font-semibold">Total de sitios evaluados:</span>{' '}
+              <span className="font-semibold text-slate-700">Total de sitios evaluados:</span>{' '}
               {indices.totalSitios}
             </p>
           </div>
@@ -97,5 +100,6 @@ export default function ResumenIndicesPeriodontales({ indices }: ResumenIndicesP
     </div>
   );
 }
+
 
 

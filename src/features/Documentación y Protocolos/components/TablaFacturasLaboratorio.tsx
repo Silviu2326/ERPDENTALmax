@@ -1,4 +1,4 @@
-import { Eye, Edit, Trash2, CheckCircle, Clock, XCircle, AlertCircle } from 'lucide-react';
+import { Eye, Edit, Trash2, CheckCircle, Clock, XCircle, AlertCircle, Loader2, FileText } from 'lucide-react';
 import { FacturaLaboratorio } from '../api/facturacionLaboratorioApi';
 
 interface TablaFacturasLaboratorioProps {
@@ -11,12 +11,12 @@ interface TablaFacturasLaboratorioProps {
 
 const getEstadoColor = (estado: string): string => {
   const colores: Record<string, string> = {
-    'Pendiente': 'bg-yellow-100 text-yellow-800 border-yellow-300',
-    'Pagada': 'bg-green-100 text-green-800 border-green-300',
-    'Vencida': 'bg-red-100 text-red-800 border-red-300',
-    'Cancelada': 'bg-gray-100 text-gray-800 border-gray-300',
+    'Pendiente': 'bg-yellow-100 text-yellow-800 ring-yellow-300',
+    'Pagada': 'bg-green-100 text-green-800 ring-green-300',
+    'Vencida': 'bg-red-100 text-red-800 ring-red-300',
+    'Cancelada': 'bg-gray-100 text-gray-800 ring-gray-300',
   };
-  return colores[estado] || 'bg-gray-100 text-gray-800 border-gray-300';
+  return colores[estado] || 'bg-gray-100 text-gray-800 ring-gray-300';
 };
 
 const getEstadoIcon = (estado: string) => {
@@ -41,24 +41,19 @@ export default function TablaFacturasLaboratorio({
 }: TablaFacturasLaboratorioProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <div className="flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Cargando facturas...</p>
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando facturas...</p>
       </div>
     );
   }
 
   if (facturas.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <div className="text-center text-gray-500">
-          <p className="text-lg">No se encontraron facturas</p>
-          <p className="text-sm mt-2">Intenta ajustar los filtros de búsqueda</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron facturas</h3>
+        <p className="text-gray-600 mb-4">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
@@ -79,30 +74,30 @@ export default function TablaFacturasLaboratorio({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Nº Factura
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Laboratorio
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha Emisión
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha Vencimiento
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Total
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -133,12 +128,12 @@ export default function TablaFacturasLaboratorio({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getEstadoColor(
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ring-1 ${getEstadoColor(
                       factura.estado
                     )}`}
                   >
                     {getEstadoIcon(factura.estado)}
-                    <span className="ml-1">{factura.estado}</span>
+                    <span>{factura.estado}</span>
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">
@@ -152,10 +147,10 @@ export default function TablaFacturasLaboratorio({
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex items-center justify-end space-x-2">
+                  <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => onVerDetalle(factura._id!)}
-                      className="text-blue-600 hover:text-blue-900 p-1.5 rounded hover:bg-blue-50 transition-colors"
+                      className="text-blue-600 hover:text-blue-900 p-1.5 rounded-xl hover:bg-blue-50 transition-all"
                       title="Ver detalle"
                     >
                       <Eye className="w-5 h-5" />
@@ -163,7 +158,7 @@ export default function TablaFacturasLaboratorio({
                     {onEditar && (
                       <button
                         onClick={() => onEditar(factura._id!)}
-                        className="text-indigo-600 hover:text-indigo-900 p-1.5 rounded hover:bg-indigo-50 transition-colors"
+                        className="text-slate-600 hover:text-slate-900 p-1.5 rounded-xl hover:bg-slate-50 transition-all"
                         title="Editar"
                       >
                         <Edit className="w-5 h-5" />
@@ -172,7 +167,7 @@ export default function TablaFacturasLaboratorio({
                     {onEliminar && (
                       <button
                         onClick={() => onEliminar(factura._id!)}
-                        className="text-red-600 hover:text-red-900 p-1.5 rounded hover:bg-red-50 transition-colors"
+                        className="text-red-600 hover:text-red-900 p-1.5 rounded-xl hover:bg-red-50 transition-all"
                         title="Eliminar"
                       >
                         <Trash2 className="w-5 h-5" />
@@ -188,5 +183,6 @@ export default function TablaFacturasLaboratorio({
     </div>
   );
 }
+
 
 

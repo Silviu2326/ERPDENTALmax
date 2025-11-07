@@ -105,3 +105,4 @@ export async function obtenerImagenesPorPaciente(pacienteId: string): Promise<Im
 }
 
 
+

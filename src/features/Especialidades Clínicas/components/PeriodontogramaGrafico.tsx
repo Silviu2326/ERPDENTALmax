@@ -100,30 +100,30 @@ const PeriodontogramaGrafico = memo(function PeriodontogramaGrafico({
 
   return (
     <div className="w-full">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">Periodontograma</h3>
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Periodontograma</h3>
         {periodontogramaComparacion && (
-          <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+          <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
             <div className="w-4 h-4 bg-green-400 opacity-50 rounded"></div>
             <span>Comparación con periodontograma anterior</span>
           </div>
         )}
-        <div className="flex items-center gap-4 text-xs text-gray-500 mb-2">
-          <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 mb-4">
+          <div className="flex items-center gap-2">
             <div className="w-3 h-3 border-2 border-red-400 bg-red-50 rounded"></div>
-            <span>Sangrado</span>
+            <span className="text-sm font-medium">Sangrado</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <div className="w-3 h-3 border-2 border-yellow-400 bg-yellow-50 rounded"></div>
-            <span>Supuración</span>
+            <span className="text-sm font-medium">Supuración</span>
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-orange-500 rounded-full text-white text-[8px] flex items-center justify-center">M</div>
-            <span>Movilidad</span>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-orange-500 rounded-full text-white text-[8px] flex items-center justify-center font-bold">M</div>
+            <span className="text-sm font-medium">Movilidad</span>
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-purple-500 rounded-full text-white text-[8px] flex items-center justify-center">F</div>
-            <span>Furca</span>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-purple-500 rounded-full text-white text-[8px] flex items-center justify-center font-bold">F</div>
+            <span className="text-sm font-medium">Furca</span>
           </div>
         </div>
       </div>
@@ -152,8 +152,8 @@ const PeriodontogramaGrafico = memo(function PeriodontogramaGrafico({
       </div>
 
       {modoEdicion && (
-        <div className="mt-4 text-sm text-gray-600 text-center">
-          <p>Haga clic en un diente para ingresar o editar sus datos</p>
+        <div className="mt-6 text-sm text-gray-600 text-center p-4 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+          <p className="font-medium">Haga clic en un diente para ingresar o editar sus datos</p>
         </div>
       )}
     </div>
@@ -161,5 +161,6 @@ const PeriodontogramaGrafico = memo(function PeriodontogramaGrafico({
 });
 
 export default PeriodontogramaGrafico;
+
 
 

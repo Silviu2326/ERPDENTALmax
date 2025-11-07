@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Shield, AlertCircle, Trash2, Edit } from 'lucide-react';
+import { Shield, AlertCircle, Trash2, Edit, Loader2 } from 'lucide-react';
 import {
   Role,
   PermissionsByModule,
@@ -230,96 +230,127 @@ export default function PermisosRolesPage() {
 
   if (loading) {
     return (
-      <div className="p-8 flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <Shield className="w-12 h-12 text-blue-600 animate-pulse mx-auto mb-4" />
-          <p className="text-gray-600">Cargando roles y permisos...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Shield size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Asignación de Permisos y Roles
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona los roles y permisos del módulo de Proveedores y Almacén
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando roles y permisos...</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Shield className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Asignación de Permisos y Roles
-              </h1>
-              <p className="text-gray-600 mt-1 text-sm">
-                Gestiona los roles y permisos del módulo de Proveedores y Almacén
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Shield size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Asignación de Permisos y Roles
+                </h1>
+                <p className="text-gray-600">
+                  Gestiona los roles y permisos del módulo de Proveedores y Almacén
+                </p>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Error */}
-        {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
-            <AlertCircle className="w-5 h-5" />
-            {error}
-          </div>
-        )}
-
-        {/* Main Content */}
-        <div className="flex gap-6" style={{ minHeight: '600px' }}>
-          {/* Lista de Roles */}
-          <RolesListComponent
-            roles={roles}
-            rolSeleccionadoId={rolSeleccionado?._id || null}
-            onRolSeleccionado={handleRolSeleccionado}
-            onNuevoRol={handleNuevoRol}
-          />
-
-          {/* Matriz de Permisos */}
-          <PermissionsMatrixComponent
-            permisosPorModulo={permisosPorModulo}
-            rol={rolSeleccionado}
-            onGuardarPermisos={handleGuardarPermisos}
-            loading={loading}
-          />
-        </div>
-
-        {/* Acciones adicionales para el rol seleccionado */}
-        {rolSeleccionado && (
-          <div className="mt-4 flex items-center justify-end gap-3">
-            <button
-              onClick={() => handleEditarRol(rolSeleccionado)}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
-            >
-              <Edit className="w-4 h-4" />
-              Editar Rol
-            </button>
-            {!rolSeleccionado.isSystemRole && (
-              <button
-                onClick={() => handleEliminarRol(rolSeleccionado)}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
-              >
-                <Trash2 className="w-4 h-4" />
-                Eliminar Rol
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Modal de Gestión de Rol */}
-        {mostrarModalRol && (
-          <ModalGestionRol
-            rol={rolEditando}
-            onClose={() => {
-              setMostrarModalRol(false);
-              setRolEditando(null);
-            }}
-            onGuardado={handleRolGuardado}
-          />
-        )}
       </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-lg p-4 border border-red-200 bg-red-50 flex items-center gap-2 text-red-700">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Main Content */}
+          <div className="flex flex-col lg:flex-row gap-6" style={{ minHeight: '600px' }}>
+            {/* Lista de Roles */}
+            <RolesListComponent
+              roles={roles}
+              rolSeleccionadoId={rolSeleccionado?._id || null}
+              onRolSeleccionado={handleRolSeleccionado}
+              onNuevoRol={handleNuevoRol}
+            />
+
+            {/* Matriz de Permisos */}
+            <PermissionsMatrixComponent
+              permisosPorModulo={permisosPorModulo}
+              rol={rolSeleccionado}
+              onGuardarPermisos={handleGuardarPermisos}
+              loading={loading}
+            />
+          </div>
+
+          {/* Acciones adicionales para el rol seleccionado */}
+          {rolSeleccionado && (
+            <div className="flex items-center justify-end gap-2">
+              <button
+                onClick={() => handleEditarRol(rolSeleccionado)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white shadow-sm ring-1 ring-slate-200"
+              >
+                <Edit size={20} />
+                Editar Rol
+              </button>
+              {!rolSeleccionado.isSystemRole && (
+                <button
+                  onClick={() => handleEliminarRol(rolSeleccionado)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all bg-red-600 text-white hover:bg-red-700 shadow-sm ring-1 ring-red-600/20"
+                >
+                  <Trash2 size={20} />
+                  Eliminar Rol
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Modal de Gestión de Rol */}
+      {mostrarModalRol && (
+        <ModalGestionRol
+          rol={rolEditando}
+          onClose={() => {
+            setMostrarModalRol(false);
+            setRolEditando(null);
+          }}
+          onGuardado={handleRolGuardado}
+        />
+      )}
     </div>
   );
 }

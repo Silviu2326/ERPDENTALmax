@@ -123,34 +123,36 @@ export default function PanelFirmaDigital({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="mb-4">
-        <div className="flex items-center space-x-2 mb-2">
-          <PenTool className="w-5 h-5 text-blue-600" />
+        <div className="flex items-center gap-2 mb-2">
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <PenTool className="w-5 h-5 text-blue-600" />
+          </div>
           <h3 className="text-lg font-semibold text-gray-900">Firma Digital</h3>
         </div>
         {nombrePaciente && (
-          <p className="text-gray-600 text-sm">Paciente: {nombrePaciente}</p>
+          <p className="text-sm text-gray-600">Paciente: {nombrePaciente}</p>
         )}
       </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="w-4 h-4 text-red-600" />
-          <p className="text-red-800 text-sm">{error}</p>
+        <div className="mb-4 p-3 bg-red-50 border-l-4 border-red-500 rounded-lg flex items-center gap-3">
+          <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+          <p className="text-sm text-red-800">{error}</p>
         </div>
       )}
 
       <div className="mb-4">
-        <p className="text-gray-700 text-sm mb-3">
+        <p className="text-sm text-gray-700 mb-3">
           Por favor, firma en el área inferior usando el ratón o el dedo (en dispositivos táctiles).
         </p>
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50">
+        <div className="ring-1 ring-slate-200 rounded-xl p-4 bg-slate-50">
           <canvas
             ref={canvasRef}
             width={600}
             height={200}
-            className="w-full border border-gray-300 rounded bg-white cursor-crosshair touch-none"
+            className="w-full ring-1 ring-slate-300 rounded-xl bg-white cursor-crosshair touch-none"
             style={{ maxWidth: '100%', height: 'auto' }}
             onMouseDown={startDrawing}
             onMouseMove={draw}
@@ -163,11 +165,11 @@ export default function PanelFirmaDigital({
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+      <div className="flex items-center justify-between gap-2 pt-4 border-t border-gray-200">
         <button
           onClick={limpiarFirma}
           disabled={disabled || loading || !hasSignature}
-          className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <RotateCcw className="w-4 h-4" />
           <span>Limpiar</span>
@@ -176,7 +178,7 @@ export default function PanelFirmaDigital({
         <button
           onClick={handleFirmar}
           disabled={disabled || loading || !hasSignature}
-          className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 shadow-md hover:shadow-lg"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>
@@ -194,5 +196,6 @@ export default function PanelFirmaDigital({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { ProduccionProfesional } from '../api/analiticaApi';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, Loader2, Table } from 'lucide-react';
 import { useState } from 'react';
 
 interface TablaDetalleProduccionBoxProps {
@@ -69,73 +69,67 @@ export default function TablaDetalleProduccionBox({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-10 bg-gray-200 rounded"></div>
-          <div className="h-10 bg-gray-200 rounded"></div>
-          <div className="h-10 bg-gray-200 rounded"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando tabla...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Detalle de Producción por Profesional</h3>
-        <p className="text-gray-500 text-center py-8">No hay datos disponibles</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Table size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Detalle de Producción por Profesional</h3>
+        <p className="text-gray-600">No hay datos disponibles para mostrar</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-4">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Detalle de Producción por Profesional</h3>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleSort('nombreCompleto')}
               >
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   <span>Profesional</span>
-                  <ArrowUpDown className="w-4 h-4" />
+                  <ArrowUpDown size={14} className="opacity-70" />
                 </div>
               </th>
-              <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSort('especialidad')}
-              >
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Especialidad
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleSort('produccionTotal')}
               >
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   <span>Producción Total</span>
-                  <ArrowUpDown className="w-4 h-4" />
+                  <ArrowUpDown size={14} className="opacity-70" />
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleSort('numeroCitas')}
               >
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   <span>N° Citas</span>
-                  <ArrowUpDown className="w-4 h-4" />
+                  <ArrowUpDown size={14} className="opacity-70" />
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => handleSort('horasTrabajadas')}
               >
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   <span>Horas Trabajadas</span>
-                  <ArrowUpDown className="w-4 h-4" />
+                  <ArrowUpDown size={14} className="opacity-70" />
                 </div>
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -145,7 +139,7 @@ export default function TablaDetalleProduccionBox({
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {sortedData.map((profesional) => (
-              <tr key={profesional.profesionalId} className="hover:bg-gray-50">
+              <tr key={profesional.profesionalId} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {profesional.nombreCompleto}
                 </td>
@@ -166,7 +160,7 @@ export default function TablaDetalleProduccionBox({
                     {profesional.boxesAsignados.map((boxId) => (
                       <span
                         key={boxId}
-                        className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs"
+                        className="px-2 py-1 bg-blue-100 text-blue-800 rounded-lg text-xs font-medium"
                       >
                         {boxId}
                       </span>
@@ -181,5 +175,6 @@ export default function TablaDetalleProduccionBox({
     </div>
   );
 }
+
 
 

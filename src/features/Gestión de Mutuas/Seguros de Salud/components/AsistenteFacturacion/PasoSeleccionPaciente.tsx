@@ -59,38 +59,39 @@ export default function PasoSeleccionPaciente({
       </div>
 
       {/* Buscador de pacientes */}
-      <div className="relative">
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por nombre, apellidos o DNI..."
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
         {/* Lista de resultados */}
         {busqueda.length >= 2 && (
-          <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+          <div className="mt-3 bg-white border border-gray-200 rounded-lg shadow-sm max-h-96 overflow-y-auto">
             {loading && (
-              <div className="p-4 text-center text-gray-500">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="mt-2">Buscando pacientes...</p>
+              <div className="p-8 text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Buscando pacientes...</p>
               </div>
             )}
 
             {error && (
               <div className="p-4 text-red-600 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5" />
-                <span>{error}</span>
+                <AlertCircle size={20} className="text-red-600" />
+                <span className="text-sm">{error}</span>
               </div>
             )}
 
             {!loading && !error && pacientes.length === 0 && busqueda.length >= 2 && (
-              <div className="p-4 text-center text-gray-500">
-                No se encontraron pacientes con seguro activo
+              <div className="p-8 text-center">
+                <AlertCircle size={48} className="mx-auto text-gray-400 mb-4" />
+                <p className="text-gray-600">No se encontraron pacientes con seguro activo</p>
               </div>
             )}
 
@@ -103,8 +104,8 @@ export default function PasoSeleccionPaciente({
                     className="w-full p-4 text-left hover:bg-blue-50 transition-colors"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="bg-blue-100 rounded-full p-2">
-                        <User className="w-5 h-5 text-blue-600" />
+                      <div className="bg-blue-100 rounded-full p-2 ring-1 ring-blue-200/70">
+                        <User size={20} className="text-blue-600" />
                       </div>
                       <div className="flex-1">
                         <div className="font-semibold text-gray-900">
@@ -115,7 +116,7 @@ export default function PasoSeleccionPaciente({
                         )}
                         <div className="mt-2 flex items-center gap-4 text-sm">
                           <div className="flex items-center gap-1 text-blue-600">
-                            <CreditCard className="w-4 h-4" />
+                            <CreditCard size={16} />
                             <span className="font-medium">{paciente.poliza.mutuaNombre}</span>
                           </div>
                           <div className="flex items-center gap-1 text-gray-600">
@@ -134,10 +135,10 @@ export default function PasoSeleccionPaciente({
 
       {/* Paciente seleccionado */}
       {pacienteSeleccionado && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4">
+        <div className="bg-white rounded-lg shadow-sm ring-1 ring-blue-200/70 p-4">
           <div className="flex items-start gap-3">
-            <div className="bg-blue-600 rounded-full p-2">
-              <User className="w-5 h-5 text-white" />
+            <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+              <User size={24} className="text-blue-600" />
             </div>
             <div className="flex-1">
               <div className="font-semibold text-gray-900 text-lg">
@@ -148,7 +149,7 @@ export default function PasoSeleccionPaciente({
               )}
               <div className="mt-3 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
-                  <CreditCard className="w-4 h-4 text-blue-600" />
+                  <CreditCard size={16} className="text-blue-600" />
                   <span className="font-medium text-gray-900">Mutua/Seguro:</span>
                   <span className="text-gray-700">{pacienteSeleccionado.poliza.mutuaNombre}</span>
                 </div>
@@ -157,14 +158,14 @@ export default function PasoSeleccionPaciente({
                   <span className="text-gray-700">{pacienteSeleccionado.poliza.numeroPoliza}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <Calendar className="w-4 h-4 text-blue-600" />
+                  <Calendar size={16} className="text-blue-600" />
                   <span className="font-medium text-gray-900">Válida hasta:</span>
                   <span className="text-gray-700">
                     {new Date(pacienteSeleccionado.poliza.fechaValidez).toLocaleDateString('es-ES')}
                   </span>
                 </div>
                 {pacienteSeleccionado.poliza.condicionesEspeciales && (
-                  <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
+                  <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
                     <span className="font-medium">Condiciones especiales:</span>{' '}
                     {pacienteSeleccionado.poliza.condicionesEspeciales}
                   </div>
@@ -177,5 +178,6 @@ export default function PasoSeleccionPaciente({
     </div>
   );
 }
+
 
 

@@ -76,21 +76,28 @@ export default function ModalAccionAlerta({ alerta, accion, onClose, onSuccess }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
-            {accion === 'crear_orden' && <ShoppingCart className="w-6 h-6 text-green-600" />}
-            {accion === 'revisar' && <Clock className="w-6 h-6 text-yellow-600" />}
-            {accion === 'resolver' && <CheckCircle className="w-6 h-6 text-blue-600" />}
+            <div className={`p-2 rounded-xl ${
+              accion === 'crear_orden' ? 'bg-green-100' : 
+              accion === 'revisar' ? 'bg-yellow-100' : 
+              'bg-blue-100'
+            }`}>
+              {accion === 'crear_orden' && <ShoppingCart size={20} className="text-green-600" />}
+              {accion === 'revisar' && <Clock size={20} className="text-yellow-600" />}
+              {accion === 'resolver' && <CheckCircle size={20} className="text-blue-600" />}
+            </div>
             <h3 className="text-lg font-semibold text-gray-900">{getTitulo()}</h3>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            disabled={loading}
+            className="text-slate-400 hover:text-slate-600 transition-colors disabled:opacity-50"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         </div>
 
@@ -99,27 +106,27 @@ export default function ModalAccionAlerta({ alerta, accion, onClose, onSuccess }
           <p className="text-gray-600 mb-4">{getDescripcion()}</p>
 
           {/* Información de la alerta */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-4">
-            <div className="space-y-2">
+          <div className="bg-slate-50 rounded-xl p-4 mb-4 ring-1 ring-slate-200">
+            <div className="space-y-3">
               <div>
-                <span className="text-sm font-medium text-gray-700">Producto:</span>
+                <span className="text-sm font-medium text-slate-700">Producto:</span>
                 <span className="text-sm text-gray-900 ml-2">{alerta.producto.nombre}</span>
               </div>
               <div>
-                <span className="text-sm font-medium text-gray-700">Sede:</span>
+                <span className="text-sm font-medium text-slate-700">Sede:</span>
                 <span className="text-sm text-gray-900 ml-2">{alerta.sede.nombre}</span>
               </div>
               <div>
-                <span className="text-sm font-medium text-gray-700">Stock Actual:</span>
+                <span className="text-sm font-medium text-slate-700">Stock Actual:</span>
                 <span className="text-sm text-red-600 font-semibold ml-2">{alerta.stock_actual}</span>
               </div>
               <div>
-                <span className="text-sm font-medium text-gray-700">Stock Mínimo:</span>
+                <span className="text-sm font-medium text-slate-700">Stock Mínimo:</span>
                 <span className="text-sm text-gray-900 ml-2">{alerta.stock_minimo_al_generar}</span>
               </div>
               {alerta.producto.proveedor_preferido && (
                 <div>
-                  <span className="text-sm font-medium text-gray-700">Proveedor:</span>
+                  <span className="text-sm font-medium text-slate-700">Proveedor:</span>
                   <span className="text-sm text-gray-900 ml-2">
                     {alerta.producto.proveedor_preferido.nombre}
                   </span>
@@ -131,7 +138,7 @@ export default function ModalAccionAlerta({ alerta, accion, onClose, onSuccess }
           {/* Campo de cantidad para crear orden */}
           {accion === 'crear_orden' && (
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Cantidad a Pedir
               </label>
               <input
@@ -139,10 +146,10 @@ export default function ModalAccionAlerta({ alerta, accion, onClose, onSuccess }
                 min="1"
                 value={cantidad}
                 onChange={(e) => setCantidad(parseInt(e.target.value) || 0)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
                 placeholder="Cantidad sugerida"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Cantidad sugerida: {cantidadInicial}
               </p>
             </div>
@@ -150,25 +157,25 @@ export default function ModalAccionAlerta({ alerta, accion, onClose, onSuccess }
 
           {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4">
               {error}
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50">
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 bg-slate-50">
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 shadow-sm ring-1 ring-slate-200 disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             onClick={handleConfirmar}
             disabled={loading || (accion === 'crear_orden' && cantidad <= 0)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -177,7 +184,7 @@ export default function ModalAccionAlerta({ alerta, accion, onClose, onSuccess }
               </>
             ) : (
               <>
-                {accion === 'crear_orden' && <ShoppingCart className="w-4 h-4" />}
+                {accion === 'crear_orden' && <ShoppingCart size={18} />}
                 Confirmar
               </>
             )}

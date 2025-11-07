@@ -170,7 +170,7 @@ export default function EmpleadoForm({
   const esOdontologo = formData.rol === 'Odontologo';
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
           {error}
@@ -178,14 +178,14 @@ export default function EmpleadoForm({
       )}
 
       {/* Sección: Datos Personales */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm p-6 rounded-lg">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
           <User className="w-5 h-5 text-blue-600" />
           Datos Personales
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre *
             </label>
             <input
@@ -193,11 +193,11 @@ export default function EmpleadoForm({
               required
               value={formData.nombre}
               onChange={(e) => handleChange('nombre', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Apellidos *
             </label>
             <input
@@ -205,11 +205,11 @@ export default function EmpleadoForm({
               required
               value={formData.apellidos}
               onChange={(e) => handleChange('apellidos', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               DNI *
             </label>
             <input
@@ -217,23 +217,23 @@ export default function EmpleadoForm({
               required
               value={formData.dni}
               onChange={(e) => handleChange('dni', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Nacimiento
             </label>
             <input
               type="date"
               value={formData.fechaNacimiento}
               onChange={(e) => handleChange('fechaNacimiento', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Mail className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Mail size={16} className="inline mr-1" />
               Email *
             </label>
             <input
@@ -241,19 +241,19 @@ export default function EmpleadoForm({
               required
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Phone className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Phone size={16} className="inline mr-1" />
               Teléfono
             </label>
             <input
               type="tel"
               value={formData.telefono}
               onChange={(e) => handleChange('telefono', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         </div>
@@ -261,76 +261,76 @@ export default function EmpleadoForm({
         {/* Dirección */}
         <div className="mt-6 pt-6 border-t border-gray-200">
           <h4 className="text-md font-semibold text-gray-800 flex items-center gap-2 mb-4">
-            <MapPin className="w-4 h-4 text-blue-600" />
+            <MapPin size={16} className="inline mr-1 text-blue-600" />
             Dirección
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2 grid grid-cols-3 gap-4">
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Calle
                 </label>
                 <input
                   type="text"
                   value={formData.calle}
                   onChange={(e) => handleChange('calle', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Número
                 </label>
                 <input
                   type="text"
                   value={formData.numero}
                   onChange={(e) => handleChange('numero', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Ciudad
               </label>
               <input
                 type="text"
                 value={formData.ciudad}
                 onChange={(e) => handleChange('ciudad', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Provincia
               </label>
               <input
                 type="text"
                 value={formData.provincia}
                 onChange={(e) => handleChange('provincia', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Código Postal
               </label>
               <input
                 type="text"
                 value={formData.codigoPostal}
                 onChange={(e) => handleChange('codigoPostal', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 País
               </label>
               <input
                 type="text"
                 value={formData.pais}
                 onChange={(e) => handleChange('pais', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
           </div>
@@ -338,21 +338,21 @@ export default function EmpleadoForm({
       </div>
 
       {/* Sección: Datos Profesionales */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm p-6 rounded-lg">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
           <Briefcase className="w-5 h-5 text-blue-600" />
           Datos Profesionales
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Rol *
             </label>
             <select
               required
               value={formData.rol}
               onChange={(e) => handleChange('rol', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               {roles.map((rol) => (
                 <option key={rol.value} value={rol.value}>
@@ -364,8 +364,8 @@ export default function EmpleadoForm({
           {esOdontologo && (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                  <GraduationCap className="w-4 h-4" />
+                <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                  <GraduationCap size={16} className="inline mr-1" />
                   Especialidad
                 </label>
                 <input
@@ -373,18 +373,18 @@ export default function EmpleadoForm({
                   value={formData.especialidad}
                   onChange={(e) => handleChange('especialidad', e.target.value)}
                   placeholder="Ej: Ortodoncia, Implantología..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Número de Colegiado
                 </label>
                 <input
                   type="text"
                   value={formData.numeroColegiado}
                   onChange={(e) => handleChange('numeroColegiado', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
             </>
@@ -393,21 +393,21 @@ export default function EmpleadoForm({
       </div>
 
       {/* Sección: Datos Contractuales */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm p-6 rounded-lg">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
           <FileText className="w-5 h-5 text-blue-600" />
           Datos Contractuales
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Tipo de Contrato *
             </label>
             <select
               required
               value={formData.tipoContrato}
               onChange={(e) => handleChange('tipoContrato', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               {tiposContrato.map((tipo) => (
                 <option key={tipo.value} value={tipo.value}>
@@ -417,8 +417,8 @@ export default function EmpleadoForm({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <DollarSign className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <DollarSign size={16} className="inline mr-1" />
               Salario (€)
             </label>
             <input
@@ -427,12 +427,12 @@ export default function EmpleadoForm({
               min="0"
               value={formData.salario}
               onChange={(e) => handleChange('salario', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Calendar size={16} className="inline mr-1" />
               Fecha de Inicio *
             </label>
             <input
@@ -440,18 +440,18 @@ export default function EmpleadoForm({
               required
               value={formData.fechaInicio}
               onChange={(e) => handleChange('fechaInicio', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Fin (si aplica)
             </label>
             <input
               type="date"
               value={formData.fechaFin}
               onChange={(e) => handleChange('fechaFin', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         </div>
@@ -459,7 +459,7 @@ export default function EmpleadoForm({
 
       {/* Sección: Clínicas Asignadas */}
       {clinicas.length > 0 && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white shadow-sm p-6 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
             <MapPin className="w-5 h-5 text-blue-600" />
             Clínicas Asignadas
@@ -485,7 +485,7 @@ export default function EmpleadoForm({
 
       {/* Estado */}
       {empleado && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white shadow-sm p-6 rounded-lg">
           <label className="flex items-center gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -520,5 +520,6 @@ export default function EmpleadoForm({
     </form>
   );
 }
+
 
 

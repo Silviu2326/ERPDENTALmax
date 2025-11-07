@@ -139,13 +139,13 @@ export default function DiagramaMuscularInteractivo({
       {!modoLectura && (
         <div className="flex gap-4 items-end">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Seleccionar Músculo
             </label>
             <select
               value={musculoSeleccionado}
               onChange={(e) => setMusculoSeleccionado(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               <option value="">Seleccione un músculo</option>
               {musculos.map((musculo) => (
@@ -156,7 +156,7 @@ export default function DiagramaMuscularInteractivo({
             </select>
           </div>
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Intensidad del Dolor (0-10)
             </label>
             <input
@@ -167,51 +167,51 @@ export default function DiagramaMuscularInteractivo({
               onChange={(e) => setIntensidadSeleccionada(Number(e.target.value))}
               className="w-full"
             />
-            <div className="text-center text-sm text-gray-600 mt-1">{intensidadSeleccionada}</div>
+            <div className="text-center text-sm text-slate-600 mt-1">{intensidadSeleccionada}</div>
           </div>
           <button
             onClick={handleAgregarPalpacion}
             disabled={!musculoSeleccionado}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed font-medium"
           >
             Agregar
           </button>
         </div>
       )}
 
-      <div className="bg-gray-50 rounded-lg p-4 border-2 border-gray-200">
+      <div className="bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200">
         <canvas
           ref={canvasRef}
           width={400}
           height={300}
           onClick={handleCanvasClick}
-          className={`w-full border border-gray-300 rounded-lg ${modoLectura ? 'cursor-default' : 'cursor-crosshair'}`}
+          className={`w-full ring-1 ring-slate-300 rounded-xl ${modoLectura ? 'cursor-default' : 'cursor-crosshair'}`}
           style={{ maxWidth: '100%', height: 'auto' }}
         />
-        <p className="text-xs text-gray-500 mt-2 text-center">
+        <p className="text-xs text-slate-500 mt-2 text-center">
           {modoLectura ? 'Visualización de mapa de dolor' : 'Haga clic en el diagrama para marcar puntos de dolor'}
         </p>
       </div>
 
       {palpaciones.length > 0 && (
         <div className="mt-4">
-          <h4 className="text-sm font-semibold text-gray-700 mb-2">Palpaciones Registradas</h4>
+          <h4 className="text-sm font-semibold text-slate-700 mb-2">Palpaciones Registradas</h4>
           <div className="space-y-2">
             {palpaciones.map((palpacion, index) => (
-              <div key={index} className="flex items-center justify-between bg-white p-2 rounded border border-gray-200">
-                <span className="text-sm text-gray-700">
+              <div key={index} className="flex items-center justify-between bg-white p-2 rounded-xl ring-1 ring-slate-200">
+                <span className="text-sm text-slate-700">
                   {musculos.find((m) => m.id === palpacion.musculo)?.nombre || palpacion.musculo}
                   {' - '}
                   {palpacion.lado}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-700">Dolor: {palpacion.dolor}/10</span>
+                  <span className="text-sm font-medium text-slate-700">Dolor: {palpacion.dolor}/10</span>
                   {!modoLectura && onPalpacionesChange && (
                     <button
                       onClick={() => {
                         onPalpacionesChange(palpaciones.filter((_, i) => i !== index));
                       }}
-                      className="text-red-600 hover:text-red-800 text-sm"
+                      className="text-red-600 hover:text-red-800 text-sm font-medium"
                     >
                       Eliminar
                     </button>
@@ -223,7 +223,7 @@ export default function DiagramaMuscularInteractivo({
         </div>
       )}
 
-      <div className="flex gap-4 mt-4 text-xs text-gray-600">
+      <div className="flex gap-4 mt-4 text-xs text-slate-600">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-blue-500"></div>
           <span>Dolor Leve (0-4)</span>
@@ -240,5 +240,6 @@ export default function DiagramaMuscularInteractivo({
     </div>
   );
 }
+
 
 

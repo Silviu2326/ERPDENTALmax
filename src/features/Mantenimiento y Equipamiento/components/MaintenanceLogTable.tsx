@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Calendar, User, DollarSign, FileText } from 'lucide-react';
+import { Calendar, User, DollarSign, FileText, Loader2 } from 'lucide-react';
 import { MaintenanceLog } from '../api/maintenanceApi';
 
 interface MaintenanceLogTableProps {
@@ -31,18 +30,19 @@ export default function MaintenanceLogTable({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando registros...</p>
       </div>
     );
   }
 
   if (logs.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-        <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-500 text-lg font-medium">No hay registros de mantenimiento</p>
-        <p className="text-gray-400 text-sm mt-2">
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay registros de mantenimiento</h3>
+        <p className="text-gray-600">
           Los registros de mantenimiento realizados aparecerán aquí
         </p>
       </div>
@@ -50,27 +50,27 @@ export default function MaintenanceLogTable({
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha de Realización
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Equipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Plan
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Realizado por
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Costo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Notas
               </th>
             </tr>
@@ -88,7 +88,7 @@ export default function MaintenanceLogTable({
                   <div className="text-sm text-gray-900">
                     {log.equipment.nombre}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-600">
                     {log.equipment.marca} {log.equipment.modelo}
                   </div>
                 </td>
@@ -128,5 +128,6 @@ export default function MaintenanceLogTable({
     </div>
   );
 }
+
 
 

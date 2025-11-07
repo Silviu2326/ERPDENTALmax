@@ -128,7 +128,7 @@ export default function AsistenteFacturacionWizard({
     setTratamientosSeleccionados([]);
   };
 
-  const handleCoberturaVerificada = (detalles: DetalleCobertura[]) => {
+  const handleCoberturaVerificada = (detalles: DetalleCobertura[], verificacion: any) => {
     setDetallesCobertura(detalles);
   };
 
@@ -147,9 +147,9 @@ export default function AsistenteFacturacionWizard({
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-lg">
+    <div className="bg-white rounded-lg shadow-sm">
       {/* Barra de progreso */}
-      <div className="border-b border-gray-200 p-6">
+      <div className="border-b border-gray-200/60 p-6">
         <div className="flex items-center justify-between">
           {PASOS.map((paso, index) => {
             const estaCompletado = index < pasoActualIndex;
@@ -164,16 +164,16 @@ export default function AsistenteFacturacionWizard({
                     disabled={!puedeAcceder}
                     className={`relative flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
                       estaCompletado
-                        ? 'bg-green-500 border-green-500 text-white'
+                        ? 'bg-green-600 border-green-600 text-white'
                         : esActual
                         ? 'bg-blue-600 border-blue-600 text-white'
                         : 'bg-white border-gray-300 text-gray-400'
                     } ${puedeAcceder && !esActual ? 'hover:border-blue-400 cursor-pointer' : ''}`}
                   >
                     {estaCompletado ? (
-                      <Check className="w-5 h-5" />
+                      <Check size={18} />
                     ) : (
-                      <span className="font-semibold">{index + 1}</span>
+                      <span className="font-semibold text-sm">{index + 1}</span>
                     )}
                   </button>
                   <div className="mt-2 text-center max-w-[120px]">
@@ -189,7 +189,7 @@ export default function AsistenteFacturacionWizard({
                 {index < PASOS.length - 1 && (
                   <div
                     className={`flex-1 h-0.5 mx-2 ${
-                      index < pasoActualIndex ? 'bg-green-500' : 'bg-gray-300'
+                      index < pasoActualIndex ? 'bg-green-600' : 'bg-gray-300'
                     }`}
                   />
                 )}
@@ -200,7 +200,7 @@ export default function AsistenteFacturacionWizard({
       </div>
 
       {/* Contenido del paso actual */}
-      <div className="p-6">
+      <div className="p-6 space-y-6">
         {pasoActual === 'seleccion-paciente' && (
           <PasoSeleccionPaciente
             pacienteSeleccionado={pacienteSeleccionado}
@@ -209,22 +209,14 @@ export default function AsistenteFacturacionWizard({
         )}
 
         {pasoActual === 'seleccion-tratamientos' && pacienteSeleccionado && (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Paso 2: Seleccionar Tratamientos</h3>
-              <p className="text-gray-600 text-sm">
-                Selecciona los tratamientos realizados que deseas incluir en esta factura.
-              </p>
-            </div>
-            <ListaTratamientosFacturables
-              tratamientos={tratamientosPendientes}
-              tratamientosSeleccionados={tratamientosSeleccionados}
-              onTratamientoToggle={handleTratamientoToggle}
-              onSeleccionarTodos={handleSeleccionarTodos}
-              onDeseleccionarTodos={handleDeseleccionarTodos}
-              loading={loadingTratamientos}
-            />
-          </div>
+          <ListaTratamientosFacturables
+            tratamientos={tratamientosPendientes}
+            tratamientosSeleccionados={tratamientosSeleccionados}
+            onTratamientoToggle={handleTratamientoToggle}
+            onSeleccionarTodos={handleSeleccionarTodos}
+            onDeseleccionarTodos={handleDeseleccionarTodos}
+            loading={loadingTratamientos}
+          />
         )}
 
         {pasoActual === 'verificacion-cobertura' && pacienteSeleccionado && (
@@ -257,7 +249,7 @@ export default function AsistenteFacturacionWizard({
 
       {/* Botones de navegación */}
       {pasoActual !== 'resumen-envio' && (
-        <div className="border-t border-gray-200 p-6 flex items-center justify-between">
+        <div className="border-t border-gray-200/60 p-6 flex items-center justify-between">
           <div>
             {onCancelar && (
               <button
@@ -274,17 +266,17 @@ export default function AsistenteFacturacionWizard({
                 onClick={handleAnterior}
                 className="flex items-center gap-2 px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft size={20} className="mr-2" />
                 Anterior
               </button>
             )}
             {puedeAvanzar() && (
               <button
                 onClick={handleSiguiente}
-                className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
+                className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm font-semibold"
               >
                 Siguiente
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight size={20} className="ml-2" />
               </button>
             )}
           </div>
@@ -293,5 +285,6 @@ export default function AsistenteFacturacionWizard({
     </div>
   );
 }
+
 
 

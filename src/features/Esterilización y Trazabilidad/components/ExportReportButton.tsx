@@ -67,16 +67,16 @@ export default function ExportReportButton({ filtros, disabled = false }: Export
       <button
         onClick={() => setMostrarMenu(!mostrarMenu)}
         disabled={disabled || exportando}
-        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
       >
         {exportando ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 size={20} className="animate-spin" />
             <span>Exportando...</span>
           </>
         ) : (
           <>
-            <Download className="w-5 h-5" />
+            <Download size={20} />
             <span>Exportar Informe</span>
           </>
         )}
@@ -92,20 +92,20 @@ export default function ExportReportButton({ filtros, disabled = false }: Export
           ></div>
           
           {/* Menú */}
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20">
+          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-slate-200 z-20">
             <div className="py-1">
               <button
                 onClick={() => handleExportar('pdf')}
-                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition-colors"
+                className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-all"
               >
-                <FileText className="w-4 h-4 text-red-600" />
+                <FileText size={16} className="text-red-600" />
                 <span>Exportar como PDF</span>
               </button>
               <button
                 onClick={() => handleExportar('csv')}
-                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition-colors"
+                className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-all"
               >
-                <FileSpreadsheet className="w-4 h-4 text-green-600" />
+                <FileSpreadsheet size={16} className="text-green-600" />
                 <span>Exportar como CSV</span>
               </button>
             </div>
@@ -115,12 +115,12 @@ export default function ExportReportButton({ filtros, disabled = false }: Export
 
       {/* Mensaje de éxito/error */}
       {mensaje && (
-        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-30">
-          <div className={`flex items-start space-x-3 ${mensaje.tipo === 'success' ? 'text-green-800' : 'text-red-800'}`}>
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg ring-1 ring-slate-200 p-4 z-30">
+          <div className={`flex items-start gap-3 ${mensaje.tipo === 'success' ? 'text-green-800' : 'text-red-800'}`}>
             {mensaje.tipo === 'success' ? (
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
             ) : (
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
             )}
             <p className="text-sm font-medium">{mensaje.texto}</p>
           </div>

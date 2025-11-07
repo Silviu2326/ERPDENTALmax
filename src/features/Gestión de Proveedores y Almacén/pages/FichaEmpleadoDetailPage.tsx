@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Loader2, Edit, User, Briefcase, FileText, MapPin } from 'lucide-react';
+import { ArrowLeft, Loader2, Edit, User, Briefcase, FileText, MapPin, AlertCircle } from 'lucide-react';
 import {
   Empleado,
   obtenerEmpleadoPorId,
@@ -84,10 +84,12 @@ export default function FichaEmpleadoDetailPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Cargando ficha del empleado...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+            <p className="text-gray-600">Cargando ficha del empleado...</p>
+          </div>
         </div>
       </div>
     );
@@ -95,8 +97,8 @@ export default function FichaEmpleadoDetailPage({
 
   if (error || !empleado) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
           {onVolver && (
             <button
               onClick={onVolver}
@@ -106,9 +108,10 @@ export default function FichaEmpleadoDetailPage({
               Volver
             </button>
           )}
-          <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
-            <p className="font-semibold">Error al cargar la ficha</p>
-            <p className="mt-1">{error || 'Empleado no encontrado'}</p>
+          <div className="bg-white shadow-sm p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error || 'Empleado no encontrado'}</p>
           </div>
         </div>
       </div>
@@ -128,30 +131,35 @@ export default function FichaEmpleadoDetailPage({
   const activo = empleado.activo !== undefined ? empleado.activo : empleado.estado !== 'Inactivo';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          {onVolver && (
-            <button
-              onClick={onVolver}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Volver al Listado
-            </button>
-          )}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-4 rounded-xl shadow-lg">
-                  <User className="w-8 h-8 text-white" />
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mr-6"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                )}
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <User size={24} className="text-blue-600" />
                 </div>
+                
+                {/* Título y descripción */}
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{nombreCompleto}</h1>
-                  <p className="text-gray-600 mt-1">
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {nombreCompleto}
+                  </h1>
+                  <p className="text-gray-600">
                     {rol}
                     {especialidad && ` • ${especialidad}`}
+                    {empleado.dni && ` • DNI: ${empleado.dni}`}
                   </p>
                   <div className="flex items-center gap-4 mt-2">
                     <span
@@ -163,9 +171,6 @@ export default function FichaEmpleadoDetailPage({
                     >
                       {activo ? 'Activo' : 'Inactivo'}
                     </span>
-                    {empleado.dni && (
-                      <span className="text-sm text-gray-600">DNI: {empleado.dni}</span>
-                    )}
                   </div>
                 </div>
               </div>
@@ -174,19 +179,23 @@ export default function FichaEmpleadoDetailPage({
                   onClick={() => setModoEdicion(true)}
                   className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  <Edit className="w-4 h-4" />
+                  <Edit size={20} className="mr-2" />
                   Editar
                 </button>
               )}
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
 
         {/* Modo Edición */}
         {modoEdicion ? (
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+          <div className="bg-white shadow-sm p-6 rounded-lg">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Editar Empleado</h2>
+              <h2 className="text-xl font-bold text-gray-900">Editar Empleado</h2>
               <button
                 onClick={() => setModoEdicion(false)}
                 className="text-gray-600 hover:text-gray-900"
@@ -204,23 +213,28 @@ export default function FichaEmpleadoDetailPage({
         ) : (
           <>
             {/* Tabs */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mb-6">
-              <div className="border-b border-gray-200 bg-gray-50">
-                <div className="flex overflow-x-auto">
+            <div className="bg-white shadow-sm p-0">
+              <div className="px-4 py-3">
+                <div
+                  role="tablist"
+                  aria-label="Secciones"
+                  className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+                >
                   {tabs.map((tab) => {
                     const Icon = tab.icon;
+                    const isActive = activeTab === tab.id;
                     return (
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex items-center gap-2 px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
-                          activeTab === tab.id
-                            ? 'border-blue-600 text-blue-600 bg-white'
-                            : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                        className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                          isActive
+                            ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                            : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                         }`}
                       >
-                        <Icon className="w-5 h-5" />
-                        {tab.label}
+                        <Icon size={18} className={isActive ? 'opacity-100' : 'opacity-70'} />
+                        <span>{tab.label}</span>
                       </button>
                     );
                   })}
@@ -228,23 +242,23 @@ export default function FichaEmpleadoDetailPage({
               </div>
 
               {/* Contenido de las pestañas */}
-              <div className="p-6">
+              <div className="px-4 pb-4">
                 {activeTab === 'datos-personales' && (
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">Email</h3>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
                         <p className="text-gray-900">{email}</p>
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">Teléfono</h3>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
                         <p className="text-gray-900">{telefono}</p>
                       </div>
                       {empleado.fechaNacimiento && (
                         <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
                             Fecha de Nacimiento
-                          </h3>
+                          </label>
                           <p className="text-gray-900">
                             {new Date(empleado.fechaNacimiento).toLocaleDateString('es-ES')}
                           </p>
@@ -254,13 +268,13 @@ export default function FichaEmpleadoDetailPage({
                     {empleado.direccion && (
                       <div className="border-t border-gray-200 pt-6">
                         <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2 mb-4">
-                          <MapPin className="w-5 h-5 text-blue-600" />
+                          <MapPin size={16} className="inline mr-1" />
                           Dirección
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {empleado.direccion.calle && (
                             <div>
-                              <h4 className="text-sm font-medium text-gray-500 mb-1">Calle</h4>
+                              <label className="block text-sm font-medium text-slate-700 mb-2">Calle</label>
                               <p className="text-gray-900">
                                 {empleado.direccion.calle}
                                 {empleado.direccion.numero && `, ${empleado.direccion.numero}`}
@@ -269,27 +283,27 @@ export default function FichaEmpleadoDetailPage({
                           )}
                           {empleado.direccion.ciudad && (
                             <div>
-                              <h4 className="text-sm font-medium text-gray-500 mb-1">Ciudad</h4>
+                              <label className="block text-sm font-medium text-slate-700 mb-2">Ciudad</label>
                               <p className="text-gray-900">{empleado.direccion.ciudad}</p>
                             </div>
                           )}
                           {empleado.direccion.provincia && (
                             <div>
-                              <h4 className="text-sm font-medium text-gray-500 mb-1">Provincia</h4>
+                              <label className="block text-sm font-medium text-slate-700 mb-2">Provincia</label>
                               <p className="text-gray-900">{empleado.direccion.provincia}</p>
                             </div>
                           )}
                           {empleado.direccion.codigoPostal && (
                             <div>
-                              <h4 className="text-sm font-medium text-gray-500 mb-1">
+                              <label className="block text-sm font-medium text-slate-700 mb-2">
                                 Código Postal
-                              </h4>
+                              </label>
                               <p className="text-gray-900">{empleado.direccion.codigoPostal}</p>
                             </div>
                           )}
                           {empleado.direccion.pais && (
                             <div>
-                              <h4 className="text-sm font-medium text-gray-500 mb-1">País</h4>
+                              <label className="block text-sm font-medium text-slate-700 mb-2">País</label>
                               <p className="text-gray-900">{empleado.direccion.pais}</p>
                             </div>
                           )}
@@ -303,20 +317,20 @@ export default function FichaEmpleadoDetailPage({
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">Rol</h3>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Rol</label>
                         <p className="text-gray-900">{rol}</p>
                       </div>
                       {especialidad && (
                         <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">Especialidad</h3>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">Especialidad</label>
                           <p className="text-gray-900">{especialidad}</p>
                         </div>
                       )}
                       {numeroColegiado && (
                         <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
                             Número de Colegiado
-                          </h3>
+                          </label>
                           <p className="text-gray-900">{numeroColegiado}</p>
                         </div>
                       )}
@@ -345,20 +359,20 @@ export default function FichaEmpleadoDetailPage({
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-500 mb-2">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
                           Tipo de Contrato
-                        </h3>
+                        </label>
                         <p className="text-gray-900">{tipoContrato}</p>
                       </div>
                       {salario && (
                         <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">Salario</h3>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">Salario</label>
                           <p className="text-gray-900">{salario.toLocaleString('es-ES')} €</p>
                         </div>
                       )}
                       {fechaInicio && (
                         <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">Fecha de Inicio</h3>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">Fecha de Inicio</label>
                           <p className="text-gray-900">
                             {new Date(fechaInicio).toLocaleDateString('es-ES')}
                           </p>
@@ -366,7 +380,7 @@ export default function FichaEmpleadoDetailPage({
                       )}
                       {fechaFin && (
                         <div>
-                          <h3 className="text-sm font-medium text-gray-500 mb-2">Fecha de Fin</h3>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">Fecha de Fin</label>
                           <p className="text-gray-900">
                             {new Date(fechaFin).toLocaleDateString('es-ES')}
                           </p>
@@ -391,5 +405,6 @@ export default function FichaEmpleadoDetailPage({
     </div>
   );
 }
+
 
 

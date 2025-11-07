@@ -102,14 +102,14 @@ export default function RoleEditorForm({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-800">
+        <h3 className="text-lg font-semibold text-gray-900">
           {role ? 'Editar Rol' : 'Nuevo Rol'}
         </h3>
         <button
           onClick={onCancel}
-          className="p-2 text-gray-400 hover:text-gray-600 rounded-lg transition-colors"
+          className="p-2 text-gray-400 hover:text-gray-600 rounded-xl transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -117,7 +117,7 @@ export default function RoleEditorForm({
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="role-name" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="role-name" className="block text-sm font-medium text-slate-700 mb-2">
             Nombre del Rol *
           </label>
           <input
@@ -125,16 +125,16 @@ export default function RoleEditorForm({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              errors.name ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+              errors.name ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+            } px-4 pr-3 py-2.5`}
             placeholder="Ej: Recepcionista, Odontólogo, Director de Clínica"
           />
           {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
         </div>
 
         <div>
-          <label htmlFor="role-description" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="role-description" className="block text-sm font-medium text-slate-700 mb-2">
             Descripción
           </label>
           <textarea
@@ -142,16 +142,16 @@ export default function RoleEditorForm({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
             placeholder="Describe las responsabilidades y funciones de este rol"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="block text-sm font-medium text-slate-700 mb-3">
             Permisos ({selectedPermissions.size} seleccionados)
           </label>
-          <div className="max-h-64 overflow-y-auto border border-gray-200 rounded-lg p-4 space-y-2">
+          <div className="max-h-64 overflow-y-auto border border-gray-200 rounded-xl p-4 space-y-2 bg-slate-50">
             {permissions.length === 0 ? (
               <p className="text-sm text-gray-500 text-center py-4">
                 No hay permisos disponibles
@@ -162,7 +162,7 @@ export default function RoleEditorForm({
                 return (
                   <label
                     key={permission}
-                    className="flex items-center space-x-3 p-2 rounded hover:bg-gray-50 cursor-pointer"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-white cursor-pointer transition-colors"
                   >
                     <input
                       type="checkbox"
@@ -170,7 +170,7 @@ export default function RoleEditorForm({
                       onChange={() => togglePermission(permission)}
                       className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-700">{getPermissionLabel(permission)}</span>
+                    <span className="text-sm text-slate-700">{getPermissionLabel(permission)}</span>
                   </label>
                 );
               })}
@@ -178,20 +178,20 @@ export default function RoleEditorForm({
           </div>
         </div>
 
-        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors font-medium"
           >
             Cancelar
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-blue-600/20 font-medium"
           >
-            <Save className="w-4 h-4" />
+            <Save size={20} />
             <span>{saving ? 'Guardando...' : 'Guardar'}</span>
           </button>
         </div>
@@ -199,5 +199,6 @@ export default function RoleEditorForm({
     </div>
   );
 }
+
 
 

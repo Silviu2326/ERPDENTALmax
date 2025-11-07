@@ -106,31 +106,31 @@ export default function ServicioWebForm({
       )}
 
       {/* Información básica */}
-      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-        <h3 className="font-semibold text-gray-900">Información Básica</h3>
+      <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900">Información Básica</h3>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Nombre del Servicio <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             value={formData.nombre}
             onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             disabled={loading}
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Descripción Corta
           </label>
           <textarea
             value={formData.descripcionCorta || ''}
             onChange={(e) => setFormData({ ...formData, descripcionCorta: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             rows={3}
             disabled={loading}
             placeholder="Breve descripción que aparecerá en las tarjetas..."
@@ -138,30 +138,30 @@ export default function ServicioWebForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Descripción Larga
           </label>
           <textarea
             value={formData.descripcionLarga || ''}
             onChange={(e) => setFormData({ ...formData, descripcionLarga: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             rows={8}
             disabled={loading}
             placeholder="Descripción detallada del servicio (puede incluir HTML)..."
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Puede incluir formato HTML para enriquecer la descripción
           </p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Categoría
           </label>
           <select
             value={formData.categoria || ''}
             onChange={(e) => setFormData({ ...formData, categoria: e.target.value || undefined })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             disabled={loading}
           >
             <option value="">Sin categoría</option>
@@ -175,12 +175,12 @@ export default function ServicioWebForm({
       </div>
 
       {/* Precios */}
-      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-        <h3 className="font-semibold text-gray-900">Precios</h3>
+      <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900">Precios</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Precio Normal (€) <span className="text-red-500">*</span>
             </label>
             <input
@@ -189,14 +189,14 @@ export default function ServicioWebForm({
               min="0"
               value={formData.precio}
               onChange={(e) => setFormData({ ...formData, precio: parseFloat(e.target.value) || 0 })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               disabled={loading}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Precio Promocional (€)
             </label>
             <input
@@ -210,7 +210,7 @@ export default function ServicioWebForm({
                   precioPromocional: e.target.value ? parseFloat(e.target.value) : undefined,
                 })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               disabled={loading}
             />
             {formData.precioPromocional && formData.precioPromocional > 0 && (
@@ -223,11 +223,11 @@ export default function ServicioWebForm({
       </div>
 
       {/* Multimedia */}
-      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-        <h3 className="font-semibold text-gray-900">Multimedia</h3>
+      <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900">Multimedia</h3>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Imágenes del Servicio
           </label>
           <div className="flex flex-wrap gap-4 mb-4">
@@ -264,14 +264,14 @@ export default function ServicioWebForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             URL del Video (Opcional)
           </label>
           <input
             type="url"
             value={formData.videoURL || ''}
             onChange={(e) => setFormData({ ...formData, videoURL: e.target.value || undefined })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             disabled={loading}
             placeholder="https://www.youtube.com/watch?v=..."
           />
@@ -279,8 +279,8 @@ export default function ServicioWebForm({
       </div>
 
       {/* Configuración de publicación */}
-      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-        <h3 className="font-semibold text-gray-900">Configuración de Publicación</h3>
+      <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900">Configuración de Publicación</h3>
 
         <div className="space-y-3">
           <label className="flex items-center space-x-3 cursor-pointer">
@@ -322,7 +322,7 @@ export default function ServicioWebForm({
         <button
           type="button"
           onClick={onCancelar}
-          className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 bg-white hover:bg-slate-50 ring-1 ring-slate-200"
           disabled={loading}
         >
           Cancelar
@@ -330,7 +330,7 @@ export default function ServicioWebForm({
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>
@@ -345,5 +345,6 @@ export default function ServicioWebForm({
     </form>
   );
 }
+
 
 

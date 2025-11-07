@@ -8,33 +8,33 @@ interface ItemAlertaFilaProps {
 
 export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps) {
   const getEstadoBadge = () => {
-    const baseClasses = 'px-3 py-1 rounded-full text-xs font-semibold';
+    const baseClasses = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium';
     switch (alerta.estado) {
       case 'nueva':
         return (
-          <span className={`${baseClasses} bg-red-100 text-red-800 flex items-center gap-1`}>
-            <AlertTriangle className="w-3 h-3" />
+          <span className={`${baseClasses} bg-red-100 text-red-800`}>
+            <AlertTriangle size={12} />
             Nueva
           </span>
         );
       case 'revisada':
         return (
-          <span className={`${baseClasses} bg-yellow-100 text-yellow-800 flex items-center gap-1`}>
-            <Clock className="w-3 h-3" />
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-800`}>
+            <Clock size={12} />
             Revisada
           </span>
         );
       case 'en_proceso_compra':
         return (
-          <span className={`${baseClasses} bg-blue-100 text-blue-800 flex items-center gap-1`}>
-            <ShoppingCart className="w-3 h-3" />
+          <span className={`${baseClasses} bg-blue-100 text-blue-800`}>
+            <ShoppingCart size={12} />
             En Proceso
           </span>
         );
       case 'resuelta':
         return (
-          <span className={`${baseClasses} bg-green-100 text-green-800 flex items-center gap-1`}>
-            <CheckCircle className="w-3 h-3" />
+          <span className={`${baseClasses} bg-green-100 text-green-800`}>
+            <CheckCircle size={12} />
             Resuelta
           </span>
         );
@@ -47,15 +47,15 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
   const porcentajeStock = (alerta.stock_actual / alerta.stock_minimo_al_generar) * 100;
 
   return (
-    <tr className="hover:bg-gray-50 transition-colors">
+    <tr className="hover:bg-slate-50 transition-colors">
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <AlertTriangle className="w-5 h-5 text-red-500" />
+            <AlertTriangle size={20} className="text-red-500" />
           </div>
           <div className="ml-3">
             <div className="text-sm font-medium text-gray-900">{alerta.producto.nombre}</div>
-            <div className="text-sm text-gray-500">SKU: {alerta.producto.sku}</div>
+            <div className="text-sm text-slate-500">SKU: {alerta.producto.sku}</div>
           </div>
         </div>
       </td>
@@ -64,19 +64,19 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm text-gray-900 font-semibold">{alerta.stock_actual}</div>
-        <div className="text-xs text-gray-500">Mínimo: {alerta.stock_minimo_al_generar}</div>
+        <div className="text-xs text-slate-500">Mínimo: {alerta.stock_minimo_al_generar}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center">
-          <div className="flex-1 mr-2">
+        <div className="flex items-center gap-2">
+          <div className="flex-1 min-w-[60px]">
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
-                className="bg-red-500 h-2 rounded-full"
+                className="bg-red-500 h-2 rounded-full transition-all"
                 style={{ width: `${Math.min(porcentajeStock, 100)}%` }}
               />
             </div>
           </div>
-          <span className="text-sm text-red-600 font-semibold">
+          <span className="text-sm text-red-600 font-semibold whitespace-nowrap">
             -{diferencia}
           </span>
         </div>
@@ -84,7 +84,7 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm text-gray-900 font-semibold">{alerta.cantidad_sugerida_pedido}</div>
         {alerta.producto.proveedor_preferido && (
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-slate-500">
             Proveedor: {alerta.producto.proveedor_preferido.nombre}
           </div>
         )}
@@ -92,7 +92,7 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
       <td className="px-6 py-4 whitespace-nowrap">
         {getEstadoBadge()}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
         {new Date(alerta.fecha_creacion).toLocaleDateString('es-ES', {
           day: '2-digit',
           month: '2-digit',
@@ -105,15 +105,15 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
             <>
               <button
                 onClick={() => onAccion(alerta, 'revisar')}
-                className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50"
+                className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-medium transition-all text-blue-600 hover:text-blue-700 hover:bg-blue-50"
               >
                 Revisar
               </button>
               <button
                 onClick={() => onAccion(alerta, 'crear_orden')}
-                className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 flex items-center gap-1"
+                className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-medium transition-all text-green-600 hover:text-green-700 hover:bg-green-50"
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart size={16} />
                 Crear Orden
               </button>
             </>
@@ -121,16 +121,16 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
           {alerta.estado === 'revisada' && (
             <button
               onClick={() => onAccion(alerta, 'crear_orden')}
-              className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 flex items-center gap-1"
+              className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-medium transition-all text-green-600 hover:text-green-700 hover:bg-green-50"
             >
-              <ShoppingCart className="w-4 h-4" />
+              <ShoppingCart size={16} />
               Crear Orden
             </button>
           )}
           {alerta.estado !== 'resuelta' && (
             <button
               onClick={() => onAccion(alerta, 'resolver')}
-              className="text-gray-600 hover:text-gray-900 px-3 py-1 rounded hover:bg-gray-100"
+              className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-medium transition-all text-slate-600 hover:text-slate-700 hover:bg-slate-100"
             >
               Resolver
             </button>
@@ -140,5 +140,6 @@ export default function ItemAlertaFila({ alerta, onAccion }: ItemAlertaFilaProps
     </tr>
   );
 }
+
 
 

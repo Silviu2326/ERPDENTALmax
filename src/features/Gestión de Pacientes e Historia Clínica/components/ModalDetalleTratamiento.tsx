@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Calendar, User, DollarSign, Tooth, FileText, Save, Loader2 } from 'lucide-react';
+import { X, Calendar, User, DollarSign, Tooth, FileText, Save, Loader2, AlertCircle } from 'lucide-react';
 import {
   TratamientoRealizado,
   obtenerTratamientoRealizadoPorId,
@@ -105,13 +105,13 @@ export default function ModalDetalleTratamiento({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Detalle del Tratamiento</h2>
+        <div className="sticky top-0 bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-900">Detalle del Tratamiento</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 text-gray-600" />
           </button>
         </div>
 
@@ -122,8 +122,10 @@ export default function ModalDetalleTratamiento({
               <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
             </div>
           ) : error ? (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-              {error}
+            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
             </div>
           ) : tratamiento ? (
             <div className="space-y-6">
@@ -232,7 +234,7 @@ export default function ModalDetalleTratamiento({
                       value={notasClinicas}
                       onChange={(e) => setNotasClinicas(e.target.value)}
                       rows={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-3"
                       placeholder="Ingrese las notas clínicas del tratamiento..."
                     />
                     <div className="flex gap-2 justify-end">
@@ -241,7 +243,7 @@ export default function ModalDetalleTratamiento({
                           setEditandoNotas(false);
                           setNotasClinicas(tratamiento.notasClinicas || '');
                         }}
-                        className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="px-4 py-2 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all ring-1 ring-slate-300"
                         disabled={saving}
                       >
                         Cancelar
@@ -249,7 +251,7 @@ export default function ModalDetalleTratamiento({
                       <button
                         onClick={handleGuardarNotas}
                         disabled={saving}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+                        className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 text-sm font-medium"
                       >
                         {saving ? (
                           <>
@@ -293,10 +295,10 @@ export default function ModalDetalleTratamiento({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end">
+        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200/60 px-6 py-4 flex justify-end">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="px-6 py-2 bg-slate-600 text-white rounded-xl hover:bg-slate-700 transition-colors text-sm font-medium"
           >
             Cerrar
           </button>
@@ -305,5 +307,6 @@ export default function ModalDetalleTratamiento({
     </div>
   );
 }
+
 
 

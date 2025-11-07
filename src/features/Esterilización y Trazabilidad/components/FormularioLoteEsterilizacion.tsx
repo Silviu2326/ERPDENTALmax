@@ -88,16 +88,16 @@ export default function FormularioLoteEsterilizacion({
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
           <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800">{error}</p>
+          <p className="text-sm font-medium text-red-800">{error}</p>
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">
           {modoEdicion ? 'Editar Lote de Esterilización' : 'Nuevo Lote de Esterilización'}
         </h3>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <SelectorAutoclave
             autoclaveSeleccionado={autoclave}
             onAutoclaveSeleccionado={setAutoclave}
@@ -105,24 +105,25 @@ export default function FormularioLoteEsterilizacion({
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Paquetes de Instrumental
             </label>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {paquetes.map((paquete, index) => (
-                <div key={index} className="flex items-center space-x-2">
+                <div key={index} className="flex items-center gap-2">
                   <input
                     type="text"
                     value={paquete.contenido}
                     onChange={(e) => handleContenidoPaqueteChange(index, e.target.value)}
                     placeholder={`Paquete ${index + 1} - Descripción del contenido`}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   />
                   {paquetes.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleEliminarPaquete(index)}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                      title="Eliminar paquete"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -132,7 +133,7 @@ export default function FormularioLoteEsterilizacion({
               <button
                 type="button"
                 onClick={handleAgregarPaquete}
-                className="flex items-center space-x-2 px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-200"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-xl transition-all border border-blue-200"
               >
                 <Plus className="w-5 h-5" />
                 <span>Agregar Paquete</span>
@@ -141,7 +142,7 @@ export default function FormularioLoteEsterilizacion({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Notas (opcional)
             </label>
             <textarea
@@ -149,23 +150,23 @@ export default function FormularioLoteEsterilizacion({
               onChange={(e) => setNotas(e.target.value)}
               placeholder="Observaciones o notas adicionales sobre el lote..."
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 resize-none"
             />
           </div>
         </div>
       </div>
 
-      <div className="flex justify-end space-x-3">
+      <div className="flex justify-end gap-3">
         <button
           type="button"
           onClick={onCancelar}
-          className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-all"
         >
           Cancelar
         </button>
         <button
           type="submit"
-          className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-sm"
         >
           <Save className="w-5 h-5" />
           <span>{modoEdicion ? 'Actualizar' : 'Crear'} Lote</span>
@@ -174,5 +175,6 @@ export default function FormularioLoteEsterilizacion({
     </form>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, AlertCircle } from 'lucide-react';
+import { RefreshCw, AlertCircle, Loader2, Calendar, Users } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   obtenerAgendaDiariaPorSucursal,
@@ -104,80 +104,122 @@ export default function ReceptionMobileAgendaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <MobileAgendaHeader
-        fechaSeleccionada={fechaSeleccionada}
-        onCambiarFecha={setFechaSeleccionada}
-        onAnteriorDia={handleAnteriorDia}
-        onSiguienteDia={handleSiguienteDia}
-        onHoy={handleHoy}
-      />
-
-      {/* Contenido principal */}
-      <div className="p-4">
-        {/* Barra de acciones */}
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl font-bold text-gray-900">Agenda del Día</h1>
-          <button
-            onClick={cargarAgendaDiaria}
-            disabled={loading}
-            className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors disabled:opacity-50"
-            aria-label="Refrescar"
-          >
-            <RefreshCw className={`w-5 h-5 text-gray-600 ${loading ? 'animate-spin' : ''}`} />
-          </button>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <Calendar size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Portal de Cita Online y Móvil
+                </h1>
+                <p className="text-gray-600">
+                  Vista de recepción con agenda por profesional
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-            <p className="text-red-800">{error}</p>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Navegador de fecha */}
+          <MobileAgendaHeader
+            fechaSeleccionada={fechaSeleccionada}
+            onCambiarFecha={setFechaSeleccionada}
+            onAnteriorDia={handleAnteriorDia}
+            onSiguienteDia={handleSiguienteDia}
+            onHoy={handleHoy}
+          />
+
+          {/* Toolbar superior */}
+          <div className="flex items-center justify-end">
+            <button
+              onClick={cargarAgendaDiaria}
+              disabled={loading}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Refrescar"
+            >
+              <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+              Refrescar
+            </button>
           </div>
-        )}
 
-        {/* Loading */}
-        {loading && profesionales.length === 0 && (
-          <div className="flex items-center justify-center py-12">
-            <RefreshCw className="w-8 h-8 text-blue-600 animate-spin" />
-          </div>
-        )}
-
-        {/* Vista de columnas por profesional */}
-        {!loading && profesionales.length > 0 && (
-          <div className="flex gap-4 overflow-x-auto pb-4">
-            {profesionales.map((profesional) => {
-              const citasDelProfesional = agendaDiaria[profesional._id] || [];
-              return (
-                <DoctorColumn
-                  key={profesional._id}
-                  profesional={profesional}
-                  citas={citasDelProfesional}
-                  onCitaClick={handleCitaClick}
-                  onLlamarPaciente={handleLlamarPaciente}
-                />
-              );
-            })}
-          </div>
-        )}
-
-        {/* Mensaje cuando no hay profesionales */}
-        {!loading && profesionales.length === 0 && !error && (
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <p className="text-gray-500">No hay profesionales registrados en esta sucursal</p>
-          </div>
-        )}
-
-        {/* Mensaje cuando no hay citas */}
-        {!loading &&
-          profesionales.length > 0 &&
-          Object.keys(agendaDiaria).length === 0 &&
-          !error && (
-            <div className="bg-white rounded-lg shadow-md p-8 text-center">
-              <p className="text-gray-500">No hay citas programadas para este día</p>
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={cargarAgendaDiaria}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md"
+              >
+                Reintentar
+              </button>
             </div>
           )}
+
+          {/* Loading */}
+          {loading && profesionales.length === 0 && (
+            <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+              <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando...</p>
+            </div>
+          )}
+
+          {/* Vista de columnas por profesional */}
+          {!loading && profesionales.length > 0 && (
+            <div className="flex gap-6 overflow-x-auto pb-4">
+              {profesionales.map((profesional) => {
+                const citasDelProfesional = agendaDiaria[profesional._id] || [];
+                return (
+                  <DoctorColumn
+                    key={profesional._id}
+                    profesional={profesional}
+                    citas={citasDelProfesional}
+                    onCitaClick={handleCitaClick}
+                    onLlamarPaciente={handleLlamarPaciente}
+                  />
+                );
+              })}
+            </div>
+          )}
+
+          {/* Mensaje cuando no hay profesionales */}
+          {!loading && profesionales.length === 0 && !error && (
+            <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+              <Users size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay profesionales</h3>
+              <p className="text-gray-600 mb-4">
+                No hay profesionales registrados en esta sucursal
+              </p>
+            </div>
+          )}
+
+          {/* Mensaje cuando no hay citas */}
+          {!loading &&
+            profesionales.length > 0 &&
+            Object.keys(agendaDiaria).length === 0 &&
+            !error && (
+              <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+                <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay citas programadas</h3>
+                <p className="text-gray-600 mb-4">
+                  No hay citas programadas para este día
+                </p>
+              </div>
+            )}
+        </div>
       </div>
 
       {/* Modal de cambio de estado */}
@@ -190,5 +232,6 @@ export default function ReceptionMobileAgendaPage() {
     </div>
   );
 }
+
 
 

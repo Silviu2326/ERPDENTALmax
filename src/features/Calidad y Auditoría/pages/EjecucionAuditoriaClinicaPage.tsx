@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, RefreshCw, AlertCircle } from 'lucide-react';
+import { ArrowLeft, RefreshCw, AlertCircle, FileCheck, Loader2, Package } from 'lucide-react';
 import {
   obtenerPlantillasAuditoria,
   crearInstanciaAuditoria,
@@ -108,19 +108,38 @@ export default function EjecucionAuditoriaClinicaPage({
   // Si hay una plantilla seleccionada, mostrar el formulario
   if (selectedTemplate && auditInstance) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
-            {onVolver && (
-              <button
-                onClick={handleVolver}
-                className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-white rounded-lg transition-colors mb-4"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Volver a plantillas
-              </button>
-            )}
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={handleVolver}
+                    className="mr-4 p-2 hover:bg-gray-100 rounded-xl transition-colors"
+                  >
+                    <ArrowLeft size={24} className="text-gray-600" />
+                  </button>
+                )}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileCheck size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {selectedTemplate.name}
+                  </h1>
+                  <p className="text-gray-600">
+                    {selectedTemplate.description || 'Completa la auditoría clínica'}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Contenedor Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
           <ChecklistRunnerForm
             template={selectedTemplate}
             auditInstance={auditInstance}
@@ -134,86 +153,103 @@ export default function EjecucionAuditoriaClinicaPage({
 
   // Mostrar lista de plantillas
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 hover:bg-white rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
-              )}
-              <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                  Ejecutar Auditoría Clínica
-                </h1>
-                <p className="text-gray-600 text-lg">
-                  Selecciona una plantilla para iniciar una auditoría
-                </p>
-                {!patientId && (
-                  <div className="mt-3 flex items-center gap-2 text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-2">
-                    <AlertCircle className="w-5 h-5" />
-                    <span className="text-sm">
-                      Advertencia: No se ha seleccionado un paciente
-                    </span>
-                  </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="mr-4 p-2 hover:bg-gray-100 rounded-xl transition-colors"
+                  >
+                    <ArrowLeft size={24} className="text-gray-600" />
+                  </button>
                 )}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileCheck size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Ejecutar Auditoría Clínica
+                  </h1>
+                  <p className="text-gray-600">
+                    Selecciona una plantilla para iniciar una auditoría
+                  </p>
+                  {!patientId && (
+                    <div className="mt-3 flex items-center gap-2 text-yellow-700 bg-yellow-100 border border-yellow-200 rounded-xl px-4 py-2">
+                      <AlertCircle size={16} className="opacity-70" />
+                      <span className="text-sm font-medium">
+                        Advertencia: No se ha seleccionado un paciente
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
+              <button
+                onClick={cargarPlantillas}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white rounded-xl ring-1 ring-slate-200 hover:bg-slate-50 transition-all"
+              >
+                <RefreshCw size={20} />
+                Actualizar
+              </button>
             </div>
-            <button
-              onClick={cargarPlantillas}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              <RefreshCw className="w-5 h-5" />
-              Actualizar
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-700">{error}</p>
-          </div>
-        )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
+              <AlertCircle size={20} className="text-red-600" />
+              <p className="text-red-700 text-sm">{error}</p>
+            </div>
+          )}
 
-        {/* Loading */}
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <RefreshCw className="w-12 h-12 text-blue-600 animate-spin" />
-          </div>
-        ) : (
-          /* Lista de plantillas */
-          <div className="space-y-4">
-            {templates.length === 0 ? (
-              <div className="bg-white rounded-xl shadow-md p-12 text-center">
-                <p className="text-gray-600 text-lg">
-                  No hay plantillas de auditoría disponibles
-                </p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {templates.map((template) => (
-                  <AuditTemplateCard
-                    key={template._id}
-                    template={template}
-                    onSelect={handleSelectTemplate}
-                    selectable={true}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+          {/* Loading */}
+          {loading ? (
+            <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+              <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando plantillas...</p>
+            </div>
+          ) : (
+            /* Lista de plantillas */
+            <div className="space-y-6">
+              {templates.length === 0 ? (
+                <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+                  <Package size={48} className="mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    No hay plantillas disponibles
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    No se encontraron plantillas de auditoría activas
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {templates.map((template) => (
+                    <AuditTemplateCard
+                      key={template._id}
+                      template={template}
+                      onSelect={handleSelectTemplate}
+                      selectable={true}
+                      showActions={false}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

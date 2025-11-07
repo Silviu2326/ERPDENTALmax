@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MoreVertical, Edit, Eye, UserX, User, Mail, Phone, MapPin, Briefcase } from 'lucide-react';
+import { MoreVertical, Edit, Eye, UserX, User, Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { Empleado } from '../api/empleadosApi';
 
 interface TablaEmpleadosProps {
@@ -67,17 +67,22 @@ function FilaEmpleado({
     });
   };
 
+  const email = empleado.contacto?.email || empleado.email || '';
+  const telefono = empleado.contacto?.telefono || empleado.telefono;
+  const rol = empleado.datosProfesionales?.rol || empleado.rol || '';
+  const fechaContratacion = empleado.datosContractuales?.fechaInicio || empleado.fechaContratacion || '';
+
   return (
-    <tr className="border-b border-gray-200 hover:bg-blue-50 transition-colors">
+    <tr className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
       <td className="px-4 py-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-semibold">
+          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold ring-1 ring-blue-200/70">
             {empleado.nombre.charAt(0).toUpperCase()}
           </div>
           <div className="flex flex-col">
             <button
               onClick={() => onVerDetalle(empleado)}
-              className="text-left font-medium text-blue-600 hover:text-blue-800 hover:underline"
+              className="text-left font-medium text-gray-900 hover:text-blue-600 transition-colors"
             >
               {empleado.nombre} {empleado.apellidos}
             </button>
@@ -86,18 +91,20 @@ function FilaEmpleado({
         </div>
       </td>
       <td className="px-4 py-3">
-        {getRolBadge(empleado.rol)}
+        {getRolBadge(rol)}
       </td>
       <td className="px-4 py-3">
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-sm text-gray-700">
-            <Mail className="w-4 h-4 text-gray-400" />
-            <span>{empleado.email}</span>
-          </div>
-          {empleado.telefono && (
+          {email && (
+            <div className="flex items-center gap-2 text-sm text-gray-700">
+              <Mail className="w-4 h-4 text-gray-400" />
+              <span>{email}</span>
+            </div>
+          )}
+          {telefono && (
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <Phone className="w-4 h-4 text-gray-400" />
-              <span>{empleado.telefono}</span>
+              <span>{telefono}</span>
             </div>
           )}
         </div>
@@ -113,10 +120,10 @@ function FilaEmpleado({
         )}
       </td>
       <td className="px-4 py-3 text-sm text-gray-600">
-        {formatearFecha(empleado.fechaContratacion)}
+        {fechaContratacion ? formatearFecha(fechaContratacion) : '-'}
       </td>
       <td className="px-4 py-3">
-        {getEstadoBadge(empleado.estado)}
+        {getEstadoBadge(empleado.estado || (empleado.activo ? 'Activo' : 'Inactivo'))}
       </td>
       <td className="px-4 py-3">
         <div className="relative">
@@ -186,25 +193,26 @@ export default function TablaEmpleados({
 }: TablaEmpleadosProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Cargando empleados...</p>
+      <div className="bg-white shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando empleados...</p>
       </div>
     );
   }
 
   if (empleados.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-        <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 text-lg">No se encontraron empleados con los filtros seleccionados</p>
-        <p className="text-gray-400 text-sm mt-2">Intenta ajustar los filtros de búsqueda</p>
+      <div className="bg-white shadow-sm p-8 text-center">
+        <User size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron empleados</h3>
+        <p className="text-gray-600 mb-4">No se encontraron empleados con los filtros seleccionados</p>
+        <p className="text-sm text-gray-500">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
@@ -248,5 +256,6 @@ export default function TablaEmpleados({
     </div>
   );
 }
+
 
 

@@ -67,7 +67,7 @@ export default function FormularioRegistroMantenimiento({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Registrar Mantenimiento</h3>
@@ -90,8 +90,8 @@ export default function FormularioRegistroMantenimiento({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Calendar className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Calendar size={16} className="inline mr-1" />
               Fecha del Mantenimiento
             </label>
             <input
@@ -100,13 +100,13 @@ export default function FormularioRegistroMantenimiento({
               value={formData.fecha}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Wrench className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Wrench size={16} className="inline mr-1" />
               Tipo de Mantenimiento
             </label>
             <select
@@ -114,7 +114,7 @@ export default function FormularioRegistroMantenimiento({
               value={formData.tipoMantenimiento}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             >
               <option value="preventivo">Preventivo</option>
               <option value="correctivo">Correctivo</option>
@@ -123,7 +123,7 @@ export default function FormularioRegistroMantenimiento({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Descripción del Mantenimiento
           </label>
           <textarea
@@ -133,14 +133,14 @@ export default function FormularioRegistroMantenimiento({
             required
             rows={4}
             placeholder="Describa los trabajos realizados, cambios de piezas, calibraciones, etc."
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <User className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <User size={16} className="inline mr-1" />
               Técnico Responsable
             </label>
             <input
@@ -150,13 +150,13 @@ export default function FormularioRegistroMantenimiento({
               onChange={handleInputChange}
               required
               placeholder="Nombre del técnico"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <DollarSign className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <DollarSign size={16} className="inline mr-1" />
               Costo (€)
             </label>
             <input
@@ -168,24 +168,24 @@ export default function FormularioRegistroMantenimiento({
               min="0"
               step="0.01"
               placeholder="0.00"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            <Upload className="w-4 h-4 inline mr-1" />
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            <Upload size={16} className="inline mr-1" />
             Documentos Adjuntos (Opcional)
           </label>
           <div className="mt-2">
-            <label className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition-colors">
+            <label className="flex items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-blue-500 transition-colors bg-slate-50">
               <div className="text-center">
-                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-600">
+                <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                <p className="text-sm text-slate-600">
                   Haga clic para seleccionar archivos o arrastre y suelte
                 </p>
-                <p className="text-xs text-gray-500 mt-1">PDF, imágenes, documentos</p>
+                <p className="text-xs text-slate-500 mt-1">PDF, imágenes, documentos</p>
               </div>
               <input
                 type="file"
@@ -202,12 +202,12 @@ export default function FormularioRegistroMantenimiento({
               {archivos.map((archivo, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-slate-50 rounded-lg ring-1 ring-slate-200"
                 >
-                  <div className="flex items-center space-x-2">
-                    <FileText className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-700">{archivo.name}</span>
-                    <span className="text-xs text-gray-500">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-slate-400" />
+                    <span className="text-sm text-slate-700">{archivo.name}</span>
+                    <span className="text-xs text-slate-500">
                       ({(archivo.size / 1024).toFixed(2)} KB)
                     </span>
                   </div>
@@ -224,7 +224,7 @@ export default function FormularioRegistroMantenimiento({
           )}
         </div>
 
-        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
           <button
             type="button"
             onClick={onCancelar}
@@ -235,7 +235,7 @@ export default function FormularioRegistroMantenimiento({
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {loading ? (
               <>
@@ -254,5 +254,6 @@ export default function FormularioRegistroMantenimiento({
     </div>
   );
 }
+
 
 

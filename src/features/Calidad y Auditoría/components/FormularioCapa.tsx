@@ -126,7 +126,7 @@ export default function FormularioCapa({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="bg-red-50 ring-1 ring-red-200 rounded-2xl p-4">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
             <p className="text-red-800 text-sm">{error}</p>
@@ -135,28 +135,28 @@ export default function FormularioCapa({
       )}
 
       {/* Información Básica */}
-      <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+      <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Información del Incidente
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Título *
             </label>
             <input
               type="text"
               value={formData.titulo}
               onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
               required
               placeholder="Ej: No conformidad en proceso de esterilización"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fuente *
             </label>
             <select
@@ -167,7 +167,7 @@ export default function FormularioCapa({
                   fuente: e.target.value as Capa['fuente'],
                 })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
               required
             >
               {fuentes.map((fuente) => (
@@ -179,7 +179,7 @@ export default function FormularioCapa({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Detección *
             </label>
             <input
@@ -188,14 +188,14 @@ export default function FormularioCapa({
               onChange={(e) =>
                 setFormData({ ...formData, fecha_deteccion: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
               required
             />
           </div>
 
           {clinicas.length > 0 && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Clínica *
               </label>
               <select
@@ -203,7 +203,7 @@ export default function FormularioCapa({
                 onChange={(e) =>
                   setFormData({ ...formData, id_clinica: e.target.value })
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 disabled:bg-slate-50 disabled:text-slate-500"
                 required
                 disabled={!!clinicaId}
               >
@@ -218,7 +218,7 @@ export default function FormularioCapa({
           )}
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Descripción del Incidente *
             </label>
             <textarea
@@ -227,7 +227,7 @@ export default function FormularioCapa({
                 setFormData({ ...formData, descripcion_incidente: e.target.value })
               }
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 resize-y"
               required
               placeholder="Describe detalladamente el incidente o no conformidad detectada..."
             />
@@ -236,31 +236,28 @@ export default function FormularioCapa({
       </div>
 
       {/* Botones de Acción */}
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
         <button
           type="button"
           onClick={onCancelar}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading}
         >
-          <div className="flex items-center gap-2">
-            <X className="w-5 h-5" />
-            <span>Cancelar</span>
-          </div>
+          <X size={20} />
+          <span>Cancelar</span>
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           disabled={loading}
         >
-          <div className="flex items-center gap-2">
-            <Save className="w-5 h-5" />
-            <span>{loading ? 'Guardando...' : 'Guardar'}</span>
-          </div>
+          <Save size={20} />
+          <span>{loading ? 'Guardando...' : 'Guardar'}</span>
         </button>
       </div>
     </form>
   );
 }
+
 
 

@@ -188,3 +188,4 @@ export async function obtenerTratamientos(): Promise<Tratamiento[]> {
 }
 
 
+

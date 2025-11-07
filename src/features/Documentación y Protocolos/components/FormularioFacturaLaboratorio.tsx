@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Save, X, Plus, Trash2, Calculator } from 'lucide-react';
+import { Save, X, Plus, Trash2, Calculator, Loader2 } from 'lucide-react';
 import SelectorLaboratorio from './SelectorLaboratorio';
 import BuscadorTrabajosLaboratorio from './BuscadorTrabajosLaboratorio';
 import { FacturaLaboratorio, NuevaFacturaLaboratorio, TrabajoLaboratorio } from '../api/facturacionLaboratorioApi';
@@ -201,7 +201,7 @@ export default function FormularioFacturaLaboratorio({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">
           {factura ? 'Editar Factura de Laboratorio' : 'Nueva Factura de Laboratorio'}
@@ -209,7 +209,7 @@ export default function FormularioFacturaLaboratorio({
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
           <p className="text-red-800">{error}</p>
         </div>
       )}
@@ -218,14 +218,14 @@ export default function FormularioFacturaLaboratorio({
         {/* Información Básica */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Número de Factura <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={numeroFactura}
               onChange={(e) => setNumeroFactura(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: FACT-2024-001"
               required
             />
@@ -239,20 +239,20 @@ export default function FormularioFacturaLaboratorio({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Emisión <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
               value={fechaEmision}
               onChange={(e) => setFechaEmision(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Vencimiento <span className="text-red-500">*</span>
             </label>
             <input
@@ -260,7 +260,7 @@ export default function FormularioFacturaLaboratorio({
               value={fechaVencimiento}
               onChange={(e) => setFechaVencimiento(e.target.value)}
               min={fechaEmision}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             />
           </div>
@@ -284,17 +284,17 @@ export default function FormularioFacturaLaboratorio({
             <button
               type="button"
               onClick={handleAgregarItem}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
             >
-              <Plus className="w-5 h-5" />
+              <Plus size={20} />
               <span>Agregar Ítem</span>
             </button>
           </div>
 
           {items.length === 0 ? (
-            <div className="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-gray-500">No hay ítems en la factura</p>
-              <p className="text-sm text-gray-400 mt-1">
+            <div className="text-center py-8 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+              <p className="text-gray-600">No hay ítems en la factura</p>
+              <p className="text-sm text-gray-500 mt-1">
                 {laboratorio
                   ? 'Selecciona trabajos o agrega ítems manualmente'
                   : 'Selecciona un laboratorio primero'}
@@ -305,11 +305,11 @@ export default function FormularioFacturaLaboratorio({
               {items.map((item, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                  className="p-4 bg-slate-50 rounded-xl ring-1 ring-slate-200"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                     <div className="md:col-span-5">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-700 mb-1">
                         Descripción
                       </label>
                       <input
@@ -318,7 +318,7 @@ export default function FormularioFacturaLaboratorio({
                         onChange={(e) =>
                           handleActualizarItem(index, 'descripcion', e.target.value)
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                         placeholder="Descripción del trabajo"
                       />
                       {item.trabajo && (
@@ -329,7 +329,7 @@ export default function FormularioFacturaLaboratorio({
                       )}
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-700 mb-1">
                         Cantidad
                       </label>
                       <input
@@ -339,11 +339,11 @@ export default function FormularioFacturaLaboratorio({
                         onChange={(e) =>
                           handleActualizarItem(index, 'cantidad', parseInt(e.target.value) || 1)
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                       />
                     </div>
                     <div className="md:col-span-3">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-700 mb-1">
                         Precio Unitario
                       </label>
                       <input
@@ -358,14 +358,14 @@ export default function FormularioFacturaLaboratorio({
                             parseFloat(e.target.value) || 0
                           )
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                       />
                     </div>
                     <div className="md:col-span-1">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-700 mb-1">
                         Total
                       </label>
-                      <div className="px-3 py-2 bg-white border border-gray-300 rounded-md text-sm font-semibold text-gray-900">
+                      <div className="px-3 py-2.5 bg-white ring-1 ring-slate-300 rounded-xl text-sm font-semibold text-gray-900">
                         {formatearMoneda(item.precioUnitario * item.cantidad)}
                       </div>
                     </div>
@@ -373,7 +373,7 @@ export default function FormularioFacturaLaboratorio({
                       <button
                         type="button"
                         onClick={() => handleEliminarItem(index)}
-                        className="w-full px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center justify-center"
+                        className="w-full px-3 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all flex items-center justify-center"
                         title="Eliminar ítem"
                       >
                         <Trash2 className="w-5 h-5" />
@@ -387,10 +387,10 @@ export default function FormularioFacturaLaboratorio({
         </div>
 
         {/* Impuestos y Totales */}
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 % Impuestos (IVA)
               </label>
               <input
@@ -399,7 +399,7 @@ export default function FormularioFacturaLaboratorio({
                 max="100"
                 value={impuestosPorcentaje}
                 onChange={(e) => setImpuestosPorcentaje(parseFloat(e.target.value) || 0)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
           </div>
@@ -423,41 +423,41 @@ export default function FormularioFacturaLaboratorio({
 
         {/* Notas */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Notas</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
           <textarea
             value={notas}
             onChange={(e) => setNotas(e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             placeholder="Notas adicionales sobre la factura..."
           />
         </div>
 
         {/* Botones */}
-        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
           <button
             type="button"
             onClick={onCancelar}
             disabled={loading}
-            className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
             <span>Cancelar</span>
           </button>
           <button
             type="button"
             onClick={handleGuardar}
             disabled={loading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                <Loader2 size={20} className="animate-spin" />
                 <span>Guardando...</span>
               </>
             ) : (
               <>
-                <Save className="w-5 h-5" />
+                <Save size={20} />
                 <span>Guardar Factura</span>
               </>
             )}
@@ -467,5 +467,6 @@ export default function FormularioFacturaLaboratorio({
     </div>
   );
 }
+
 
 

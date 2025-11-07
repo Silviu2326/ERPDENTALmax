@@ -1,5 +1,5 @@
 import { Bloqueo } from '../api/bloqueosApi';
-import { Building2, User, Clock, Calendar } from 'lucide-react';
+import { Building2, User, Clock, Calendar, Package } from 'lucide-react';
 
 interface VisualizadorBloqueoCalendarioProps {
   bloqueos: Bloqueo[];
@@ -13,9 +13,9 @@ export default function VisualizadorBloqueoCalendario({
   const getBloqueoStyle = (bloqueo: Bloqueo) => {
     // Estilos diferentes para bloqueos de sala vs profesional
     if (bloqueo.tipo === 'SALA') {
-      return 'bg-orange-100 border-orange-300 text-orange-800';
+      return 'bg-orange-50 ring-orange-200 text-orange-900 hover:bg-orange-100';
     } else {
-      return 'bg-purple-100 border-purple-300 text-purple-800';
+      return 'bg-purple-50 ring-purple-200 text-purple-900 hover:bg-purple-100';
     }
   };
 
@@ -38,20 +38,21 @@ export default function VisualizadorBloqueoCalendario({
 
   if (bloqueos.length === 0) {
     return (
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
-        <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay bloqueos</h3>
         <p className="text-gray-600">No hay bloqueos programados en este período</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {bloqueos.map((bloqueo) => (
         <div
           key={bloqueo._id}
           onClick={() => onBloqueoClick?.(bloqueo)}
-          className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md ${getBloqueoStyle(
+          className={`p-4 rounded-xl ring-1 cursor-pointer transition-all hover:shadow-md ${getBloqueoStyle(
             bloqueo
           )}`}
         >
@@ -69,7 +70,7 @@ export default function VisualizadorBloqueoCalendario({
                     : `${bloqueo.recursoId.nombre || ''} ${bloqueo.recursoId.apellidos || ''}`.trim()}
                 </span>
                 {bloqueo.recurrencia && (
-                  <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded-full">
+                  <span className="inline-flex items-center gap-1 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
                     Recurrente
                   </span>
                 )}
@@ -94,7 +95,7 @@ export default function VisualizadorBloqueoCalendario({
                   </>
                 )}
               </div>
-              <div className="mt-2 text-xs opacity-75">
+              <div className="mt-2 text-xs text-gray-600">
                 Sede: {bloqueo.sede.nombre}
               </div>
             </div>
@@ -104,5 +105,6 @@ export default function VisualizadorBloqueoCalendario({
     </div>
   );
 }
+
 
 

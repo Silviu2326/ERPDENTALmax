@@ -96,21 +96,21 @@ export default function FormularioPagoTarjeta({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between border-b border-gray-200 pb-4">
         <div className="flex items-center space-x-3">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-2 rounded-lg">
-            <CreditCard className="w-6 h-6 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <CreditCard size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-xl font-semibold text-gray-900">Pago con Tarjeta</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Pago con Tarjeta</h3>
             <p className="text-sm text-gray-600">Monto: {moneda} {monto.toFixed(2)}</p>
           </div>
         </div>
         {onCancelar && (
           <button
             onClick={onCancelar}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-all"
             disabled={loading || creandoIntent}
           >
             <span className="text-gray-500">✕</span>
@@ -119,21 +119,21 @@ export default function FormularioPagoTarjeta({
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3">
+          <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-red-800">{error}</p>
         </div>
       )}
 
       {creandoIntent ? (
-        <div className="bg-gray-50 rounded-lg p-8 flex flex-col items-center justify-center space-y-4">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <div className="bg-white rounded-xl p-8 text-center">
+          <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
           <p className="text-gray-600">Inicializando pasarela de pago...</p>
-          <p className="text-xs text-gray-500">Preparando el formulario de pago seguro</p>
+          <p className="text-xs text-gray-500 mt-2">Preparando el formulario de pago seguro</p>
         </div>
       ) : clientSecret ? (
         <div className="space-y-4">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
             <p className="text-sm text-blue-800">
               <strong>Pago seguro:</strong> Tus datos de tarjeta se procesan de forma segura
               a través de nuestra pasarela de pagos certificada. No almacenamos información
@@ -150,14 +150,14 @@ export default function FormularioPagoTarjeta({
           />
 
           {loading && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center space-x-3">
-              <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center space-x-3">
+              <Loader2 size={20} className="animate-spin text-blue-600" />
               <p className="text-sm text-blue-800">Confirmando pago...</p>
             </div>
           )}
         </div>
       ) : (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
           <p className="text-sm text-yellow-800">
             Por favor, espera mientras se inicializa el sistema de pago.
           </p>
@@ -166,12 +166,13 @@ export default function FormularioPagoTarjeta({
 
       <div className="pt-4 border-t border-gray-200">
         <div className="flex items-center space-x-2 text-xs text-gray-500">
-          <CheckCircle2 className="w-4 h-4" />
+          <CheckCircle2 size={16} className="text-gray-500" />
           <span>Protegido por encriptación SSL y cumplimiento PCI DSS</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 

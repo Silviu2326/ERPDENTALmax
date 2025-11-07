@@ -97,7 +97,7 @@ export default function MaintenanceTaskCalendar({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">
           {meses[mesActual]} {anioActual}
@@ -105,19 +105,19 @@ export default function MaintenanceTaskCalendar({
         <div className="flex items-center gap-2">
           <button
             onClick={anteriorMes}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-all"
           >
             <ChevronLeft className="w-5 h-5 text-gray-600" />
           </button>
           <button
             onClick={() => setFechaActual(new Date())}
-            className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-xl transition-all"
           >
             Hoy
           </button>
           <button
             onClick={siguienteMes}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-all"
           >
             <ChevronRight className="w-5 h-5 text-gray-600" />
           </button>
@@ -126,7 +126,7 @@ export default function MaintenanceTaskCalendar({
 
       <div className="grid grid-cols-7 gap-2">
         {diasSemana.map((dia) => (
-          <div key={dia} className="text-center text-sm font-medium text-gray-500 py-2">
+          <div key={dia} className="text-center text-sm font-medium text-slate-600 py-2">
             {dia}
           </div>
         ))}
@@ -143,14 +143,14 @@ export default function MaintenanceTaskCalendar({
           return (
             <div
               key={dia}
-              className={`h-20 border rounded-lg p-1 overflow-y-auto ${
+              className={`h-20 ring-1 rounded-xl p-1 overflow-y-auto transition-all ${
                 hoy
-                  ? 'bg-blue-50 border-blue-300'
+                  ? 'bg-blue-50 ring-blue-300'
                   : pasado && tareas.length > 0
-                  ? 'bg-red-50 border-red-200'
+                  ? 'bg-red-50 ring-red-200'
                   : proximo && tareas.length > 0
-                  ? 'bg-yellow-50 border-yellow-200'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'bg-yellow-50 ring-yellow-200'
+                  : 'ring-gray-200 hover:ring-gray-300'
               }`}
             >
               <div
@@ -166,7 +166,7 @@ export default function MaintenanceTaskCalendar({
                     <div
                       key={plan._id}
                       onClick={() => onTaskClick && onTaskClick(plan)}
-                      className={`text-xs p-1 rounded cursor-pointer truncate ${
+                      className={`text-xs p-1 rounded-lg cursor-pointer truncate transition-all ${
                         pasado
                           ? 'bg-red-100 text-red-800 hover:bg-red-200'
                           : proximo
@@ -192,20 +192,21 @@ export default function MaintenanceTaskCalendar({
 
       <div className="mt-6 flex items-center gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-blue-50 border border-blue-300 rounded"></div>
+          <div className="w-4 h-4 bg-blue-50 ring-1 ring-blue-300 rounded"></div>
           <span className="text-gray-600">Hoy</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-yellow-50 border border-yellow-200 rounded"></div>
+          <div className="w-4 h-4 bg-yellow-50 ring-1 ring-yellow-200 rounded"></div>
           <span className="text-gray-600">Próximos 7 días</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-red-50 border border-red-200 rounded"></div>
+          <div className="w-4 h-4 bg-red-50 ring-1 ring-red-200 rounded"></div>
           <span className="text-gray-600">Vencidos</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 

@@ -211,108 +211,122 @@ export default function AnticiposPage() {
     .reduce((sum, a) => sum + a.monto, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <DollarSign className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <DollarSign size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Anticipos y Señales
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión de pagos por adelantado de pacientes
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setMostrarModalRegistro(true)}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                >
+                  <Plus size={20} />
+                  <span>Registrar Anticipo</span>
+                </button>
+                <button
+                  onClick={cargarAnticipos}
+                  disabled={loading}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Anticipos y Señales</h1>
-              <p className="text-gray-600 mt-1">
-                Gestión de pagos por adelantado de pacientes
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+
+          {/* Resumen de Totales */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <DollarSign className="w-5 h-5 text-green-600" />
+                </div>
+              </div>
+              <p className="text-sm font-medium text-gray-700 mb-1">Total Disponible</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(totalDisponible)}
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                {anticipos.filter((a) => a.estado === 'disponible').length} anticipos disponibles
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <DollarSign className="w-5 h-5 text-blue-600" />
+                </div>
+              </div>
+              <p className="text-sm font-medium text-gray-700 mb-1">Total Aplicado</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(totalAplicado)}
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                {anticipos.filter((a) => a.estado === 'aplicado').length} anticipos aplicados
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <DollarSign className="w-5 h-5 text-blue-600" />
+                </div>
+              </div>
+              <p className="text-sm font-medium text-gray-700 mb-1">Total General</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(totalDisponible + totalAplicado)}
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                Suma de todos los anticipos
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-center justify-between mb-3">
+                <div className="p-2 bg-gray-100 rounded-lg">
+                  <DollarSign className="w-5 h-5 text-gray-600" />
+                </div>
+              </div>
+              <p className="text-sm font-medium text-gray-700 mb-1">Total Registros</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {paginacion.total}
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                En el período seleccionado
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={() => setMostrarModalRegistro(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-md"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Registrar Anticipo</span>
-            </button>
-            <button
-              onClick={cargarAnticipos}
-              disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Resumen de Totales */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-green-500 to-green-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-2">Total Disponible</p>
-            <p className="text-3xl font-bold text-green-600">
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(totalDisponible)}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              {anticipos.filter((a) => a.estado === 'disponible').length} anticipos disponibles
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-2">Total Aplicado</p>
-            <p className="text-3xl font-bold text-blue-600">
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(totalAplicado)}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              {anticipos.filter((a) => a.estado === 'aplicado').length} anticipos aplicados
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-2">Total General</p>
-            <p className="text-3xl font-bold text-gray-900">
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(totalDisponible + totalAplicado)}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Suma de todos los anticipos
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
-                <DollarSign className="w-6 h-6" />
-              </div>
-            </div>
-            <p className="text-sm font-medium text-gray-600 mb-2">Total Registros</p>
-            <p className="text-3xl font-bold text-gray-900">
-              {paginacion.total}
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              En el período seleccionado
-            </p>
-          </div>
-        </div>
 
         {/* KPIs Adicionales */}
         {!loading && anticipos.length > 0 && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 text-white">
                     <DollarSign className="w-6 h-6" />
@@ -331,7 +345,7 @@ export default function AnticiposPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 text-white">
                     <DollarSign className="w-6 h-6" />
@@ -348,7 +362,7 @@ export default function AnticiposPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 text-white">
                     <DollarSign className="w-6 h-6" />
@@ -367,7 +381,7 @@ export default function AnticiposPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-600 text-white">
                     <DollarSign className="w-6 h-6" />
@@ -390,7 +404,7 @@ export default function AnticiposPage() {
             </div>
 
             {/* Análisis por Método de Pago */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Método de Pago</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 {(() => {
@@ -432,7 +446,7 @@ export default function AnticiposPage() {
             </div>
 
             {/* Análisis por Estado */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis por Estado</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200">
@@ -471,7 +485,7 @@ export default function AnticiposPage() {
             </div>
 
             {/* Evolución Temporal de Anticipos */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución Temporal de Anticipos</h3>
               <div className="space-y-4">
                 {(() => {
@@ -546,7 +560,7 @@ export default function AnticiposPage() {
             </div>
 
             {/* Análisis de Anticipos por Rango de Monto */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución por Rango de Monto</h3>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {(() => {
@@ -589,7 +603,7 @@ export default function AnticiposPage() {
 
             {/* Top 10 Pacientes por Anticipos */}
             {anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Pacientes por Anticipos</h3>
                 <div className="space-y-2">
                   {(() => {
@@ -643,7 +657,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Responsable */}
             {anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Anticipos Registrados por Responsable</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                   {(() => {
@@ -687,7 +701,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Día de la Semana */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Anticipos por Día de la Semana</h3>
                 <div className="grid grid-cols-7 gap-2">
                   {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((dia, index) => {
@@ -729,7 +743,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Tiempo Promedio hasta Aplicación */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Tiempo hasta Aplicación</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
@@ -767,7 +781,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Tipo de Tratamiento */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Anticipos por Tipo de Tratamiento</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -808,7 +822,7 @@ export default function AnticiposPage() {
 
             {/* Predicción de Anticipos */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Predicción de Anticipos - Próximo Mes</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200">
@@ -842,7 +856,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Mes de Registro */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Evolución de Anticipos por Mes de Registro</h3>
                 <div className="space-y-3">
                   {(() => {
@@ -917,7 +931,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Observación/Tipo */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Anticipos por Tipo de Tratamiento (Observación)</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {(() => {
@@ -956,7 +970,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Velocidad de Aplicación de Anticipos */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Análisis de Velocidad de Aplicación de Anticipos</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {(() => {
@@ -994,7 +1008,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Mes de Registro - Comparativa */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Comparativa de Anticipos: Registro vs Aplicación</h3>
                 <div className="space-y-4">
                   {(() => {
@@ -1073,7 +1087,7 @@ export default function AnticiposPage() {
 
             {/* Análisis de Anticipos por Rango de Edad de Paciente */}
             {!loading && anticipos.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Distribución de Anticipos por Rango de Edad de Paciente</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                   {(() => {
@@ -1111,64 +1125,76 @@ export default function AnticiposPage() {
           </>
         )}
 
-        {/* Filtros */}
-        <FiltrosBusquedaAnticipos
-          filtros={filtros}
-          onFiltrosChange={handleFiltrosChange}
-          onLimpiarFiltros={handleLimpiarFiltros}
-        />
+          {/* Filtros */}
+          <FiltrosBusquedaAnticipos
+            filtros={filtros}
+            onFiltrosChange={handleFiltrosChange}
+            onLimpiarFiltros={handleLimpiarFiltros}
+          />
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar los datos</p>
-            <p className="text-sm">{error}</p>
-          </div>
-        )}
-
-        {/* Tabla de Anticipos */}
-        <TablaAnticipos
-          anticipos={anticipos}
-          loading={loading}
-          onAnular={handleAnularAnticipo}
-        />
-
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="flex items-center justify-between bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="text-sm text-gray-600">
-              Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
-              {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de {paginacion.total} registros
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm border border-red-200 p-4">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                    <span className="text-red-600 text-sm font-bold">!</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-red-900 mb-1">Error al cargar los datos</h3>
+                  <p className="text-sm text-red-700">{error}</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => handlePageChange(paginacion.page - 1)}
-                disabled={paginacion.page === 1}
-                className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <span className="px-3 py-1 text-sm text-gray-700">
-                Página {paginacion.page} de {paginacion.totalPages}
-              </span>
-              <button
-                onClick={() => handlePageChange(paginacion.page + 1)}
-                disabled={paginacion.page >= paginacion.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Siguiente
-              </button>
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* Modal de Registro */}
-        <ModalRegistrarAnticipo
-          isOpen={mostrarModalRegistro}
-          onClose={() => setMostrarModalRegistro(false)}
-          onSubmit={handleRegistrarAnticipo}
-        />
+          {/* Tabla de Anticipos */}
+          <TablaAnticipos
+            anticipos={anticipos}
+            loading={loading}
+            onAnular={handleAnularAnticipo}
+          />
+
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="text-sm text-gray-600">
+                  Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
+                  {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de {paginacion.total} registros
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handlePageChange(paginacion.page - 1)}
+                    disabled={paginacion.page === 1}
+                    className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Anterior
+                  </button>
+                  <span className="px-4 py-2 text-sm text-slate-700 font-medium">
+                    Página {paginacion.page} de {paginacion.totalPages}
+                  </span>
+                  <button
+                    onClick={() => handlePageChange(paginacion.page + 1)}
+                    disabled={paginacion.page >= paginacion.totalPages}
+                    className="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 shadow-sm ring-1 ring-slate-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* Modal de Registro */}
+      <ModalRegistrarAnticipo
+        isOpen={mostrarModalRegistro}
+        onClose={() => setMostrarModalRegistro(false)}
+        onSubmit={handleRegistrarAnticipo}
+      />
     </div>
   );
 }

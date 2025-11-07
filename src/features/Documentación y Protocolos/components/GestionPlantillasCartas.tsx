@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, FileText, Search, X } from 'lucide-react';
+import { Plus, Edit, Trash2, FileText, Search, X, RefreshCw } from 'lucide-react';
 import { PlantillaCarta, obtenerTodasLasPlantillas, eliminarPlantilla } from '../api/plantillasCartaApi';
 import EditorPlantillaCarta from './EditorPlantillaCarta';
 
@@ -82,67 +82,82 @@ export default function GestionPlantillasCartas({ onPlantillaSeleccionada }: Ges
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Header con acciones */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900">Plantillas de Cartas</h3>
+      <div className="flex items-center justify-end">
         <button
           onClick={handleCrearNueva}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
         >
-          <Plus className="w-5 h-5" />
+          <Plus size={20} />
           <span>Nueva Plantilla</span>
         </button>
       </div>
 
       {/* Filtros */}
-      <div className="flex items-center space-x-4">
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Buscar plantillas..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
+      <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+        <div className="flex gap-4">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Buscar plantillas..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+            />
+          </div>
+          <select
+            value={tipoFiltro}
+            onChange={(e) => setTipoFiltro(e.target.value)}
+            className="rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
+          >
+            <option value="">Todos los tipos</option>
+            <option value="bienvenida">Bienvenida</option>
+            <option value="marketing">Marketing</option>
+            <option value="recordatorio">Recordatorio</option>
+            <option value="post-operatorio">Post-operatorio</option>
+            <option value="cumpleaños">Cumpleaños</option>
+            <option value="promocion">Promoción</option>
+          </select>
         </div>
-        <select
-          value={tipoFiltro}
-          onChange={(e) => setTipoFiltro(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        >
-          <option value="">Todos los tipos</option>
-          <option value="bienvenida">Bienvenida</option>
-          <option value="marketing">Marketing</option>
-          <option value="recordatorio">Recordatorio</option>
-          <option value="post-operatorio">Post-operatorio</option>
-          <option value="cumpleaños">Cumpleaños</option>
-          <option value="promocion">Promoción</option>
-        </select>
       </div>
 
       {/* Lista de plantillas */}
       {error && (
         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-800">{error}</p>
+          <p className="text-red-800 text-sm">{error}</p>
         </div>
       )}
 
       {loading ? (
-        <div className="text-center py-8 text-gray-500">Cargando plantillas...</div>
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+          <RefreshCw size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-600">Cargando plantillas...</p>
+        </div>
       ) : plantillasFiltradas.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">No hay plantillas disponibles</div>
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay plantillas disponibles</h3>
+          <p className="text-gray-600 mb-4">Crea tu primera plantilla para comenzar</p>
+          <button
+            onClick={handleCrearNueva}
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+          >
+            <Plus size={20} />
+            <span>Nueva Plantilla</span>
+          </button>
+        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {plantillasFiltradas.map((plantilla) => (
             <div
               key={plantilla._id}
-              className="bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg transition-shadow"
+              className="bg-white shadow-sm rounded-lg p-4 hover:shadow-md transition-shadow flex flex-col h-full"
             >
               <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center space-x-2">
-                  <FileText className="w-5 h-5 text-blue-600" />
+                <div className="flex items-center gap-2">
+                  <FileText size={18} className="text-blue-600" />
                   <h4 className="font-semibold text-gray-900">{plantilla.nombre}</h4>
                 </div>
                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getTipoColor(plantilla.tipo)}`}>
@@ -154,15 +169,15 @@ export default function GestionPlantillasCartas({ onPlantillaSeleccionada }: Ges
               
               {plantilla.placeholdersDisponibles.length > 0 && (
                 <div className="mb-3">
-                  <p className="text-xs text-gray-500 mb-1">Placeholders:</p>
+                  <p className="text-xs text-slate-500 mb-1">Placeholders:</p>
                   <div className="flex flex-wrap gap-1">
                     {plantilla.placeholdersDisponibles.slice(0, 3).map((placeholder, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
+                      <span key={idx} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">
                         {`{{${placeholder}}}`}
                       </span>
                     ))}
                     {plantilla.placeholdersDisponibles.length > 3 && (
-                      <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
+                      <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">
                         +{plantilla.placeholdersDisponibles.length - 3}
                       </span>
                     )}
@@ -170,28 +185,28 @@ export default function GestionPlantillasCartas({ onPlantillaSeleccionada }: Ges
                 </div>
               )}
 
-              <div className="flex items-center justify-end space-x-2 mt-4">
+              <div className="flex items-center justify-end gap-2 mt-auto pt-3 border-t border-gray-100">
                 {onPlantillaSeleccionada && (
                   <button
                     onClick={() => onPlantillaSeleccionada(plantilla)}
-                    className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                   >
                     Seleccionar
                   </button>
                 )}
                 <button
                   onClick={() => handleEditar(plantilla)}
-                  className="p-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                  className="p-1.5 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
                   title="Editar"
                 >
-                  <Edit className="w-4 h-4" />
+                  <Edit size={16} />
                 </button>
                 <button
                   onClick={() => setMostrarConfirmacionEliminar(plantilla._id!)}
-                  className="p-1.5 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                  className="p-1.5 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
                   title="Eliminar"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 size={16} />
                 </button>
               </div>
             </div>
@@ -208,16 +223,16 @@ export default function GestionPlantillasCartas({ onPlantillaSeleccionada }: Ges
               <p className="text-gray-600 mb-6">
                 ¿Estás seguro de que deseas eliminar esta plantilla? Esta acción no se puede deshacer.
               </p>
-              <div className="flex items-center justify-end space-x-3">
+              <div className="flex items-center justify-end gap-2">
                 <button
                   onClick={() => setMostrarConfirmacionEliminar(null)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all border border-gray-300 text-gray-700 hover:bg-gray-50"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={() => handleEliminar(mostrarConfirmacionEliminar)}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-red-600 text-white hover:bg-red-700 shadow-sm"
                 >
                   Eliminar
                 </button>
@@ -241,5 +256,6 @@ export default function GestionPlantillasCartas({ onPlantillaSeleccionada }: Ges
     </div>
   );
 }
+
 
 

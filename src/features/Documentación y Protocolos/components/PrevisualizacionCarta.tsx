@@ -59,48 +59,48 @@ export default function PrevisualizacionCarta({
 
   if (!asunto && !cuerpoHTML) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8 border border-gray-200">
-        <div className="text-center text-gray-500">
-          <p className="text-lg">Selecciona una plantilla y un paciente para generar la previsualización</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Mail size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Sin previsualización</h3>
+        <p className="text-gray-600">Selecciona una plantilla y un paciente para generar la previsualización</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
       {/* Header con acciones */}
       <div className="p-4 border-b border-gray-200 bg-gray-50">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Previsualización de la Carta</h3>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             {onGenerarPDF && (
               <button
                 onClick={onGenerarPDF}
-                className="px-3 py-2 text-sm bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2"
+                className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-slate-600 text-white hover:bg-slate-700 shadow-sm"
                 title="Generar PDF"
               >
-                <Download className="w-4 h-4" />
+                <Download size={16} />
                 <span>PDF</span>
               </button>
             )}
             {onImprimir && (
               <button
                 onClick={onImprimir}
-                className="px-3 py-2 text-sm bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2"
+                className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-slate-600 text-white hover:bg-slate-700 shadow-sm"
                 title="Imprimir"
               >
-                <Printer className="w-4 h-4" />
+                <Printer size={16} />
                 <span>Imprimir</span>
               </button>
             )}
             {onEnviarEmail && (
               <button
                 onClick={onEnviarEmail}
-                className="px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                 title="Enviar por Email"
               >
-                <Mail className="w-4 h-4" />
+                <Mail size={16} />
                 <span>Enviar Email</span>
               </button>
             )}
@@ -112,7 +112,7 @@ export default function PrevisualizacionCarta({
       <div className="p-6">
         {/* Asunto */}
         <div className="mb-6 pb-4 border-b border-gray-200">
-          <p className="text-sm font-medium text-gray-500 mb-1">Asunto:</p>
+          <p className="text-sm font-medium text-slate-500 mb-1">Asunto:</p>
           <p className="text-lg font-semibold text-gray-900">{procesarAsunto(asunto)}</p>
         </div>
 
@@ -125,5 +125,6 @@ export default function PrevisualizacionCarta({
     </div>
   );
 }
+
 
 

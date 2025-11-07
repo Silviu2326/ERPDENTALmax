@@ -35,36 +35,36 @@ export default function CampaignEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-gray-900">Editor de Contenido</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Editor de Contenido</h3>
         <div className="flex items-center gap-2">
           {onPreview && (
             <button
               onClick={() => setShowPreview(!showPreview)}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-all"
             >
-              <Eye className="w-4 h-4" />
+              <Eye size={20} />
               {showPreview ? 'Editar' : 'Vista Previa'}
             </button>
           )}
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all"
           >
-            <Save className="w-4 h-4" />
+            <Save size={20} />
             Guardar
           </button>
         </div>
       </div>
 
       {showPreview ? (
-        <div className="border border-gray-200 rounded-lg p-6 bg-white">
-          <div className="mb-4 flex items-center justify-between border-b pb-2">
-            <h4 className="font-medium text-gray-900">Vista Previa</h4>
+        <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-6">
+          <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-2">
+            <h4 className="font-semibold text-gray-900">Vista Previa</h4>
             <button
               onClick={() => setShowPreview(false)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-slate-400 hover:text-slate-600 transition-colors"
             >
-              <X className="w-4 h-4" />
+              <X size={20} />
             </button>
           </div>
           <div
@@ -73,18 +73,18 @@ export default function CampaignEditor({
           />
         </div>
       ) : (
-        <div className="border border-gray-200 rounded-lg">
+        <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 overflow-hidden">
           <textarea
             value={htmlContent}
             onChange={(e) => setHtmlContent(e.target.value)}
-            className="w-full h-96 p-4 border-0 focus:ring-0 focus:outline-none resize-none font-mono text-sm"
+            className="w-full h-96 p-4 border-0 focus:ring-0 focus:outline-none resize-none font-mono text-sm text-slate-900 bg-white"
             placeholder="Escribe o pega el contenido HTML del email aquí..."
           />
         </div>
       )}
 
-      <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
-        <p className="font-medium mb-1">Consejos:</p>
+      <div className="text-xs text-slate-600 bg-slate-50 p-4 rounded-2xl ring-1 ring-slate-200">
+        <p className="font-medium mb-2 text-slate-700">Consejos:</p>
         <ul className="list-disc list-inside space-y-1">
           <li>Puedes usar HTML para formatear el contenido</li>
           <li>Incluye siempre un enlace de baja en el pie del email</li>
@@ -94,5 +94,6 @@ export default function CampaignEditor({
     </div>
   );
 }
+
 
 

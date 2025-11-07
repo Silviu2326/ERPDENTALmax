@@ -110,41 +110,43 @@ export default function FormularioHorarioProfesional({
 
   if (!profesionalId || !sedeId) {
     return (
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center text-gray-500">
-        <Clock className="w-12 h-12 mx-auto mb-2 text-gray-400" />
-        <p>Seleccione un profesional y una sede para configurar los horarios</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Clock size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un profesional y una sede</h3>
+        <p className="text-gray-600">Para configurar los horarios, seleccione un profesional y una sede</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-          <Clock className="w-5 h-5" />
+          <Clock size={20} />
           <span>Horarios Recurrentes</span>
         </h3>
         <button
           onClick={agregarHorario}
           disabled={loading || guardando}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Plus className="w-4 h-4" />
+          <Plus size={20} />
           <span>Agregar Horario</span>
         </button>
       </div>
 
       {error && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="h-5 w-5" />
+        <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center space-x-2">
+          <AlertCircle size={20} />
           <span>{error}</span>
         </div>
       )}
 
       {horarios.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          <Clock className="w-12 h-12 mx-auto mb-2 text-gray-400" />
-          <p>No hay horarios configurados. Haga clic en "Agregar Horario" para comenzar.</p>
+        <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+          <Clock size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay horarios configurados</h3>
+          <p className="text-gray-600 mb-4">Haga clic en "Agregar Horario" para comenzar.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -154,14 +156,14 @@ export default function FormularioHorarioProfesional({
             );
 
             return (
-              <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <div key={index} className="flex items-center space-x-4 p-4 bg-slate-50 rounded-xl ring-1 ring-slate-200">
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Día</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Día</label>
                   <select
                     value={horario.diaSemana}
                     onChange={(e) => actualizarHorario(index, 'diaSemana', parseInt(e.target.value))}
                     disabled={loading || guardando}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                   >
                     {diasDisponibles.map((dia) => (
                       <option key={dia.valor} value={dia.valor}>
@@ -172,34 +174,34 @@ export default function FormularioHorarioProfesional({
                 </div>
 
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Hora Inicio</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Hora Inicio</label>
                   <input
                     type="time"
                     value={horario.horaInicio}
                     onChange={(e) => actualizarHorario(index, 'horaInicio', e.target.value)}
                     disabled={loading || guardando}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                   />
                 </div>
 
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Hora Fin</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Hora Fin</label>
                   <input
                     type="time"
                     value={horario.horaFin}
                     onChange={(e) => actualizarHorario(index, 'horaFin', e.target.value)}
                     disabled={loading || guardando}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                   />
                 </div>
 
                 <button
                   onClick={() => eliminarHorario(index)}
                   disabled={loading || guardando}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors disabled:opacity-50"
                   title="Eliminar horario"
                 >
-                  <X className="w-5 h-5" />
+                  <X size={20} />
                 </button>
               </div>
             );
@@ -212,9 +214,9 @@ export default function FormularioHorarioProfesional({
           <button
             onClick={handleGuardar}
             disabled={loading || guardando}
-            className="flex items-center space-x-2 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 rounded-xl px-6 py-2 text-sm font-medium transition-all bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Save className="w-4 h-4" />
+            <Save size={20} />
             <span>{guardando ? 'Guardando...' : 'Guardar Horarios'}</span>
           </button>
         </div>
@@ -222,5 +224,6 @@ export default function FormularioHorarioProfesional({
     </div>
   );
 }
+
 
 

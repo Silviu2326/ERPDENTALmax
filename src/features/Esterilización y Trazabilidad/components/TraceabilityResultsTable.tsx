@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TraceabilityEvent } from '../api/traceabilityApi';
-import { Eye, Calendar, Package, User, TestTube, AlertCircle, CheckCircle } from 'lucide-react';
+import { Eye, Calendar, Package, User, TestTube, AlertCircle, CheckCircle, Loader2, FileText } from 'lucide-react';
 
 interface TraceabilityResultsTableProps {
   eventos: TraceabilityEvent[];
@@ -60,59 +60,55 @@ export default function TraceabilityResultsTable({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div className="flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-3 text-gray-600">Cargando resultados...</span>
-        </div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (eventos.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-        <div className="text-center text-gray-500">
-          <AlertCircle className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p className="text-lg font-medium">No se encontraron resultados</p>
-          <p className="text-sm mt-2">Intente ajustar los filtros de búsqueda</p>
-        </div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron resultados</h3>
+        <p className="text-gray-600 mb-4">Intente ajustar los filtros de búsqueda</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Kit de Instrumental
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Paciente
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Ciclo de Esterilización
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {eventos.map((evento) => (
-              <tr key={evento._id} className="hover:bg-gray-50 transition-colors">
+              <tr key={evento._id} className="hover:bg-gray-50 transition-all">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center text-sm text-gray-900">
                     <Calendar className="w-4 h-4 mr-2 text-gray-400" />
@@ -170,12 +166,12 @@ export default function TraceabilityResultsTable({
                     >
                       {evento.sterilizationStatus === 'passed' ? (
                         <>
-                          <CheckCircle className="w-3 h-3 mr-1" />
+                          <CheckCircle size={12} className="mr-1" />
                           Aprobado
                         </>
                       ) : (
                         <>
-                          <AlertCircle className="w-3 h-3 mr-1" />
+                          <AlertCircle size={12} className="mr-1" />
                           Fallido
                         </>
                       )}
@@ -187,9 +183,9 @@ export default function TraceabilityResultsTable({
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => onVerTimeline(evento.kitId)}
-                    className="text-blue-600 hover:text-blue-900 flex items-center space-x-1 transition-colors"
+                    className="text-blue-600 hover:text-blue-900 flex items-center gap-2 transition-all"
                   >
-                    <Eye className="w-4 h-4" />
+                    <Eye size={18} />
                     <span>Ver Timeline</span>
                   </button>
                 </td>
@@ -201,32 +197,35 @@ export default function TraceabilityResultsTable({
 
       {/* Paginación */}
       {pagination && pagination.pages > 1 && (
-        <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-          <div className="text-sm text-gray-700">
-            Mostrando página <span className="font-medium">{pagination.page}</span> de{' '}
-            <span className="font-medium">{pagination.pages}</span> ({pagination.total} resultados
-            totales)
-          </div>
-          <div className="flex space-x-2">
-            <button
-              onClick={() => pagination.onPageChange(pagination.page - 1)}
-              disabled={pagination.page === 1}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Anterior
-            </button>
-            <button
-              onClick={() => pagination.onPageChange(pagination.page + 1)}
-              disabled={pagination.page === pagination.pages}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Siguiente
-            </button>
+        <div className="bg-white px-6 py-4 border-t border-gray-200">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="text-sm text-gray-600">
+              Mostrando página <span className="font-medium text-gray-900">{pagination.page}</span> de{' '}
+              <span className="font-medium text-gray-900">{pagination.pages}</span> ({pagination.total} resultados
+              totales)
+            </div>
+            <div className="flex justify-center items-center gap-2">
+              <button
+                onClick={() => pagination.onPageChange(pagination.page - 1)}
+                disabled={pagination.page === 1}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
+              >
+                Anterior
+              </button>
+              <button
+                onClick={() => pagination.onPageChange(pagination.page + 1)}
+                disabled={pagination.page === pagination.pages}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
+              >
+                Siguiente
+              </button>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 }
+
 
 

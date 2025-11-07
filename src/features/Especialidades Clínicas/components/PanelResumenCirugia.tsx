@@ -27,9 +27,9 @@ export default function PanelResumenCirugia({ postoperatorio }: PanelResumenCiru
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800">Resumen de la Cirugía</h2>
+        <h2 className="text-xl font-bold text-gray-900">Resumen de la Cirugía</h2>
         <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${getEstadoColor()}`}>
           {getEstadoIcon()}
           <span className="text-sm font-medium">{postoperatorio.estado}</span>
@@ -44,7 +44,7 @@ export default function PanelResumenCirugia({ postoperatorio }: PanelResumenCiru
           </div>
           <div>
             <p className="text-xs text-gray-500 mb-1">Paciente</p>
-            <p className="text-sm font-semibold text-gray-800">
+            <p className="text-sm font-semibold text-gray-900">
               {postoperatorio.paciente.nombre} {postoperatorio.paciente.apellidos || ''}
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function PanelResumenCirugia({ postoperatorio }: PanelResumenCiru
           </div>
           <div>
             <p className="text-xs text-gray-500 mb-1">Tratamiento</p>
-            <p className="text-sm font-semibold text-gray-800">
+            <p className="text-sm font-semibold text-gray-900">
               {postoperatorio.tratamiento.nombre || postoperatorio.tratamiento.descripcion || 'Cirugía Oral'}
             </p>
           </div>
@@ -70,7 +70,7 @@ export default function PanelResumenCirugia({ postoperatorio }: PanelResumenCiru
           </div>
           <div>
             <p className="text-xs text-gray-500 mb-1">Fecha de Inicio</p>
-            <p className="text-sm font-semibold text-gray-800">{fechaInicio}</p>
+            <p className="text-sm font-semibold text-gray-900">{fechaInicio}</p>
           </div>
         </div>
 
@@ -81,7 +81,7 @@ export default function PanelResumenCirugia({ postoperatorio }: PanelResumenCiru
           </div>
           <div>
             <p className="text-xs text-gray-500 mb-1">Controles Realizados</p>
-            <p className="text-sm font-semibold text-gray-800">
+            <p className="text-sm font-semibold text-gray-900">
               {postoperatorio.seguimientos?.length || 0} controles
             </p>
           </div>
@@ -98,5 +98,6 @@ export default function PanelResumenCirugia({ postoperatorio }: PanelResumenCiru
     </div>
   );
 }
+
 
 

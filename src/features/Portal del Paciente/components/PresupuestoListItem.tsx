@@ -54,3 +54,4 @@ export default function PresupuestoListItem({ presupuesto, onVerDetalle }: Presu
 }
 
 
+

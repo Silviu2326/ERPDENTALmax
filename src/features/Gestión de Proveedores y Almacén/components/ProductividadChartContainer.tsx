@@ -1,4 +1,4 @@
-import { TrendingUp, BarChart3 } from 'lucide-react';
+import { TrendingUp, BarChart3, Loader2 } from 'lucide-react';
 import { ProductividadProfesional } from '../api/reportesProductividadApi';
 
 interface ProductividadChartContainerProps {
@@ -20,22 +20,19 @@ export default function ProductividadChartContainer({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando gráficos...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-6">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <BarChart3 className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay datos disponibles</p>
-          <p className="text-sm">Seleccione un rango de fechas para ver los gráficos</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <BarChart3 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600 mb-4">Seleccione un rango de fechas para ver los gráficos</p>
       </div>
     );
   }
@@ -53,12 +50,12 @@ export default function ProductividadChartContainer({
   const espacioEntreBarras = 20;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Gráfico de Ingresos */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-blue-600" />
+            <TrendingUp size={20} className="text-blue-600" />
             Ingresos por Profesional
           </h3>
           <p className="text-sm text-gray-600">Comparación de ingresos totales generados</p>
@@ -137,10 +134,10 @@ export default function ProductividadChartContainer({
       </div>
 
       {/* Gráfico de Rentabilidad */}
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-emerald-600" />
+            <TrendingUp size={20} className="text-green-600" />
             Rentabilidad por Profesional
           </h3>
           <p className="text-sm text-gray-600">Ingresos menos coste de materiales</p>
@@ -233,5 +230,6 @@ export default function ProductividadChartContainer({
     </div>
   );
 }
+
 
 

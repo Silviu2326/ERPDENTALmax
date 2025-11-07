@@ -5,6 +5,7 @@ import { CrearCampanaRequest, TipoCampana } from '../api/abmApi';
 interface AbmCampaignFormProps {
   onSubmit: (datos: CrearCampanaRequest) => Promise<void>;
   onCancelar?: () => void;
+  loading?: boolean;
 }
 
 const TIPO_CAMPANA_ICONS: Record<TipoCampana, typeof Send> = {
@@ -16,7 +17,7 @@ const TIPO_CAMPANA_ICONS: Record<TipoCampana, typeof Send> = {
 
 const TIPO_CAMPANA_OPTIONS: TipoCampana[] = ['Email', 'Llamada', 'Evento', 'Publicidad Digital'];
 
-export default function AbmCampaignForm({ onSubmit, onCancelar }: AbmCampaignFormProps) {
+export default function AbmCampaignForm({ onSubmit, onCancelar, loading: loadingProp }: AbmCampaignFormProps) {
   const [formulario, setFormulario] = useState<CrearCampanaRequest>({
     nombre: '',
     tipo: 'Email',
@@ -25,6 +26,8 @@ export default function AbmCampaignForm({ onSubmit, onCancelar }: AbmCampaignFor
     contenido: '',
   });
   const [cargando, setCargando] = useState(false);
+
+  const loading = loadingProp || cargando;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +43,7 @@ export default function AbmCampaignForm({ onSubmit, onCancelar }: AbmCampaignFor
       });
     } catch (error) {
       console.error('Error al crear campaña:', error);
-      alert('Error al crear la campaña');
+      // Error handling is done in parent component
     } finally {
       setCargando(false);
     }
@@ -49,24 +52,28 @@ export default function AbmCampaignForm({ onSubmit, onCancelar }: AbmCampaignFor
   const IconoSeleccionado = TIPO_CAMPANA_ICONS[formulario.tipo];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Nueva Campaña</h3>
+    <div className="bg-white shadow-sm rounded-lg ring-1 ring-slate-200 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-6">Detalles de la Campaña</h3>
 
-      <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Nombre de la campaña</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Nombre de la campaña
+          </label>
           <input
             type="text"
             required
             value={formulario.nombre}
             onChange={(e) => setFormulario({ ...formulario, nombre: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             placeholder="Ej: Campaña de presentación - Empresa XYZ"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de campaña</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Tipo de campaña
+          </label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {TIPO_CAMPANA_OPTIONS.map((tipo) => {
               const Icono = TIPO_CAMPANA_ICONS[tipo];
@@ -76,14 +83,14 @@ export default function AbmCampaignForm({ onSubmit, onCancelar }: AbmCampaignFor
                   key={tipo}
                   type="button"
                   onClick={() => setFormulario({ ...formulario, tipo })}
-                  className={`flex flex-col items-center gap-2 p-3 border-2 rounded-lg transition-all ${
+                  className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all ring-1 ${
                     estaSeleccionado
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'ring-blue-500 bg-blue-50 shadow-sm'
+                      : 'ring-slate-200 hover:ring-slate-300 bg-white'
                   }`}
                 >
-                  <Icono className={`w-5 h-5 ${estaSeleccionado ? 'text-blue-600' : 'text-gray-400'}`} />
-                  <span className={`text-xs font-medium ${estaSeleccionado ? 'text-blue-600' : 'text-gray-600'}`}>
+                  <Icono size={20} className={estaSeleccionado ? 'text-blue-600' : 'text-slate-400'} />
+                  <span className={`text-xs font-medium ${estaSeleccionado ? 'text-blue-600' : 'text-slate-600'}`}>
                     {tipo}
                   </span>
                 </button>
@@ -94,59 +101,67 @@ export default function AbmCampaignForm({ onSubmit, onCancelar }: AbmCampaignFor
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de inicio</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Fecha de inicio
+            </label>
             <input
               type="date"
               required
               value={formulario.fechaInicio}
               onChange={(e) => setFormulario({ ...formulario, fechaInicio: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de fin (opcional)</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Fecha de fin (opcional)
+            </label>
             <input
               type="date"
               value={formulario.fechaFin}
               onChange={(e) => setFormulario({ ...formulario, fechaFin: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Contenido / Descripción</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Contenido / Descripción
+          </label>
           <textarea
             value={formulario.contenido}
             onChange={(e) => setFormulario({ ...formulario, contenido: e.target.value })}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 resize-none"
             placeholder="Describe el contenido o mensaje de la campaña..."
           />
         </div>
-      </div>
 
-      <div className="flex gap-2 mt-6">
-        <button
-          type="submit"
-          disabled={cargando}
-          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-        >
-          <IconoSeleccionado className="w-4 h-4" />
-          {cargando ? 'Creando...' : 'Crear Campaña'}
-        </button>
-        {onCancelar && (
+        <div className="flex gap-2 pt-4 border-t border-gray-100">
           <button
-            type="button"
-            onClick={onCancelar}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            type="submit"
+            disabled={loading}
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Cancelar
+            <IconoSeleccionado size={18} />
+            {loading ? 'Creando...' : 'Crear Campaña'}
           </button>
-        )}
-      </div>
-    </form>
+          {onCancelar && (
+            <button
+              type="button"
+              onClick={onCancelar}
+              disabled={loading}
+              className="px-4 py-2.5 text-sm font-medium bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Cancelar
+            </button>
+          )}
+        </div>
+      </form>
+    </div>
   );
 }
+
 
 

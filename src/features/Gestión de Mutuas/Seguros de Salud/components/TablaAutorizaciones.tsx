@@ -1,4 +1,4 @@
-import { Eye, Edit, FileText, Calendar, User, Building2 } from 'lucide-react';
+import { Eye, Edit, FileText, Calendar, User, Building2, Loader2 } from 'lucide-react';
 import { Autorizacion } from '../api/autorizacionesApi';
 import SelectorEstadoAutorizacion from './SelectorEstadoAutorizacion';
 
@@ -40,31 +40,28 @@ export default function TablaAutorizaciones({
 }: TablaAutorizacionesProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (autorizaciones.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <FileText className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay autorizaciones registradas</p>
-          <p className="text-sm">Comienza creando una nueva autorización de tratamiento</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay autorizaciones registradas</h3>
+        <p className="text-gray-600 mb-4">Comienza creando una nueva autorización de tratamiento</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <thead className="bg-slate-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Código Solicitud
@@ -198,5 +195,6 @@ export default function TablaAutorizaciones({
     </div>
   );
 }
+
 
 

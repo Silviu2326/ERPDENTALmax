@@ -47,31 +47,31 @@ export default function IntraopNoteTaker({ notas, onNotasChange, onAutoSave }: I
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-gray-200 h-full flex flex-col">
+    <div className="bg-white shadow-sm rounded-xl p-6 h-full flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-br from-green-500 to-emerald-500 p-2 rounded-lg">
-            <FileText className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <FileText size={20} className="text-blue-600" />
           </div>
-          <h3 className="text-lg font-bold text-gray-800">Notas Intraoperatorias</h3>
+          <h3 className="text-lg font-semibold text-gray-900">Notas Intraoperatorias</h3>
         </div>
         <div className="flex items-center gap-2">
           {isSaving && (
-            <span className="text-xs text-gray-500 flex items-center gap-1">
-              <Save className="w-3 h-3" />
+            <span className="text-xs text-gray-600 flex items-center gap-1">
+              <Save size={14} />
               Guardando...
             </span>
           )}
           {lastSaved && !isSaving && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-600">
               Guardado: {lastSaved.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
             </span>
           )}
           <button
             onClick={handleManualSave}
-            className="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm flex items-center gap-1"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all text-sm font-medium shadow-sm"
           >
-            <Save className="w-4 h-4" />
+            <Save size={16} />
             Guardar
           </button>
         </div>
@@ -81,17 +81,18 @@ export default function IntraopNoteTaker({ notas, onNotasChange, onAutoSave }: I
         value={localNotas}
         onChange={(e) => handleChange(e.target.value)}
         placeholder="Registre aquí todas las observaciones, hallazgos y procedimientos realizados durante la cirugía..."
-        className="flex-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none"
+        className="flex-1 w-full px-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
         style={{ minHeight: '300px' }}
       />
 
       <div className="mt-4 pt-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-600">
           <strong>Consejo:</strong> Las notas se guardan automáticamente cada 30 segundos. También puede guardar manualmente usando el botón Guardar.
         </p>
       </div>
     </div>
   );
 }
+
 
 

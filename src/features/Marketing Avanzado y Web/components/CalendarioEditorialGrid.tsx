@@ -66,17 +66,17 @@ export default function CalendarioEditorialGrid({
   const getColorPorEstado = (estado: string) => {
     switch (estado) {
       case 'borrador':
-        return 'bg-yellow-100 border-yellow-300 text-yellow-800';
+        return 'bg-yellow-100 ring-1 ring-yellow-200 text-yellow-800';
       case 'programado':
-        return 'bg-blue-100 border-blue-300 text-blue-800';
+        return 'bg-blue-100 ring-1 ring-blue-200 text-blue-800';
       case 'publicado':
-        return 'bg-green-100 border-green-300 text-green-800';
+        return 'bg-green-100 ring-1 ring-green-200 text-green-800';
       case 'error':
-        return 'bg-red-100 border-red-300 text-red-800';
+        return 'bg-red-100 ring-1 ring-red-200 text-red-800';
       case 'archivado':
-        return 'bg-gray-100 border-gray-300 text-gray-800';
+        return 'bg-gray-100 ring-1 ring-gray-200 text-gray-800';
       default:
-        return 'bg-gray-100 border-gray-300 text-gray-800';
+        return 'bg-gray-100 ring-1 ring-gray-200 text-gray-800';
     }
   };
 
@@ -127,28 +127,28 @@ export default function CalendarioEditorialGrid({
     };
 
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => cambiarMes('anterior')}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-all"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-600" />
+            <ChevronLeft size={20} className="text-gray-600" />
           </button>
-          <h2 className="text-2xl font-bold text-gray-800">
+          <h2 className="text-xl font-bold text-gray-900">
             {NOMBRES_MESES[mesActual - 1]} {anioActual}
           </h2>
           <button
             onClick={() => cambiarMes('siguiente')}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-all"
           >
-            <ChevronRight className="w-6 h-6 text-gray-600" />
+            <ChevronRight size={20} className="text-gray-600" />
           </button>
         </div>
 
         <div className="grid grid-cols-7 gap-2">
           {NOMBRES_DIAS.map((dia) => (
-            <div key={dia} className="text-center font-semibold text-gray-600 py-2">
+            <div key={dia} className="text-center text-sm font-medium text-slate-700 py-2">
               {dia}
             </div>
           ))}
@@ -156,7 +156,7 @@ export default function CalendarioEditorialGrid({
           {diasMesAnterior.map((dia) => (
             <div
               key={`prev-${dia}`}
-              className="min-h-[100px] p-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-400"
+              className="min-h-[100px] p-2 border border-gray-200 rounded-xl bg-gray-50 text-gray-400"
             />
           ))}
 
@@ -169,22 +169,22 @@ export default function CalendarioEditorialGrid({
             return (
               <div
                 key={dia}
-                className={`min-h-[100px] p-2 border rounded-lg transition-colors ${
+                className={`min-h-[100px] p-2 border rounded-xl transition-all ${
                   esHoyDia
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
+                    ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-200'
+                    : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className={`text-sm font-semibold ${esHoyDia ? 'text-blue-600' : 'text-gray-700'}`}>
+                  <span className={`text-sm font-semibold ${esHoyDia ? 'text-blue-600' : 'text-gray-900'}`}>
                     {dia}
                   </span>
                   <button
                     onClick={() => onNuevaPublicacion(fecha)}
-                    className="p-1 text-gray-400 hover:text-blue-600"
+                    className="p-1 text-gray-400 hover:text-blue-600 rounded-lg transition-colors"
                     title="Nueva publicación"
                   >
-                    <Plus className="w-3 h-3" />
+                    <Plus size={16} />
                   </button>
                 </div>
                 <div className="space-y-1">
@@ -192,14 +192,14 @@ export default function CalendarioEditorialGrid({
                     <div
                       key={pub._id}
                       onClick={() => onPublicacionClick(pub)}
-                      className={`text-xs p-1 rounded cursor-pointer hover:opacity-80 ${getColorPorEstado(pub.estado)}`}
+                      className={`text-xs p-1.5 rounded-lg cursor-pointer hover:opacity-80 transition-opacity ${getColorPorEstado(pub.estado)}`}
                       title={`${pub.contenido.substring(0, 50)}...`}
                     >
                       {pub.contenido.substring(0, 20)}...
                     </div>
                   ))}
                   {publicacionesDia.length > 3 && (
-                    <div className="text-xs text-gray-500 text-center">
+                    <div className="text-xs text-gray-500 text-center pt-1">
                       +{publicacionesDia.length - 3} más
                     </div>
                   )}
@@ -211,7 +211,7 @@ export default function CalendarioEditorialGrid({
           {diasMesSiguiente.map((dia) => (
             <div
               key={`next-${dia}`}
-              className="min-h-[100px] p-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-400"
+              className="min-h-[100px] p-2 border border-gray-200 rounded-xl bg-gray-50 text-gray-400"
             />
           ))}
         </div>
@@ -221,12 +221,12 @@ export default function CalendarioEditorialGrid({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto"></div>
+          <div className="h-8 bg-gray-200 rounded-xl w-1/3 mx-auto"></div>
           <div className="grid grid-cols-7 gap-2">
             {Array.from({ length: 35 }).map((_, i) => (
-              <div key={i} className="h-24 bg-gray-100 rounded"></div>
+              <div key={i} className="h-24 bg-gray-100 rounded-xl"></div>
             ))}
           </div>
         </div>
@@ -238,17 +238,18 @@ export default function CalendarioEditorialGrid({
     <div>
       {vista === 'mes' && renderVistaMes()}
       {vista === 'semana' && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <p className="text-center text-gray-500">Vista semanal - En desarrollo</p>
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+          <p className="text-gray-600">Vista semanal - En desarrollo</p>
         </div>
       )}
       {vista === 'dia' && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <p className="text-center text-gray-500">Vista diaria - En desarrollo</p>
+        <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+          <p className="text-gray-600">Vista diaria - En desarrollo</p>
         </div>
       )}
     </div>
   );
 }
+
 
 

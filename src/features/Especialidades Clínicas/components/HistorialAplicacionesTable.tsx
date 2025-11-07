@@ -1,4 +1,4 @@
-import { Trash2, Edit2, Calendar, Filter } from 'lucide-react';
+import { Trash2, Edit2, Calendar, Filter, Loader2 } from 'lucide-react';
 import { AplicacionPreventiva } from '../api/odontopediatriaApi';
 
 interface HistorialAplicacionesTableProps {
@@ -39,52 +39,53 @@ export default function HistorialAplicacionesTable({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-8">
-        <div className="text-center text-gray-500">Cargando historial...</div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando historial...</p>
       </div>
     );
   }
 
   if (aplicacionesFiltradas.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-8">
-        <div className="text-center text-gray-500">
-          <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p className="text-lg font-medium">No hay aplicaciones registradas</p>
-          <p className="text-sm mt-2">
-            {filtroTipo !== 'Todos'
-              ? `No hay aplicaciones de tipo "${filtroTipo === 'Fluor' ? 'Flúor' : 'Sellador'}" registradas`
-              : 'Comience registrando una nueva aplicación'}
-          </p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay aplicaciones registradas</h3>
+        <p className="text-gray-600 mb-4">
+          {filtroTipo !== 'Todos'
+            ? `No hay aplicaciones de tipo "${filtroTipo === 'Fluor' ? 'Flúor' : 'Sellador'}" registradas`
+            : 'Comience registrando una nueva aplicación'}
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       {/* Filtros */}
       {onFiltroTipoChange && (
-        <div className="p-4 border-b border-gray-200 bg-gray-50">
-          <div className="flex items-center gap-3">
-            <Filter className="w-4 h-4 text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">Filtrar por tipo:</span>
-            <div className="flex gap-2">
-              {(['Todos', 'Fluor', 'Sellador'] as const).map((tipo) => (
-                <button
-                  key={tipo}
-                  onClick={() => onFiltroTipoChange(tipo)}
-                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    filtroTipo === tipo
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-                  }`}
-                >
-                  {tipo === 'Fluor' ? 'Flúor' : tipo === 'Sellador' ? 'Sellador' : 'Todos'}
-                </button>
-              ))}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3 mb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-3 flex-wrap">
+              <Filter size={16} className="text-slate-600" />
+              <span className="text-sm font-medium text-slate-700">Filtrar por tipo:</span>
+              <div className="flex gap-2">
+                {(['Todos', 'Fluor', 'Sellador'] as const).map((tipo) => (
+                  <button
+                    key={tipo}
+                    onClick={() => onFiltroTipoChange(tipo)}
+                    className={`inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                      filtroTipo === tipo
+                        ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                    }`}
+                  >
+                    {tipo === 'Fluor' ? 'Flúor' : tipo === 'Sellador' ? 'Sellador' : 'Todos'}
+                  </button>
+                ))}
+              </div>
             </div>
-            <span className="text-xs text-gray-500 ml-auto">
+            <span className="text-xs text-slate-600 ml-auto">
               {aplicacionesFiltradas.length} de {aplicaciones.length} aplicaciones
             </span>
           </div>
@@ -94,33 +95,33 @@ export default function HistorialAplicacionesTable({
       {/* Tabla */}
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Producto
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Dientes Tratados
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Notas
               </th>
               {(onEditar || onEliminar) && (
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                   Acciones
                 </th>
               )}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-slate-200">
             {aplicacionesFiltradas.map((aplicacion) => (
-              <tr key={aplicacion._id} className="hover:bg-gray-50">
+              <tr key={aplicacion._id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {formatearFecha(aplicacion.fechaAplicacion)}
                 </td>
@@ -145,7 +146,7 @@ export default function HistorialAplicacionesTable({
                         return (
                           <span
                             key={diente}
-                            className="inline-flex items-center px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs font-medium"
+                            className="inline-flex items-center px-2 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium ring-1 ring-blue-200"
                             title={`Superficies: ${superficies}`}
                           >
                             {diente}
@@ -154,7 +155,7 @@ export default function HistorialAplicacionesTable({
                       }
                     )}
                   </div>
-                  <span className="text-xs text-gray-500 mt-1 block">
+                  <span className="text-xs text-slate-500 mt-1 block">
                     {new Set(aplicacion.dientesTratados.map((dt) => dt.diente)).size} diente(s)
                   </span>
                 </td>
@@ -164,7 +165,7 @@ export default function HistorialAplicacionesTable({
                       {aplicacion.notas}
                     </p>
                   ) : (
-                    <span className="text-gray-400 italic">Sin notas</span>
+                    <span className="text-slate-400 italic">Sin notas</span>
                   )}
                 </td>
                 {(onEditar || onEliminar) && (
@@ -173,10 +174,10 @@ export default function HistorialAplicacionesTable({
                       {onEditar && (
                         <button
                           onClick={() => onEditar(aplicacion)}
-                          className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50"
+                          className="inline-flex items-center justify-center p-2 rounded-xl text-blue-600 hover:text-blue-900 hover:bg-blue-50 transition-all"
                           title="Editar"
                         >
-                          <Edit2 className="w-4 h-4" />
+                          <Edit2 size={18} />
                         </button>
                       )}
                       {onEliminar && (
@@ -186,10 +187,10 @@ export default function HistorialAplicacionesTable({
                               onEliminar(aplicacion._id);
                             }
                           }}
-                          className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50"
+                          className="inline-flex items-center justify-center p-2 rounded-xl text-red-600 hover:text-red-900 hover:bg-red-50 transition-all"
                           title="Eliminar"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 size={18} />
                         </button>
                       )}
                     </div>
@@ -203,5 +204,6 @@ export default function HistorialAplicacionesTable({
     </div>
   );
 }
+
 
 

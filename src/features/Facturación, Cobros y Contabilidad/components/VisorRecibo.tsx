@@ -67,34 +67,37 @@ export default function VisorRecibo({ pagoId, isOpen, onClose }: VisorReciboProp
       <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-800">Recibo de Pago</h2>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <button
               onClick={handleImprimir}
-              className="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
               title="Imprimir"
             >
-              <Printer className="w-5 h-5" />
+              <Printer size={18} />
+              <span>Imprimir</span>
             </button>
             <button
               onClick={handleDescargar}
-              className="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
               title="Descargar PDF"
             >
-              <Download className="w-5 h-5" />
+              <Download size={18} />
+              <span>Descargar</span>
             </button>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 transition-colors"
+              className="text-slate-500 hover:text-slate-700 transition-colors p-2"
             >
-              <X className="w-6 h-6" />
+              <X size={20} />
             </button>
           </div>
         </div>
 
         <div className="p-6">
           {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+            <div className="flex flex-col items-center justify-center py-12">
+              <Loader2 size={48} className="text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando...</p>
             </div>
           ) : error ? (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
@@ -232,5 +235,6 @@ export default function VisorRecibo({ pagoId, isOpen, onClose }: VisorReciboProp
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TrendingUp } from 'lucide-react';
+import { Loader2, BarChart3 } from 'lucide-react';
 import { RentabilidadPorTratamiento } from '../api/rentabilidadApi';
 
 interface GraficoRentabilidadTratamientosProps {
@@ -15,39 +15,37 @@ export default function GraficoRentabilidadTratamientos({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <BarChart3 size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Rentabilidad por Tratamiento</h3>
-            <p className="text-sm text-gray-500">Margen por tipo de tratamiento</p>
+            <h3 className="text-lg font-semibold text-gray-900">Rentabilidad por Tratamiento</h3>
+            <p className="text-sm text-gray-600">Margen por tipo de tratamiento</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-          <p className="text-gray-500 mt-4">Cargando datos...</p>
-        </div>
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (!datos || datos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
         <div className="flex items-center space-x-3 mb-6">
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-2 rounded-lg">
-            <TrendingUp className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+            <BarChart3 size={20} className="text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800">Rentabilidad por Tratamiento</h3>
-            <p className="text-sm text-gray-500">Margen por tipo de tratamiento</p>
+            <h3 className="text-lg font-semibold text-gray-900">Rentabilidad por Tratamiento</h3>
+            <p className="text-sm text-gray-600">Margen por tipo de tratamiento</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <p>No hay datos disponibles</p>
-        </div>
+        <BarChart3 size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos disponibles</h3>
+        <p className="text-gray-600 mb-4">No se encontraron datos de rentabilidad para el período seleccionado</p>
       </div>
     );
   }
@@ -64,14 +62,14 @@ export default function GraficoRentabilidadTratamientos({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-200 p-6">
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-2 rounded-lg">
-          <TrendingUp className="w-5 h-5 text-white" />
+        <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+          <BarChart3 size={20} className="text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-800">Rentabilidad por Tratamiento</h3>
-          <p className="text-sm text-gray-500">Margen por tipo de tratamiento</p>
+          <h3 className="text-lg font-semibold text-gray-900">Rentabilidad por Tratamiento</h3>
+          <p className="text-sm text-gray-600">Margen por tipo de tratamiento</p>
         </div>
       </div>
 
@@ -127,5 +125,6 @@ export default function GraficoRentabilidadTratamientos({
     </div>
   );
 }
+
 
 

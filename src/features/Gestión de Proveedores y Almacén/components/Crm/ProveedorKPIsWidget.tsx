@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Building2, FileText, DollarSign, Star, TrendingUp } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 import { ProveedorKPIs } from '../../api/crmApi';
+import MetricCards from '../MetricCards';
 
 export default function ProveedorKPIsWidget() {
   const [kpis, setKpis] = useState<ProveedorKPIs | null>(null);
@@ -44,83 +45,54 @@ export default function ProveedorKPIsWidget() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white rounded-xl shadow-md p-6 animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-            <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-          </div>
-        ))}
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (error && !kpis) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700">
-        {error}
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
       </div>
     );
   }
 
   if (!kpis) return null;
 
-  const cards = [
-    {
-      title: 'Total Proveedores',
-      value: kpis.totalProveedores,
-      icon: Building2,
-      color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50',
-      iconColor: 'text-blue-600',
-    },
-    {
-      title: 'Contratos Activos',
-      value: kpis.contratosActivos,
-      icon: FileText,
-      color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50',
-      iconColor: 'text-green-600',
-    },
-    {
-      title: 'Gasto Último Mes',
-      value: `€${kpis.gastoUltimoMes.toLocaleString('es-ES', { minimumFractionDigits: 2 })}`,
-      icon: DollarSign,
-      color: 'from-purple-500 to-purple-600',
-      bgColor: 'bg-purple-50',
-      iconColor: 'text-purple-600',
-    },
-    {
-      title: 'Calificación Media',
-      value: kpis.calificacionMedia.toFixed(1),
-      icon: Star,
-      color: 'from-yellow-500 to-yellow-600',
-      bgColor: 'bg-yellow-50',
-      iconColor: 'text-yellow-600',
-    },
-  ];
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      {cards.map((card, index) => {
-        const Icon = card.icon;
-        return (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-100"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-lg ${card.bgColor}`}>
-                <Icon className={`w-6 h-6 ${card.iconColor}`} />
-              </div>
-              <TrendingUp className="w-5 h-5 text-gray-400" />
-            </div>
-            <h3 className="text-sm font-medium text-gray-600 mb-2">{card.title}</h3>
-            <p className="text-2xl font-bold text-gray-900">{card.value}</p>
-          </div>
-        );
-      })}
-    </div>
+    <MetricCards
+      data={[
+        {
+          id: 'total-proveedores',
+          title: 'Total Proveedores',
+          value: kpis.totalProveedores,
+          color: 'info',
+        },
+        {
+          id: 'contratos-activos',
+          title: 'Contratos Activos',
+          value: kpis.contratosActivos,
+          color: 'success',
+        },
+        {
+          id: 'gasto-ultimo-mes',
+          title: 'Gasto Último Mes',
+          value: kpis.gastoUltimoMes,
+          color: 'info',
+        },
+        {
+          id: 'calificacion-media',
+          title: 'Calificación Media',
+          value: kpis.calificacionMedia.toFixed(1),
+          color: 'warning',
+        },
+      ]}
+    />
   );
 }
 

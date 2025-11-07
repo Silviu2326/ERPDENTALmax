@@ -1,4 +1,4 @@
-import { Eye, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Eye, Clock, CheckCircle, XCircle, AlertCircle, Loader2, Package } from 'lucide-react';
 import { OrdenFabricacion, EstadoFabricacion } from '../api/fabricacionApi';
 
 interface TablaOrdenesFabricacionProps {
@@ -38,24 +38,19 @@ export default function TablaOrdenesFabricacion({
 }: TablaOrdenesFabricacionProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <div className="flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Cargando órdenes de fabricación...</p>
-          </div>
-        </div>
+      <div className="p-8 text-center bg-white shadow-sm rounded-lg">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando órdenes de fabricación...</p>
       </div>
     );
   }
 
   if (ordenes.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <div className="text-center text-gray-500">
-          <p className="text-lg">No se encontraron órdenes de fabricación</p>
-          <p className="text-sm mt-2">Intenta ajustar los filtros de búsqueda</p>
-        </div>
+      <div className="p-8 text-center bg-white shadow-sm rounded-lg">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No se encontraron órdenes de fabricación</h3>
+        <p className="text-gray-600 mb-4">Intenta ajustar los filtros de búsqueda</p>
       </div>
     );
   }
@@ -69,33 +64,33 @@ export default function TablaOrdenesFabricacion({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Orden
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Paciente
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Laboratorio
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tipo de Prótesis
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha Creación
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Entrega Estimada
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -158,7 +153,7 @@ export default function TablaOrdenesFabricacion({
                       e.stopPropagation();
                       if (orden._id) onVerDetalle(orden._id);
                     }}
-                    className="text-blue-600 hover:text-blue-900 flex items-center justify-end space-x-1 ml-auto"
+                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-900 transition-colors"
                   >
                     <Eye className="w-4 h-4" />
                     <span>Ver Detalle</span>
@@ -172,5 +167,6 @@ export default function TablaOrdenesFabricacion({
     </div>
   );
 }
+
 
 

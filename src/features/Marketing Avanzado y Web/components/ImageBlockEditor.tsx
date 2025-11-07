@@ -7,16 +7,17 @@ export default function ImageBlockEditor({ bloque }: ImageBlockEditorProps) {
   const alt = bloque.contenido?.alt || 'Imagen';
 
   return (
-    <div className="p-4">
+    <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 overflow-hidden">
       {url ? (
-        <img src={url} alt={alt} className="w-full h-auto rounded-lg" />
+        <img src={url} alt={alt} className="w-full h-auto" />
       ) : (
-        <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-          <span className="text-gray-400">Sin imagen</span>
+        <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+          <span className="text-gray-400 text-sm">Sin imagen</span>
         </div>
       )}
     </div>
   );
 }
+
 
 

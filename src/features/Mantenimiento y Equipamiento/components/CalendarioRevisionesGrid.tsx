@@ -133,28 +133,28 @@ export default function CalendarioRevisionesGrid({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+    <div className="bg-white shadow-sm rounded-lg">
+      <div className="p-4 border-b border-gray-200/60 flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <button
             onClick={() => navegarFecha('anterior')}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-100 rounded-xl transition-all text-slate-600 hover:text-slate-900"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft size={20} />
           </button>
-          <h3 className="text-lg font-semibold text-gray-800 capitalize">
+          <h3 className="text-lg font-semibold text-gray-900 capitalize">
             {getTituloVista()}
           </h3>
           <button
             onClick={() => navegarFecha('siguiente')}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-100 rounded-xl transition-all text-slate-600 hover:text-slate-900"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight size={20} />
           </button>
         </div>
         <button
           onClick={irHoy}
-          className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
         >
           Hoy
         </button>
@@ -162,20 +162,20 @@ export default function CalendarioRevisionesGrid({
 
       <div className="overflow-x-auto">
         <div className="min-w-full">
-          <div className="grid grid-cols-7 border-b border-gray-200">
+          <div className="grid grid-cols-7 border-b border-gray-200/60">
             {dias.map((dia, index) => (
               <div
                 key={index}
-                className={`p-3 text-center border-r border-gray-200 last:border-r-0 ${
+                className={`p-3 text-center border-r border-gray-200/60 last:border-r-0 ${
                   dia.toDateString() === new Date().toDateString()
                     ? 'bg-blue-50 font-semibold'
-                    : 'bg-gray-50'
+                    : 'bg-slate-50'
                 }`}
               >
-                <div className="text-xs text-gray-500 uppercase">
+                <div className="text-xs text-slate-500 uppercase font-medium">
                   {nombreDias[dia.getDay()]}
                 </div>
-                <div className="text-lg mt-1">
+                <div className="text-lg mt-1 text-gray-900">
                   {dia.getDate()}
                 </div>
               </div>
@@ -186,7 +186,7 @@ export default function CalendarioRevisionesGrid({
             {dias.map((dia, diaIndex) => (
               <div
                 key={diaIndex}
-                className="border-r border-gray-200 last:border-r-0 min-h-[600px]"
+                className="border-r border-gray-200/60 last:border-r-0 min-h-[600px]"
               >
                 {horasDelDia.map((hora, horaIndex) => {
                   const revisionesEnSlot = getRevisionesPorDiaYHora(dia, hora);
@@ -198,11 +198,11 @@ export default function CalendarioRevisionesGrid({
                   return (
                     <div
                       key={horaIndex}
-                      className={`border-b border-gray-100 p-2 min-h-[80px] ${
-                        esHoraPasada ? 'bg-gray-50 opacity-60' : 'hover:bg-blue-50/30'
+                      className={`border-b border-gray-100/60 p-2 min-h-[80px] ${
+                        esHoraPasada ? 'bg-slate-50 opacity-60' : 'hover:bg-blue-50/30'
                       } transition-colors relative group`}
                     >
-                      <div className="text-xs text-gray-400 mb-1">{hora}</div>
+                      <div className="text-xs text-slate-400 mb-1 font-medium">{hora}</div>
                       <div className="space-y-1">
                         {revisionesEnSlot.map((revision) => {
                           const fechaRevision = new Date(revision.fechaProgramada);
@@ -212,13 +212,13 @@ export default function CalendarioRevisionesGrid({
                             <div
                               key={revision._id}
                               onClick={() => onRevisionClick(revision)}
-                              className={`${getColorPorEstado(revision.estado)} border rounded px-2 py-1 text-xs cursor-pointer hover:shadow-md transition-shadow`}
+                              className={`${getColorPorEstado(revision.estado)} border rounded-xl px-2 py-1 text-xs cursor-pointer hover:shadow-md transition-all`}
                               title={`${revision.equipo.nombre} - ${revision.tecnicoResponsable} - ${horaRevision}`}
                             >
                               <div className="font-semibold truncate">
                                 {revision.equipo.nombre}
                               </div>
-                              <div className="text-xs truncate text-gray-600">
+                              <div className="text-xs truncate text-slate-600">
                                 {revision.tecnicoResponsable}
                               </div>
                               <div className="text-xs">{horaRevision}</div>
@@ -236,7 +236,7 @@ export default function CalendarioRevisionesGrid({
                           }}
                           className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
                         >
-                          <Plus className="w-6 h-6 text-blue-600" />
+                          <Plus size={24} className="text-blue-600" />
                         </button>
                       )}
                     </div>
@@ -250,5 +250,6 @@ export default function CalendarioRevisionesGrid({
     </div>
   );
 }
+
 
 

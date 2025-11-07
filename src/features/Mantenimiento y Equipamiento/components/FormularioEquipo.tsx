@@ -139,7 +139,7 @@ export default function FormularioEquipo({
   const estados = ['Operativo', 'En Mantenimiento', 'Fuera de Servicio', 'De Baja'];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <form onSubmit={handleSubmit} className="bg-white shadow-sm rounded-lg p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">
           {equipo ? 'Editar Equipo' : 'Nuevo Equipo Clínico'}
@@ -155,83 +155,83 @@ export default function FormularioEquipo({
           <h3 className="text-lg font-semibold text-gray-900 border-b pb-2">Información Básica</h3>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre del Equipo <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.nombre}
               onChange={(e) => handleChange('nombre', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.nombre ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                errors.nombre ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              } px-3 py-2.5`}
               placeholder="Ej: Unidad Dental"
             />
             {errors.nombre && <p className="text-red-500 text-xs mt-1">{errors.nombre}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Marca <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.marca}
               onChange={(e) => handleChange('marca', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.marca ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                errors.marca ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              } px-3 py-2.5`}
               placeholder="Ej: A-dec"
             />
             {errors.marca && <p className="text-red-500 text-xs mt-1">{errors.marca}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Modelo <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.modelo}
               onChange={(e) => handleChange('modelo', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.modelo ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                errors.modelo ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              } px-3 py-2.5`}
               placeholder="Ej: A-dec 300"
             />
             {errors.modelo && <p className="text-red-500 text-xs mt-1">{errors.modelo}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Número de Serie <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.numeroSerie}
               onChange={(e) => handleChange('numeroSerie', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono ${
-                errors.numeroSerie ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 font-mono ${
+                errors.numeroSerie ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              } px-3 py-2.5`}
               placeholder="Ej: SN123456789"
             />
             {errors.numeroSerie && <p className="text-red-500 text-xs mt-1">{errors.numeroSerie}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha de Adquisición <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
               value={formData.fechaAdquisicion}
               onChange={(e) => handleChange('fechaAdquisicion', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Costo de Adquisición (€) <span className="text-red-500">*</span>
             </label>
             <input
@@ -240,9 +240,9 @@ export default function FormularioEquipo({
               min="0"
               value={formData.costo}
               onChange={(e) => handleChange('costo', parseFloat(e.target.value) || 0)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.costo ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ${
+                errors.costo ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              } px-3 py-2.5`}
               placeholder="0.00"
             />
             {errors.costo && <p className="text-red-500 text-xs mt-1">{errors.costo}</p>}
@@ -254,15 +254,15 @@ export default function FormularioEquipo({
           <h3 className="text-lg font-semibold text-gray-900 border-b pb-2">Ubicación y Estado</h3>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Sede <span className="text-red-500">*</span>
             </label>
             <select
               value={formData.ubicacion.sede}
               onChange={(e) => handleChange('ubicacion.sede', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors['ubicacion.sede'] ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full rounded-xl bg-white text-slate-900 ring-1 ${
+                errors['ubicacion.sede'] ? 'ring-red-300 focus:ring-2 focus:ring-red-400' : 'ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              } px-3 py-2.5`}
             >
               <option value="">Selecciona una sede</option>
               {sedes.map((sede) => (
@@ -277,24 +277,24 @@ export default function FormularioEquipo({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Gabinete</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Gabinete</label>
             <input
               type="text"
               value={formData.ubicacion.gabinete || ''}
               onChange={(e) => handleChange('ubicacion.gabinete', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Gabinete 1"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Estado <span className="text-red-500">*</span>
             </label>
             <select
               value={formData.estado}
               onChange={(e) => handleChange('estado', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               {estados.map((estado) => (
                 <option key={estado} value={estado}>
@@ -305,11 +305,11 @@ export default function FormularioEquipo({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Proveedor</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Proveedor</label>
             <select
               value={formData.proveedor || ''}
               onChange={(e) => handleChange('proveedor', e.target.value || undefined)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               <option value="">Selecciona un proveedor</option>
               {proveedores.map((proveedor) => (
@@ -325,7 +325,7 @@ export default function FormularioEquipo({
       {/* Mantenimiento y Garantía */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Último Mantenimiento
           </label>
           <input
@@ -334,12 +334,12 @@ export default function FormularioEquipo({
             onChange={(e) =>
               handleChange('fechaUltimoMantenimiento', e.target.value || undefined)
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Próximo Mantenimiento
           </label>
           <input
@@ -348,39 +348,39 @@ export default function FormularioEquipo({
             onChange={(e) =>
               handleChange('fechaProximoMantenimiento', e.target.value || undefined)
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Garantía hasta</label>
+          <label className="block text-sm font-medium text-slate-700 mb-2">Garantía hasta</label>
           <input
             type="date"
             value={formData.garantiaHasta || ''}
             onChange={(e) => handleChange('garantiaHasta', e.target.value || undefined)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
       </div>
 
       {/* Notas */}
       <div className="mt-6">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+        <label className="block text-sm font-medium text-slate-700 mb-2">Notas</label>
         <textarea
           value={formData.notas || ''}
           onChange={(e) => handleChange('notas', e.target.value)}
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           placeholder="Observaciones o notas adicionales sobre el equipo..."
         />
       </div>
 
       {/* Botones */}
-      <div className="mt-6 flex items-center justify-end gap-3 pt-6 border-t border-gray-200">
+      <div className="mt-6 flex items-center justify-end gap-2 pt-6 border-t border-gray-100">
         <button
           type="button"
           onClick={onCancelar}
-          className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+          className="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition-colors font-medium inline-flex items-center gap-2"
         >
           <X className="w-4 h-4" />
           Cancelar
@@ -388,7 +388,7 @@ export default function FormularioEquipo({
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium inline-flex items-center gap-2"
         >
           <Save className="w-4 h-4" />
           {loading ? 'Guardando...' : equipo ? 'Actualizar' : 'Guardar'}
@@ -397,5 +397,6 @@ export default function FormularioEquipo({
     </form>
   );
 }
+
 
 

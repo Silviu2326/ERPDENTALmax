@@ -214,73 +214,99 @@ export default function AutorizacionesTratamientosPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Autorizaciones de Tratamientos
-            </h2>
-            <p className="text-gray-600 mt-1">
-              Gestiona las solicitudes de pre-autorización para tratamientos dentales
-            </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileCheck size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Autorizaciones de Tratamientos
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona las solicitudes de pre-autorización para tratamientos dentales
+                  </p>
+                </div>
+              </div>
+              
+              {/* Botón de acción principal */}
+              <div className="flex items-center justify-end">
+                <button
+                  onClick={handleNuevaAutorizacion}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md font-medium"
+                >
+                  <Plus size={20} />
+                  Nueva Autorización
+                </button>
+              </div>
+            </div>
           </div>
-          <button
-            onClick={handleNuevaAutorizacion}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 font-semibold"
-          >
-            <Plus className="w-5 h-5" />
-            Nueva Autorización
-          </button>
         </div>
       </div>
 
-      {/* Estadísticas */}
-      {autorizaciones.length > 0 && (
-        <div className="space-y-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg p-5 border border-blue-200 hover:shadow-xl transition-shadow">
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8 space-y-6">
+
+        {/* Métricas/KPIs */}
+        {paginacion.total > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-blue-700">Total Autorizaciones</div>
-                <FileCheck className="w-5 h-5 text-blue-600" />
+                <div className="text-sm font-medium text-slate-700">Total Autorizaciones</div>
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <FileCheck size={20} className="text-blue-600" />
+                </div>
               </div>
-              <div className="text-3xl font-bold text-blue-900">{paginacion.total}</div>
-              <div className="text-xs text-blue-600 mt-2">Registradas en el sistema</div>
+              <div className="text-3xl font-bold text-gray-900">{paginacion.total}</div>
+              <div className="text-xs text-slate-600 mt-1">Registradas en el sistema</div>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-lg p-5 border border-green-200 hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-green-700">Aprobadas</div>
-                <CheckCircle className="w-5 h-5 text-green-600" />
+                <div className="text-sm font-medium text-slate-700">Aprobadas</div>
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <CheckCircle size={20} className="text-green-600" />
+                </div>
               </div>
-              <div className="text-3xl font-bold text-green-900">
+              <div className="text-3xl font-bold text-gray-900">
                 {autorizaciones.filter(a => a.estado === 'Aprobada').length}
               </div>
-              <div className="text-xs text-green-600 mt-2">
+              <div className="text-xs text-slate-600 mt-1">
                 {paginacion.total > 0 
                   ? `${Math.round((autorizaciones.filter(a => a.estado === 'Aprobada').length / paginacion.total) * 100)}% del total`
                   : 'Confirmadas'}
               </div>
             </div>
-            <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl shadow-lg p-5 border border-amber-200 hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-amber-700">Pendientes</div>
-                <Clock className="w-5 h-5 text-amber-600" />
+                <div className="text-sm font-medium text-slate-700">Pendientes</div>
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <Clock size={20} className="text-yellow-600" />
+                </div>
               </div>
-              <div className="text-3xl font-bold text-amber-900">
+              <div className="text-3xl font-bold text-gray-900">
                 {autorizaciones.filter(a => a.estado === 'Pendiente').length}
               </div>
-              <div className="text-xs text-amber-600 mt-2">En revisión por aseguradora</div>
+              <div className="text-xs text-slate-600 mt-1">En revisión por aseguradora</div>
             </div>
-            <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl shadow-lg p-5 border border-red-200 hover:shadow-xl transition-shadow">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-red-700">Rechazadas</div>
-                <XCircle className="w-5 h-5 text-red-600" />
+                <div className="text-sm font-medium text-slate-700">Rechazadas</div>
+                <div className="p-2 bg-red-100 rounded-lg">
+                  <XCircle size={20} className="text-red-600" />
+                </div>
               </div>
-              <div className="text-3xl font-bold text-red-900">
+              <div className="text-3xl font-bold text-gray-900">
                 {autorizaciones.filter(a => a.estado === 'Rechazada').length}
               </div>
-              <div className="text-xs text-red-600 mt-2">
+              <div className="text-xs text-slate-600 mt-1">
                 {autorizaciones.filter(a => a.estado === 'Requiere Información Adicional').length > 0 && (
                   <span className="block mt-1">
                     + {autorizaciones.filter(a => a.estado === 'Requiere Información Adicional').length} requieren info
@@ -290,65 +316,16 @@ export default function AutorizacionesTratamientosPage() {
               </div>
             </div>
           </div>
-
-          {/* Resumen de tiempos de respuesta */}
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-amber-600" />
-              Resumen de Autorizaciones
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-sm text-gray-600 mb-1">Tiempo promedio de respuesta</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {(() => {
-                    const aprobadas = autorizaciones.filter(a => a.estado === 'Aprobada' && a.fechaRespuesta);
-                    if (aprobadas.length === 0) return 'N/A';
-                    const tiempos = aprobadas.map(a => {
-                      const solicitud = new Date(a.fechaSolicitud);
-                      const respuesta = new Date(a.fechaRespuesta!);
-                      return Math.round((respuesta.getTime() - solicitud.getTime()) / (1000 * 60 * 60 * 24));
-                    });
-                    const promedio = tiempos.reduce((a, b) => a + b, 0) / tiempos.length;
-                    return `${promedio.toFixed(1)} días`;
-                  })()}
-                </div>
-              </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-sm text-gray-600 mb-1">Autorizaciones con documentos</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {autorizaciones.filter(a => a.documentos && a.documentos.length > 0).length}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {paginacion.total > 0 
-                    ? `${Math.round((autorizaciones.filter(a => a.documentos && a.documentos.length > 0).length / paginacion.total) * 100)}% del total`
-                    : ''}
-                </div>
-              </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-sm text-gray-600 mb-1">Tasa de aprobación</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  {paginacion.total > 0 
-                    ? `${Math.round((autorizaciones.filter(a => a.estado === 'Aprobada').length / paginacion.total) * 100)}%`
-                    : '0%'}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {autorizaciones.filter(a => a.estado === 'Aprobada').length} de {paginacion.total}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+        )}
 
         {/* Error message */}
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-800">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <span>{error}</span>
+          <div className="bg-white rounded-xl shadow-sm p-4 border border-red-200 bg-red-50 flex items-center gap-3">
+            <AlertCircle size={20} className="text-red-600 flex-shrink-0" />
+            <span className="text-sm text-red-800 flex-1">{error}</span>
             <button
               onClick={() => setError(null)}
-              className="ml-auto text-red-600 hover:text-red-800"
+              className="text-red-600 hover:text-red-800 transition-colors"
             >
               ×
             </button>
@@ -374,55 +351,50 @@ export default function AutorizacionesTratamientosPage() {
 
         {/* Paginación */}
         {paginacion.totalPages > 1 && (
-          <div className="mt-6 bg-white rounded-xl shadow-lg p-4 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                Mostrando {autorizaciones.length} de {paginacion.total} autorizaciones
+          <div className="bg-white rounded-xl shadow-sm p-4">
+            <div className="flex justify-center items-center gap-2">
+              <button
+                onClick={() => handlePageChange(paginacion.page - 1)}
+                disabled={paginacion.page === 1}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronLeft size={16} />
+                Anterior
+              </button>
+              <div className="flex items-center gap-1">
+                {Array.from({ length: paginacion.totalPages }, (_, i) => i + 1)
+                  .filter(
+                    (page) =>
+                      page === 1 ||
+                      page === paginacion.totalPages ||
+                      (page >= paginacion.page - 1 && page <= paginacion.page + 1)
+                  )
+                  .map((page, index, array) => (
+                    <div key={page} className="flex items-center gap-1">
+                      {index > 0 && array[index - 1] !== page - 1 && (
+                        <span className="px-2 text-slate-400">...</span>
+                      )}
+                      <button
+                        onClick={() => handlePageChange(page)}
+                        className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                          paginacion.page === page
+                            ? 'bg-blue-600 text-white shadow-sm'
+                            : 'text-slate-700 bg-white border border-slate-300 hover:bg-slate-50'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    </div>
+                  ))}
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => handlePageChange(paginacion.page - 1)}
-                  disabled={paginacion.page === 1}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  Anterior
-                </button>
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: paginacion.totalPages }, (_, i) => i + 1)
-                    .filter(
-                      (page) =>
-                        page === 1 ||
-                        page === paginacion.totalPages ||
-                        (page >= paginacion.page - 1 && page <= paginacion.page + 1)
-                    )
-                    .map((page, index, array) => (
-                      <div key={page} className="flex items-center gap-1">
-                        {index > 0 && array[index - 1] !== page - 1 && (
-                          <span className="px-2 text-gray-400">...</span>
-                        )}
-                        <button
-                          onClick={() => handlePageChange(page)}
-                          className={`px-4 py-2 rounded-lg transition-colors ${
-                            paginacion.page === page
-                              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                              : 'border border-gray-300 hover:bg-gray-50'
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      </div>
-                    ))}
-                </div>
-                <button
-                  onClick={() => handlePageChange(paginacion.page + 1)}
-                  disabled={paginacion.page === paginacion.totalPages}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                >
-                  Siguiente
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
+              <button
+                onClick={() => handlePageChange(paginacion.page + 1)}
+                disabled={paginacion.page === paginacion.totalPages}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                Siguiente
+                <ChevronRight size={16} />
+              </button>
             </div>
           </div>
         )}
@@ -455,6 +427,7 @@ export default function AutorizacionesTratamientosPage() {
             loading={guardando}
           />
         )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Filter, X } from 'lucide-react';
+import { Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { EstadoPublicacion, PlataformaSocial, FiltrosPublicaciones } from '../api/publicacionesSocialesApi';
 
 interface FiltrosCalendarioEditorialProps {
@@ -38,77 +38,101 @@ export default function FiltrosCalendarioEditorial({
   };
 
   const tieneFiltrosActivos = filtros.estado || filtros.plataforma;
+  const numFiltrosActivos = [filtros.estado, filtros.plataforma].filter(Boolean).length;
 
   return (
-    <div className="mb-4">
-      <div className="flex items-center justify-between">
-        <button
-          onClick={() => setMostrarFiltros(!mostrarFiltros)}
-          className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-        >
-          <Filter className="w-4 h-4" />
-          <span>Filtros</span>
-          {tieneFiltrosActivos && (
-            <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">
-              Activos
-            </span>
-          )}
-        </button>
+    <div className="bg-white shadow-sm rounded-lg mb-6">
+      <div className="space-y-4 p-4">
+        {/* Barra de búsqueda y filtros */}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-4">
+            {/* Botón de filtros */}
+            <button
+              onClick={() => setMostrarFiltros(!mostrarFiltros)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-white/70 bg-white ring-1 ring-slate-200"
+            >
+              <Filter size={18} />
+              <span>Filtros</span>
+              {tieneFiltrosActivos && (
+                <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full font-medium">
+                  {numFiltrosActivos}
+                </span>
+              )}
+              {mostrarFiltros ? (
+                <ChevronUp size={16} className="ml-1" />
+              ) : (
+                <ChevronDown size={16} className="ml-1" />
+              )}
+            </button>
 
-        {tieneFiltrosActivos && (
-          <button
-            onClick={limpiarFiltros}
-            className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900"
-          >
-            <X className="w-4 h-4" />
-            <span>Limpiar filtros</span>
-          </button>
-        )}
-      </div>
-
-      {mostrarFiltros && (
-        <div className="mt-4 p-4 bg-white rounded-lg shadow border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Estado
-              </label>
-              <select
-                value={filtros.estado || 'todos'}
-                onChange={(e) => handleEstadoChange(e.target.value as EstadoPublicacion | 'todos')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            {/* Botón limpiar filtros */}
+            {tieneFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-white/70"
               >
-                <option value="todos">Todos los estados</option>
-                {estados.map((estado) => (
-                  <option key={estado} value={estado}>
-                    {estado.charAt(0).toUpperCase() + estado.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Plataforma
-              </label>
-              <select
-                value={filtros.plataforma || 'todas'}
-                onChange={(e) => handlePlataformaChange(e.target.value as PlataformaSocial | 'todas')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="todas">Todas las plataformas</option>
-                {plataformas.map((plataforma) => (
-                  <option key={plataforma} value={plataforma}>
-                    {plataforma.charAt(0).toUpperCase() + plataforma.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <X size={18} />
+                <span>Limpiar filtros</span>
+              </button>
+            )}
           </div>
         </div>
-      )}
+
+        {/* Panel de filtros avanzados */}
+        {mostrarFiltros && (
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Estado
+                </label>
+                <select
+                  value={filtros.estado || 'todos'}
+                  onChange={(e) => handleEstadoChange(e.target.value as EstadoPublicacion | 'todos')}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="todos">Todos los estados</option>
+                  {estados.map((estado) => (
+                    <option key={estado} value={estado}>
+                      {estado.charAt(0).toUpperCase() + estado.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Filter size={16} className="inline mr-1" />
+                  Plataforma
+                </label>
+                <select
+                  value={filtros.plataforma || 'todas'}
+                  onChange={(e) => handlePlataformaChange(e.target.value as PlataformaSocial | 'todas')}
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="todas">Todas las plataformas</option>
+                  {plataformas.map((plataforma) => (
+                    <option key={plataforma} value={plataforma}>
+                      {plataforma.charAt(0).toUpperCase() + plataforma.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Resumen de resultados */}
+            {tieneFiltrosActivos && (
+              <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+                <span>{numFiltrosActivos} filtro{numFiltrosActivos > 1 ? 's' : ''} aplicado{numFiltrosActivos > 1 ? 's' : ''}</span>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
 
 

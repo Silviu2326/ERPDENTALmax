@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, FileText, Calendar, CheckCircle, XCircle, Clock, Edit, Trash2, Eye } from 'lucide-react';
+import { ArrowLeft, Plus, FileText, Calendar, CheckCircle, XCircle, Clock, Edit, Trash2, Eye, Loader2, AlertCircle, Package } from 'lucide-react';
 import {
   obtenerPlanesPorPaciente,
   eliminarPlanTratamiento,
@@ -88,49 +88,59 @@ export default function PlanTratamientoOrtodonciaPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            {onVolver && (
-              <button
-                onClick={onVolver}
-                className="p-2 rounded-lg hover:bg-gray-200 transition-colors"
-                aria-label="Volver"
-              >
-                <ArrowLeft className="w-5 h-5 text-gray-700" />
-              </button>
-            )}
-            <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-purple-600 to-violet-600 p-3 rounded-xl shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    aria-label="Volver"
+                  >
+                    <ArrowLeft className="w-5 h-5 text-gray-700" />
+                  </button>
+                )}
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <FileText size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Planes de Tratamiento de Ortodoncia
+                    </h1>
+                    <p className="text-gray-600">
+                      Gestión integral de planes de tratamiento ortodóncicos
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  Planes de Tratamiento de Ortodoncia
-                </h1>
-                <p className="text-gray-600 mt-1">
-                  Gestión integral de planes de tratamiento ortodóncicos
-                </p>
-              </div>
+              {pacienteId && (
+                <div className="flex items-center justify-end">
+                  <button
+                    onClick={handleCrearNuevo}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
+                  >
+                    <Plus size={20} className="mr-2" />
+                    Nuevo Plan
+                  </button>
+                </div>
+              )}
             </div>
           </div>
-          {pacienteId && (
-            <button
-              onClick={handleCrearNuevo}
-              className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
-            >
-              <Plus className="w-5 h-5" />
-              <span className="font-semibold">Nuevo Plan</span>
-            </button>
-          )}
         </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
 
         {/* Selector de paciente si no se proporciona */}
         {!pacienteId && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="bg-white shadow-sm rounded-2xl p-6 mb-6">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               ID del Paciente
             </label>
             <input
@@ -138,11 +148,11 @@ export default function PlanTratamientoOrtodonciaPage({
               value={pacienteId}
               onChange={(e) => setPacienteId(e.target.value)}
               placeholder="Ingrese el ID del paciente"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
             <button
               onClick={cargarPlanes}
-              className="mt-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all"
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
             >
               Cargar Planes
             </button>
@@ -151,36 +161,35 @@ export default function PlanTratamientoOrtodonciaPage({
 
         {/* Mensaje de error */}
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error al cargar los planes</p>
-            <p className="text-sm mt-1">{error}</p>
+          <div className="bg-white shadow-sm rounded-2xl p-8 text-center mb-6">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
           </div>
         )}
 
         {/* Lista de planes */}
-        {cargando ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-          </div>
-        ) : planes.length === 0 && pacienteId ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
-              No hay planes de tratamiento
-            </h3>
-            <p className="text-gray-500 mb-6">
-              Cree un nuevo plan de tratamiento para comenzar
-            </p>
-            <button
-              onClick={handleCrearNuevo}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-violet-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Crear Primer Plan</span>
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-6">
+        <div className="space-y-6">
+          {cargando ? (
+            <div className="bg-white shadow-sm rounded-2xl p-8 text-center">
+              <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando...</p>
+            </div>
+          ) : planes.length === 0 && pacienteId ? (
+            <div className="bg-white shadow-sm rounded-2xl p-8 text-center">
+              <Package size={48} className="mx-auto text-gray-400 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay planes de tratamiento</h3>
+              <p className="text-gray-600 mb-4">Cree un nuevo plan de tratamiento para comenzar</p>
+              <button
+                onClick={handleCrearNuevo}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm"
+              >
+                <Plus size={20} className="mr-2" />
+                Crear Primer Plan
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
             {planes.map((plan) => {
               const estadoInfo = estadosConfig[plan.estado];
               const EstadoIcon = estadoInfo.icon;
@@ -195,13 +204,13 @@ export default function PlanTratamientoOrtodonciaPage({
               return (
                 <div
                   key={plan._id}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200"
+                  className="bg-white shadow-sm rounded-2xl transition-shadow overflow-hidden hover:shadow-md h-full flex flex-col"
                 >
-                  <div className="p-6">
+                  <div className="p-4 flex flex-col flex-1">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-bold text-gray-900">
+                          <h3 className="text-lg font-semibold text-gray-900">
                             Plan de Tratamiento #{plan._id?.substring(0, 8)}
                           </h3>
                           <span
@@ -213,7 +222,7 @@ export default function PlanTratamientoOrtodonciaPage({
                         </div>
                         <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
                           <div className="flex items-center gap-1.5">
-                            <Calendar className="w-4 h-4" />
+                            <Calendar size={16} className="opacity-70" />
                             <span>{fechaCreacion}</span>
                           </div>
                         </div>
@@ -224,7 +233,7 @@ export default function PlanTratamientoOrtodonciaPage({
                         )}
                         {plan.objetivosTratamiento && plan.objetivosTratamiento.length > 0 && (
                           <div className="mb-3">
-                            <p className="text-sm font-semibold text-gray-700 mb-1">Objetivos:</p>
+                            <p className="text-sm font-medium text-slate-700 mb-1">Objetivos:</p>
                             <ul className="list-disc list-inside text-sm text-gray-600">
                               {plan.objetivosTratamiento.slice(0, 3).map((objetivo, idx) => (
                                 <li key={idx}>{objetivo}</li>
@@ -239,14 +248,14 @@ export default function PlanTratamientoOrtodonciaPage({
                         )}
                         {plan.fases && plan.fases.length > 0 && (
                           <div className="mb-3">
-                            <p className="text-sm font-semibold text-gray-700 mb-1">
+                            <p className="text-sm font-medium text-slate-700 mb-1">
                               Fases: {plan.fases.length}
                             </p>
                             <div className="flex flex-wrap gap-2">
                               {plan.fases.map((fase, idx) => (
                                 <span
                                   key={idx}
-                                  className="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded-md"
+                                  className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-md"
                                 >
                                   {fase.nombre}
                                 </span>
@@ -257,38 +266,40 @@ export default function PlanTratamientoOrtodonciaPage({
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
+                    <div className="flex gap-2 mt-auto pt-3 border-t border-gray-100">
                       <button
                         onClick={() => handleVerDetalle(plan._id!)}
-                        className="flex items-center gap-2 px-4 py-2 text-purple-700 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 transition-all"
                       >
-                        <Eye className="w-4 h-4" />
-                        <span className="text-sm font-medium">Ver Detalle</span>
+                        <Eye size={16} />
+                        <span>Ver Detalle</span>
                       </button>
                       <button
                         onClick={() => handleEditar(plan._id!)}
-                        className="flex items-center gap-2 px-4 py-2 text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 transition-all"
                       >
-                        <Edit className="w-4 h-4" />
-                        <span className="text-sm font-medium">Editar</span>
+                        <Edit size={16} />
+                        <span>Editar</span>
                       </button>
                       <button
                         onClick={() => handleEliminar(plan._id!)}
-                        className="flex items-center gap-2 px-4 py-2 text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 transition-all"
                       >
-                        <Trash2 className="w-4 h-4" />
-                        <span className="text-sm font-medium">Eliminar</span>
+                        <Trash2 size={16} />
+                        <span>Eliminar</span>
                       </button>
                     </div>
                   </div>
                 </div>
               );
             })}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

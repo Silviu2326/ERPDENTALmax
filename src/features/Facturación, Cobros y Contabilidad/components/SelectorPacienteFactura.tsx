@@ -92,12 +92,13 @@ export default function SelectorPacienteFactura({
 
   return (
     <div ref={containerRef} className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
+        <User size={16} className="inline mr-1" />
         Paciente *
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
+          <Search size={18} className="text-slate-400" />
         </div>
         <input
           type="text"
@@ -109,23 +110,23 @@ export default function SelectorPacienteFactura({
             }
           }}
           placeholder="Buscar paciente por nombre, apellidos o DNI..."
-          className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+          className="block w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-10 py-2.5 text-sm"
         />
         {query && (
           <button
             onClick={handleLimpiar}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-700"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-slate-700 transition-colors"
           >
-            <X className="h-5 w-5 text-gray-400" />
+            <X size={18} className="text-slate-400" />
           </button>
         )}
       </div>
 
       {/* Lista de resultados */}
       {mostrarResultados && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
+        <div className="absolute z-50 w-full mt-1 bg-white ring-1 ring-slate-300 rounded-xl shadow-lg max-h-60 overflow-auto">
           {loading ? (
-            <div className="p-4 text-center text-sm text-gray-500">
+            <div className="p-4 text-center text-sm text-slate-500">
               Buscando...
             </div>
           ) : resultados.length > 0 ? (
@@ -134,12 +135,12 @@ export default function SelectorPacienteFactura({
                 <li
                   key={paciente._id}
                   onClick={() => handleSeleccionarPaciente(paciente)}
-                  className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                  className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-slate-100 last:border-b-0 transition-colors"
                 >
                   <div className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <User className="w-4 h-4 text-blue-600" />
+                        <User size={16} className="text-blue-600" />
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -147,7 +148,7 @@ export default function SelectorPacienteFactura({
                         {paciente.nombreCompleto}
                       </p>
                       {paciente.dni && (
-                        <p className="text-xs text-gray-500">DNI: {paciente.dni}</p>
+                        <p className="text-xs text-slate-500">DNI: {paciente.dni}</p>
                       )}
                     </div>
                   </div>
@@ -155,7 +156,7 @@ export default function SelectorPacienteFactura({
               ))}
             </ul>
           ) : (
-            <div className="p-4 text-center text-sm text-gray-500">
+            <div className="p-4 text-center text-sm text-slate-500">
               No se encontraron pacientes
             </div>
           )}
@@ -164,10 +165,10 @@ export default function SelectorPacienteFactura({
 
       {/* Indicador de paciente seleccionado */}
       {pacienteSeleccionado && (
-        <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="mt-2 p-3 bg-blue-50 ring-1 ring-blue-200 rounded-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <User className="w-4 h-4 text-blue-600" />
+              <User size={16} className="text-blue-600" />
               <span className="text-sm font-medium text-blue-900">
                 {pacienteSeleccionado.nombreCompleto}
               </span>
@@ -181,5 +182,6 @@ export default function SelectorPacienteFactura({
     </div>
   );
 }
+
 
 

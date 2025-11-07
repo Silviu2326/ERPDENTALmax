@@ -169,50 +169,60 @@ export default function ProductividadProfesionalPage() {
   const resumen = calcularResumenKPIs(datos);
 
   return (
-    <div className="p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <TrendingUp className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Productividad por Profesional
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Análisis de rendimiento y rentabilidad por profesional
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <TrendingUp size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Productividad por Profesional
+                </h1>
+                <p className="text-gray-600">
+                  Análisis de rendimiento y rentabilidad por profesional
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Mensaje de error */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-            <p className="text-sm text-red-800">{error}</p>
-          </div>
-        )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Mensaje de error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-4 flex items-center gap-3 border border-red-200 bg-red-50">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0" />
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
 
-        {/* Filtros */}
-        <FiltroProductividad
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          profesionales={profesionales}
-          sedes={sedes}
-          loading={loading}
-        />
+          {/* Filtros */}
+          <FiltroProductividad
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            profesionales={profesionales}
+            sedes={sedes}
+            loading={loading}
+          />
 
-        {/* KPIs Resumen */}
-        <KPIResumenCard resumen={resumen} loading={loading} />
+          {/* KPIs Resumen */}
+          <KPIResumenCard resumen={resumen} loading={loading} />
 
-        {/* Gráficos */}
-        <ProductividadChartContainer datos={datos} loading={loading} />
+          {/* Gráficos */}
+          <ProductividadChartContainer datos={datos} loading={loading} />
 
-        {/* Tabla de datos */}
-        <ProductividadDataTable datos={datos} loading={loading} />
+          {/* Tabla de datos */}
+          <ProductividadDataTable datos={datos} loading={loading} />
+        </div>
       </div>
     </div>
   );

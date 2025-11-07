@@ -174,193 +174,200 @@ export default function MantenimientoPeriodontalPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={onVolver}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Volver"
-              >
-                <ArrowLeft className="w-5 h-5 text-gray-600" />
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-teal-600 to-cyan-600 p-3 rounded-xl shadow-lg">
-                  <Calendar className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-800">Mantenimiento Periodontal</h1>
-                  <p className="text-sm text-gray-600">
-                    Seguimiento y control a largo plazo de pacientes periodontales
-                  </p>
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={onVolver}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  title="Volver"
+                >
+                  <ArrowLeft size={20} className="text-gray-600" />
+                </button>
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                    <Calendar size={24} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                      Mantenimiento Periodontal
+                    </h1>
+                    <p className="text-gray-600">
+                      Seguimiento y control a largo plazo de pacientes periodontales
+                    </p>
+                  </div>
                 </div>
               </div>
+              {!modoNuevaSesion && (
+                <button
+                  onClick={iniciarNuevaSesion}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200"
+                >
+                  <Plus size={20} />
+                  <span>Nueva Sesión</span>
+                </button>
+              )}
             </div>
-            {!modoNuevaSesion && (
-              <button
-                onClick={iniciarNuevaSesion}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
-              >
-                <Plus className="w-5 h-5" />
-                <span>Nueva Sesión</span>
-              </button>
-            )}
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Mensajes */}
-        {mensaje && (
-          <div
-            className={`mb-6 p-4 rounded-lg border ${
-              mensaje.tipo === 'success'
-                ? 'bg-green-50 border-green-200 text-green-700'
-                : 'bg-red-50 border-red-200 text-red-700'
-            }`}
-          >
-            <p className="font-medium">{mensaje.texto}</p>
-          </div>
-        )}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Mensajes */}
+          {mensaje && (
+            <div
+              className={`p-4 rounded-lg border ${
+                mensaje.tipo === 'success'
+                  ? 'bg-green-50 border-green-200 text-green-700'
+                  : 'bg-red-50 border-red-200 text-red-700'
+              }`}
+            >
+              <p className="font-medium">{mensaje.texto}</p>
+            </div>
+          )}
 
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <p className="font-medium">Error</p>
-            <p className="text-sm mt-1">{error}</p>
-          </div>
-        )}
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+              <p className="font-medium">Error</p>
+              <p className="text-sm mt-1">{error}</p>
+            </div>
+          )}
 
-        {/* Selección de paciente si no está definido */}
-        {!pacienteId && (
-          <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6 mb-6">
-            <p className="text-gray-600">Por favor, seleccione un paciente para continuar</p>
-            {/* Aquí podría ir un selector de pacientes */}
-          </div>
-        )}
+          {/* Selección de paciente si no está definido */}
+          {!pacienteId && (
+            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+              <p className="text-gray-600">Por favor, seleccione un paciente para continuar</p>
+              {/* Aquí podría ir un selector de pacientes */}
+            </div>
+          )}
 
-        {/* Contenido principal */}
-        {pacienteId && (
-          <>
-            {/* Gráfico de evolución */}
-            {sesiones.length > 0 && (
-              <div className="mb-6">
-                <GraficoEvolucionPeriodontal sesiones={sesiones} />
-              </div>
-            )}
+          {/* Contenido principal */}
+          {pacienteId && (
+            <>
+              {/* Gráfico de evolución */}
+              {sesiones.length > 0 && (
+                <div>
+                  <GraficoEvolucionPeriodontal sesiones={sesiones} />
+                </div>
+              )}
 
-            {/* Formulario de nueva sesión */}
-            {modoNuevaSesion && (
-              <div className="mb-6 space-y-6">
-                {/* Información básica */}
-                <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-4">
-                    {sesionEditando ? 'Editar Sesión' : 'Nueva Sesión de Mantenimiento'}
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Fecha de Sesión
-                      </label>
-                      <input
-                        type="date"
-                        value={fechaSesion}
-                        onChange={(e) => setFechaSesion(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              {/* Formulario de nueva sesión */}
+              {modoNuevaSesion && (
+                <div className="space-y-6">
+                  {/* Información básica */}
+                  <div className="bg-white shadow-sm rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                      {sesionEditando ? 'Editar Sesión' : 'Nueva Sesión de Mantenimiento'}
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                          Fecha de Sesión
+                        </label>
+                        <input
+                          type="date"
+                          value={fechaSesion}
+                          onChange={(e) => setFechaSesion(e.target.value)}
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                          Intervalo Recomendado (meses)
+                        </label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="12"
+                          value={intervaloRecomendado}
+                          onChange={(e) => setIntervaloRecomendado(parseInt(e.target.value) || 6)}
+                          className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 pr-3 py-2.5"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Tabla de registro */}
+                    <div className="mb-4">
+                      <TablaRegistroPeriodontal
+                        mediciones={mediciones}
+                        onMedicionesChange={setMediciones}
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Intervalo Recomendado (meses)
+
+                    {/* Observaciones */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Observaciones
                       </label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="12"
-                        value={intervaloRecomendado}
-                        onChange={(e) => setIntervaloRecomendado(parseInt(e.target.value) || 6)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      <textarea
+                        value={observaciones}
+                        onChange={(e) => setObservaciones(e.target.value)}
+                        rows={3}
+                        className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
+                        placeholder="Anotaciones sobre la sesión, áreas de atención, etc."
                       />
                     </div>
-                  </div>
 
-                  {/* Tabla de registro */}
-                  <div className="mb-4">
-                    <TablaRegistroPeriodontal
-                      mediciones={mediciones}
-                      onMedicionesChange={setMediciones}
-                    />
-                  </div>
+                    {/* Plan para próxima visita */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Plan para Próxima Visita
+                      </label>
+                      <textarea
+                        value={planProximaVisita}
+                        onChange={(e) => setPlanProximaVisita(e.target.value)}
+                        rows={2}
+                        className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
+                        placeholder="Recomendaciones y plan de tratamiento para la siguiente visita"
+                      />
+                    </div>
 
-                  {/* Observaciones */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Observaciones
-                    </label>
-                    <textarea
-                      value={observaciones}
-                      onChange={(e) => setObservaciones(e.target.value)}
-                      rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Anotaciones sobre la sesión, áreas de atención, etc."
-                    />
-                  </div>
-
-                  {/* Plan para próxima visita */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Plan para Próxima Visita
-                    </label>
-                    <textarea
-                      value={planProximaVisita}
-                      onChange={(e) => setPlanProximaVisita(e.target.value)}
-                      rows={2}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Recomendaciones y plan de tratamiento para la siguiente visita"
-                    />
-                  </div>
-
-                  {/* Botones de acción */}
-                  <div className="flex gap-3 justify-end">
-                    <button
-                      onClick={cancelarEdicion}
-                      className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                      disabled={loading}
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={guardarSesion}
-                      disabled={loading}
-                      className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <Save className="w-5 h-5" />
-                      <span>{loading ? 'Guardando...' : sesionEditando ? 'Actualizar' : 'Guardar Sesión'}</span>
-                    </button>
+                    {/* Botones de acción */}
+                    <div className="flex gap-2 justify-end pt-3 border-t border-gray-100">
+                      <button
+                        onClick={cancelarEdicion}
+                        className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-700 hover:bg-slate-100 ring-1 ring-slate-300"
+                        disabled={loading}
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        onClick={guardarSesion}
+                        disabled={loading}
+                        className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm ring-1 ring-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Save size={20} />
+                        <span>{loading ? 'Guardando...' : sesionEditando ? 'Actualizar' : 'Guardar Sesión'}</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Historial de sesiones */}
-            <div>
-              <HistorialSesionesPeriodoncia
-                sesiones={sesiones}
-                onVerSesion={(sesionId) => {
-                  cargarSesionParaEditar(sesionId);
-                }}
-                onEditarSesion={(sesionId) => {
-                  cargarSesionParaEditar(sesionId);
-                }}
-              />
-            </div>
-          </>
-        )}
+              {/* Historial de sesiones */}
+              <div>
+                <HistorialSesionesPeriodoncia
+                  sesiones={sesiones}
+                  onVerSesion={(sesionId) => {
+                    cargarSesionParaEditar(sesionId);
+                  }}
+                  onEditarSesion={(sesionId) => {
+                    cargarSesionParaEditar(sesionId);
+                  }}
+                />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

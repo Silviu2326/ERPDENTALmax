@@ -73,18 +73,18 @@ export default function EscanerQRBandeja({ onCodigoEscaneado, onCerrar }: Escane
   // entrada manual y prepara la estructura para integrar el escáner real.
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
-          <QrCode className="w-5 h-5 text-blue-600" />
+        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+          <QrCode size={20} className="text-blue-600" />
           <span>Escanear Código QR de Bandeja</span>
         </h3>
         {onCerrar && (
           <button
             onClick={onCerrar}
-            className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-1 text-slate-400 hover:text-slate-600 transition-all rounded-lg"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         )}
       </div>
@@ -92,14 +92,14 @@ export default function EscanerQRBandeja({ onCodigoEscaneado, onCerrar }: Escane
       {/* Área de escaneo */}
       <div className="mb-4">
         {!isScanning ? (
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50">
-            <Camera className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+          <div className="ring-2 ring-dashed ring-slate-300 rounded-2xl p-8 text-center bg-slate-50">
+            <Camera size={48} className="mx-auto mb-4 text-gray-400" />
             <p className="text-gray-600 mb-4">
               Inicie el escáner para leer el código QR de la bandeja
             </p>
             <button
               onClick={iniciarEscaner}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-medium shadow-sm hover:shadow-md"
             >
               Iniciar Escáner
             </button>
@@ -110,17 +110,17 @@ export default function EscanerQRBandeja({ onCodigoEscaneado, onCerrar }: Escane
               ref={videoRef}
               autoPlay
               playsInline
-              className="w-full rounded-lg border-2 border-blue-500"
+              className="w-full rounded-xl ring-2 ring-blue-500"
               style={{ maxHeight: '400px', objectFit: 'cover' }}
             />
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="border-4 border-blue-500 rounded-lg w-64 h-64 opacity-75"></div>
+              <div className="ring-4 ring-blue-500 rounded-xl w-64 h-64 opacity-75"></div>
             </div>
             <button
               onClick={detenerEscaner}
-              className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all shadow-sm"
             >
-              <X className="w-5 h-5" />
+              <X size={20} />
             </button>
           </div>
         )}
@@ -128,8 +128,8 @@ export default function EscanerQRBandeja({ onCodigoEscaneado, onCerrar }: Escane
 
       {/* Error */}
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+        <div className="mb-4 p-3 bg-red-50 ring-1 ring-red-200 rounded-2xl flex items-start space-x-2">
+          <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="text-sm text-red-800">{error}</p>
           </div>
@@ -137,29 +137,33 @@ export default function EscanerQRBandeja({ onCodigoEscaneado, onCerrar }: Escane
       )}
 
       {/* Entrada manual */}
-      <div className="border-t border-gray-200 pt-4">
-        <p className="text-sm text-gray-600 mb-2">O ingrese el código manualmente:</p>
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            value={codigoManual}
-            onChange={handleInputManual}
-            onKeyPress={handleKeyPress}
-            placeholder="Código de la bandeja..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-          <button
-            onClick={handleEnviarCodigoManual}
-            disabled={!codigoManual.trim()}
-            className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Enviar
-          </button>
+      <div className="border-t border-gray-100 pt-4">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          O ingrese el código manualmente:
+        </label>
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={codigoManual}
+              onChange={handleInputManual}
+              onKeyPress={handleKeyPress}
+              placeholder="Código de la bandeja..."
+              className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
+            />
+            <button
+              onClick={handleEnviarCodigoManual}
+              disabled={!codigoManual.trim()}
+              className="px-6 py-2.5 bg-slate-600 text-white rounded-xl hover:bg-slate-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-sm"
+            >
+              Enviar
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Nota técnica */}
-      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+      <div className="mt-4 p-3 bg-blue-50 ring-1 ring-blue-200 rounded-2xl">
         <p className="text-xs text-blue-800">
           <strong>Nota:</strong> Para una implementación completa, se recomienda integrar una librería
           como 'html5-qrcode' o 'react-qr-reader' para el escaneo automático de códigos QR.
@@ -168,5 +172,6 @@ export default function EscanerQRBandeja({ onCodigoEscaneado, onCerrar }: Escane
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { FiltrosEquipos } from '../api/equiposApi';
 
 interface FiltrosBusquedaEquiposProps {
@@ -52,98 +52,115 @@ export default function FiltrosBusquedaEquipos({
   };
 
   const tieneFiltrosActivos = filtros.query || filtros.estado || filtros.sedeId;
+  const numFiltrosActivos = [filtros.query, filtros.estado, filtros.sedeId].filter(Boolean).length;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-      <div className="flex flex-col md:flex-row gap-4">
-        {/* Búsqueda por texto */}
-        <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Buscar por nombre, marca, modelo o número de serie..."
-            value={busqueda}
-            onChange={(e) => handleBusquedaChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
+    <div className="bg-white shadow-sm rounded-lg mb-6">
+      <div className="space-y-4 p-4">
+        {/* Barra de búsqueda */}
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex gap-4">
+            {/* Input de búsqueda */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Buscar por nombre, marca, modelo o número de serie..."
+                value={busqueda}
+                onChange={(e) => handleBusquedaChange(e.target.value)}
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+              />
+            </div>
+
+            {/* Botón de filtros avanzados */}
+            <button
+              onClick={() => setMostrarFiltros(!mostrarFiltros)}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+            >
+              <Filter size={18} className="opacity-70" />
+              <span>Filtros</span>
+              {tieneFiltrosActivos && (
+                <span className="bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  {numFiltrosActivos}
+                </span>
+              )}
+              {mostrarFiltros ? (
+                <ChevronUp size={18} className="opacity-70" />
+              ) : (
+                <ChevronDown size={18} className="opacity-70" />
+              )}
+            </button>
+
+            {/* Botón limpiar filtros */}
+            {tieneFiltrosActivos && (
+              <button
+                onClick={limpiarFiltros}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+              >
+                <X size={18} className="opacity-70" />
+                <span>Limpiar</span>
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Botón de filtros avanzados */}
-        <button
-          onClick={() => setMostrarFiltros(!mostrarFiltros)}
-          className={`px-4 py-2 rounded-lg border flex items-center gap-2 transition-colors ${
-            mostrarFiltros || tieneFiltrosActivos
-              ? 'bg-blue-50 border-blue-300 text-blue-700'
-              : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          <Filter className="w-4 h-4" />
-          <span>Filtros</span>
-          {tieneFiltrosActivos && (
-            <span className="bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              {[filtros.query, filtros.estado, filtros.sedeId].filter(Boolean).length}
-            </span>
-          )}
-        </button>
+        {/* Panel de filtros avanzados */}
+        {mostrarFiltros && (
+          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Filtro por estado */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Estado
+                </label>
+                <select
+                  value={filtros.estado || 'todos'}
+                  onChange={(e) => handleEstadoChange(e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="todos">Todos los estados</option>
+                  {estados.map((estado) => (
+                    <option key={estado} value={estado}>
+                      {estado}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-        {/* Botón limpiar filtros */}
+              {/* Filtro por sede */}
+              {sedes.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Sede
+                  </label>
+                  <select
+                    value={filtros.sedeId || 'todos'}
+                    onChange={(e) => handleSedeChange(e.target.value)}
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                  >
+                    <option value="todos">Todas las sedes</option>
+                    {sedes.map((sede) => (
+                      <option key={sede._id} value={sede._id}>
+                        {sede.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Resumen de resultados */}
         {tieneFiltrosActivos && (
-          <button
-            onClick={limpiarFiltros}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
-          >
-            <X className="w-4 h-4" />
-            <span>Limpiar</span>
-          </button>
+          <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
+            <span>{numFiltrosActivos} filtro{numFiltrosActivos > 1 ? 's' : ''} aplicado{numFiltrosActivos > 1 ? 's' : ''}</span>
+          </div>
         )}
       </div>
-
-      {/* Filtros avanzados */}
-      {mostrarFiltros && (
-        <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Filtro por estado */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Estado
-            </label>
-            <select
-              value={filtros.estado || 'todos'}
-              onChange={(e) => handleEstadoChange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="todos">Todos los estados</option>
-              {estados.map((estado) => (
-                <option key={estado} value={estado}>
-                  {estado}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Filtro por sede */}
-          {sedes.length > 0 && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Sede
-              </label>
-              <select
-                value={filtros.sedeId || 'todos'}
-                onChange={(e) => handleSedeChange(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="todos">Todas las sedes</option>
-                {sedes.map((sede) => (
-                  <option key={sede._id} value={sede._id}>
-                    {sede.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
+
 
 

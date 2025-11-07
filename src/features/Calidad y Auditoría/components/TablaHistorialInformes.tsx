@@ -166,9 +166,9 @@ export default function TablaHistorialInformes({
 
   if (loading && informes.length === 0) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin mr-3" />
-        <span className="text-gray-600">Cargando historial de informes...</span>
+      <div className="p-8 text-center bg-white shadow-sm rounded-xl">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando historial de informes...</p>
       </div>
     );
   }
@@ -182,9 +182,9 @@ export default function TablaHistorialInformes({
             cargarInformes();
             onRefresh?.();
           }}
-          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-all"
         >
-          <RefreshCw className="w-4 h-4" />
+          <RefreshCw size={18} />
           Actualizar
         </button>
       </div>
@@ -196,16 +196,16 @@ export default function TablaHistorialInformes({
       )}
 
       {informes.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
-          <FileText className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-          <p className="text-gray-600">No hay informes generados aún</p>
-          <p className="text-sm text-gray-500 mt-1">
+        <div className="p-8 text-center bg-white shadow-sm rounded-xl">
+          <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay informes generados</h3>
+          <p className="text-gray-600 mb-4">
             Los informes que generes aparecerán aquí
           </p>
         </div>
       ) : (
         <>
-          <div className="overflow-x-auto bg-white rounded-lg border border-gray-200 shadow-sm">
+          <div className="overflow-x-auto bg-white rounded-xl border border-gray-200 shadow-sm">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -247,16 +247,16 @@ export default function TablaHistorialInformes({
                           <button
                             onClick={() => handleDescargar(informe)}
                             disabled={descargandoId === informe.id}
-                            className="inline-flex items-center px-3 py-1.5 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             {descargandoId === informe.id ? (
                               <>
-                                <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                                <Loader2 size={16} className="animate-spin" />
                                 Descargando...
                               </>
                             ) : (
                               <>
-                                <Download className="w-4 h-4 mr-1" />
+                                <Download size={16} />
                                 Descargar
                               </>
                             )}
@@ -272,47 +272,49 @@ export default function TablaHistorialInformes({
 
           {/* Paginación */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 rounded-b-lg">
-              <div className="flex-1 flex justify-between sm:hidden">
-                <button
-                  onClick={() => setPaginacion({ ...paginacion, page: paginacion.page - 1 })}
-                  disabled={paginacion.page === 1}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Anterior
-                </button>
-                <button
-                  onClick={() => setPaginacion({ ...paginacion, page: paginacion.page + 1 })}
-                  disabled={paginacion.page >= totalPages}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Siguiente
-                </button>
-              </div>
-              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-sm text-gray-700">
-                    Mostrando página <span className="font-medium">{paginacion.page}</span> de{' '}
-                    <span className="font-medium">{totalPages}</span>
-                  </p>
+            <div className="p-4 bg-white shadow-sm rounded-xl">
+              <div className="flex justify-center items-center gap-2">
+                <div className="flex-1 flex justify-between sm:hidden">
+                  <button
+                    onClick={() => setPaginacion({ ...paginacion, page: paginacion.page - 1 })}
+                    disabled={paginacion.page === 1}
+                    className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    Anterior
+                  </button>
+                  <button
+                    onClick={() => setPaginacion({ ...paginacion, page: paginacion.page + 1 })}
+                    disabled={paginacion.page >= totalPages}
+                    className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    Siguiente
+                  </button>
                 </div>
-                <div>
-                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                    <button
-                      onClick={() => setPaginacion({ ...paginacion, page: paginacion.page - 1 })}
-                      disabled={paginacion.page === 1}
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      Anterior
-                    </button>
-                    <button
-                      onClick={() => setPaginacion({ ...paginacion, page: paginacion.page + 1 })}
-                      disabled={paginacion.page >= totalPages}
-                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      Siguiente
-                    </button>
-                  </nav>
+                <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-sm text-gray-700">
+                      Mostrando página <span className="font-medium">{paginacion.page}</span> de{' '}
+                      <span className="font-medium">{totalPages}</span>
+                    </p>
+                  </div>
+                  <div>
+                    <nav className="relative z-0 inline-flex rounded-xl -space-x-px" aria-label="Pagination">
+                      <button
+                        onClick={() => setPaginacion({ ...paginacion, page: paginacion.page - 1 })}
+                        disabled={paginacion.page === 1}
+                        className="relative inline-flex items-center px-4 py-2 rounded-l-xl border border-slate-300 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      >
+                        Anterior
+                      </button>
+                      <button
+                        onClick={() => setPaginacion({ ...paginacion, page: paginacion.page + 1 })}
+                        disabled={paginacion.page >= totalPages}
+                        className="relative inline-flex items-center px-4 py-2 rounded-r-xl border border-slate-300 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      >
+                        Siguiente
+                      </button>
+                    </nav>
+                  </div>
                 </div>
               </div>
             </div>
@@ -322,5 +324,6 @@ export default function TablaHistorialInformes({
     </div>
   );
 }
+
 
 

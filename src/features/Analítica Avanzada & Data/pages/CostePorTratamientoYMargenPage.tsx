@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, DollarSign } from 'lucide-react';
+import { RefreshCw, DollarSign, Calendar } from 'lucide-react';
 import {
   obtenerCosteTratamientoKPIs,
   obtenerCostePorTratamiento,
@@ -60,70 +60,79 @@ export default function CostePorTratamientoYMargenPage() {
   }, [filtros, agrupacion]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <DollarSign className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Coste por Tratamiento y Margen</h1>
-              <p className="text-gray-600 mt-1">Análisis detallado de costes y rentabilidad por tratamiento</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <DollarSign size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Coste por Tratamiento y Margen
+                </h1>
+                <p className="text-gray-600">
+                  Análisis detallado de costes y rentabilidad por tratamiento
+                </p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <FiltrosCosteTratamientoComponent
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          onActualizar={cargarDatos}
-          loading={loading}
-        />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Filtros */}
+          <FiltrosCosteTratamientoComponent
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            onActualizar={cargarDatos}
+            loading={loading}
+          />
 
-        {/* Selector de agrupación para evolución */}
-        <div className="mb-6 flex items-center space-x-4">
-          <label className="text-sm font-medium text-gray-700">Agrupación temporal:</label>
-          <select
-            value={agrupacion}
-            onChange={(e) => setAgrupacion(e.target.value as 'dia' | 'semana' | 'mes')}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="dia">Diaria</option>
-            <option value="semana">Semanal</option>
-            <option value="mes">Mensual</option>
-          </select>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-800">{error}</p>
+          {/* Selector de agrupación para evolución */}
+          <div className="bg-white shadow-sm rounded-xl p-4">
+            <div className="flex items-center gap-2">
+              <Calendar size={16} className="text-slate-700" />
+              <label className="text-sm font-medium text-slate-700">Agrupación temporal:</label>
+              <select
+                value={agrupacion}
+                onChange={(e) => setAgrupacion(e.target.value as 'dia' | 'semana' | 'mes')}
+                className="ml-2 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 text-sm"
+              >
+                <option value="dia">Diaria</option>
+                <option value="semana">Semanal</option>
+                <option value="mes">Mensual</option>
+              </select>
+            </div>
           </div>
-        )}
 
-        {/* KPIs */}
-        <IndicadoresCosteTratamiento kpis={kpis} loading={loading} />
+          {/* Error */}
+          {error && (
+            <div className="bg-white shadow-sm rounded-xl p-4 border-l-4 border-red-500">
+              <p className="text-red-800 text-sm">{error}</p>
+            </div>
+          )}
 
-        {/* Gráfico de Coste y Margen */}
-        <div className="mb-6">
+          {/* KPIs */}
+          <IndicadoresCosteTratamiento kpis={kpis} loading={loading} />
+
+          {/* Gráfico de Coste y Margen */}
           <GraficoCosteMargen datos={datosTratamientos} loading={loading} />
-        </div>
 
-        {/* Evolución temporal */}
-        <div className="mb-6">
+          {/* Evolución temporal */}
           <GraficoEvolucionCosteMargen datos={evolucion} loading={loading} agrupacion={agrupacion} />
-        </div>
 
-        {/* Tabla detallada */}
-        <div className="mb-6">
+          {/* Tabla detallada */}
           <TablaDetalleCosteTratamiento datos={datosTratamientos} loading={loading} />
         </div>
       </div>
     </div>
   );
 }
+
 
 

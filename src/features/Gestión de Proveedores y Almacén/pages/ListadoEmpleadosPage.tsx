@@ -413,28 +413,36 @@ export default function ListadoEmpleadosPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <Users className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Users size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Listado de Empleados
+                  </h1>
+                  <p className="text-gray-600">
+                    Administra el personal de la clínica dental
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  Listado de Empleados
-                </h1>
-                <p className="text-gray-600 mt-1">
-                  Administra el personal de la clínica dental
-                </p>
-              </div>
+              <BotonCrearEmpleado onClick={() => setMostrarNuevoEmpleado(true)} />
             </div>
-            <BotonCrearEmpleado onClick={() => setMostrarNuevoEmpleado(true)} />
           </div>
         </div>
+      </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {/* Error */}
         {error && !empleadoParaDetalle && (
           <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
@@ -454,7 +462,7 @@ export default function ListadoEmpleadosPage() {
             clinicas={clinicas}
           />
         ) : (
-          <>
+          <div className="space-y-6">
             {/* Filtros */}
             <FiltrosBusquedaEmpleados
               filtros={filtros}
@@ -473,14 +481,12 @@ export default function ListadoEmpleadosPage() {
 
             {/* Paginación */}
             {!loading && empleados.length > 0 && (
-              <div className="mt-6">
-                <PaginacionEmpleados
-                  paginaActual={paginacion.paginaActual}
-                  totalPaginas={paginacion.totalPaginas}
-                  totalResultados={paginacion.totalResultados}
-                  onPageChange={(page) => setFiltros({ ...filtros, page })}
-                />
-              </div>
+              <PaginacionEmpleados
+                paginaActual={paginacion.paginaActual}
+                totalPaginas={paginacion.totalPaginas}
+                totalResultados={paginacion.totalResultados}
+                onPageChange={(page) => setFiltros({ ...filtros, page })}
+              />
             )}
 
             {/* Modales */}
@@ -492,7 +498,7 @@ export default function ListadoEmpleadosPage() {
                 sedes={sedes}
               />
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

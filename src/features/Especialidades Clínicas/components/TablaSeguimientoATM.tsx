@@ -8,27 +8,27 @@ interface TablaSeguimientoATMProps {
 
 export default function TablaSeguimientoATM({ evaluaciones, onVerDetalle }: TablaSeguimientoATMProps) {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white rounded-xl shadow-sm p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800">Historial de Evaluaciones</h2>
-        <span className="text-sm text-gray-600">{evaluaciones.length} evaluación(es)</span>
+        <h2 className="text-xl font-bold text-gray-900">Historial de Evaluaciones</h2>
+        <span className="text-sm text-slate-600">{evaluaciones.length} evaluación(es)</span>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Fecha</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Índice Fonseca</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Diagnósticos</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Apertura Máx. (mm)</th>
-              <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Acciones</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Fecha</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Índice Fonseca</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Diagnósticos</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-slate-700">Apertura Máx. (mm)</th>
+              <th className="text-center py-3 px-4 text-sm font-semibold text-slate-700">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {evaluaciones.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-8 text-gray-500">
+                <td colSpan={5} className="text-center py-8 text-slate-500">
                   No hay evaluaciones registradas
                 </td>
               </tr>
@@ -40,8 +40,8 @@ export default function TablaSeguimientoATM({ evaluaciones, onVerDetalle }: Tabl
                 >
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-700">
+                      <Calendar className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm text-slate-700">
                         {new Date(evaluacion.fechaEvaluacion).toLocaleDateString('es-ES', {
                           year: 'numeric',
                           month: 'short',
@@ -53,7 +53,7 @@ export default function TablaSeguimientoATM({ evaluaciones, onVerDetalle }: Tabl
                   <td className="py-3 px-4">
                     {evaluacion.anamnesis?.indiceFonseca !== undefined ? (
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-700">
+                        <span className="text-sm font-medium text-slate-700">
                           {evaluacion.anamnesis.indiceFonseca.toFixed(1)}%
                         </span>
                         <div
@@ -69,7 +69,7 @@ export default function TablaSeguimientoATM({ evaluaciones, onVerDetalle }: Tabl
                         />
                       </div>
                     ) : (
-                      <span className="text-sm text-gray-400">-</span>
+                      <span className="text-sm text-slate-400">-</span>
                     )}
                   </td>
                   <td className="py-3 px-4">
@@ -84,31 +84,31 @@ export default function TablaSeguimientoATM({ evaluaciones, onVerDetalle }: Tabl
                           </span>
                         ))}
                         {evaluacion.diagnostico.length > 2 && (
-                          <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                          <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
                             +{evaluacion.diagnostico.length - 2}
                           </span>
                         )}
                       </div>
                     ) : (
-                      <span className="text-sm text-gray-400">-</span>
+                      <span className="text-sm text-slate-400">-</span>
                     )}
                   </td>
                   <td className="py-3 px-4">
                     {evaluacion.examenClinico?.rangosMovimiento?.aperturaMaxima ? (
-                      <span className="text-sm text-gray-700">
+                      <span className="text-sm text-slate-700">
                         {evaluacion.examenClinico.rangosMovimiento.aperturaMaxima} mm
                       </span>
                     ) : (
-                      <span className="text-sm text-gray-400">-</span>
+                      <span className="text-sm text-slate-400">-</span>
                     )}
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex justify-center">
                       <button
                         onClick={() => onVerDetalle(evaluacion)}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm"
+                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-colors text-sm font-medium"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye size={16} />
                         Ver Detalle
                       </button>
                     </div>
@@ -122,5 +122,6 @@ export default function TablaSeguimientoATM({ evaluaciones, onVerDetalle }: Tabl
     </div>
   );
 }
+
 
 

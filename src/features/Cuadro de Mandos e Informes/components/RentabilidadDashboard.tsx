@@ -88,17 +88,21 @@ export default function RentabilidadDashboard({
   return (
     <div className="space-y-6">
       {/* Filtros */}
-      <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-xl shadow-md border-2 border-blue-100">
-        <FiltroPeriodoTiempo
-          fechaInicio={fechaInicio}
-          fechaFin={fechaFin}
-          onCambio={handleCambioFecha}
-        />
-        <SelectorSede
-          sedes={sedes}
-          sedeSeleccionada={sedeId || null}
-          onCambio={handleCambioSede}
-        />
+      <div className="bg-white shadow-sm rounded-2xl ring-1 ring-slate-200 p-4">
+        <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+          <div className="flex flex-wrap items-center gap-4">
+            <FiltroPeriodoTiempo
+              fechaInicio={fechaInicio}
+              fechaFin={fechaFin}
+              onCambio={handleCambioFecha}
+            />
+            <SelectorSede
+              sedes={sedes}
+              sedeSeleccionada={sedeId || null}
+              onCambio={handleCambioSede}
+            />
+          </div>
+        </div>
       </div>
 
       {/* KPIs */}
@@ -175,5 +179,6 @@ export default function RentabilidadDashboard({
     </div>
   );
 }
+
 
 

@@ -73,84 +73,122 @@ export default function CalendarioEditorialPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Calendario Editorial y Redes Sociales</h1>
-          <p className="text-gray-600 mt-2">
-            Planifica, programa y gestiona todo tu contenido para redes sociales
-          </p>
-        </div>
-        <button
-          onClick={() => handleNuevaPublicacion()}
-          className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <Plus className="w-5 h-5" />
-          <span>Nueva Publicación</span>
-        </button>
-      </div>
-
-      <div className="flex items-center space-x-2 mb-4">
-        <button
-          onClick={() => setVista('mes')}
-          className={`px-4 py-2 rounded-lg transition-colors ${
-            vista === 'mes'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          <Grid className="w-4 h-4 inline mr-2" />
-          Mes
-        </button>
-        <button
-          onClick={() => setVista('semana')}
-          className={`px-4 py-2 rounded-lg transition-colors ${
-            vista === 'semana'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          <List className="w-4 h-4 inline mr-2" />
-          Semana
-        </button>
-        <button
-          onClick={() => setVista('dia')}
-          className={`px-4 py-2 rounded-lg transition-colors ${
-            vista === 'dia'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          <Calendar className="w-4 h-4 inline mr-2" />
-          Día
-        </button>
-      </div>
-
-      <FiltrosCalendarioEditorial filtros={filtros} onFiltrosChange={setFiltros} />
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3">
-          <CalendarioEditorialGrid
-            vista={vista}
-            fechaInicio={fechaInicio}
-            fechaFin={fechaFin}
-            filtros={filtros}
-            onPublicacionClick={handlePublicacionClick}
-            onNuevaPublicacion={handleNuevaPublicacion}
-            onReprogramarPublicacion={handleReprogramarPublicacion}
-          />
-        </div>
-
-        <div className="lg:col-span-1">
-          <PanelIdeasContenido
-            ideas={ideasContenido}
-            onAgregarIdea={handleAgregarIdea}
-            onEliminarIdea={handleEliminarIdea}
-            onUsarIdea={handleUsarIdea}
-          />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <Calendar size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Calendario Editorial y Redes Sociales
+                  </h1>
+                  <p className="text-gray-600">
+                    Planifica, programa y gestiona todo tu contenido para redes sociales
+                  </p>
+                </div>
+              </div>
+              
+              {/* Toolbar */}
+              <div className="flex items-center justify-end">
+                <button
+                  onClick={() => handleNuevaPublicacion()}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                >
+                  <Plus size={20} />
+                  <span>Nueva Publicación</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Sistema de Tabs */}
+          <div className="bg-white shadow-sm rounded-lg p-0">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Vista del calendario"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
+              >
+                <button
+                  onClick={() => setVista('mes')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'mes'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Grid size={18} className={vista === 'mes' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Mes</span>
+                </button>
+                <button
+                  onClick={() => setVista('semana')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'semana'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <List size={18} className={vista === 'semana' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Semana</span>
+                </button>
+                <button
+                  onClick={() => setVista('dia')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    vista === 'dia'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Calendar size={18} className={vista === 'dia' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Día</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Filtros */}
+          <FiltrosCalendarioEditorial filtros={filtros} onFiltrosChange={setFiltros} />
+
+          {/* Contenido Principal */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="lg:col-span-3">
+              <CalendarioEditorialGrid
+                vista={vista}
+                fechaInicio={fechaInicio}
+                fechaFin={fechaFin}
+                filtros={filtros}
+                onPublicacionClick={handlePublicacionClick}
+                onNuevaPublicacion={handleNuevaPublicacion}
+                onReprogramarPublicacion={handleReprogramarPublicacion}
+              />
+            </div>
+
+            <div className="lg:col-span-1">
+              <PanelIdeasContenido
+                ideas={ideasContenido}
+                onAgregarIdea={handleAgregarIdea}
+                onEliminarIdea={handleEliminarIdea}
+                onUsarIdea={handleUsarIdea}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal */}
       {mostrarModal && (
         <ModalGestionPublicacion
           publicacion={publicacionSeleccionada}
@@ -166,5 +204,6 @@ export default function CalendarioEditorialPage() {
     </div>
   );
 }
+
 
 

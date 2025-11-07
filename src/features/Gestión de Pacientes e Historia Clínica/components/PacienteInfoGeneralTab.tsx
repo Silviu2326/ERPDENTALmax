@@ -191,52 +191,52 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+        <div className="bg-red-50 ring-1 ring-red-200 text-red-700 px-4 py-3 rounded-xl">
           {error}
         </div>
       )}
 
       {/* Información personal */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <User className="w-5 h-5 text-blue-600" />
+      <div className="bg-white shadow-sm rounded-2xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <User size={20} className="text-blue-600" />
           Información Personal
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Nombre</label>
             {isEditing ? (
               <input
                 type="text"
                 value={formData.nombre}
                 onChange={(e) => setFormData((prev) => ({ ...prev, nombre: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">{paciente.nombre}</p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Apellidos</label>
             {isEditing ? (
               <input
                 type="text"
                 value={formData.apellidos}
                 onChange={(e) => setFormData((prev) => ({ ...prev, apellidos: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">{paciente.apellidos}</p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de Nacimiento</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Fecha de Nacimiento</label>
             {isEditing ? (
               <input
                 type="date"
                 value={formData.fechaNacimiento || ''}
                 onChange={(e) => setFormData((prev) => ({ ...prev, fechaNacimiento: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">
@@ -247,25 +247,25 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">DNI</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">DNI</label>
             {isEditing ? (
               <input
                 type="text"
                 value={formData.dni || ''}
                 onChange={(e) => setFormData((prev) => ({ ...prev, dni: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">{paciente.dni || 'No especificado'}</p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Género</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Género</label>
             {isEditing ? (
               <select
                 value={formData.genero || ''}
                 onChange={(e) => setFormData((prev) => ({ ...prev, genero: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               >
                 <option value="">Seleccionar...</option>
                 <option value="Masculino">Masculino</option>
@@ -280,14 +280,14 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {/* Datos de contacto */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <Phone className="w-5 h-5 text-blue-600" />
+      <div className="bg-white shadow-sm rounded-2xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <Phone size={20} className="text-blue-600" />
           Datos de Contacto
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
             {isEditing ? (
               <input
                 type="tel"
@@ -298,14 +298,14 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     datosContacto: { ...prev.datosContacto, telefono: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">{paciente.datosContacto?.telefono || 'No especificado'}</p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
             {isEditing ? (
               <input
                 type="email"
@@ -316,14 +316,14 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     datosContacto: { ...prev.datosContacto, email: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">{paciente.datosContacto?.email || 'No especificado'}</p>
             )}
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Dirección</label>
             {isEditing ? (
               <input
                 type="text"
@@ -334,7 +334,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     datosContacto: { ...prev.datosContacto, direccion: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             ) : (
               <p className="text-gray-900">{paciente.datosContacto?.direccion || 'No especificada'}</p>
@@ -344,9 +344,9 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {/* Anamnesis */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <Pill className="w-5 h-5 text-blue-600" />
+      <div className="bg-white shadow-sm rounded-2xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <Pill size={20} className="text-blue-600" />
           Anamnesis
         </h3>
 
@@ -463,14 +463,14 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {/* Contacto de emergencia */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+      <div className="bg-white shadow-sm rounded-2xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <AlertTriangle className="w-5 h-5 text-orange-600" />
           Contacto de Emergencia
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Nombre</label>
             {isEditing ? (
               <input
                 type="text"
@@ -481,7 +481,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     contactoEmergencia: { ...prev.contactoEmergencia, nombre: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Nombre del contacto"
               />
             ) : (
@@ -489,7 +489,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Teléfono</label>
             {isEditing ? (
               <input
                 type="tel"
@@ -500,7 +500,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     contactoEmergencia: { ...prev.contactoEmergencia, telefono: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Teléfono de emergencia"
               />
             ) : (
@@ -508,7 +508,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Relación</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Relación</label>
             {isEditing ? (
               <input
                 type="text"
@@ -519,7 +519,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     contactoEmergencia: { ...prev.contactoEmergencia, relacion: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Ej: Cónyuge, Hijo/a, etc."
               />
             ) : (
@@ -530,14 +530,14 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {/* Datos de seguro */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+      <div className="bg-white shadow-sm rounded-2xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <User className="w-5 h-5 text-green-600" />
           Datos de Seguro
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Aseguradora</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Aseguradora</label>
             {isEditing ? (
               <input
                 type="text"
@@ -548,7 +548,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     datosSeguro: { ...prev.datosSeguro, aseguradora: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Nombre de la aseguradora"
               />
             ) : (
@@ -556,7 +556,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Número de Póliza</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Número de Póliza</label>
             {isEditing ? (
               <input
                 type="text"
@@ -567,7 +567,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     datosSeguro: { ...prev.datosSeguro, numeroPoliza: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Número de póliza"
               />
             ) : (
@@ -575,7 +575,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Plan</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Plan</label>
             {isEditing ? (
               <input
                 type="text"
@@ -586,7 +586,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
                     datosSeguro: { ...prev.datosSeguro, tipoPlan: e.target.value },
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Tipo de plan"
               />
             ) : (
@@ -597,8 +597,8 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {/* Estadísticas del paciente */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+      <div className="bg-white shadow-sm rounded-2xl p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <Calendar className="w-5 h-5 text-purple-600" />
           Estadísticas y Resumen
         </h3>
@@ -798,7 +798,7 @@ export default function PacienteInfoGeneralTab({ paciente, onUpdate }: PacienteI
       </div>
 
       {/* Notas administrativas */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white shadow-sm rounded-2xl p-6">
         <h3 className="text-xl font-semibold text-gray-900 mb-4">Notas Administrativas</h3>
         {isEditing ? (
           <textarea

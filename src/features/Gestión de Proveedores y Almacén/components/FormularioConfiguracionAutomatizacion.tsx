@@ -76,11 +76,11 @@ export default function FormularioConfiguracionAutomatizacion({
   return (
     <div className="space-y-6">
       {/* Activación del sistema */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Sistema de Recordatorios</h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Activa o desactiva el envío automático de recordatorios
             </p>
           </div>
@@ -100,13 +100,13 @@ export default function FormularioConfiguracionAutomatizacion({
       </div>
 
       {/* Canales activos */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Canales de Comunicación</h3>
         <div className="space-y-3">
           {['SMS', 'Email', 'WhatsApp'].map((canal) => (
             <label
               key={canal}
-              className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+              className="flex items-center justify-between p-3 rounded-xl bg-white ring-1 ring-slate-200 hover:bg-slate-50 cursor-pointer transition-colors"
             >
               <span className="font-medium text-gray-900">{canal}</span>
               <input
@@ -121,19 +121,19 @@ export default function FormularioConfiguracionAutomatizacion({
       </div>
 
       {/* Reglas de envío */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Reglas de Envío</h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Define cuándo y qué plantillas enviar antes de cada cita
             </p>
           </div>
           <button
             onClick={handleAgregarRegla}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
           >
-            <Plus className="w-4 h-4" />
+            <Plus size={20} />
             Agregar Regla
           </button>
         </div>
@@ -142,18 +142,18 @@ export default function FormularioConfiguracionAutomatizacion({
           {reglasEnvio.map((regla, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg bg-gray-50"
+              className="flex flex-col md:flex-row items-start md:items-center gap-4 p-4 rounded-xl bg-slate-50 ring-1 ring-slate-200"
             >
-              <div className="flex items-center gap-2 flex-1">
-                <Clock className="w-5 h-5 text-gray-400" />
-                <span className="text-sm font-medium text-gray-700">Enviar</span>
+              <div className="flex items-center gap-2 flex-1 w-full md:w-auto">
+                <Clock className="w-5 h-5 text-slate-400" />
+                <span className="text-sm font-medium text-slate-700">Enviar</span>
                 <input
                   type="number"
                   value={regla.tiempo_antes}
                   onChange={(e) =>
                     handleActualizarRegla(index, 'tiempo_antes', parseInt(e.target.value))
                   }
-                  className="w-20 px-3 py-1 border border-gray-300 rounded-md text-sm"
+                  className="w-20 rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-1.5 text-sm"
                   min="1"
                 />
                 <select
@@ -161,17 +161,17 @@ export default function FormularioConfiguracionAutomatizacion({
                   onChange={(e) =>
                     handleActualizarRegla(index, 'unidad', e.target.value as 'horas' | 'dias')
                   }
-                  className="px-3 py-1 border border-gray-300 rounded-md text-sm"
+                  className="rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-1.5 text-sm"
                 >
                   <option value="horas">horas</option>
                   <option value="dias">días</option>
                 </select>
-                <span className="text-sm text-gray-700">antes de la cita</span>
+                <span className="text-sm text-slate-700">antes de la cita</span>
               </div>
               <select
                 value={regla.plantillaId}
                 onChange={(e) => handleActualizarRegla(index, 'plantillaId', e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm flex-1"
+                className="rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2 text-sm flex-1 w-full md:w-auto"
               >
                 <option value="">Seleccionar plantilla</option>
                 {plantillas
@@ -185,8 +185,9 @@ export default function FormularioConfiguracionAutomatizacion({
               <button
                 onClick={() => handleEliminarRegla(index)}
                 className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                aria-label="Eliminar regla"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 size={16} />
               </button>
             </div>
           ))}
@@ -199,12 +200,12 @@ export default function FormularioConfiguracionAutomatizacion({
       </div>
 
       {/* Plantilla por defecto */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Plantilla por Defecto</h3>
         <select
           value={plantillaDefectoId}
           onChange={(e) => setPlantillaDefectoId(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm"
+          className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 text-sm"
         >
           <option value="">Seleccionar plantilla por defecto</option>
           {plantillas
@@ -215,7 +216,7 @@ export default function FormularioConfiguracionAutomatizacion({
               </option>
             ))}
         </select>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-gray-600 mt-2">
           Esta plantilla se usará cuando no se especifique otra en las reglas de envío
         </p>
       </div>
@@ -225,14 +226,15 @@ export default function FormularioConfiguracionAutomatizacion({
         <button
           onClick={handleGuardar}
           disabled={loading}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
         >
-          <Save className="w-4 h-4" />
+          <Save size={20} />
           {loading ? 'Guardando...' : 'Guardar Configuración'}
         </button>
       </div>
     </div>
   );
 }
+
 
 

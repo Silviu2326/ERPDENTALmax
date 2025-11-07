@@ -102,15 +102,15 @@ export default function ModalGestionThreshold({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-900">
             {threshold ? 'Editar Threshold' : 'Nuevo Threshold'}
           </h2>
           <button
             onClick={onCerrar}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -118,45 +118,45 @@ export default function ModalGestionThreshold({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <p className="text-red-800">{error}</p>
+            <div className="rounded-2xl bg-red-50 ring-1 ring-red-200 p-4">
+              <p className="text-red-800 text-sm">{error}</p>
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre del Threshold *
             </label>
             <input
               type="text"
               value={formData.nombre}
               onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Descripción
             </label>
             <textarea
               value={formData.descripcion}
               onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Métrica *
               </label>
               <select
                 value={formData.metrica}
                 onChange={(e) => setFormData({ ...formData, metrica: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 required
               >
                 <option value="">Selecciona una métrica</option>
@@ -167,14 +167,14 @@ export default function ModalGestionThreshold({
                 ))}
               </select>
               {formData.metrica && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-slate-500 mt-1">
                   {metricasDisponibles.find((m) => m.valor === formData.metrica)?.descripcion}
                 </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Operador *
               </label>
               <select
@@ -186,7 +186,7 @@ export default function ModalGestionThreshold({
                     valorUmbral2: e.target.value !== 'entre' ? undefined : formData.valorUmbral2,
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 required
               >
                 <option value="mayor_que">Mayor que</option>
@@ -200,7 +200,7 @@ export default function ModalGestionThreshold({
 
           <div className={`grid gap-4 ${formData.operador === 'entre' ? 'grid-cols-2' : 'grid-cols-1'}`}>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Valor Umbral *
               </label>
               <input
@@ -208,13 +208,13 @@ export default function ModalGestionThreshold({
                 step="0.01"
                 value={formData.valorUmbral}
                 onChange={(e) => setFormData({ ...formData, valorUmbral: parseFloat(e.target.value) || 0 })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 required
               />
             </div>
             {formData.operador === 'entre' && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Valor Umbral 2 *
                 </label>
                 <input
@@ -224,7 +224,7 @@ export default function ModalGestionThreshold({
                   onChange={(e) =>
                     setFormData({ ...formData, valorUmbral2: parseFloat(e.target.value) || undefined })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   required
                 />
               </div>
@@ -232,7 +232,7 @@ export default function ModalGestionThreshold({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Frecuencia de Verificación *
             </label>
             <select
@@ -240,7 +240,7 @@ export default function ModalGestionThreshold({
               onChange={(e) =>
                 setFormData({ ...formData, frecuenciaVerificacion: e.target.value as any })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               required
             >
               <option value="tiempo_real">Tiempo Real</option>
@@ -251,11 +251,11 @@ export default function ModalGestionThreshold({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
+            <label className="block text-sm font-medium text-slate-700 mb-4">
               Notificaciones
             </label>
             <div className="space-y-3">
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={formData.notificaciones.dashboard}
@@ -270,9 +270,9 @@ export default function ModalGestionThreshold({
                   }
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">Mostrar en Dashboard</span>
+                <span className="text-sm text-slate-700">Mostrar en Dashboard</span>
               </label>
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={formData.notificaciones.email}
@@ -287,9 +287,9 @@ export default function ModalGestionThreshold({
                   }
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">Enviar por Email</span>
+                <span className="text-sm text-slate-700">Enviar por Email</span>
               </label>
-              <label className="flex items-center space-x-3">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={formData.notificaciones.push}
@@ -304,12 +304,12 @@ export default function ModalGestionThreshold({
                   }
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">Notificación Push</span>
+                <span className="text-sm text-slate-700">Notificación Push</span>
               </label>
             </div>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-3">
             <input
               type="checkbox"
               checked={formData.activa}
@@ -317,25 +317,25 @@ export default function ModalGestionThreshold({
               className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               id="activa"
             />
-            <label htmlFor="activa" className="text-sm font-medium text-gray-700">
+            <label htmlFor="activa" className="text-sm font-medium text-slate-700">
               Threshold Activo
             </label>
           </div>
 
-          <div className="flex justify-end space-x-4 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-4 pt-4 border-t border-gray-200/60">
             <button
               type="button"
               onClick={onCerrar}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all border border-gray-300 text-gray-700 hover:bg-gray-50"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
-              <Save className="w-4 h-4" />
+              <Save size={18} />
               <span>{loading ? 'Guardando...' : 'Guardar'}</span>
             </button>
           </div>
@@ -344,5 +344,6 @@ export default function ModalGestionThreshold({
     </div>
   );
 }
+
 
 

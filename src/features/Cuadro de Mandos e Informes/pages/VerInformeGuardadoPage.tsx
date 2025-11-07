@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, FileText } from 'lucide-react';
+import { RefreshCw, FileText, AlertCircle, ArrowLeft } from 'lucide-react';
 import { getSavedReportById, generateReport, SavedReport } from '../api/informesConfigurablesApi';
 import ReportDataTable from '../components/ReportDataTable';
 import ReportChartRenderer from '../components/ReportChartRenderer';
@@ -55,10 +55,10 @@ export default function VerInformeGuardadoPage({
 
   if (loading) {
     return (
-      <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <RefreshCw size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
             <p className="text-gray-600">Cargando informe...</p>
           </div>
         </div>
@@ -68,89 +68,120 @@ export default function VerInformeGuardadoPage({
 
   if (error || !report) {
     return (
-      <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
-        <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6 text-center">
-          <p className="text-red-800 font-semibold">{error || 'No se pudo cargar el informe'}</p>
-          {onBack && (
-            <button
-              onClick={onBack}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Volver
-            </button>
-          )}
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error || 'No se pudo cargar el informe'}</p>
+            {onBack && (
+              <button
+                onClick={onBack}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700"
+              >
+                <ArrowLeft size={18} />
+                <span>Volver</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{report.nombre}</h1>
-            {report.descripcion && <p className="text-gray-600">{report.descripcion}</p>}
-          </div>
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={() => generateReportData(report.configuracion)}
-              disabled={generating}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-            >
-              <RefreshCw className={`w-4 h-4 ${generating ? 'animate-spin' : ''}`} />
-              <span>Actualizar</span>
-            </button>
-            {onBack && (
-              <button
-                onClick={onBack}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                Volver
-              </button>
-            )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileText size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {report.nombre}
+                  </h1>
+                  {report.descripcion && (
+                    <p className="text-gray-600">
+                      {report.descripcion}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Toolbar */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => generateReportData(report.configuracion)}
+                  disabled={generating}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={20} className={generating ? 'animate-spin' : ''} />
+                  <span>Actualizar</span>
+                </button>
+                {onBack && (
+                  <button
+                    onClick={onBack}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-600 text-white hover:bg-slate-700"
+                  >
+                    <ArrowLeft size={20} />
+                    <span>Volver</span>
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {generating ? (
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <RefreshCw className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        {generating ? (
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <RefreshCw size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
             <p className="text-gray-600">Generando informe...</p>
           </div>
-        </div>
-      ) : reportData ? (
-        <div className="space-y-6">
-          {report.configuracion.visualizationType === 'table' ? (
-            <ReportDataTable
-              data={reportData.data}
-              columns={reportData.columns}
-              totalRecords={reportData.totalRecords}
-            />
-          ) : (
-            <ReportChartRenderer
-              data={reportData.data}
-              visualizationType={report.configuracion.visualizationType || 'table'}
-              grouping={report.configuracion.grouping?.map((g: any) => g.field) || []}
-              aggregation={report.configuracion.aggregation || []}
-            />
-          )}
-        </div>
-      ) : (
-        <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-12 text-center">
-          <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">No hay datos para mostrar</p>
-          <button
-            onClick={() => generateReportData(report.configuracion)}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Generar Informe
-          </button>
-        </div>
-      )}
+        ) : reportData ? (
+          <div className="space-y-6">
+            {report.configuracion.visualizationType === 'table' ? (
+              <ReportDataTable
+                data={reportData.data}
+                columns={reportData.columns}
+                totalRecords={reportData.totalRecords}
+              />
+            ) : (
+              <ReportChartRenderer
+                data={reportData.data}
+                visualizationType={report.configuracion.visualizationType || 'table'}
+                grouping={report.configuracion.grouping?.map((g: any) => g.field) || []}
+                aggregation={report.configuracion.aggregation || []}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+            <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay datos para mostrar</h3>
+            <p className="text-gray-600 mb-4">Genera el informe para ver los datos</p>
+            <button
+              onClick={() => generateReportData(report.configuracion)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700"
+            >
+              <RefreshCw size={20} />
+              <span>Generar Informe</span>
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
 
 

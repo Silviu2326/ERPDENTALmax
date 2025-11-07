@@ -65,31 +65,31 @@ export default function ModalActualizarEstadoProtesis({
             </h2>
             <button
               onClick={onCerrar}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-1 hover:bg-gray-100"
             >
-              <X className="w-6 h-6" />
+              <X size={20} />
             </button>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Estado Actual
             </label>
-            <div className="px-4 py-2 bg-gray-100 rounded-lg text-gray-700">
+            <div className="px-4 py-2.5 bg-slate-100 rounded-xl text-slate-900">
               {estadoActual}
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nuevo Estado <span className="text-red-500">*</span>
             </label>
             <select
               value={nuevoEstado}
               onChange={(e) => setNuevoEstado(e.target.value as EstadoProtesis)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
               required
             >
               <option value="">Seleccionar estado...</option>
@@ -100,14 +100,14 @@ export default function ModalActualizarEstadoProtesis({
               ))}
             </select>
             {estadosPermitidos.length === 0 && (
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-600 mt-2">
                 No hay estados disponibles para cambiar desde este estado.
               </p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nota (opcional)
             </label>
             <textarea
@@ -115,15 +115,15 @@ export default function ModalActualizarEstadoProtesis({
               onChange={(e) => setNota(e.target.value)}
               rows={4}
               placeholder="Añade una nota sobre el cambio de estado..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
             />
           </div>
 
-          <div className="flex space-x-3 pt-4">
+          <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onCerrar}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all border border-slate-300 text-slate-700 hover:bg-slate-50"
               disabled={actualizando}
             >
               Cancelar
@@ -131,7 +131,7 @@ export default function ModalActualizarEstadoProtesis({
             <button
               type="submit"
               disabled={!nuevoEstado || actualizando}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {actualizando ? (
                 <>
@@ -140,7 +140,7 @@ export default function ModalActualizarEstadoProtesis({
                 </>
               ) : (
                 <>
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle size={18} />
                   <span>Actualizar Estado</span>
                 </>
               )}
@@ -151,5 +151,6 @@ export default function ModalActualizarEstadoProtesis({
     </div>
   );
 }
+
 
 

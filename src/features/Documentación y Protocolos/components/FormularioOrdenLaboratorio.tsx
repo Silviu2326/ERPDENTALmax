@@ -134,13 +134,7 @@ export default function FormularioOrdenLaboratorio({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
-          {orden ? 'Editar Orden de Laboratorio' : 'Nueva Orden de Laboratorio'}
-        </h2>
-      </div>
-
+    <div className="bg-white shadow-sm rounded-xl p-6">
       <div className="space-y-6">
         {/* Selección de Paciente */}
         <div>
@@ -160,7 +154,7 @@ export default function FormularioOrdenLaboratorio({
 
         {/* Tipo de Trabajo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Tipo de Trabajo <span className="text-red-500">*</span>
           </label>
           <input
@@ -168,7 +162,7 @@ export default function FormularioOrdenLaboratorio({
             value={tipoTrabajo}
             onChange={(e) => setTipoTrabajo(e.target.value)}
             placeholder="Ej: Corona, Prótesis fija, Prótesis removible..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             required
           />
         </div>
@@ -176,7 +170,7 @@ export default function FormularioOrdenLaboratorio({
         {/* Materiales y Color */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Materiales
             </label>
             <input
@@ -184,11 +178,11 @@ export default function FormularioOrdenLaboratorio({
               value={materiales}
               onChange={(e) => setMateriales(e.target.value)}
               placeholder="Ej: Zirconio, Cerámica, Resina..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Color
             </label>
             <input
@@ -196,14 +190,14 @@ export default function FormularioOrdenLaboratorio({
               value={color}
               onChange={(e) => setColor(e.target.value)}
               placeholder="Ej: A2, B1, Natural..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
         </div>
 
         {/* Instrucciones */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Instrucciones
           </label>
           <textarea
@@ -211,31 +205,31 @@ export default function FormularioOrdenLaboratorio({
             onChange={(e) => setInstrucciones(e.target.value)}
             rows={4}
             placeholder="Instrucciones detalladas para el laboratorio..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
           />
         </div>
 
         {/* Fecha Entrega Prevista y Estado */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Fecha Entrega Prevista
             </label>
             <input
               type="date"
               value={fechaEntregaPrevista}
               onChange={(e) => setFechaEntregaPrevista(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Estado
             </label>
             <select
               value={estado}
               onChange={(e) => setEstado(e.target.value as EstadoOrden)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             >
               {ESTADOS.map((est) => (
                 <option key={est} value={est}>
@@ -259,22 +253,22 @@ export default function FormularioOrdenLaboratorio({
         )}
 
         {/* Botones de Acción */}
-        <div className="flex items-center justify-end space-x-4 pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100">
           <button
             type="button"
             onClick={onCancelar}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           >
-            <X className="w-4 h-4" />
+            <X size={18} />
             <span>Cancelar</span>
           </button>
           <button
             type="button"
             onClick={handleGuardar}
             disabled={loading || !paciente || !laboratorio || !tipoTrabajo}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
-            <Save className="w-4 h-4" />
+            <Save size={18} />
             <span>{loading ? 'Guardando...' : 'Guardar'}</span>
           </button>
         </div>
@@ -282,5 +276,6 @@ export default function FormularioOrdenLaboratorio({
     </div>
   );
 }
+
 
 

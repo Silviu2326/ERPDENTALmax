@@ -136,30 +136,30 @@ export default function ModalGestionExcepcion({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-900 flex items-center space-x-2">
-            <Calendar className="w-5 h-5" />
+            <Calendar size={20} />
             <span>{excepcion ? 'Editar Excepción' : 'Nueva Excepción'}</span>
           </h2>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X size={20} />
           </button>
         </div>
 
         <div className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-              <AlertCircle className="h-5 w-5" />
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center space-x-2">
+              <AlertCircle size={20} />
               <span>{error}</span>
             </div>
           )}
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center space-x-2 text-sm font-medium text-slate-700 mb-2">
               <input
                 type="checkbox"
                 checked={formData.diaCompleto}
@@ -172,9 +172,9 @@ export default function ModalGestionExcepcion({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Calendar className="w-4 h-4" />
-                <span>Fecha y Hora Inicio {!formData.diaCompleto && '*'}</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Calendar size={16} className="inline mr-1" />
+                Fecha y Hora Inicio {!formData.diaCompleto && '*'}
               </label>
               <input
                 type="datetime-local"
@@ -184,15 +184,15 @@ export default function ModalGestionExcepcion({
                   setFormData({ ...formData, fechaInicio: fecha.toISOString() });
                 }}
                 disabled={formData.diaCompleto || guardando}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                 required={!formData.diaCompleto}
               />
             </div>
 
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Calendar className="w-4 h-4" />
-                <span>Fecha y Hora Fin {!formData.diaCompleto && '*'}</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Calendar size={16} className="inline mr-1" />
+                Fecha y Hora Fin {!formData.diaCompleto && '*'}
               </label>
               <input
                 type="datetime-local"
@@ -202,7 +202,7 @@ export default function ModalGestionExcepcion({
                   setFormData({ ...formData, fechaFin: fecha.toISOString() });
                 }}
                 disabled={formData.diaCompleto || guardando}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                 required={!formData.diaCompleto}
               />
             </div>
@@ -210,9 +210,9 @@ export default function ModalGestionExcepcion({
 
           {formData.diaCompleto && (
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Calendar className="w-4 h-4" />
-                <span>Fecha *</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Calendar size={16} className="inline mr-1" />
+                Fecha *
               </label>
               <input
                 type="date"
@@ -229,23 +229,23 @@ export default function ModalGestionExcepcion({
                   });
                 }}
                 disabled={guardando}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
                 required
               />
             </div>
           )}
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-              <FileText className="w-4 h-4" />
-              <span>Motivo *</span>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <FileText size={16} className="inline mr-1" />
+              Motivo *
             </label>
             <textarea
               value={formData.motivo}
               onChange={(e) => setFormData({ ...formData, motivo: e.target.value })}
               disabled={guardando}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
               placeholder="Ej: Vacaciones, Baja médica, Congreso, Formación..."
               required
             />
@@ -256,16 +256,16 @@ export default function ModalGestionExcepcion({
           <button
             onClick={onClose}
             disabled={guardando}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="px-4 py-2 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             onClick={handleGuardar}
             disabled={guardando}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Save className="w-4 h-4" />
+            <Save size={20} />
             <span>{guardando ? 'Guardando...' : 'Guardar'}</span>
           </button>
         </div>
@@ -273,5 +273,6 @@ export default function ModalGestionExcepcion({
     </div>
   );
 }
+
 
 

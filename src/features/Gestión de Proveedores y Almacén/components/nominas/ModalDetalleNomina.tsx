@@ -75,10 +75,10 @@ export default function ModalDetalleNomina({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-xl flex items-center justify-between">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold">Detalle de Nómina</h2>
-            <p className="text-blue-100 mt-1">
+            <h2 className="text-2xl font-bold text-gray-900">Detalle de Nómina</h2>
+            <p className="text-gray-600 mt-1">
               {nomina.empleadoNombre || `Empleado ${nomina.empleadoId}`} -{' '}
               {meses[nomina.periodo.mes - 1]} {nomina.periodo.anio}
             </p>
@@ -86,16 +86,16 @@ export default function ModalDetalleNomina({
           <div className="flex items-center gap-2">
             <button
               onClick={handleDescargarPDF}
-              className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+              className="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
               title="Descargar PDF"
             >
-              <Download className="w-5 h-5" />
+              <Download size={20} />
             </button>
             <button
               onClick={onClose}
-              className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+              className="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
             >
-              <X className="w-5 h-5" />
+              <X size={20} />
             </button>
           </div>
         </div>
@@ -104,40 +104,40 @@ export default function ModalDetalleNomina({
         <div className="p-6 space-y-6">
           {/* Información General */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Fecha de Cálculo</p>
+            <div className="bg-slate-50 p-4 rounded-xl ring-1 ring-slate-200">
+              <p className="text-sm text-slate-600 mb-1">Fecha de Cálculo</p>
               <p className="text-lg font-semibold text-gray-900">{formatearFecha(nomina.fechaCalculo)}</p>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Estado</p>
+            <div className="bg-slate-50 p-4 rounded-xl ring-1 ring-slate-200">
+              <p className="text-sm text-slate-600 mb-1">Estado</p>
               <p className="text-lg font-semibold text-gray-900">{nomina.estado}</p>
             </div>
           </div>
 
           {/* Resumen Financiero */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+          <div className="bg-blue-50 p-6 rounded-xl ring-1 ring-blue-200">
             <h3 className="text-lg font-bold text-gray-900 mb-4">Resumen Financiero</h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-gray-700">Salario Base</span>
+                <span className="text-slate-700">Salario Base</span>
                 <span className="text-lg font-semibold text-gray-900">
                   {formatearMoneda(nomina.salarioBase)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-700">Total Comisiones</span>
+                <span className="text-slate-700">Total Comisiones</span>
                 <span className="text-lg font-semibold text-green-600">
                   +{formatearMoneda(nomina.totalComisiones)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-700">Total Percepciones</span>
+                <span className="text-slate-700">Total Percepciones</span>
                 <span className="text-lg font-semibold text-blue-600">
                   {formatearMoneda(nomina.totalPercepciones)}
                 </span>
               </div>
               <div className="flex justify-between items-center border-t border-blue-200 pt-3">
-                <span className="text-gray-700">Total Deducciones</span>
+                <span className="text-slate-700">Total Deducciones</span>
                 <span className="text-lg font-semibold text-red-600">
                   -{formatearMoneda(nomina.totalDeducciones)}
                 </span>
@@ -154,10 +154,10 @@ export default function ModalDetalleNomina({
           {/* Desglose de Comisiones */}
           {nomina.desgloseComisiones && nomina.desgloseComisiones.length > 0 && (
             <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Desglose de Comisiones</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Desglose de Comisiones</h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-100">
+                  <thead className="bg-gray-50">
                     <tr>
                       <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
                         Paciente
@@ -173,9 +173,9 @@ export default function ModalDetalleNomina({
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200 bg-white">
                     {nomina.desgloseComisiones.map((comision, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
+                      <tr key={index} className="hover:bg-gray-50 transition-colors">
                         <td className="px-4 py-3 text-sm text-gray-900">{comision.paciente}</td>
                         <td className="px-4 py-3 text-sm text-gray-900 text-right">
                           {formatearMoneda(comision.montoTratamiento)}
@@ -197,10 +197,10 @@ export default function ModalDetalleNomina({
           {/* Desglose de Deducciones */}
           {nomina.desgloseDeducciones && nomina.desgloseDeducciones.length > 0 && (
             <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Desglose de Deducciones</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Desglose de Deducciones</h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-100">
+                  <thead className="bg-gray-50">
                     <tr>
                       <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase">
                         Concepto
@@ -210,9 +210,9 @@ export default function ModalDetalleNomina({
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200 bg-white">
                     {nomina.desgloseDeducciones.map((deduccion, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
+                      <tr key={index} className="hover:bg-gray-50 transition-colors">
                         <td className="px-4 py-3 text-sm text-gray-900">{deduccion.concepto}</td>
                         <td className="px-4 py-3 text-sm font-semibold text-red-600 text-right">
                           -{formatearMoneda(deduccion.monto)}
@@ -231,9 +231,9 @@ export default function ModalDetalleNomina({
               <button
                 onClick={() => handleActualizarEstado('Aprobada')}
                 disabled={actualizando}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-blue-600/20 font-medium"
               >
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 size={20} />
                 {actualizando ? 'Aprobando...' : 'Aprobar Nómina'}
               </button>
             )}
@@ -241,15 +241,15 @@ export default function ModalDetalleNomina({
               <button
                 onClick={() => handleActualizarEstado('Pagada')}
                 disabled={actualizando}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm ring-1 ring-green-600/20 font-medium"
               >
-                <CheckCircle2 className="w-4 h-4" />
+                <CheckCircle2 size={20} />
                 {actualizando ? 'Marcando como pagada...' : 'Marcar como Pagada'}
               </button>
             )}
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all text-slate-700 hover:text-slate-900 hover:bg-slate-100 bg-white shadow-sm ring-1 ring-slate-200"
             >
               Cerrar
             </button>
@@ -259,5 +259,6 @@ export default function ModalDetalleNomina({
     </div>
   );
 }
+
 
 

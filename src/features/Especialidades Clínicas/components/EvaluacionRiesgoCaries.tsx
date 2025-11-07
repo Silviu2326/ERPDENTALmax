@@ -79,23 +79,23 @@ export default function EvaluacionRiesgoCaries({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white shadow-sm rounded-lg p-6">
       <div className="flex items-center gap-3 mb-4">
-        <AlertTriangle className="w-5 h-5 text-orange-600" />
-        <h3 className="text-lg font-semibold text-gray-800">Evaluación de Riesgo de Caries</h3>
+        <AlertTriangle size={20} className="text-orange-600" />
+        <h3 className="text-lg font-semibold text-gray-900">Evaluación de Riesgo de Caries</h3>
       </div>
 
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nivel de Riesgo
             </label>
             <select
               value={localRiesgo.nivel}
               onChange={(e) => handleChange('nivel', e.target.value as RiesgoCaries['nivel'])}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
             >
               <option value="bajo">Bajo</option>
               <option value="medio">Medio</option>
@@ -104,8 +104,8 @@ export default function EvaluacionRiesgoCaries({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
+            <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+              <Calendar size={16} />
               Fecha de Evaluación
             </label>
             <input
@@ -113,20 +113,20 @@ export default function EvaluacionRiesgoCaries({
               value={localRiesgo.fechaEvaluacion}
               onChange={(e) => handleChange('fechaEvaluacion', e.target.value)}
               disabled={readonly}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+              className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
             />
           </div>
         </div>
 
         <div>
-          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 ${getNivelColor(localRiesgo.nivel)}`}>
-            <CheckCircle className="w-4 h-4" />
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ring-1 ${getNivelColor(localRiesgo.nivel)}`}>
+            <CheckCircle size={16} />
             <span className="font-semibold">Riesgo: {getNivelLabel(localRiesgo.nivel)}</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Factores de Riesgo Identificados
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -138,21 +138,21 @@ export default function EvaluacionRiesgoCaries({
                   type="button"
                   onClick={() => toggleFactor(factor)}
                   disabled={readonly}
-                  className={`text-left px-3 py-2 rounded-lg border-2 transition-all ${
+                  className={`text-left px-3 py-2 rounded-xl ring-1 transition-all ${
                     isSelected
-                      ? 'bg-blue-50 border-blue-400 text-blue-900'
-                      : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-gray-300'
+                      ? 'bg-blue-50 ring-blue-400 text-blue-900'
+                      : 'bg-slate-50 ring-slate-200 text-slate-700 hover:ring-slate-300'
                   } ${readonly ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 >
                   <div className="flex items-center gap-2">
                     <div
-                      className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                      className={`w-4 h-4 rounded ring-1 flex items-center justify-center ${
                         isSelected
-                          ? 'bg-blue-600 border-blue-600'
-                          : 'border-gray-300 bg-white'
+                          ? 'bg-blue-600 ring-blue-600'
+                          : 'ring-slate-300 bg-white'
                       }`}
                     >
-                      {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
+                      {isSelected && <CheckCircle size={12} className="text-white" />}
                     </div>
                     <span className="text-sm">{factor}</span>
                   </div>
@@ -163,7 +163,7 @@ export default function EvaluacionRiesgoCaries({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
             Observaciones
           </label>
           <textarea
@@ -171,7 +171,7 @@ export default function EvaluacionRiesgoCaries({
             onChange={(e) => handleChange('observaciones', e.target.value)}
             disabled={readonly}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
+            className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-gray-100"
             placeholder="Observaciones adicionales sobre el riesgo de caries..."
           />
         </div>
@@ -179,5 +179,6 @@ export default function EvaluacionRiesgoCaries({
     </div>
   );
 }
+
 
 

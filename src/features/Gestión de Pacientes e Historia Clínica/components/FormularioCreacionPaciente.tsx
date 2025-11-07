@@ -176,8 +176,8 @@ export default function FormularioCreacionPaciente({
 
       {/* Mensaje de error general */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="h-5 w-5 flex-shrink-0" />
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-2">
+          <AlertCircle size={20} className="flex-shrink-0" />
           <span>{error}</span>
         </div>
       )}
@@ -194,15 +194,15 @@ export default function FormularioCreacionPaciente({
       />
 
       {/* Sección Contacto */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200 flex items-center gap-2">
-          <Phone className="w-5 h-5" />
+          <Phone size={18} />
           Datos de Contacto
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Phone className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Phone size={16} className="inline mr-1" />
               Teléfono <span className="text-red-500">*</span>
             </label>
             <input
@@ -210,21 +210,21 @@ export default function FormularioCreacionPaciente({
               required
               value={contacto.telefono || ''}
               onChange={(e) => setContacto({ ...contacto, telefono: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: 612345678"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Mail className="w-4 h-4 inline mr-1" />
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Mail size={16} className="inline mr-1" />
               Email
             </label>
             <input
               type="email"
               value={contacto.email || ''}
               onChange={(e) => setContacto({ ...contacto, email: e.target.value })}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                errores['contacto.email'] ? 'border-red-500' : 'border-gray-300'
+              className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 ${
+                errores['contacto.email'] ? 'ring-red-300' : 'ring-slate-300'
               }`}
               placeholder="correo@ejemplo.com"
             />
@@ -235,8 +235,8 @@ export default function FormularioCreacionPaciente({
         </div>
 
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
+          <label className="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+            <MapPin size={16} />
             Dirección
           </label>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -250,7 +250,7 @@ export default function FormularioCreacionPaciente({
                     direccion: { ...contacto.direccion, calle: e.target.value },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Calle y número"
               />
             </div>
@@ -264,7 +264,7 @@ export default function FormularioCreacionPaciente({
                     direccion: { ...contacto.direccion, ciudad: e.target.value },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Ciudad"
               />
             </div>
@@ -278,7 +278,7 @@ export default function FormularioCreacionPaciente({
                     direccion: { ...contacto.direccion, codigoPostal: e.target.value },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 placeholder="Código Postal"
               />
             </div>
@@ -287,14 +287,14 @@ export default function FormularioCreacionPaciente({
       </div>
 
       {/* Sección Contacto de Emergencia */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-white shadow-sm rounded-xl p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200 flex items-center gap-2">
-          <Heart className="w-5 h-5" />
+          <Heart size={18} />
           Contacto de Emergencia
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Nombre
             </label>
             <input
@@ -303,12 +303,12 @@ export default function FormularioCreacionPaciente({
               onChange={(e) =>
                 setContactoEmergencia({ ...contactoEmergencia, nombre: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Nombre completo"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Teléfono
             </label>
             <input
@@ -317,12 +317,12 @@ export default function FormularioCreacionPaciente({
               onChange={(e) =>
                 setContactoEmergencia({ ...contactoEmergencia, telefono: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Teléfono de contacto"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
               Relación
             </label>
             <input
@@ -331,7 +331,7 @@ export default function FormularioCreacionPaciente({
               onChange={(e) =>
                 setContactoEmergencia({ ...contactoEmergencia, relacion: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               placeholder="Ej: Cónyuge, Padre, Hijo..."
             />
           </div>
@@ -345,13 +345,13 @@ export default function FormularioCreacionPaciente({
       <SeccionDatosSeguro datos={datosSeguro} onChange={setDatosSeguro} />
 
       {/* Botones de acción */}
-      <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+      <div className="flex justify-end gap-2 pt-4 border-t border-gray-200">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
             disabled={loading}
-            className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all disabled:opacity-50"
           >
             Cancelar
           </button>
@@ -359,16 +359,16 @@ export default function FormularioCreacionPaciente({
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2 shadow-md hover:shadow-lg"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         >
           {loading ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 size={20} className="animate-spin" />
               <span>Guardando...</span>
             </>
           ) : (
             <>
-              <Save className="w-4 h-4" />
+              <Save size={20} />
               <span>Guardar Paciente</span>
             </>
           )}
@@ -377,5 +377,6 @@ export default function FormularioCreacionPaciente({
     </form>
   );
 }
+
 
 

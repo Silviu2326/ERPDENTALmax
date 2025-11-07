@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Eye, Edit, Trash2, AlertCircle, FileText, Shield, User, Package } from 'lucide-react';
+import { Eye, Edit, Trash2, AlertCircle, FileText, Shield, User, Package, Loader2 } from 'lucide-react';
 import { Incidencia } from '../api/incidenciasApi';
 
 interface IncidenciasDataTableProps {
@@ -17,34 +16,33 @@ export default function IncidenciasDataTable({
   onEditar,
   onEliminar,
 }: IncidenciasDataTableProps) {
-  const [incidenciaSeleccionada, setIncidenciaSeleccionada] = useState<string | null>(null);
 
   const getTipoIcon = (tipo: Incidencia['tipo']) => {
     switch (tipo) {
       case 'No Conformidad Producto':
-        return <Package className="w-4 h-4" />;
+        return <Package size={12} />;
       case 'Incidencia Clínica':
-        return <AlertCircle className="w-4 h-4" />;
+        return <AlertCircle size={12} />;
       case 'Queja Paciente':
-        return <User className="w-4 h-4" />;
+        return <User size={12} />;
       case 'Incidente Seguridad':
-        return <Shield className="w-4 h-4" />;
+        return <Shield size={12} />;
       default:
-        return <FileText className="w-4 h-4" />;
+        return <FileText size={12} />;
     }
   };
 
   const getEstadoBadge = (estado: Incidencia['estado']) => {
     const estilos = {
-      Abierta: 'bg-red-100 text-red-800 border-red-300',
-      'En Investigación': 'bg-yellow-100 text-yellow-800 border-yellow-300',
-      Resuelta: 'bg-blue-100 text-blue-800 border-blue-300',
-      Cerrada: 'bg-green-100 text-green-800 border-green-300',
+      Abierta: 'bg-red-100 text-red-800',
+      'En Investigación': 'bg-yellow-100 text-yellow-800',
+      Resuelta: 'bg-blue-100 text-blue-800',
+      Cerrada: 'bg-green-100 text-green-800',
     };
 
     return (
       <span
-        className={`px-2 py-1 rounded-full text-xs font-medium border ${estilos[estado] || 'bg-gray-100 text-gray-800 border-gray-300'}`}
+        className={`px-2 py-1 rounded-full text-xs font-medium ${estilos[estado] || 'bg-gray-100 text-gray-800'}`}
       >
         {estado}
       </span>
@@ -53,15 +51,15 @@ export default function IncidenciasDataTable({
 
   const getTipoBadge = (tipo: Incidencia['tipo']) => {
     const estilos = {
-      'No Conformidad Producto': 'bg-purple-100 text-purple-800 border-purple-300',
-      'Incidencia Clínica': 'bg-orange-100 text-orange-800 border-orange-300',
-      'Queja Paciente': 'bg-pink-100 text-pink-800 border-pink-300',
-      'Incidente Seguridad': 'bg-red-100 text-red-800 border-red-300',
+      'No Conformidad Producto': 'bg-purple-100 text-purple-800',
+      'Incidencia Clínica': 'bg-orange-100 text-orange-800',
+      'Queja Paciente': 'bg-pink-100 text-pink-800',
+      'Incidente Seguridad': 'bg-red-100 text-red-800',
     };
 
     return (
       <span
-        className={`px-2 py-1 rounded-full text-xs font-medium border flex items-center gap-1 w-fit ${estilos[tipo] || 'bg-gray-100 text-gray-800 border-gray-300'}`}
+        className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 w-fit ${estilos[tipo] || 'bg-gray-100 text-gray-800'}`}
       >
         {getTipoIcon(tipo)}
         {tipo}
@@ -79,50 +77,48 @@ export default function IncidenciasDataTable({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando incidencias...</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando incidencias...</p>
       </div>
     );
   }
 
   if (incidencias.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-        <FileText className="w-16 h-16 text-gray-400 mb-4" />
-        <p className="text-gray-600 font-medium mb-2">No hay incidencias registradas</p>
-        <p className="text-gray-500 text-sm">Comienza creando una nueva incidencia</p>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay incidencias registradas</h3>
+        <p className="text-gray-600 mb-4">Comienza creando una nueva incidencia</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Folio
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Tipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Descripción
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha Detección
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Reportado por
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
@@ -131,7 +127,7 @@ export default function IncidenciasDataTable({
             {incidencias.map((incidencia) => (
               <tr
                 key={incidencia._id}
-                className="hover:bg-gray-50 transition-colors"
+                className="hover:bg-slate-50 transition-colors"
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{incidencia.folio}</div>
@@ -147,28 +143,28 @@ export default function IncidenciasDataTable({
                 <td className="px-6 py-4 whitespace-nowrap">
                   {getEstadoBadge(incidencia.estado)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {formatFecha(incidencia.fecha_deteccion)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {incidencia.reportado_por?.nombre} {incidencia.reportado_por?.apellidos}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => onVerDetalle(incidencia)}
-                      className="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50 transition-colors"
+                      className="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50 transition-all"
                       title="Ver detalle"
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye size={16} />
                     </button>
                     {onEditar && (
                       <button
                         onClick={() => onEditar(incidencia)}
-                        className="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-50 transition-colors"
+                        className="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-50 transition-all"
                         title="Editar"
                       >
-                        <Edit className="w-4 h-4" />
+                        <Edit size={16} />
                       </button>
                     )}
                     {onEliminar && (
@@ -180,10 +176,10 @@ export default function IncidenciasDataTable({
                             }
                           }
                         }}
-                        className="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50 transition-colors"
+                        className="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50 transition-all"
                         title="Eliminar"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 size={16} />
                       </button>
                     )}
                   </div>

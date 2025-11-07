@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Package, ArrowRight, Eye, XCircle, CheckCircle, Clock, MoreVertical } from 'lucide-react';
+import { Package, ArrowRight, Eye, XCircle, CheckCircle, Clock, MoreVertical, Loader2 } from 'lucide-react';
 import { TransferenciaAlmacen, EstadoTransferencia } from '../api/transferenciasApi';
 
 interface TablaTransferenciasProps {
@@ -59,19 +59,19 @@ export default function TablaTransferencias({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-gray-600">Cargando transferencias...</span>
+      <div className="p-8 text-center bg-white">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando transferencias...</p>
       </div>
     );
   }
 
   if (transferencias.length === 0) {
     return (
-      <div className="text-center py-12">
-        <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-600 font-medium">No hay transferencias registradas</p>
-        <p className="text-gray-500 text-sm mt-1">Crea una nueva transferencia para comenzar</p>
+      <div className="p-8 text-center bg-white">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay transferencias registradas</h3>
+        <p className="text-gray-600 mb-4">Crea una nueva transferencia para comenzar</p>
       </div>
     );
   }
@@ -79,36 +79,36 @@ export default function TablaTransferencias({
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
-        <thead className="bg-gray-50 border-b border-gray-200">
+        <thead className="bg-slate-50 border-b border-slate-200">
           <tr>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Código
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Origen
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Destino
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Productos
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Estado
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Fecha Creación
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
               Acciones
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white divide-y divide-slate-200">
           {transferencias.map((transferencia) => (
             <tr
               key={transferencia._id}
-              className="hover:bg-blue-50 transition-colors cursor-pointer"
+              className="hover:bg-slate-50 transition-colors cursor-pointer"
               onClick={() => onVerDetalle(transferencia._id || '')}
             >
               <td className="px-4 py-4 whitespace-nowrap">
@@ -122,18 +122,18 @@ export default function TablaTransferencias({
                   {transferencia.almacenOrigen.nombre}
                 </div>
                 {transferencia.almacenOrigen.ubicacion && (
-                  <div className="text-xs text-gray-500">{transferencia.almacenOrigen.ubicacion}</div>
+                  <div className="text-xs text-slate-500">{transferencia.almacenOrigen.ubicacion}</div>
                 )}
               </td>
               <td className="px-4 py-4">
                 <div className="flex items-center gap-2">
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
+                  <ArrowRight className="w-4 h-4 text-slate-400" />
                   <div>
                     <div className="text-sm font-medium text-gray-900">
                       {transferencia.almacenDestino.nombre}
                     </div>
                     {transferencia.almacenDestino.ubicacion && (
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-slate-500">
                         {transferencia.almacenDestino.ubicacion}
                       </div>
                     )}
@@ -145,7 +145,7 @@ export default function TablaTransferencias({
                   {transferencia.productos.length}{' '}
                   {transferencia.productos.length === 1 ? 'producto' : 'productos'}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-slate-500">
                   Total:{' '}
                   {transferencia.productos.reduce((sum, p) => sum + p.cantidad, 0)} unidades
                 </div>
@@ -154,7 +154,7 @@ export default function TablaTransferencias({
               <td className="px-4 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">{formatFecha(transferencia.fechaCreacion)}</div>
                 {transferencia.usuarioSolicitante && (
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-slate-500">
                     Por {transferencia.usuarioSolicitante.name}
                   </div>
                 )}
@@ -166,7 +166,7 @@ export default function TablaTransferencias({
                       e.stopPropagation();
                       onVerDetalle(transferencia._id || '');
                     }}
-                    className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
+                    className="p-2 text-blue-600 hover:bg-blue-100 rounded-xl transition-all"
                     title="Ver detalle"
                   >
                     <Eye className="w-4 h-4" />
@@ -180,13 +180,13 @@ export default function TablaTransferencias({
                             menuAbierto === transferencia._id ? null : transferencia._id || null
                           );
                         }}
-                        className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-all"
                         title="Más opciones"
                       >
                         <MoreVertical className="w-4 h-4" />
                       </button>
                       {menuAbierto === transferencia._id && (
-                        <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                        <div className="absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-lg ring-1 ring-slate-200 z-10">
                           <div className="py-1">
                             {onConfirmarRecepcion && (
                               <button
@@ -195,7 +195,7 @@ export default function TablaTransferencias({
                                   onConfirmarRecepcion(transferencia._id || '');
                                   setMenuAbierto(null);
                                 }}
-                                className="w-full text-left px-4 py-2 text-sm text-green-700 hover:bg-green-50 flex items-center gap-2"
+                                className="w-full text-left px-4 py-2 text-sm text-green-700 hover:bg-green-50 flex items-center gap-2 transition-colors"
                               >
                                 <CheckCircle className="w-4 h-4" />
                                 Confirmar Recepción
@@ -208,7 +208,7 @@ export default function TablaTransferencias({
                                   onCancelar(transferencia._id || '');
                                   setMenuAbierto(null);
                                 }}
-                                className="w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-50 flex items-center gap-2"
+                                className="w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-50 flex items-center gap-2 transition-colors"
                               >
                                 <XCircle className="w-4 h-4" />
                                 Cancelar
@@ -234,5 +234,6 @@ export default function TablaTransferencias({
     </div>
   );
 }
+
 
 

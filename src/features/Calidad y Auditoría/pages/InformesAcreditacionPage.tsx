@@ -94,126 +94,136 @@ export default function InformesAcreditacionPage({ onVolver }: InformesAcreditac
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
               {onVolver && (
                 <button
                   onClick={onVolver}
-                  className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 rounded-xl mr-4 transition-colors"
                 >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
+                  <ArrowLeft size={20} className="text-gray-600" />
                 </button>
               )}
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
+              </div>
+              
+              {/* Título y descripción */}
               <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                  <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                    <FileText className="w-8 h-8 text-white" />
-                  </div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
                   Informes de Acreditación/Normativas
                 </h1>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600">
                   Genera informes de acreditación, certificaciones y cumplimiento normativo
                 </p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Mensajes de éxito/error */}
-        {exito && (
-          <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="text-green-800 font-medium">{exito}</p>
-            </div>
-            <button
-              onClick={() => setExito(null)}
-              className="text-green-600 hover:text-green-800"
-            >
-              ×
-            </button>
-          </div>
-        )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
 
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="text-red-800 font-medium">{error}</p>
-            </div>
-            <button
-              onClick={() => setError(null)}
-              className="text-red-600 hover:text-red-800"
-            >
-              ×
-            </button>
-          </div>
-        )}
-
-        {/* Sección de Generación de Informe */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Generar Nuevo Informe</h2>
-
-          {/* Paso 1: Seleccionar Plantilla */}
-          <div className="mb-8">
-            <SelectorDeInformes
-              plantillaSeleccionada={plantillaSeleccionada}
-              onPlantillaSeleccionada={setPlantillaSeleccionada}
-              error={plantillaSeleccionada === null && error?.includes('selecciona') ? error : undefined}
-            />
-          </div>
-
-          {/* Paso 2: Configurar Filtros */}
-          {plantillaSeleccionada && plantillaData && (
-            <div className="mb-8">
-              <FormularioFiltrosInforme
-                filtros={filtros}
-                onFiltrosChange={setFiltros}
-                filtrosDisponibles={plantillaData.filtrosDisponibles}
-                error={error && !error.includes('selecciona') ? error : undefined}
-              />
-            </div>
-          )}
-
-          {/* Botón de Generar */}
-          {plantillaSeleccionada && (
-            <div className="flex justify-end">
+          {/* Mensajes de éxito/error */}
+          {exito && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
+              <CheckCircle2 size={20} className="text-green-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-green-800 font-medium">{exito}</p>
+              </div>
               <button
-                onClick={handleGenerarInforme}
-                disabled={generando || !plantillaSeleccionada}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={() => setExito(null)}
+                className="text-green-600 hover:text-green-800"
               >
-                {generando ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Generando informe...
-                  </>
-                ) : (
-                  <>
-                    <FileText className="w-5 h-5" />
-                    Generar Informe
-                  </>
-                )}
+                ×
               </button>
             </div>
           )}
-        </div>
 
-        {/* Sección de Historial */}
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-          <TablaHistorialInformes
-            key={refreshHistorial}
-            autoRefresh={true}
-            refreshInterval={5000}
-          />
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-red-800 font-medium">{error}</p>
+              </div>
+              <button
+                onClick={() => setError(null)}
+                className="text-red-600 hover:text-red-800"
+              >
+                ×
+              </button>
+            </div>
+          )}
+
+          {/* Sección de Generación de Informe */}
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Generar Nuevo Informe</h2>
+
+            {/* Paso 1: Seleccionar Plantilla */}
+            <div className="mb-8">
+              <SelectorDeInformes
+                plantillaSeleccionada={plantillaSeleccionada}
+                onPlantillaSeleccionada={setPlantillaSeleccionada}
+                error={plantillaSeleccionada === null && error?.includes('selecciona') ? error : undefined}
+              />
+            </div>
+
+            {/* Paso 2: Configurar Filtros */}
+            {plantillaSeleccionada && plantillaData && (
+              <div className="mb-8">
+                <FormularioFiltrosInforme
+                  filtros={filtros}
+                  onFiltrosChange={setFiltros}
+                  filtrosDisponibles={plantillaData.filtrosDisponibles}
+                  error={error && !error.includes('selecciona') ? error : undefined}
+                />
+              </div>
+            )}
+
+            {/* Botón de Generar */}
+            {plantillaSeleccionada && (
+              <div className="flex items-center justify-end">
+                <button
+                  onClick={handleGenerarInforme}
+                  disabled={generando || !plantillaSeleccionada}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-all shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {generando ? (
+                    <>
+                      <Loader2 size={20} className="animate-spin" />
+                      Generando informe...
+                    </>
+                  ) : (
+                    <>
+                      <FileText size={20} />
+                      Generar Informe
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Sección de Historial */}
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <TablaHistorialInformes
+              key={refreshHistorial}
+              autoRefresh={true}
+              refreshInterval={5000}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 

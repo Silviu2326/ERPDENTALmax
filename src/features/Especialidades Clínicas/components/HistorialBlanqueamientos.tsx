@@ -1,4 +1,4 @@
-import { Eye, Calendar, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Eye, Calendar, CheckCircle, Clock, XCircle, Loader2, Package } from 'lucide-react';
 import { Blanqueamiento } from '../api/blanqueamientoApi';
 
 interface HistorialBlanqueamientosProps {
@@ -17,21 +17,21 @@ export default function HistorialBlanqueamientos({
       case 'Completado':
         return (
           <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full flex items-center gap-1">
-            <CheckCircle className="w-3 h-3" />
+            <CheckCircle size={12} />
             Completado
           </span>
         );
       case 'En Proceso':
         return (
           <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full flex items-center gap-1">
-            <Clock className="w-3 h-3" />
+            <Clock size={12} />
             En Proceso
           </span>
         );
       case 'Cancelado':
         return (
           <span className="px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full flex items-center gap-1">
-            <XCircle className="w-3 h-3" />
+            <XCircle size={12} />
             Cancelado
           </span>
         );
@@ -42,18 +42,19 @@ export default function HistorialBlanqueamientos({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-        <p className="text-gray-500">Cargando historial...</p>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando historial...</p>
       </div>
     );
   }
 
   if (blanqueamientos.length === 0) {
     return (
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-        <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-        <p className="text-gray-500 font-medium">No hay tratamientos de blanqueamiento registrados</p>
-        <p className="text-sm text-gray-400 mt-1">
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay tratamientos registrados</h3>
+        <p className="text-gray-600 mb-4">
           Cree un nuevo tratamiento para comenzar el seguimiento
         </p>
       </div>
@@ -67,14 +68,14 @@ export default function HistorialBlanqueamientos({
         .map((blanqueamiento) => (
           <div
             key={blanqueamiento._id}
-            className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow overflow-hidden"
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-3">
-                  <Calendar className="w-5 h-5 text-blue-600" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
+                  <Calendar size={20} className="text-blue-600" />
+                  <div className="flex-1">
+                    <h4 className="text-lg font-semibold text-gray-900">
                       Tratamiento iniciado el{' '}
                       {new Date(blanqueamiento.fechaInicio).toLocaleDateString('es-ES', {
                         day: 'numeric',
@@ -122,7 +123,7 @@ export default function HistorialBlanqueamientos({
                 </div>
 
                 {blanqueamiento.notasGenerales && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
+                  <div className="mt-4 pt-4 border-t border-gray-100">
                     <p className="text-sm text-gray-600">
                       <span className="font-medium">Notas:</span> {blanqueamiento.notasGenerales}
                     </p>
@@ -130,18 +131,21 @@ export default function HistorialBlanqueamientos({
                 )}
               </div>
 
-              <button
-                onClick={() => onVerDetalle(blanqueamiento)}
-                className="ml-4 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <Eye className="w-4 h-4" />
-                Ver Detalle
-              </button>
+              <div className="flex gap-2 ml-4">
+                <button
+                  onClick={() => onVerDetalle(blanqueamiento)}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                >
+                  <Eye size={18} />
+                  Ver Detalle
+                </button>
+              </div>
             </div>
           </div>
         ))}
     </div>
   );
 }
+
 
 

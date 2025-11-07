@@ -1,5 +1,5 @@
 import { EstadisticasDashboard } from '../api/campanasApi';
-import KPIsCampanaCard from './KPIsCampanaCard';
+import MetricCards from './MetricCards';
 
 interface CampanaDashboardProps {
   estadisticas: EstadisticasDashboard;
@@ -16,42 +16,42 @@ export default function CampanaDashboard({ estadisticas }: CampanaDashboardProps
   };
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <KPIsCampanaCard
-          titulo="Inversión Total"
-          valor={formatearMoneda(estadisticas.inversionTotal)}
-          icono="inversion"
-          color="blue"
-        />
-        <KPIsCampanaCard
-          titulo="Pacientes Captados"
-          valor={estadisticas.totalPacientesCaptados}
-          icono="pacientes"
-          color="purple"
-        />
-        <KPIsCampanaCard
-          titulo="CPA Promedio"
-          valor={formatearMoneda(estadisticas.cpaPromedio)}
-          icono="cpa"
-          color="orange"
-        />
-        <KPIsCampanaCard
-          titulo="ROI Global"
-          valor={`${estadisticas.roiGlobal.toFixed(1)}%`}
-          icono="roi"
-          color="green"
-          tendencia={estadisticas.roiGlobal > 0 ? 'up' : estadisticas.roiGlobal < 0 ? 'down' : 'neutral'}
-        />
-        <KPIsCampanaCard
-          titulo="Ingresos Generados"
-          valor={formatearMoneda(estadisticas.ingresosGenerados)}
-          icono="ingresos"
-          color="green"
-        />
-      </div>
-    </div>
+    <MetricCards
+      data={[
+        {
+          id: 'inversion-total',
+          title: 'Inversión Total',
+          value: formatearMoneda(estadisticas.inversionTotal),
+          color: 'info',
+        },
+        {
+          id: 'pacientes-captados',
+          title: 'Pacientes Captados',
+          value: estadisticas.totalPacientesCaptados.toString(),
+          color: 'info',
+        },
+        {
+          id: 'cpa-promedio',
+          title: 'CPA Promedio',
+          value: formatearMoneda(estadisticas.cpaPromedio),
+          color: 'warning',
+        },
+        {
+          id: 'roi-global',
+          title: 'ROI Global',
+          value: `${estadisticas.roiGlobal.toFixed(1)}%`,
+          color: estadisticas.roiGlobal > 0 ? 'success' : 'danger',
+        },
+        {
+          id: 'ingresos-generados',
+          title: 'Ingresos Generados',
+          value: formatearMoneda(estadisticas.ingresosGenerados),
+          color: 'success',
+        },
+      ]}
+    />
   );
 }
+
 
 

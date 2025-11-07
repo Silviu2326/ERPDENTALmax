@@ -1,5 +1,5 @@
 import { Pago } from '../api/pagoApi';
-import { CreditCard, Banknote, Building2, TrendingUp, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { CreditCard, Banknote, Building2, TrendingUp, CheckCircle, Clock, XCircle, Loader2 } from 'lucide-react';
 
 interface HistorialPagosMiniaturaProps {
   pagos: Pago[];
@@ -72,27 +72,28 @@ export default function HistorialPagosMiniatura({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (pagos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Historial de Pagos</h3>
-        <div className="text-center py-8 text-gray-500">
-          <p>No hay pagos registrados</p>
+      <div className="bg-white shadow-sm rounded-xl">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-900">Historial de Pagos</h3>
+        </div>
+        <div className="p-8 text-center">
+          <p className="text-gray-600">No hay pagos registrados</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+    <div className="bg-white shadow-sm rounded-xl">
       <div className="p-6 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">Historial de Pagos</h3>
         <p className="text-sm text-gray-600 mt-1">
@@ -117,7 +118,7 @@ export default function HistorialPagosMiniatura({
                     {formatearMoneda(pago.monto)} {pago.moneda}
                   </span>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${getEstadoColor(pago.estado)}`}>
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center gap-1">
                       {getEstadoIcono(pago.estado)}
                       <span>{pago.estado}</span>
                     </div>
@@ -148,5 +149,6 @@ export default function HistorialPagosMiniatura({
     </div>
   );
 }
+
 
 

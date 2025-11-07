@@ -144,47 +144,51 @@ export default function FormularioMutua({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-t-xl">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-xl">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold flex items-center gap-2">
-              <Building2 className="w-6 h-6" />
-              {mutua ? 'Editar Mutua/Seguro' : 'Nueva Mutua/Seguro'}
-            </h2>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
+                <Building2 size={24} className="text-blue-600" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">
+                {mutua ? 'Editar Mutua/Seguro' : 'Nueva Mutua/Seguro'}
+              </h2>
+            </div>
             <button
               onClick={onCancelar}
-              className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+              className="text-gray-400 hover:text-gray-600 p-2 rounded-lg transition-colors"
             >
-              <X className="w-6 h-6" />
+              <X size={20} />
             </button>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
           {errorGeneral && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-800">
-              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-red-800">
+              <AlertCircle size={20} className="flex-shrink-0" />
               <span>{errorGeneral}</span>
             </div>
           )}
 
           <div className="space-y-6">
             {/* Sección: Datos básicos */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-2xl ring-1 ring-slate-200 p-4">
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
+                <FileText size={20} />
                 Datos Básicos
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Nombre Comercial <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.nombreComercial}
                     onChange={(e) => updateField('nombreComercial', e.target.value)}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                      errores.nombreComercial ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+                      errores.nombreComercial ? 'ring-red-500' : 'ring-slate-300'
                     }`}
                     placeholder="Ej: Sanitas, Adeslas..."
                   />
@@ -194,28 +198,28 @@ export default function FormularioMutua({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Razón Social
                   </label>
                   <input
                     type="text"
                     value={formData.razonSocial || ''}
                     onChange={(e) => updateField('razonSocial', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="Razón social completa"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     CIF <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.cif}
                     onChange={(e) => updateField('cif', e.target.value.toUpperCase())}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono ${
-                      errores.cif ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 font-mono ${
+                      errores.cif ? 'ring-red-500' : 'ring-slate-300'
                     }`}
                     placeholder="A12345678"
                     maxLength={9}
@@ -226,13 +230,13 @@ export default function FormularioMutua({
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Estado
                   </label>
                   <select
                     value={formData.activo ? 'activo' : 'inactivo'}
                     onChange={(e) => updateField('activo', e.target.value === 'activo')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   >
                     <option value="activo">Activa</option>
                     <option value="inactivo">Inactiva</option>
@@ -242,70 +246,70 @@ export default function FormularioMutua({
             </div>
 
             {/* Sección: Dirección */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-2xl ring-1 ring-slate-200 p-4">
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <MapPin className="w-5 h-5" />
+                <MapPin size={20} />
                 Dirección
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Calle y Número
                   </label>
                   <input
                     type="text"
                     value={formData.direccion?.calle || ''}
                     onChange={(e) => updateField('direccion.calle', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="Calle y número"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Ciudad
                   </label>
                   <input
                     type="text"
                     value={formData.direccion?.ciudad || ''}
                     onChange={(e) => updateField('direccion.ciudad', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="Ciudad"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Código Postal
                   </label>
                   <input
                     type="text"
                     value={formData.direccion?.codigoPostal || ''}
                     onChange={(e) => updateField('direccion.codigoPostal', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="28001"
                     maxLength={5}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Provincia
                   </label>
                   <input
                     type="text"
                     value={formData.direccion?.provincia || ''}
                     onChange={(e) => updateField('direccion.provincia', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="Madrid"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     País
                   </label>
                   <input
                     type="text"
                     value={formData.direccion?.pais || ''}
                     onChange={(e) => updateField('direccion.pais', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="España"
                   />
                 </div>
@@ -313,36 +317,36 @@ export default function FormularioMutua({
             </div>
 
             {/* Sección: Contacto */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-2xl ring-1 ring-slate-200 p-4">
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Phone className="w-5 h-5" />
+                <Phone size={20} />
                 Contacto
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    <Phone className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <Phone size={16} className="inline mr-1" />
                     Teléfono
                   </label>
                   <input
                     type="tel"
                     value={formData.contacto?.telefono || ''}
                     onChange={(e) => updateField('contacto.telefono', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="912345678"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    <Mail className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <Mail size={16} className="inline mr-1" />
                     Email
                   </label>
                   <input
                     type="email"
                     value={formData.contacto?.email || ''}
                     onChange={(e) => updateField('contacto.email', e.target.value)}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                      errores['contacto.email'] ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5 ${
+                      errores['contacto.email'] ? 'ring-red-500' : 'ring-slate-300'
                     }`}
                     placeholder="contacto@mutua.es"
                   />
@@ -351,15 +355,15 @@ export default function FormularioMutua({
                   )}
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    <User className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <User size={16} className="inline mr-1" />
                     Persona de Contacto
                   </label>
                   <input
                     type="text"
                     value={formData.contacto?.personaContacto || ''}
                     onChange={(e) => updateField('contacto.personaContacto', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                     placeholder="Nombre del contacto principal"
                   />
                 </div>
@@ -367,20 +371,20 @@ export default function FormularioMutua({
             </div>
 
             {/* Sección: Condiciones Generales */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-slate-50 rounded-2xl ring-1 ring-slate-200 p-4">
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
+                <FileText size={20} />
                 Condiciones Generales
               </h3>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Notas y Condiciones
                 </label>
                 <textarea
                   value={formData.condicionesGenerales || ''}
                   onChange={(e) => updateField('condicionesGenerales', e.target.value)}
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
                   placeholder="Información sobre condiciones de cobertura, porcentajes, topes anuales, etc."
                 />
               </div>
@@ -392,24 +396,24 @@ export default function FormularioMutua({
             <button
               type="button"
               onClick={onCancelar}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all"
               disabled={loading}
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading}
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 size={20} className="animate-spin" />
                   Guardando...
                 </>
               ) : (
                 <>
-                  <Save className="w-4 h-4" />
+                  <Save size={20} />
                   Guardar
                 </>
               )}
@@ -420,5 +424,6 @@ export default function FormularioMutua({
     </div>
   );
 }
+
 
 

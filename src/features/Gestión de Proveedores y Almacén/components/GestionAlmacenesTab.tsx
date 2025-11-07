@@ -4,6 +4,7 @@ import AlmacenesDataTable from './AlmacenesDataTable';
 import ModalCrearEditarAlmacen from './ModalCrearEditarAlmacen';
 import ModalTransferenciaStock from './ModalTransferenciaStock';
 import DetalleAlmacenPage from '../pages/DetalleAlmacenPage';
+import MetricCards from './MetricCards';
 import {
   obtenerAlmacenes,
   crearAlmacen,
@@ -305,43 +306,50 @@ export default function GestionAlmacenesTab() {
   }
 
   return (
-    <div className="p-6">
-      {/* Header con botón de crear */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Gestión de Almacenes</h2>
-            <p className="text-gray-600 mt-1">
-              Administra los almacenes de tu clínica y gestiona transferencias de stock
-            </p>
-          </div>
-          <button
-            onClick={() => setMostrarModalCrear(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors shadow-lg"
-          >
-            <Plus className="w-5 h-5" />
-            Nuevo Almacén
-          </button>
-        </div>
-        {/* KPIs */}
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Almacenes activos</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{totalActivos}</div>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Almacenes principales</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{totalPrincipales}</div>
-          </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-sm text-gray-500">Con responsable asignado</div>
-            <div className="mt-1 text-2xl font-bold text-gray-900">{totalConResponsable}</div>
-          </div>
-        </div>
+    <div className="space-y-6">
+      {/* Toolbar Superior */}
+      <div className="flex items-center justify-end">
+        <button
+          onClick={() => setMostrarModalCrear(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+        >
+          <Plus size={20} className="mr-2" />
+          Nuevo Almacén
+        </button>
       </div>
 
+      {/* KPIs/Métricas */}
+      <MetricCards
+        data={[
+          {
+            id: 'activos',
+            title: 'Almacenes activos',
+            value: totalActivos,
+            color: 'success',
+          },
+          {
+            id: 'principales',
+            title: 'Almacenes principales',
+            value: totalPrincipales,
+            color: 'info',
+          },
+          {
+            id: 'responsables',
+            title: 'Con responsable asignado',
+            value: totalConResponsable,
+            color: 'info',
+          },
+          {
+            id: 'total',
+            title: 'Total almacenes',
+            value: almacenes.length,
+            color: 'info',
+          },
+        ]}
+      />
+
       {/* Tabla de almacenes */}
-      <div className="bg-white rounded-lg border border-gray-200">
+      <div className="bg-white shadow-sm rounded-lg">
         <AlmacenesDataTable
           almacenes={almacenes}
           loading={loading}

@@ -104,38 +104,38 @@ export default function ModalFormRevisionTecnica({
   const horaStr = `${fechaProgramada.getHours().toString().padStart(2, '0')}:${fechaProgramada.getMinutes().toString().padStart(2, '0')}`;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-800">
+        <div className="sticky top-0 bg-white border-b border-gray-200/60 px-6 py-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900">
             {revision ? 'Editar Revisión Técnica' : 'Nueva Revisión Técnica'}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition-colors"
+            className="text-slate-500 hover:text-slate-700 transition-colors p-2 hover:bg-slate-100 rounded-xl"
           >
-            <X className="w-6 h-6" />
+            <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
               {error}
             </div>
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Building2 className="w-4 h-4" />
-                <span>Sede *</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Building2 size={16} className="inline mr-1" />
+                Sede *
               </label>
               <select
                 value={(formData as NuevaRevisionTecnica).sedeId || ''}
                 onChange={(e) => handleChange('sedeId', e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               >
                 <option value="">Seleccione una sede</option>
                 {sedes.map((sede) => (
@@ -147,16 +147,16 @@ export default function ModalFormRevisionTecnica({
             </div>
 
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Wrench className="w-4 h-4" />
-                <span>Equipo *</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Wrench size={16} className="inline mr-1" />
+                Equipo *
               </label>
               <select
                 value={(formData as NuevaRevisionTecnica).equipoId || ''}
                 onChange={(e) => handleChange('equipoId', e.target.value)}
                 required
                 disabled={!formData.sedeId}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 disabled:bg-slate-100 disabled:cursor-not-allowed disabled:text-slate-500"
               >
                 <option value="">Seleccione un equipo</option>
                 {equiposFiltrados.map((equipo) => (
@@ -166,16 +166,16 @@ export default function ModalFormRevisionTecnica({
                 ))}
               </select>
               {!formData.sedeId && (
-                <p className="text-xs text-gray-500 mt-1">Seleccione primero una sede</p>
+                <p className="text-xs text-slate-500 mt-1">Seleccione primero una sede</p>
               )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Calendar className="w-4 h-4" />
-                <span>Fecha Programada *</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Calendar size={16} className="inline mr-1" />
+                Fecha Programada *
               </label>
               <input
                 type="date"
@@ -186,14 +186,14 @@ export default function ModalFormRevisionTecnica({
                   handleChange('fechaProgramada', nuevaFecha.toISOString());
                 }}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
 
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                <Calendar className="w-4 h-4" />
-                <span>Hora</span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                <Calendar size={16} className="inline mr-1" />
+                Hora
               </label>
               <input
                 type="time"
@@ -204,15 +204,15 @@ export default function ModalFormRevisionTecnica({
                   nuevaFecha.setHours(parseInt(hora || '0'), parseInt(minuto || '0'), 0, 0);
                   handleChange('fechaProgramada', nuevaFecha.toISOString());
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
               />
             </div>
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-              <Wrench className="w-4 h-4" />
-              <span>Técnico Responsable *</span>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <Wrench size={16} className="inline mr-1" />
+              Técnico Responsable *
             </label>
             <input
               type="text"
@@ -220,28 +220,28 @@ export default function ModalFormRevisionTecnica({
               onChange={(e) => handleChange('tecnicoResponsable', e.target.value)}
               required
               placeholder="Nombre del técnico"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-              <FileText className="w-4 h-4" />
-              <span>Descripción del Trabajo</span>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <FileText size={16} className="inline mr-1" />
+              Descripción del Trabajo
             </label>
             <textarea
               value={formData.descripcionTrabajo || ''}
               onChange={(e) => handleChange('descripcionTrabajo', e.target.value)}
               rows={3}
               placeholder="Descripción del trabajo a realizar..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-              <DollarSign className="w-4 h-4" />
-              <span>Costo (€)</span>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <DollarSign size={16} className="inline mr-1" />
+              Costo (€)
             </label>
             <input
               type="number"
@@ -250,30 +250,30 @@ export default function ModalFormRevisionTecnica({
               min="0"
               step="0.01"
               placeholder="0.00"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           <div>
-            <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-              <FileText className="w-4 h-4" />
-              <span>Notas</span>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              <FileText size={16} className="inline mr-1" />
+              Notas
             </label>
             <textarea
               value={formData.notas || ''}
               onChange={(e) => handleChange('notas', e.target.value)}
               rows={3}
               placeholder="Notas adicionales..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
             />
           </div>
 
           {revision && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>Fecha de Realización</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <Calendar size={16} className="inline mr-1" />
+                  Fecha de Realización
                 </label>
                 <input
                   type="date"
@@ -286,18 +286,18 @@ export default function ModalFormRevisionTecnica({
                       handleChange('fechaRealizacion', undefined);
                     }
                   }}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-                  <span>Estado</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Estado
                 </label>
                 <select
                   value={revision.estado || 'Programada'}
                   onChange={(e) => handleChange('estado', e.target.value as any)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                 >
                   <option value="Programada">Programada</option>
                   <option value="Completada">Completada</option>
@@ -308,20 +308,20 @@ export default function ModalFormRevisionTecnica({
             </div>
           )}
 
-          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-2 pt-4 border-t border-gray-200/60">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 shadow-sm"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save className="w-4 h-4" />
+              <Save size={20} />
               <span>{loading ? 'Guardando...' : 'Guardar'}</span>
             </button>
           </div>
@@ -330,5 +330,6 @@ export default function ModalFormRevisionTecnica({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw, ArrowLeft } from 'lucide-react';
+import { Plus, RefreshCw, ArrowLeft, ClipboardList, Loader2, Package, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   obtenerPlantillasAuditoria,
@@ -114,123 +114,191 @@ export default function GestionTemplatesAuditoriaPage({
 
   if (showBuilder) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-        <div className="max-w-5xl mx-auto">
-          <ChecklistTemplateBuilder
-            initialData={
-              editingTemplate
-                ? {
-                    name: editingTemplate.name,
-                    description: editingTemplate.description,
-                    items: editingTemplate.items,
-                  }
-                : undefined
-            }
-            onSave={editingTemplate ? handleUpdate : handleCreate}
-            onCancel={() => {
-              setShowBuilder(false);
-              setEditingTemplate(null);
-            }}
-          />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                )}
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <ClipboardList size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {editingTemplate ? 'Editar Plantilla' : 'Nueva Plantilla de Auditoría'}
+                  </h1>
+                  <p className="text-gray-600">
+                    {editingTemplate 
+                      ? 'Modifica los detalles de la plantilla de auditoría'
+                      : 'Crea una nueva plantilla de checklist para auditorías clínicas'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Contenedor Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="max-w-5xl mx-auto">
+            <ChecklistTemplateBuilder
+              initialData={
+                editingTemplate
+                  ? {
+                      name: editingTemplate.name,
+                      description: editingTemplate.description,
+                      items: editingTemplate.items,
+                    }
+                  : undefined
+              }
+              onSave={editingTemplate ? handleUpdate : handleCreate}
+              onCancel={() => {
+                setShowBuilder(false);
+                setEditingTemplate(null);
+              }}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {onVolver && (
-                <button
-                  onClick={onVolver}
-                  className="p-2 hover:bg-white rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
-              )}
-              <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                  Gestión de Plantillas de Auditoría
-                </h1>
-                <p className="text-gray-600 text-lg">
-                  Crea y gestiona plantillas de checklists para auditorías clínicas
-                </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center">
+                {onVolver && (
+                  <button
+                    onClick={onVolver}
+                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors mr-4"
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                )}
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <ClipboardList size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Gestión de Plantillas de Auditoría
+                  </h1>
+                  <p className="text-gray-600">
+                    Crea y gestiona plantillas de checklists para auditorías clínicas
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="flex gap-3">
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex gap-2">
               <button
                 onClick={handleRefresh}
                 disabled={refreshing}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white rounded-xl ring-1 ring-slate-300 hover:bg-slate-50 transition-all disabled:opacity-50"
               >
-                <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin' : ''}`} />
-                <span>Actualizar</span>
+                <RefreshCw size={20} className={refreshing ? 'animate-spin' : ''} />
+                Actualizar
               </button>
               {isAdmin && (
                 <button
                   onClick={() => setShowBuilder(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-sm"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus size={20} />
                   Nueva Plantilla
                 </button>
               )}
             </div>
           </div>
+
+          {/* Error */}
+          {error && (
+            <div className="bg-white rounded-xl shadow-sm ring-1 ring-red-200 p-8 text-center">
+              <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+              <p className="text-gray-600 mb-4">{error}</p>
+              <button
+                onClick={handleRefresh}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all"
+              >
+                Reintentar
+              </button>
+            </div>
+          )}
+
+          {/* Loading */}
+          {loading ? (
+            <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+              <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+              <p className="text-gray-600">Cargando...</p>
+            </div>
+          ) : !error && (
+            /* Lista de plantillas */
+            <div>
+              {templates.length === 0 ? (
+                <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+                  <Package size={48} className="mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    No hay plantillas de auditoría creadas
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Comienza creando tu primera plantilla de checklist para auditorías clínicas
+                  </p>
+                  {isAdmin && (
+                    <button
+                      onClick={() => setShowBuilder(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all"
+                    >
+                      <Plus size={20} />
+                      Crear Primera Plantilla
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {templates.map((template) => (
+                    <AuditTemplateCard
+                      key={template._id}
+                      template={template}
+                      onEdit={isAdmin ? handleEdit : undefined}
+                      onDelete={isAdmin ? handleDelete : undefined}
+                      onArchive={isAdmin ? handleArchive : undefined}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-700">{error}</p>
-          </div>
-        )}
-
-        {/* Loading */}
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <RefreshCw className="w-12 h-12 text-blue-600 animate-spin" />
-          </div>
-        ) : (
-          /* Lista de plantillas */
-          <div className="space-y-4">
-            {templates.length === 0 ? (
-              <div className="bg-white rounded-xl shadow-md p-12 text-center">
-                <p className="text-gray-600 text-lg mb-4">
-                  No hay plantillas de auditoría creadas
-                </p>
-                {isAdmin && (
-                  <button
-                    onClick={() => setShowBuilder(true)}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    <Plus className="w-5 h-5" />
-                    Crear Primera Plantilla
-                  </button>
-                )}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {templates.map((template) => (
-                  <AuditTemplateCard
-                    key={template._id}
-                    template={template}
-                    onEdit={isAdmin ? handleEdit : undefined}
-                    onDelete={isAdmin ? handleDelete : undefined}
-                    onArchive={isAdmin ? handleArchive : undefined}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
 }
+
 
 

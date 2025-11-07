@@ -50,17 +50,17 @@ export default function SelectorSegmentoPacientes({
   }, [segmento]);
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white rounded-xl ring-1 ring-slate-200 p-6">
       <div className="flex items-center gap-2 mb-4">
-        <Filter className="w-5 h-5 text-blue-600" />
-        <h3 className="font-semibold text-gray-900">Segmentación de Pacientes</h3>
+        <Filter size={16} className="text-blue-600" />
+        <h3 className="text-lg font-semibold text-gray-900">Segmentación de Pacientes</h3>
       </div>
 
       <div className="space-y-4">
         {/* Última visita */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            <Calendar className="w-4 h-4 inline mr-1" />
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            <Calendar size={16} className="inline mr-1" />
             Última Visita
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -74,7 +74,7 @@ export default function SelectorSegmentoPacientes({
                 onChange={(e) =>
                   actualizarSegmento({ lastVisitBefore: e.target.value || undefined })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
               />
             </div>
             <div>
@@ -87,7 +87,7 @@ export default function SelectorSegmentoPacientes({
                 onChange={(e) =>
                   actualizarSegmento({ lastVisitAfter: e.target.value || undefined })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
               />
             </div>
           </div>
@@ -95,8 +95,8 @@ export default function SelectorSegmentoPacientes({
 
         {/* Rango de edad */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            <Users className="w-4 h-4 inline mr-1" />
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            <Users size={16} className="inline mr-1" />
             Rango de Edad
           </label>
           <div className="grid grid-cols-2 gap-3">
@@ -115,7 +115,7 @@ export default function SelectorSegmentoPacientes({
                     },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
                 placeholder="Ej: 25"
               />
             </div>
@@ -134,7 +134,7 @@ export default function SelectorSegmentoPacientes({
                     },
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
                 placeholder="Ej: 45"
               />
             </div>
@@ -143,7 +143,7 @@ export default function SelectorSegmentoPacientes({
 
         {/* Consentimiento de marketing */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-sm font-medium text-slate-700 cursor-pointer">
             <input
               type="checkbox"
               checked={segmento.marketingConsent !== false}
@@ -152,7 +152,7 @@ export default function SelectorSegmentoPacientes({
               }
               className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
-            <CheckCircle className="w-4 h-4" />
+            <CheckCircle size={16} />
             <span>Incluir solo pacientes con consentimiento de marketing</span>
           </label>
           <p className="text-xs text-gray-500 mt-1 ml-6">
@@ -162,10 +162,10 @@ export default function SelectorSegmentoPacientes({
       </div>
 
       {/* Vista previa del conteo */}
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+      <div className="mt-6 p-4 bg-blue-50 rounded-xl ring-1 ring-blue-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-blue-600" />
+            <Users size={20} className="text-blue-600" />
             <span className="font-medium text-gray-900">Pacientes que recibirán el SMS:</span>
           </div>
           {cargandoVistaPrevia ? (
@@ -182,5 +182,6 @@ export default function SelectorSegmentoPacientes({
     </div>
   );
 }
+
 
 

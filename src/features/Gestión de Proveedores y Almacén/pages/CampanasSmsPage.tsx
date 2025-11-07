@@ -238,27 +238,33 @@ export default function CampanasSmsPage() {
 
   if (viewMode === 'create' || viewMode === 'edit') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <MessageSquare className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  {viewMode === 'edit' ? 'Editar Campaña SMS' : 'Nueva Campaña SMS'}
-                </h1>
-                <p className="text-gray-600 mt-1">
-                  {viewMode === 'edit'
-                    ? 'Modifica los detalles de tu campaña'
-                    : 'Crea una nueva campaña de mensajería SMS para tus pacientes'}
-                </p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <MessageSquare size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {viewMode === 'edit' ? 'Editar Campaña SMS' : 'Nueva Campaña SMS'}
+                  </h1>
+                  <p className="text-gray-600">
+                    {viewMode === 'edit'
+                      ? 'Modifica los detalles de tu campaña'
+                      : 'Crea una nueva campaña de mensajería SMS para tus pacientes'}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+        {/* Contenedor Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-xl p-6">
             <FormularioNuevaCampanaSms
               campana={selectedCampana || undefined}
               onGuardar={handleGuardar}
@@ -271,94 +277,113 @@ export default function CampanasSmsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <MessageSquare className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <MessageSquare size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Campañas de SMS
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestiona y analiza tus campañas de mensajería SMS masivas
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Campañas de SMS</h1>
-                <p className="text-gray-600 mt-1">
-                  Gestiona y analiza tus campañas de mensajería SMS masivas
-                </p>
-              </div>
+              <button
+                onClick={handleCrearNueva}
+                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+              >
+                <Plus size={20} className="mr-2" />
+                Nueva Campaña
+              </button>
             </div>
-            <button
-              onClick={handleCrearNueva}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
-            >
-              <Plus className="w-5 h-5" />
-              Nueva Campaña
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 mb-6">
-          <div className="flex items-center gap-4">
-            <Filter className="w-5 h-5 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Filtrar por estado:</span>
-            <select
-              value={filtroEstado || ''}
-              onChange={(e) =>
-                setFiltroEstado(
-                  e.target.value ? (e.target.value as any) : undefined
-                )
-              }
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Todos</option>
-              <option value="draft">Borrador</option>
-              <option value="scheduled">Programada</option>
-              <option value="sending">Enviando</option>
-              <option value="sent">Enviada</option>
-              <option value="failed">Fallida</option>
-            </select>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
             <button
               onClick={cargarCampañas}
-              className="ml-auto flex items-center gap-2 px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+              className="flex items-center px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50 transition-all"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw size={20} className="mr-2" />
               Actualizar
             </button>
           </div>
-        </div>
 
-        {/* Error */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <div className="flex items-center gap-2">
-              <span className="text-red-800 text-sm">{error}</span>
+          {/* Filtros */}
+          <div className="bg-white shadow-sm rounded-xl mb-6">
+            <div className="p-4">
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2 flex-1">
+                    <Filter size={18} className="text-slate-600" />
+                    <span className="text-sm font-medium text-slate-700">Filtrar por estado:</span>
+                    <select
+                      value={filtroEstado || ''}
+                      onChange={(e) =>
+                        setFiltroEstado(
+                          e.target.value ? (e.target.value as any) : undefined
+                        )
+                      }
+                      className="flex-1 rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 text-sm"
+                    >
+                      <option value="">Todos</option>
+                      <option value="draft">Borrador</option>
+                      <option value="scheduled">Programada</option>
+                      <option value="sending">Enviando</option>
+                      <option value="sent">Enviada</option>
+                      <option value="failed">Fallida</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        )}
 
-        {/* Tabla de campañas */}
-        <TablaCampanasSms
-          campañas={campañas}
-          loading={loading}
-          onEditar={handleEditar}
-          onEliminar={handleEliminar}
-          onVerEstadisticas={handleVerEstadisticas}
-        />
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <div className="flex items-center gap-2">
+                <span className="text-red-800 text-sm">{error}</span>
+              </div>
+            </div>
+          )}
 
-        {/* Modal de estadísticas */}
-        {mostrarEstadisticas && estadisticas && selectedCampana && (
-          <ModalEstadisticasCampana
-            campanaNombre={selectedCampana.name}
-            estadisticas={estadisticas}
-            onCerrar={() => {
-              setMostrarEstadisticas(false);
-              setEstadisticas(null);
-              setSelectedCampana(null);
-            }}
+          {/* Tabla de campañas */}
+          <TablaCampanasSms
+            campañas={campañas}
+            loading={loading}
+            onEditar={handleEditar}
+            onEliminar={handleEliminar}
+            onVerEstadisticas={handleVerEstadisticas}
           />
-        )}
+        </div>
       </div>
+
+      {/* Modal de estadísticas */}
+      {mostrarEstadisticas && estadisticas && selectedCampana && (
+        <ModalEstadisticasCampana
+          campanaNombre={selectedCampana.name}
+          estadisticas={estadisticas}
+          onCerrar={() => {
+            setMostrarEstadisticas(false);
+            setEstadisticas(null);
+            setSelectedCampana(null);
+          }}
+        />
+      )}
     </div>
   );
 }

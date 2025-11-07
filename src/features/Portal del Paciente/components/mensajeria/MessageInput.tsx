@@ -122,3 +122,4 @@ export default function MessageInput({ onEnviar, disabled = false, onAdjuntar }:
 }
 
 
+

@@ -1,5 +1,5 @@
 import { SmsCampaign } from '../api/campanasSmsApi';
-import { Edit, Trash2, BarChart3, Calendar, MessageSquare, CheckCircle, Clock, XCircle, Send } from 'lucide-react';
+import { Edit, Trash2, BarChart3, Calendar, MessageSquare, CheckCircle, Clock, XCircle, Send, Loader2, AlertCircle } from 'lucide-react';
 
 interface TablaCampanasSmsProps {
   campañas: SmsCampaign[];
@@ -20,27 +20,27 @@ export default function TablaCampanasSms({
     const statusConfig = {
       draft: {
         label: 'Borrador',
-        className: 'bg-gray-100 text-gray-800 border-gray-300',
+        className: 'bg-gray-100 text-gray-800',
         icon: MessageSquare,
       },
       scheduled: {
         label: 'Programada',
-        className: 'bg-blue-100 text-blue-800 border-blue-300',
+        className: 'bg-blue-100 text-blue-800',
         icon: Calendar,
       },
       sending: {
         label: 'Enviando',
-        className: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+        className: 'bg-yellow-100 text-yellow-800',
         icon: Send,
       },
       sent: {
         label: 'Enviada',
-        className: 'bg-green-100 text-green-800 border-green-300',
+        className: 'bg-green-100 text-green-800',
         icon: CheckCircle,
       },
       failed: {
         label: 'Fallida',
-        className: 'bg-red-100 text-red-800 border-red-300',
+        className: 'bg-red-100 text-red-800',
         icon: XCircle,
       },
     };
@@ -50,9 +50,9 @@ export default function TablaCampanasSms({
 
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border ${config.className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${config.className}`}
       >
-        <Icon className="w-3 h-3" />
+        <Icon size={12} />
         {config.label}
       </span>
     );
@@ -72,18 +72,19 @@ export default function TablaCampanasSms({
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (campañas.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-        <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-        <p className="text-gray-600 font-medium">No hay campañas de SMS</p>
-        <p className="text-sm text-gray-500 mt-1">
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <MessageSquare size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay campañas de SMS</h3>
+        <p className="text-gray-600 mb-4">
           Crea tu primera campaña para comenzar
         </p>
       </div>
@@ -91,7 +92,7 @@ export default function TablaCampanasSms({
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white shadow-sm rounded-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -119,19 +120,19 @@ export default function TablaCampanasSms({
           <tbody className="bg-white divide-y divide-gray-200">
             {campañas.map((campana) => (
               <tr key={campana._id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4">
                   <div>
                     <div className="text-sm font-medium text-gray-900">{campana.name}</div>
-                    <div className="text-sm text-gray-500 truncate max-w-xs">
+                    <div className="text-sm text-gray-600 truncate max-w-xs">
                       {campana.message}
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(campana.status)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {formatDate(campana.scheduledAt)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {formatDate(campana.sentAt)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -140,7 +141,7 @@ export default function TablaCampanasSms({
                       <div className="text-gray-900 font-medium">
                         {campana.stats.delivered || 0} / {campana.stats.total || 0}
                       </div>
-                      <div className="text-gray-500 text-xs">
+                      <div className="text-gray-600 text-xs">
                         {campana.stats.total > 0
                           ? Math.round(
                               (campana.stats.delivered / campana.stats.total) * 100
@@ -159,27 +160,27 @@ export default function TablaCampanasSms({
                       <>
                         <button
                           onClick={() => onEditar(campana)}
-                          className="text-blue-600 hover:text-blue-900 p-1.5 rounded hover:bg-blue-50 transition-colors"
+                          className="text-blue-600 hover:text-blue-900 p-1.5 rounded-xl hover:bg-blue-50 transition-all"
                           title="Editar"
                         >
-                          <Edit className="w-4 h-4" />
+                          <Edit size={16} />
                         </button>
                         <button
                           onClick={() => campana._id && onEliminar(campana._id)}
-                          className="text-red-600 hover:text-red-900 p-1.5 rounded hover:bg-red-50 transition-colors"
+                          className="text-red-600 hover:text-red-900 p-1.5 rounded-xl hover:bg-red-50 transition-all"
                           title="Eliminar"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 size={16} />
                         </button>
                       </>
                     )}
                     {(campana.status === 'sent' || campana.status === 'sending') && (
                       <button
                         onClick={() => campana._id && onVerEstadisticas(campana._id)}
-                        className="text-green-600 hover:text-green-900 p-1.5 rounded hover:bg-green-50 transition-colors"
+                        className="text-green-600 hover:text-green-900 p-1.5 rounded-xl hover:bg-green-50 transition-all"
                         title="Ver estadísticas"
                       >
-                        <BarChart3 className="w-4 h-4" />
+                        <BarChart3 size={16} />
                       </button>
                     )}
                   </div>
@@ -192,5 +193,6 @@ export default function TablaCampanasSms({
     </div>
   );
 }
+
 
 

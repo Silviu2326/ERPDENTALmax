@@ -50,8 +50,8 @@ export default function DienteEndoSelector({
   onDienteSeleccionado,
 }: DienteEndoSelectorProps) {
   return (
-    <div className="bg-gray-50 rounded-lg p-6">
-      <label className="block text-sm font-medium text-gray-700 mb-4">
+    <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-6">
+      <label className="block text-sm font-medium text-slate-700 mb-4">
         Diente a Tratar
       </label>
       <div className="grid grid-cols-8 gap-2">
@@ -60,21 +60,21 @@ export default function DienteEndoSelector({
             key={diente.num}
             onClick={() => onDienteSeleccionado(diente.num)}
             className={`
-              p-3 rounded-lg border-2 transition-all duration-200
+              p-3 rounded-xl ring-1 transition-all
               ${dienteSeleccionado === diente.num
-                ? 'bg-blue-600 border-blue-600 text-white shadow-lg transform scale-105'
-                : 'bg-white border-gray-300 text-gray-700 hover:border-blue-400 hover:bg-blue-50'
+                ? 'bg-blue-600 ring-blue-600 text-white shadow-sm'
+                : 'bg-white ring-slate-300 text-gray-700 hover:ring-blue-400 hover:bg-blue-50'
               }
             `}
             title={diente.nombre}
           >
-            <Tooth className="w-6 h-6 mx-auto mb-1" />
+            <Tooth size={24} className="mx-auto mb-1" />
             <span className="text-xs font-semibold">{diente.num}</span>
           </button>
         ))}
       </div>
       {dienteSeleccionado && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="mt-4 p-3 bg-blue-50 ring-1 ring-blue-200 rounded-xl">
           <p className="text-sm text-blue-800">
             <span className="font-semibold">Diente seleccionado:</span>{' '}
             {dienteSeleccionado} - {DIENTES.find(d => d.num === dienteSeleccionado)?.nombre}
@@ -84,5 +84,6 @@ export default function DienteEndoSelector({
     </div>
   );
 }
+
 
 

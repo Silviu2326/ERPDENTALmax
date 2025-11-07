@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, RefreshCw, ArrowLeft } from 'lucide-react';
+import { Plus, RefreshCw, ArrowLeft, ShieldAlert, Loader2 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import {
   obtenerCapas,
@@ -136,25 +136,41 @@ export default function GestionCapasPage({ onVolver }: GestionCapasPageProps) {
 
   if (vista === 'nueva' || vista === 'editar') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
-            <button
-              onClick={() => {
-                setVista('lista');
-                setCapaEditando(null);
-              }}
-              className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              Volver a la lista
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">
-              {vista === 'nueva' ? 'Nueva CAPA' : 'Editar CAPA'}
-            </h1>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Header */}
+        <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+            <div className="py-6">
+              <button
+                onClick={() => {
+                  setVista('lista');
+                  setCapaEditando(null);
+                }}
+                className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2 text-sm font-medium"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                Volver a la lista
+              </button>
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <ShieldAlert size={24} className="text-blue-600" />
+                </div>
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    {vista === 'nueva' ? 'Nueva CAPA' : 'Editar CAPA'}
+                  </h1>
+                  <p className="text-gray-600">
+                    {vista === 'nueva' ? 'Crear una nueva Acción Correctiva y Preventiva' : 'Modificar la información de la CAPA'}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        {/* Contenedor Principal */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-6">
             <FormularioCapa
               capa={capaEditando || undefined}
               onGuardar={handleGuardar}
@@ -174,101 +190,120 @@ export default function GestionCapasPage({ onVolver }: GestionCapasPageProps) {
 
   // Vista de lista
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
             {onVolver && (
               <button
                 onClick={onVolver}
-                className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2"
+                className="text-blue-600 hover:text-blue-800 mb-4 flex items-center gap-2 text-sm font-medium"
               >
                 <ArrowLeft className="w-5 h-5" />
                 Volver
               </button>
             )}
-            <h1 className="text-3xl font-bold text-gray-900">
-              Gestión de CAPAs
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Acciones Correctivas y Preventivas
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={cargarCapas}
-              disabled={loading}
-              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-            >
-              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-              Actualizar
-            </button>
-            <button
-              onClick={() => setVista('nueva')}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-md"
-            >
-              <Plus className="w-5 h-5" />
-              Nueva CAPA
-            </button>
+            <div className="flex items-center">
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <ShieldAlert size={24} className="text-blue-600" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Gestión de CAPAs
+                </h1>
+                <p className="text-gray-600">
+                  Acciones Correctivas y Preventivas
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Filtros */}
-        <FiltrosCapas
-          filtros={filtros}
-          onFiltrosChange={setFiltros}
-          clinicas={clinicas}
-          responsables={responsables}
-        />
-
-        {/* Tabla */}
-        <TablaCapas
-          capas={capas}
-          onVerDetalle={handleVerDetalle}
-          onEditar={(capaId) => {
-            const capa = capas.find((c) => c._id === capaId);
-            if (capa) {
-              setCapaEditando(capa);
-              setVista('editar');
-            }
-          }}
-          onEliminar={handleEliminar}
-          loading={loading}
-        />
-
-        {/* Paginación */}
-        {paginacion.totalPages > 1 && (
-          <div className="mt-6 flex items-center justify-between bg-white rounded-lg shadow-md p-4 border border-gray-200">
-            <div className="text-sm text-gray-700">
-              Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
-              {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
-              {paginacion.total} CAPAs
-            </div>
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setFiltros({ ...filtros, page: paginacion.page - 1 })}
-                disabled={paginacion.page === 1}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={cargarCapas}
+                disabled={loading}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Anterior
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+                Actualizar
               </button>
-              <span className="px-4 py-2 text-sm text-gray-700">
-                Página {paginacion.page} de {paginacion.totalPages}
-              </span>
               <button
-                onClick={() => setFiltros({ ...filtros, page: paginacion.page + 1 })}
-                disabled={paginacion.page === paginacion.totalPages}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={() => setVista('nueva')}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               >
-                Siguiente
+                <Plus size={20} />
+                Nueva CAPA
               </button>
             </div>
           </div>
-        )}
+
+          {/* Filtros */}
+          <FiltrosCapas
+            filtros={filtros}
+            onFiltrosChange={setFiltros}
+            clinicas={clinicas}
+            responsables={responsables}
+          />
+
+          {/* Tabla */}
+          <TablaCapas
+            capas={capas}
+            onVerDetalle={handleVerDetalle}
+            onEditar={(capaId) => {
+              const capa = capas.find((c) => c._id === capaId);
+              if (capa) {
+                setCapaEditando(capa);
+                setVista('editar');
+              }
+            }}
+            onEliminar={handleEliminar}
+            loading={loading}
+          />
+
+          {/* Paginación */}
+          {paginacion.totalPages > 1 && (
+            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="text-sm text-slate-600">
+                  Mostrando {((paginacion.page - 1) * paginacion.limit) + 1} a{' '}
+                  {Math.min(paginacion.page * paginacion.limit, paginacion.total)} de{' '}
+                  {paginacion.total} CAPAs
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setFiltros({ ...filtros, page: paginacion.page - 1 })}
+                    disabled={paginacion.page === 1}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Anterior
+                  </button>
+                  <span className="px-4 py-2 text-sm text-slate-700">
+                    Página {paginacion.page} de {paginacion.totalPages}
+                  </span>
+                  <button
+                    onClick={() => setFiltros({ ...filtros, page: paginacion.page + 1 })}
+                    disabled={paginacion.page === paginacion.totalPages}
+                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

@@ -62,24 +62,28 @@ export default function SelectorProfesionalTratamiento({
   return (
     <div className="space-y-4">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center space-x-2">
-          <AlertCircle className="h-5 w-5" />
-          <span>{error}</span>
+        <div className="bg-white shadow-sm rounded-xl p-4 ring-1 ring-red-200/70">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-red-100 rounded-lg">
+              <AlertCircle size={18} className="text-red-600" />
+            </div>
+            <p className="text-sm font-medium text-red-900">{error}</p>
+          </div>
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Selector de Profesional */}
         <div>
-          <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-            <Stethoscope className="w-4 h-4" />
+          <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
+            <Stethoscope size={16} />
             <span>Profesional *</span>
           </label>
           <select
             value={profesionalSeleccionado?._id || ''}
             onChange={handleProfesionalSelect}
             disabled={disabled || loadingProfesionales}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 transition-all disabled:bg-slate-100 disabled:cursor-not-allowed disabled:text-slate-500"
           >
             <option value="">
               {loadingProfesionales ? 'Cargando...' : 'Seleccionar profesional'}
@@ -94,15 +98,15 @@ export default function SelectorProfesionalTratamiento({
 
         {/* Selector de Tratamiento */}
         <div>
-          <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-            <Clock className="w-4 h-4" />
+          <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-2">
+            <Clock size={16} />
             <span>Tratamiento</span>
           </label>
           <select
             value={tratamientoSeleccionado?._id || ''}
             onChange={handleTratamientoSelect}
             disabled={disabled || loadingTratamientos}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 transition-all disabled:bg-slate-100 disabled:cursor-not-allowed disabled:text-slate-500"
           >
             <option value="">
               {loadingTratamientos ? 'Cargando...' : 'Seleccionar tratamiento (opcional)'}
@@ -114,7 +118,7 @@ export default function SelectorProfesionalTratamiento({
             ))}
           </select>
           {tratamientoSeleccionado && (
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-slate-600">
               Duración estimada: {tratamientoSeleccionado.duracionEstimadaMinutos} minutos
             </p>
           )}
@@ -123,5 +127,6 @@ export default function SelectorProfesionalTratamiento({
     </div>
   );
 }
+
 
 

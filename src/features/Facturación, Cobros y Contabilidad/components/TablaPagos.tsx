@@ -1,5 +1,5 @@
 import { Pago } from '../api/pagosApi';
-import { Eye, FileText, XCircle, Receipt } from 'lucide-react';
+import { Eye, FileText, XCircle, Receipt, Loader2 } from 'lucide-react';
 
 interface TablaPagosProps {
   pagos: Pago[];
@@ -58,29 +58,26 @@ export default function TablaPagos({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center ring-1 ring-slate-200">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (pagos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-          <Receipt className="w-12 h-12 mb-4 opacity-50" />
-          <p className="text-lg font-medium">No hay pagos registrados</p>
-          <p className="text-sm">Los pagos aparecerán aquí cuando se registren</p>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm p-8 text-center ring-1 ring-slate-200">
+        <Receipt size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay pagos registrados</h3>
+        <p className="text-gray-600 mb-4">Los pagos aparecerán aquí cuando se registren</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div className="bg-white rounded-xl shadow-sm ring-1 ring-slate-200 overflow-hidden">
+      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
         <h3 className="text-lg font-semibold text-gray-900">Lista de Pagos</h3>
       </div>
       <div className="overflow-x-auto">
@@ -168,14 +165,14 @@ export default function TablaPagos({
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center gap-2">
                     {onVerRecibo && pago._id && pago.estado === 'Completado' && (
                       <button
                         onClick={() => onVerRecibo(pago._id!)}
-                        className="text-blue-600 hover:text-blue-900 flex items-center space-x-1 transition-colors"
+                        className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium transition-all bg-white text-blue-600 shadow-sm ring-1 ring-blue-200 hover:bg-blue-50 hover:shadow-md"
                         title="Ver recibo"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye size={16} />
                         <span>Ver</span>
                       </button>
                     )}
@@ -186,10 +183,10 @@ export default function TablaPagos({
                             onAnularPago(pago._id!);
                           }
                         }}
-                        className="text-red-600 hover:text-red-900 flex items-center space-x-1 transition-colors"
+                        className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium transition-all bg-white text-red-600 shadow-sm ring-1 ring-red-200 hover:bg-red-50 hover:shadow-md"
                         title="Anular pago"
                       >
-                        <XCircle className="w-4 h-4" />
+                        <XCircle size={16} />
                         <span>Anular</span>
                       </button>
                     )}
@@ -203,5 +200,6 @@ export default function TablaPagos({
     </div>
   );
 }
+
 
 

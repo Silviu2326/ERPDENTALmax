@@ -84,141 +84,158 @@ export default function RecetasMedicasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center">
+              {/* Icono con contenedor */}
+              <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                <FileText size={24} className="text-blue-600" />
               </div>
+              
+              {/* Título y descripción */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Recetas Médicas</h1>
-                <p className="text-gray-600 mt-1">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                  Recetas Médicas
+                </h1>
+                <p className="text-gray-600">
                   Gestión de recetas médicas y prescripciones
                 </p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">{error}</p>
-          </div>
-        )}
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+        <div className="space-y-6">
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-xl ring-1 ring-red-200/70">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
 
-        {/* Vista: Buscar Paciente */}
-        {vista === 'buscar' && (
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-6">
-                <Search className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Buscar Paciente
-                </h2>
-                <p className="text-gray-600">
-                  Busca un paciente para ver su historial de recetas o crear una nueva
-                </p>
-              </div>
+          {/* Vista: Buscar Paciente */}
+          {vista === 'buscar' && (
+            <div className="bg-white rounded-lg shadow-sm p-8">
+              <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-6">
+                  <div className="inline-flex p-3 bg-blue-100 rounded-xl mb-4 ring-1 ring-blue-200/70">
+                    <Search size={48} className="text-blue-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-2">
+                    Buscar Paciente
+                  </h2>
+                  <p className="text-gray-600">
+                    Busca un paciente para ver su historial de recetas o crear una nueva
+                  </p>
+                </div>
 
-              <BuscadorPacientes
-                pacienteSeleccionado={pacienteSeleccionado}
-                onPacienteSeleccionado={handlePacienteSeleccionado}
-              />
+                <BuscadorPacientes
+                  pacienteSeleccionado={pacienteSeleccionado}
+                  onPacienteSeleccionado={handlePacienteSeleccionado}
+                />
 
-              {pacienteSeleccionado && (
-                <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <User className="w-5 h-5 text-blue-600" />
-                      <div>
-                        <p className="font-semibold text-gray-900">
-                          {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
-                        </p>
-                        {pacienteSeleccionado.dni && (
-                          <p className="text-sm text-gray-600">DNI: {pacienteSeleccionado.dni}</p>
-                        )}
+                {pacienteSeleccionado && (
+                  <div className="mt-6 p-4 bg-blue-50 rounded-xl ring-1 ring-blue-200/70">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-blue-100 rounded-lg">
+                          <User size={20} className="text-blue-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">
+                            {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
+                          </p>
+                          {pacienteSeleccionado.dni && (
+                            <p className="text-xs text-gray-600">DNI: {pacienteSeleccionado.dni}</p>
+                          )}
+                        </div>
                       </div>
+                      <button
+                        onClick={() => setVista('historial')}
+                        className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                      >
+                        Ver Historial
+                      </button>
                     </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Vista: Crear Nueva Receta */}
+          {vista === 'crear' && pacienteSeleccionado && (
+            <div className="space-y-6">
+              <div className="flex items-center">
+                <button
+                  onClick={handleCancelarCrear}
+                  className="text-blue-600 hover:text-blue-800 flex items-center gap-2 text-sm font-medium transition-colors"
+                >
+                  <span>← Volver al historial</span>
+                </button>
+              </div>
+              <FormularioCrearReceta
+                pacienteId={pacienteSeleccionado._id}
+                pacienteNombre={`${pacienteSeleccionado.nombre} ${pacienteSeleccionado.apellidos}`}
+                onGuardar={handleGuardarReceta}
+                onCancelar={handleCancelarCrear}
+                loading={loading}
+              />
+            </div>
+          )}
+
+          {/* Vista: Historial de Recetas */}
+          {vista === 'historial' && pacienteSeleccionado && (
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg shadow-sm p-4">
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <User size={20} className="text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
+                      </p>
+                      {pacienteSeleccionado.dni && (
+                        <p className="text-xs text-gray-600">DNI: {pacienteSeleccionado.dni}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
                     <button
-                      onClick={() => setVista('historial')}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      onClick={handleNuevaReceta}
+                      className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
                     >
-                      Ver Historial
+                      <Plus size={20} />
+                      <span>Nueva Receta</span>
+                    </button>
+                    <button
+                      onClick={handleVolverBuscar}
+                      className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                    >
+                      Cambiar Paciente
                     </button>
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Vista: Crear Nueva Receta */}
-        {vista === 'crear' && pacienteSeleccionado && (
-          <div>
-            <div className="mb-4 flex items-center justify-between">
-              <button
-                onClick={handleCancelarCrear}
-                className="text-blue-600 hover:text-blue-800 flex items-center space-x-2"
-              >
-                <span>← Volver al historial</span>
-              </button>
-            </div>
-            <FormularioCrearReceta
-              pacienteId={pacienteSeleccionado._id}
-              pacienteNombre={`${pacienteSeleccionado.nombre} ${pacienteSeleccionado.apellidos}`}
-              onGuardar={handleGuardarReceta}
-              onCancelar={handleCancelarCrear}
-              loading={loading}
-            />
-          </div>
-        )}
-
-        {/* Vista: Historial de Recetas */}
-        {vista === 'historial' && pacienteSeleccionado && (
-          <div>
-            <div className="mb-6 bg-white rounded-lg shadow-md p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <User className="w-5 h-5 text-blue-600" />
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      {pacienteSeleccionado.nombre} {pacienteSeleccionado.apellidos}
-                    </p>
-                    {pacienteSeleccionado.dni && (
-                      <p className="text-sm text-gray-600">DNI: {pacienteSeleccionado.dni}</p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <button
-                    onClick={handleNuevaReceta}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors flex items-center space-x-2"
-                  >
-                    <Plus className="w-5 h-5" />
-                    <span>Nueva Receta</span>
-                  </button>
-                  <button
-                    onClick={handleVolverBuscar}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
-                  >
-                    Cambiar Paciente
-                  </button>
-                </div>
               </div>
-            </div>
 
-            <ListaHistorialRecetas
-              pacienteId={pacienteSeleccionado._id}
-              onRecetaCreada={recetaCreada ? () => setRecetaCreada(false) : undefined}
-            />
-          </div>
-        )}
+              <ListaHistorialRecetas
+                pacienteId={pacienteSeleccionado._id}
+                onRecetaCreada={recetaCreada ? () => setRecetaCreada(false) : undefined}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
 
 

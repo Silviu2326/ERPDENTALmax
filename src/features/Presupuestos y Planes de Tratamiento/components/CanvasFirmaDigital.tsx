@@ -195,3 +195,4 @@ export default function CanvasFirmaDigital({ onFirmaChange, firmaPrevia }: Canva
 }
 
 
+

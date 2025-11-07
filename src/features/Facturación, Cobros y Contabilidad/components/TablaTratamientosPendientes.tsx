@@ -1,5 +1,5 @@
 import { Tratamiento } from '../api/liquidacionesApi';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { CheckCircle2, Circle, Package, Loader2 } from 'lucide-react';
 
 interface TablaTratamientosPendientesProps {
   tratamientos: Tratamiento[];
@@ -36,54 +36,46 @@ export default function TablaTratamientosPendientes({
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-200 rounded w-1/4"></div>
-          <div className="space-y-2">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-12 bg-gray-200 rounded"></div>
-            ))}
-          </div>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (tratamientos.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-        <div className="text-center py-12">
-          <Circle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">
-            No hay tratamientos pendientes
-          </h3>
-          <p className="text-gray-500">
-            No se encontraron tratamientos para liquidar con los filtros seleccionados.
-          </p>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          No hay tratamientos pendientes
+        </h3>
+        <p className="text-gray-600 mb-4">
+          No se encontraron tratamientos para liquidar con los filtros seleccionados.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-      <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+    <div className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
+      <div className="p-4 bg-gray-50 border-b border-gray-200">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-gray-900">
             Tratamientos Pendientes ({tratamientos.length})
           </h3>
           <button
             onClick={onToggleTodos}
-            className="flex items-center space-x-2 px-3 py-1.5 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
             {todosSeleccionados ? (
               <>
-                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <CheckCircle2 size={16} className="text-green-600" />
                 <span>Deseleccionar todos</span>
               </>
             ) : (
               <>
-                <Circle className="w-4 h-4 text-gray-400" />
+                <Circle size={16} className="text-gray-400" />
                 <span>Seleccionar todos</span>
               </>
             )}
@@ -93,7 +85,7 @@ export default function TablaTratamientosPendientes({
 
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-slate-50 border-b border-gray-200">
             <tr>
               <th className="px-4 py-3 text-left">
                 <input
@@ -103,22 +95,22 @@ export default function TablaTratamientosPendientes({
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Fecha
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Paciente
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Prestación
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Importe Total
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Importe Mutua
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
                 Importe Paciente
               </th>
             </tr>
@@ -129,7 +121,7 @@ export default function TablaTratamientosPendientes({
               return (
                 <tr
                   key={tratamiento._id}
-                  className={`hover:bg-gray-50 transition-colors ${
+                  className={`hover:bg-slate-50 transition-colors ${
                     estaSeleccionado ? 'bg-blue-50' : ''
                   }`}
                 >
@@ -180,5 +172,6 @@ export default function TablaTratamientosPendientes({
     </div>
   );
 }
+
 
 

@@ -146,130 +146,160 @@ export default function ProtocolosLimpiezaPage({ onTabChange, tabActiva = 'proto
   });
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileText size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Protocolos de Limpieza y Desinfección
+                  </h1>
+                  <p className="text-gray-600">
+                    Gestión y consulta de protocolos estandarizados de higiene, limpieza y desinfección
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
         {/* Tabs de Navegación (si se muestra desde la página principal) */}
         {onTabChange && (
-          <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200">
-            <div className="flex border-b border-gray-200">
-              <button
-                onClick={() => onTabChange('lotes')}
-                className={`flex items-center space-x-2 px-6 py-4 font-medium transition-colors border-b-2 ${
-                  tabActiva === 'lotes'
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                }`}
+          <div className="p-0 bg-white shadow-sm rounded-lg mb-6">
+            <div className="px-4 py-3">
+              <div
+                role="tablist"
+                aria-label="Secciones"
+                className="flex items-center gap-2 rounded-2xl bg-slate-100 p-1"
               >
-                <Package className="w-5 h-5" />
-                <span>Lotes de Esterilización</span>
-              </button>
-              <button
-                onClick={() => onTabChange('protocolos')}
-                className={`flex items-center space-x-2 px-6 py-4 font-medium transition-colors border-b-2 ${
-                  tabActiva === 'protocolos'
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                <FileText className="w-5 h-5" />
-                <span>Protocolos de Limpieza</span>
-              </button>
+                <button
+                  onClick={() => onTabChange('lotes')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    tabActiva === 'lotes'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <Package size={18} className={tabActiva === 'lotes' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Lotes de Esterilización</span>
+                </button>
+                <button
+                  onClick={() => onTabChange('protocolos')}
+                  className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    tabActiva === 'protocolos'
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                  }`}
+                >
+                  <FileText size={18} className={tabActiva === 'protocolos' ? 'opacity-100' : 'opacity-70'} />
+                  <span>Protocolos de Limpieza</span>
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Protocolos de Limpieza y Desinfección</h1>
-              <p className="text-gray-600 mt-1">
-                Gestión y consulta de protocolos estandarizados de higiene, limpieza y desinfección
-              </p>
-            </div>
-            <div className="flex items-center space-x-3">
+        <div className="space-y-6">
+          {/* Toolbar Superior */}
+          <div className="flex items-center justify-end">
+            <div className="flex items-center gap-2">
               <button
                 onClick={cargarProtocolos}
                 disabled={loading}
-                className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-2 disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               >
-                <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
                 <span>Actualizar</span>
               </button>
               {esAdmin && (
                 <button
                   onClick={() => handleAbrirModalGestion()}
-                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 shadow-sm"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all shadow-sm"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus size={20} />
                   <span>Nuevo Protocolo</span>
                 </button>
               )}
             </div>
           </div>
-        </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-red-800">{error}</p>
-              <button
-                onClick={() => setError(null)}
-                className="mt-2 text-xs text-red-600 hover:text-red-800 underline"
-              >
-                Cerrar
-              </button>
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+              <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-red-800">{error}</p>
+                <button
+                  onClick={() => setError(null)}
+                  className="mt-2 text-xs text-red-600 hover:text-red-800 underline"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Filtros y Búsqueda */}
+          <div className="bg-white shadow-sm rounded-lg">
+            <div className="p-4 space-y-4">
+              <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-3">
+                <div className="flex gap-4">
+                  <div className="flex-1 relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+                    <input
+                      type="text"
+                      placeholder="Buscar protocolos..."
+                      value={busqueda}
+                      onChange={(e) => setBusqueda(e.target.value)}
+                      className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 pl-10 pr-3 py-2.5"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Filter size={18} className="text-slate-400" />
+                    <select
+                      value={filtros.categoria || ''}
+                      onChange={(e) =>
+                        setFiltros({ ...filtros, categoria: e.target.value || undefined })
+                      }
+                      className="rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-4 py-2.5"
+                    >
+                      <option value="">Todas las categorías</option>
+                      <option value="Limpieza de superficies">Limpieza de superficies</option>
+                      <option value="Esterilización de instrumental">Esterilización de instrumental</option>
+                      <option value="Limpieza de gabinetes">Limpieza de gabinetes</option>
+                      <option value="Gestión de residuos">Gestión de residuos</option>
+                      <option value="Otros">Otros</option>
+                    </select>
+                  </div>
+                  {!esAdmin && (
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={filtros.noLeidos || false}
+                        onChange={(e) =>
+                          setFiltros({ ...filtros, noLeidos: e.target.checked || undefined })
+                        }
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                      />
+                      <span className="text-sm text-slate-700">Solo no leídos</span>
+                    </label>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        )}
-
-        {/* Filtros y Búsqueda */}
-        <div className="mb-6 bg-white rounded-lg shadow-sm p-4 border border-gray-200">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Buscar protocolos..."
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Filter className="w-5 h-5 text-gray-400" />
-              <select
-                value={filtros.categoria || ''}
-                onChange={(e) =>
-                  setFiltros({ ...filtros, categoria: e.target.value || undefined })
-                }
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="">Todas las categorías</option>
-                <option value="Limpieza de superficies">Limpieza de superficies</option>
-                <option value="Esterilización de instrumental">Esterilización de instrumental</option>
-                <option value="Limpieza de gabinetes">Limpieza de gabinetes</option>
-                <option value="Gestión de residuos">Gestión de residuos</option>
-                <option value="Otros">Otros</option>
-              </select>
-            </div>
-            {!esAdmin && (
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={filtros.noLeidos || false}
-                  onChange={(e) =>
-                    setFiltros({ ...filtros, noLeidos: e.target.checked || undefined })
-                  }
-                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-                <span className="text-sm text-gray-700">Solo no leídos</span>
-              </label>
-            )}
-          </div>
-        </div>
 
         {/* Contenido Principal */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -298,8 +328,10 @@ export default function ProtocolosLimpiezaPage({ onTabChange, tabActiva = 'proto
                 onArchivar={handleArchivarProtocolo}
               />
             ) : (
-              <div className="bg-white rounded-lg shadow-sm p-12 border border-gray-200 text-center">
-                <p className="text-gray-500 text-lg">Seleccione un protocolo para ver los detalles</p>
+              <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un protocolo</h3>
+                <p className="text-gray-600">Seleccione un protocolo de la lista para ver los detalles</p>
               </div>
             )}
           </div>

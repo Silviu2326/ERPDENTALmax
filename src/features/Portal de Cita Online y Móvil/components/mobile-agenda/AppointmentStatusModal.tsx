@@ -18,42 +18,42 @@ const estadosDisponibles: Array<{
   {
     valor: 'Pendiente',
     label: 'Pendiente',
-    icon: <Clock className="w-5 h-5" />,
+    icon: <Clock size={20} />,
     color: 'text-yellow-600 bg-yellow-50 hover:bg-yellow-100',
     descripcion: 'Cita sin confirmar',
   },
   {
     valor: 'Confirmado',
     label: 'Confirmado',
-    icon: <CheckCircle className="w-5 h-5" />,
+    icon: <CheckCircle size={20} />,
     color: 'text-blue-600 bg-blue-50 hover:bg-blue-100',
     descripcion: 'Cita confirmada por el paciente',
   },
   {
     valor: 'En Sala de Espera',
     label: 'En Sala de Espera',
-    icon: <UserCheck className="w-5 h-5" />,
+    icon: <UserCheck size={20} />,
     color: 'text-green-600 bg-green-50 hover:bg-green-100',
     descripcion: 'Paciente ha llegado (Check-in)',
   },
   {
     valor: 'Atendido',
     label: 'Atendido',
-    icon: <CheckCircle className="w-5 h-5" />,
-    color: 'text-gray-600 bg-gray-50 hover:bg-gray-100',
+    icon: <CheckCircle size={20} />,
+    color: 'text-slate-600 bg-slate-50 hover:bg-slate-100',
     descripcion: 'Cita completada',
   },
   {
     valor: 'Cancelado',
     label: 'Cancelado',
-    icon: <XCircle className="w-5 h-5" />,
+    icon: <XCircle size={20} />,
     color: 'text-red-600 bg-red-50 hover:bg-red-100',
     descripcion: 'Cita cancelada',
   },
   {
     valor: 'No se presentó',
     label: 'No se presentó',
-    icon: <AlertCircle className="w-5 h-5" />,
+    icon: <AlertCircle size={20} />,
     color: 'text-orange-600 bg-orange-50 hover:bg-orange-100',
     descripcion: 'Paciente no asistió',
   },
@@ -97,30 +97,30 @@ export default function AppointmentStatusModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto ring-1 ring-slate-200">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-900">Cambiar Estado de Cita</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-all"
             aria-label="Cerrar"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X size={20} className="text-slate-600" />
           </button>
         </div>
 
         {/* Información de la cita */}
-        <div className="px-6 py-4 border-b border-gray-200">
-          <div className="space-y-2">
+        <div className="px-6 py-4 border-b border-slate-200">
+          <div className="space-y-3">
             <div>
-              <p className="text-sm text-gray-500">Paciente</p>
+              <p className="text-sm text-slate-600 mb-1">Paciente</p>
               <p className="font-semibold text-gray-900">
                 {cita.paciente.nombre} {cita.paciente.apellidos}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Fecha y Hora</p>
+              <p className="text-sm text-slate-600 mb-1">Fecha y Hora</p>
               <p className="font-medium text-gray-900">
                 {formatearFecha(cita.fechaHoraInicio)} - {formatearHora(cita.fechaHoraInicio)} -{' '}
                 {formatearHora(cita.fechaHoraFin)}
@@ -128,12 +128,12 @@ export default function AppointmentStatusModal({
             </div>
             {cita.tratamiento && (
               <div>
-                <p className="text-sm text-gray-500">Tratamiento</p>
+                <p className="text-sm text-slate-600 mb-1">Tratamiento</p>
                 <p className="font-medium text-gray-900">{cita.tratamiento.nombre}</p>
               </div>
             )}
             <div>
-              <p className="text-sm text-gray-500">Estado Actual</p>
+              <p className="text-sm text-slate-600 mb-1">Estado Actual</p>
               <p className="font-medium text-gray-900">{cita.estado}</p>
             </div>
           </div>
@@ -141,26 +141,26 @@ export default function AppointmentStatusModal({
 
         {/* Opciones de estado */}
         <div className="px-6 py-4">
-          <p className="text-sm font-medium text-gray-700 mb-3">Seleccionar nuevo estado:</p>
+          <p className="text-sm font-medium text-slate-700 mb-3">Seleccionar nuevo estado:</p>
           <div className="space-y-2">
             {estadosDisponibles.map((estado) => (
               <button
                 key={estado.valor}
                 onClick={() => handleCambiarEstado(estado.valor)}
                 disabled={cita.estado === estado.valor}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl ring-1 transition-all duration-200 ${
                   cita.estado === estado.valor
-                    ? 'border-blue-500 bg-blue-50 cursor-not-allowed opacity-60'
-                    : `border-gray-200 ${estado.color} cursor-pointer`
+                    ? 'ring-blue-500 bg-blue-50 cursor-not-allowed opacity-60'
+                    : `ring-slate-200 ${estado.color} cursor-pointer hover:ring-2 hover:shadow-sm`
                 }`}
               >
                 <div className="flex-shrink-0">{estado.icon}</div>
                 <div className="flex-1 text-left">
-                  <p className="font-medium">{estado.label}</p>
-                  <p className="text-xs opacity-75">{estado.descripcion}</p>
+                  <p className="font-medium text-gray-900">{estado.label}</p>
+                  <p className="text-xs text-slate-600">{estado.descripcion}</p>
                 </div>
                 {cita.estado === estado.valor && (
-                  <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                  <CheckCircle size={20} className="text-blue-600 flex-shrink-0" />
                 )}
               </button>
             ))}
@@ -168,10 +168,10 @@ export default function AppointmentStatusModal({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4">
+        <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4">
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-slate-200 text-slate-700 hover:bg-slate-300 ring-1 ring-slate-300"
           >
             Cancelar
           </button>
@@ -180,5 +180,6 @@ export default function AppointmentStatusModal({
     </div>
   );
 }
+
 
 

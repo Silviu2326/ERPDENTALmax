@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Calendar, User, FileText, AlertCircle } from 'lucide-react';
+import { Clock, Calendar, User, FileText, AlertCircle, Loader2 } from 'lucide-react';
 import { AjusteProtesis, obtenerHistorialAjustes } from '../api/protesisRemovibleApi';
 
 interface HistorialAjustesProtesisProps {
@@ -53,44 +53,39 @@ export default function HistorialAjustesProtesis({
 
   if (cargando) {
     return (
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <span className="ml-3 text-gray-600">Cargando historial...</span>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando historial...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-        <div className="flex items-center gap-3 text-red-600">
-          <AlertCircle className="w-5 h-5" />
-          <p className="font-medium">{error}</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+        <p className="text-gray-600 mb-4">{error}</p>
       </div>
     );
   }
 
   if (ajustes.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Historial de Ajustes</h3>
-        <div className="text-center py-8 text-gray-500">
-          <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
-          <p>No se han registrado ajustes aún</p>
-          <p className="text-sm mt-1">El historial aparecerá aquí cuando se registren los primeros ajustes</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-xl p-8 text-center">
+        <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Historial de Ajustes</h3>
+        <p className="text-gray-600 mb-4">No se han registrado ajustes aún</p>
+        <p className="text-sm text-gray-500">El historial aparecerá aquí cuando se registren los primeros ajustes</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold text-gray-800">Historial de Ajustes</h3>
-        <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+    <div className="bg-white shadow-sm rounded-xl p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-xl font-bold text-gray-900">Historial de Ajustes</h3>
+        <span className="text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1 rounded-full">
           {ajustes.length} {ajustes.length === 1 ? 'ajuste' : 'ajustes'}
         </span>
       </div>
@@ -99,20 +94,20 @@ export default function HistorialAjustesProtesis({
         {ajustes.map((ajuste, index) => (
           <div
             key={ajuste._id || index}
-            className="border-l-4 border-blue-500 bg-blue-50 rounded-r-lg p-4 hover:shadow-md transition-shadow"
+            className="border-l-4 border-blue-500 bg-blue-50/50 rounded-r-xl p-4 hover:shadow-md transition-shadow ring-1 ring-slate-200"
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-3">
-                <div className="bg-blue-600 text-white rounded-full p-2">
-                  <Calendar className="w-4 h-4" />
+                <div className="bg-blue-100 rounded-xl p-2 ring-1 ring-blue-200/70">
+                  <Calendar size={18} className="text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-800">
+                  <p className="font-semibold text-gray-900">
                     {formatearFecha(ajuste.fecha)}
                   </p>
                   {ajuste.createdAt && (
                     <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
-                      <Clock className="w-3 h-3" />
+                      <Clock size={12} />
                       Registrado el {new Date(ajuste.createdAt).toLocaleDateString('es-ES')}
                     </p>
                   )}
@@ -123,12 +118,12 @@ export default function HistorialAjustesProtesis({
             {/* Zonas ajustadas */}
             {ajuste.zonasAjustadas && ajuste.zonasAjustadas.length > 0 && (
               <div className="mb-3">
-                <p className="text-sm font-medium text-gray-700 mb-2">Zonas Ajustadas:</p>
+                <p className="text-sm font-medium text-slate-700 mb-2">Zonas Ajustadas:</p>
                 <div className="flex flex-wrap gap-2">
                   {ajuste.zonasAjustadas.map((zona, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-medium"
+                      className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium"
                     >
                       {zona}
                     </span>
@@ -139,18 +134,18 @@ export default function HistorialAjustesProtesis({
 
             {/* Descripción */}
             <div className="mb-3">
-              <p className="text-sm font-medium text-gray-700 mb-1">Descripción del Ajuste:</p>
-              <p className="text-gray-800 whitespace-pre-wrap">{ajuste.descripcionAjuste}</p>
+              <p className="text-sm font-medium text-slate-700 mb-1">Descripción del Ajuste:</p>
+              <p className="text-gray-900 whitespace-pre-wrap">{ajuste.descripcionAjuste}</p>
             </div>
 
             {/* Feedback del paciente */}
             {ajuste.feedbackPaciente && (
               <div className="mt-3 pt-3 border-t border-blue-200">
-                <p className="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
-                  <User className="w-4 h-4" />
+                <p className="text-sm font-medium text-slate-700 mb-1 flex items-center gap-2">
+                  <User size={16} />
                   Feedback del Paciente:
                 </p>
-                <p className="text-gray-700 italic whitespace-pre-wrap bg-white rounded p-2 border border-blue-200">
+                <p className="text-gray-700 italic whitespace-pre-wrap bg-white rounded-lg p-3 ring-1 ring-slate-200">
                   "{ajuste.feedbackPaciente}"
                 </p>
               </div>
@@ -160,9 +155,9 @@ export default function HistorialAjustesProtesis({
       </div>
 
       {modoLectura && (
-        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800">
-            <AlertCircle className="w-4 h-4 inline mr-2" />
+        <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+          <p className="text-sm text-yellow-800 flex items-center gap-2">
+            <AlertCircle size={16} />
             Modo de solo lectura - Este historial es visible para el laboratorio como referencia
           </p>
         </div>
@@ -170,5 +165,6 @@ export default function HistorialAjustesProtesis({
     </div>
   );
 }
+
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Edit, Trash2, Download, Calendar, User, Building2, FileText } from 'lucide-react';
+import { ArrowLeft, Edit, Trash2, Download, Calendar, User, Building2, FileText, Loader2, AlertCircle } from 'lucide-react';
 import { obtenerOrdenPorId, actualizarEstadoOrden, eliminarOrden, EstadoOrden, OrdenLaboratorio } from '../api/ordenesLaboratorioApi';
 import TimelineEstadoOrden from '../components/TimelineEstadoOrden';
 import UploaderArchivosAdjuntos from '../components/UploaderArchivosAdjuntos';
@@ -135,10 +135,10 @@ export default function DetalleOrdenLaboratorioPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
             <p className="text-gray-600">Cargando detalles de la orden...</p>
           </div>
         </div>
@@ -148,17 +148,26 @@ export default function DetalleOrdenLaboratorioPage({
 
   if (error || !orden) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
           <button
             onClick={onVolver}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 mb-4"
+            className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft size={20} />
             <span>Volver</span>
           </button>
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-            <p className="text-red-800">{error || 'Orden no encontrada'}</p>
+          <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+            <AlertCircle size={48} className="mx-auto text-red-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Error al cargar</h3>
+            <p className="text-gray-600 mb-4">{error || 'Orden no encontrada'}</p>
+            <button
+              onClick={onVolver}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+            >
+              <ArrowLeft size={16} />
+              <span>Volver a Órdenes</span>
+            </button>
           </div>
         </div>
       </div>
@@ -166,110 +175,133 @@ export default function DetalleOrdenLaboratorioPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={onVolver}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 mb-4"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Volver a Órdenes</span>
-          </button>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Orden de Laboratorio #{orden._id?.slice(-6)}
-              </h1>
-              <span
-                className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
-                  ESTADO_COLORS[orden.estado] || 'bg-gray-100 text-gray-800'
-                }`}
-              >
-                {orden.estado}
-              </span>
-            </div>
-            <div className="flex items-center space-x-3">
-              {onEditar && (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header */}
+      <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+          <div className="py-6">
+            <button
+              onClick={onVolver}
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-4 transition-colors"
+            >
+              <ArrowLeft size={20} />
+              <span>Volver a Órdenes</span>
+            </button>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center">
+                {/* Icono con contenedor */}
+                <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
+                  <FileText size={24} className="text-blue-600" />
+                </div>
+                
+                {/* Título y descripción */}
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+                    Orden de Laboratorio #{orden._id?.slice(-6)}
+                  </h1>
+                  <div className="flex items-center gap-3 mt-1">
+                    <p className="text-gray-600">
+                      Detalles y seguimiento de la orden
+                    </p>
+                    <span
+                      className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
+                        ESTADO_COLORS[orden.estado] || 'bg-gray-100 text-gray-800'
+                      }`}
+                    >
+                      {orden.estado}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {onEditar && (
+                  <button
+                    onClick={() => onEditar(orden._id!)}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm"
+                  >
+                    <Edit size={20} />
+                    <span>Editar</span>
+                  </button>
+                )}
                 <button
-                  onClick={() => onEditar(orden._id!)}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2"
+                  onClick={handleEliminar}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all shadow-sm"
                 >
-                  <Edit className="w-5 h-5" />
-                  <span>Editar</span>
+                  <Trash2 size={20} />
+                  <span>Eliminar</span>
                 </button>
-              )}
-              <button
-                onClick={handleEliminar}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center space-x-2"
-              >
-                <Trash2 className="w-5 h-5" />
-                <span>Eliminar</span>
-              </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Contenedor Principal */}
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Información Principal */}
           <div className="lg:col-span-2 space-y-6">
             {/* Información de la Orden */}
-            <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Información de la Orden</h2>
+            <div className="bg-white shadow-sm rounded-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Información de la Orden</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-600 mb-1">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm font-medium">Paciente</span>
-                  </div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <User size={16} className="inline mr-1" />
+                    Paciente
+                  </label>
                   <p className="text-gray-900 font-medium">
                     {orden.paciente.nombre} {orden.paciente.apellidos}
                   </p>
                   {orden.paciente.dni && (
-                    <p className="text-sm text-gray-500">DNI: {orden.paciente.dni}</p>
+                    <p className="text-sm text-gray-600 mt-1">DNI: {orden.paciente.dni}</p>
                   )}
                 </div>
 
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-600 mb-1">
-                    <Building2 className="w-4 h-4" />
-                    <span className="text-sm font-medium">Laboratorio</span>
-                  </div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <Building2 size={16} className="inline mr-1" />
+                    Laboratorio
+                  </label>
                   <p className="text-gray-900 font-medium">{orden.laboratorio.nombre}</p>
                   {orden.laboratorio.personaContacto && (
-                    <p className="text-sm text-gray-500">{orden.laboratorio.personaContacto}</p>
+                    <p className="text-sm text-gray-600 mt-1">{orden.laboratorio.personaContacto}</p>
                   )}
                 </div>
 
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-600 mb-1">
-                    <FileText className="w-4 h-4" />
-                    <span className="text-sm font-medium">Tipo de Trabajo</span>
-                  </div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <FileText size={16} className="inline mr-1" />
+                    Tipo de Trabajo
+                  </label>
                   <p className="text-gray-900">{orden.tipoTrabajo}</p>
                 </div>
 
                 {orden.materiales && (
                   <div>
-                    <span className="text-sm font-medium text-gray-600">Materiales</span>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Materiales
+                    </label>
                     <p className="text-gray-900">{orden.materiales}</p>
                   </div>
                 )}
 
                 {orden.color && (
                   <div>
-                    <span className="text-sm font-medium text-gray-600">Color</span>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Color
+                    </label>
                     <p className="text-gray-900">{orden.color}</p>
                   </div>
                 )}
 
                 <div>
-                  <div className="flex items-center space-x-2 text-gray-600 mb-1">
-                    <Calendar className="w-4 h-4" />
-                    <span className="text-sm font-medium">Fecha Creación</span>
-                  </div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <Calendar size={16} className="inline mr-1" />
+                    Fecha Creación
+                  </label>
                   <p className="text-gray-900">
                     {new Date(orden.fechaCreacion).toLocaleString('es-ES')}
                   </p>
@@ -277,7 +309,9 @@ export default function DetalleOrdenLaboratorioPage({
 
                 {orden.fechaEntregaPrevista && (
                   <div>
-                    <span className="text-sm font-medium text-gray-600">Entrega Prevista</span>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Entrega Prevista
+                    </label>
                     <p className="text-gray-900">
                       {new Date(orden.fechaEntregaPrevista).toLocaleDateString('es-ES')}
                     </p>
@@ -286,16 +320,18 @@ export default function DetalleOrdenLaboratorioPage({
               </div>
 
               {orden.instrucciones && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <span className="text-sm font-medium text-gray-600 block mb-2">Instrucciones</span>
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                    Instrucciones
+                  </label>
                   <p className="text-gray-900 whitespace-pre-wrap">{orden.instrucciones}</p>
                 </div>
               )}
             </div>
 
             {/* Archivos Adjuntos */}
-            <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Archivos Adjuntos</h2>
+            <div className="bg-white shadow-sm rounded-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Archivos Adjuntos</h2>
               <UploaderArchivosAdjuntos
                 archivos={orden.adjuntos || []}
                 onArchivosSubidos={handleSubirArchivos}
@@ -307,17 +343,17 @@ export default function DetalleOrdenLaboratorioPage({
           {/* Panel Lateral */}
           <div className="space-y-6">
             {/* Cambiar Estado */}
-            <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Cambiar Estado</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Nuevo Estado
                   </label>
                   <select
                     value={nuevoEstado}
                     onChange={(e) => setNuevoEstado(e.target.value as EstadoOrden)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   >
                     {ESTADOS.map((est) => (
                       <option key={est} value={est}>
@@ -327,7 +363,7 @@ export default function DetalleOrdenLaboratorioPage({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2">
                     Notas (opcional)
                   </label>
                   <textarea
@@ -335,21 +371,28 @@ export default function DetalleOrdenLaboratorioPage({
                     onChange={(e) => setNotasCambioEstado(e.target.value)}
                     rows={3}
                     placeholder="Notas sobre el cambio de estado..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5 resize-none"
                   />
                 </div>
                 <button
                   onClick={handleCambiarEstado}
                   disabled={cambiandoEstado || nuevoEstado === orden.estado}
-                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {cambiandoEstado ? 'Actualizando...' : 'Actualizar Estado'}
+                  {cambiandoEstado ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Actualizando...</span>
+                    </>
+                  ) : (
+                    'Actualizar Estado'
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Historial de Estados */}
-            <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+            <div className="bg-white shadow-sm rounded-lg p-6">
               <TimelineEstadoOrden historial={orden.historialEstados || []} />
             </div>
           </div>
@@ -358,5 +401,6 @@ export default function DetalleOrdenLaboratorioPage({
     </div>
   );
 }
+
 
 

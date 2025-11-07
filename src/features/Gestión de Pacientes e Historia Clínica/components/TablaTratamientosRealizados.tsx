@@ -1,4 +1,4 @@
-import { Eye, Calendar, DollarSign, User, Tooth } from 'lucide-react';
+import { Eye, Calendar, DollarSign, User, Tooth, Loader2, Package } from 'lucide-react';
 import { TratamientoRealizado } from '../api/tratamientosRealizadosApi';
 
 interface TablaTratamientosRealizadosProps {
@@ -43,18 +43,19 @@ export default function TablaTratamientosRealizados({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Loader2 size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
+        <p className="text-gray-600">Cargando...</p>
       </div>
     );
   }
 
   if (tratamientos.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-        <Tooth className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <p className="text-gray-500 text-lg font-medium">No hay tratamientos realizados</p>
-        <p className="text-gray-400 text-sm mt-2">
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+        <Package size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay tratamientos realizados</h3>
+        <p className="text-gray-600">
           Los tratamientos completados aparecerán aquí
         </p>
       </div>
@@ -62,7 +63,7 @@ export default function TablaTratamientosRealizados({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -146,9 +147,9 @@ export default function TablaTratamientosRealizados({
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
                     onClick={() => onVerDetalle(tratamiento)}
-                    className="inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all ring-1 ring-slate-300"
                   >
-                    <Eye className="w-4 h-4 mr-1" />
+                    <Eye size={16} />
                     Ver
                   </button>
                 </td>
@@ -160,5 +161,6 @@ export default function TablaTratamientosRealizados({
     </div>
   );
 }
+
 
 

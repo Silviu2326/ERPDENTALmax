@@ -42,7 +42,7 @@ export default function SelectorMetodoPago({
 
   return (
     <div className="space-y-3">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-slate-700 mb-2">
         Método de Pago *
       </label>
       <div className="grid grid-cols-2 gap-3">
@@ -52,10 +52,10 @@ export default function SelectorMetodoPago({
             type="button"
             onClick={() => !disabled && onMetodoChange(metodo.valor)}
             disabled={disabled}
-            className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+            className={`p-4 rounded-xl ring-1 transition-all duration-200 ${
               metodoSeleccionado === metodo.valor
-                ? 'border-blue-600 bg-blue-50 shadow-md'
-                : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50'
+                ? 'ring-blue-600 bg-blue-50 shadow-sm'
+                : 'ring-slate-200 bg-white hover:ring-blue-300 hover:bg-blue-50/50'
             } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
             <div className="flex items-center space-x-3">
@@ -83,5 +83,6 @@ export default function SelectorMetodoPago({
     </div>
   );
 }
+
 
 

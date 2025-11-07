@@ -318,3 +318,4 @@ export default function ModalDetalleLote({ loteId, onClose }: ModalDetalleLotePr
 }
 
 
+

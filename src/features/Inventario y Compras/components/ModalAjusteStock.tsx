@@ -61,48 +61,50 @@ export default function ModalAjusteStock({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Package className="w-6 h-6 text-blue-600" />
+            <div className="p-2 bg-blue-100 rounded-xl">
+              <Package className="w-5 h-5 text-blue-600" />
+            </div>
             <h2 className="text-xl font-bold text-gray-900">Ajustar Stock</h2>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-slate-100"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="p-6">
           {/* Información del producto */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-slate-50 rounded-xl p-4 mb-6 ring-1 ring-slate-200">
             <h3 className="font-semibold text-gray-900 mb-2">{producto.nombre}</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-gray-600">SKU:</span>
-                <span className="ml-2 font-medium">{producto.sku}</span>
+                <span className="text-slate-600">SKU:</span>
+                <span className="ml-2 font-medium text-slate-900">{producto.sku}</span>
               </div>
               <div>
-                <span className="text-gray-600">Unidad:</span>
-                <span className="ml-2 font-medium">{producto.unidadMedida}</span>
+                <span className="text-slate-600">Unidad:</span>
+                <span className="ml-2 font-medium text-slate-900">{producto.unidadMedida}</span>
               </div>
               <div>
-                <span className="text-gray-600">Stock Actual:</span>
+                <span className="text-slate-600">Stock Actual:</span>
                 <span className="ml-2 font-bold text-blue-600">
                   {producto.cantidadActual} {producto.unidadMedida}
                 </span>
               </div>
               <div>
-                <span className="text-gray-600">Punto Reorden:</span>
-                <span className="ml-2 font-medium">{producto.puntoReorden} {producto.unidadMedida}</span>
+                <span className="text-slate-600">Punto Reorden:</span>
+                <span className="ml-2 font-medium text-slate-900">{producto.puntoReorden} {producto.unidadMedida}</span>
               </div>
             </div>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-red-600" />
               <span className="text-sm text-red-700">{error}</span>
             </div>
@@ -112,7 +114,7 @@ export default function ModalAjusteStock({
             <div className="space-y-4">
               {/* Nueva cantidad */}
               <div>
-                <label htmlFor="nuevaCantidad" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="nuevaCantidad" className="block text-sm font-medium text-slate-700 mb-2">
                   Nueva Cantidad *
                 </label>
                 <input
@@ -122,13 +124,13 @@ export default function ModalAjusteStock({
                   onChange={(e) => setNuevaCantidad(e.target.value)}
                   min="0"
                   step="0.01"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   placeholder={producto.cantidadActual.toString()}
                   required
                 />
                 {cantidadActual !== producto.cantidadActual && (
                   <p
-                    className={`mt-2 text-sm ${
+                    className={`mt-2 text-sm font-medium ${
                       diferencia > 0 ? 'text-green-600' : 'text-red-600'
                     }`}
                   >
@@ -140,7 +142,7 @@ export default function ModalAjusteStock({
 
               {/* Motivo */}
               <div>
-                <label htmlFor="motivo" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="motivo" className="block text-sm font-medium text-slate-700 mb-2">
                   Motivo del Ajuste *
                 </label>
                 <textarea
@@ -148,7 +150,7 @@ export default function ModalAjusteStock({
                   value={motivo}
                   onChange={(e) => setMotivo(e.target.value)}
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-xl bg-white text-slate-900 placeholder-slate-400 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
                   placeholder="Ej: Merma por producto dañado, Conteo físico, Corrección de error..."
                   required
                 />
@@ -159,14 +161,14 @@ export default function ModalAjusteStock({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 Cancelar
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 {loading ? 'Guardando...' : 'Guardar Ajuste'}

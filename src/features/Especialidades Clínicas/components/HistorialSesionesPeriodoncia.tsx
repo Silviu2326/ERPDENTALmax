@@ -40,13 +40,10 @@ export default function HistorialSesionesPeriodoncia({
 
   if (sesiones.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Historial de Sesiones</h3>
-        <div className="text-center py-12 text-gray-500">
-          <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p className="text-lg">No hay sesiones registradas</p>
-          <p className="text-sm mt-2">Las sesiones de mantenimiento aparecerán aquí</p>
-        </div>
+      <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+        <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">No hay sesiones registradas</h3>
+        <p className="text-gray-600 mb-4">Las sesiones de mantenimiento aparecerán aquí</p>
       </div>
     );
   }
@@ -59,9 +56,9 @@ export default function HistorialSesionesPeriodoncia({
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-lg border border-gray-200">
-      <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <h3 className="text-lg font-bold text-gray-800">Historial de Sesiones</h3>
+    <div className="bg-white shadow-sm rounded-lg">
+      <div className="p-4 border-b border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900">Historial de Sesiones</h3>
         <p className="text-sm text-gray-600 mt-1">
           {sesiones.length} {sesiones.length === 1 ? 'sesión registrada' : 'sesiones registradas'}
         </p>
@@ -97,7 +94,7 @@ export default function HistorialSesionesPeriodoncia({
                   <div className="grid grid-cols-2 gap-4 mt-3">
                     {/* Índice de Placa */}
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Índice de Placa</p>
+                      <p className="text-xs text-slate-500 mb-1">Índice de Placa</p>
                       <div className="flex items-center gap-2">
                         <span className={`text-xl font-bold ${obtenerColorIndice(sesion.indicePlacaGeneral)}`}>
                           {sesion.indicePlacaGeneral?.toFixed(1) || 'N/A'}%
@@ -113,7 +110,7 @@ export default function HistorialSesionesPeriodoncia({
 
                     {/* Índice de Sangrado */}
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Índice de Sangrado (BOP)</p>
+                      <p className="text-xs text-slate-500 mb-1">Índice de Sangrado (BOP)</p>
                       <div className="flex items-center gap-2">
                         <span className={`text-xl font-bold ${obtenerColorIndice(sesion.indiceSangradoGeneral)}`}>
                           {sesion.indiceSangradoGeneral?.toFixed(1) || 'N/A'}%
@@ -129,14 +126,14 @@ export default function HistorialSesionesPeriodoncia({
                   </div>
 
                   {sesion.observaciones && (
-                    <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                      <p className="text-xs text-gray-500 mb-1">Observaciones</p>
-                      <p className="text-sm text-gray-700">{sesion.observaciones}</p>
+                    <div className="mt-3 p-3 bg-slate-50 rounded-lg ring-1 ring-slate-200">
+                      <p className="text-xs text-slate-500 mb-1">Observaciones</p>
+                      <p className="text-sm text-slate-700">{sesion.observaciones}</p>
                     </div>
                   )}
 
                   {sesion.planProximaVisita && (
-                    <div className="mt-2 p-2 bg-blue-50 rounded border border-blue-200">
+                    <div className="mt-2 p-2 bg-blue-50 rounded-lg ring-1 ring-blue-200">
                       <p className="text-xs text-blue-600 font-medium mb-1">Plan para próxima visita</p>
                       <p className="text-sm text-blue-800">{sesion.planProximaVisita}</p>
                       {sesion.intervaloRecomendado && (
@@ -148,7 +145,7 @@ export default function HistorialSesionesPeriodoncia({
                   )}
 
                   {sesion.mediciones && sesion.mediciones.length > 0 && (
-                    <div className="mt-2 text-xs text-gray-500">
+                    <div className="mt-2 text-xs text-slate-500">
                       {sesion.mediciones.length} {sesion.mediciones.length === 1 ? 'diente registrado' : 'dientes registrados'}
                     </div>
                   )}
@@ -161,10 +158,10 @@ export default function HistorialSesionesPeriodoncia({
                         setSesionSeleccionada(sesion._id || null);
                         onVerSesion(sesion._id);
                       }}
-                      className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
+                      className="p-2 text-blue-600 hover:bg-blue-100 rounded-xl transition-all"
                       title="Ver detalles"
                     >
-                      <Eye className="w-5 h-5" />
+                      <Eye size={20} />
                     </button>
                   )}
                   {onEditarSesion && sesion._id && (
@@ -173,10 +170,10 @@ export default function HistorialSesionesPeriodoncia({
                         setSesionSeleccionada(sesion._id || null);
                         onEditarSesion(sesion._id);
                       }}
-                      className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors"
+                      className="p-2 text-green-600 hover:bg-green-100 rounded-xl transition-all"
                       title="Editar sesión"
                     >
-                      <Edit className="w-5 h-5" />
+                      <Edit size={20} />
                     </button>
                   )}
                 </div>
@@ -188,5 +185,6 @@ export default function HistorialSesionesPeriodoncia({
     </div>
   );
 }
+
 
 
