@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { AlertTriangle, RefreshCw, Package, TrendingDown, Clock, CheckCircle, Loader2 } from 'lucide-react';
 import {
   AlertaReabastecimiento,
-  FiltrosAlertas,
+  FiltrosAlertas as FiltrosAlertasType,
   obtenerAlertas,
   RespuestaAlertas,
 } from '../api/alertasApi';
@@ -26,7 +26,7 @@ export default function AlertasReabastecimientoPage() {
     { _id: '2', nombre: 'Sede Norte' },
   ];
 
-  const [filtros, setFiltros] = useState<FiltrosAlertas>({
+  const [filtros, setFiltros] = useState<FiltrosAlertasType>({
     page: 1,
     limit: 10,
     sortBy: 'fecha_creacion',
@@ -419,7 +419,7 @@ export default function AlertasReabastecimientoPage() {
     cargarAlertas();
   }, [filtros]);
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosAlertas) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosAlertasType) => {
     setFiltros(nuevosFiltros);
   };
 

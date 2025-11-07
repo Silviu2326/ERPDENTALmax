@@ -1,4 +1,4 @@
-import { Eye, Calendar, DollarSign, User, Tooth, Loader2, Package } from 'lucide-react';
+import { Eye, Calendar, DollarSign, User, Circle, Loader2, Package } from 'lucide-react';
 import { TratamientoRealizado } from '../api/tratamientosRealizadosApi';
 
 interface TablaTratamientosRealizadosProps {
@@ -113,7 +113,7 @@ export default function TablaTratamientosRealizados({
                 <td className="px-6 py-4 whitespace-nowrap">
                   {tratamiento.piezaDental ? (
                     <div className="flex items-center text-sm text-gray-900">
-                      <Tooth className="w-4 h-4 mr-1 text-gray-400" />
+                      <Circle className="w-4 h-4 mr-1 text-gray-400" />
                       <span>{tratamiento.piezaDental}</span>
                       {tratamiento.superficie && (
                         <span className="ml-1 text-gray-500">({tratamiento.superficie})</span>

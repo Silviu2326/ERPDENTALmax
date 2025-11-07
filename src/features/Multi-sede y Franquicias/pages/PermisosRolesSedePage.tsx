@@ -343,20 +343,19 @@ export default function PermisosRolesSedePage() {
         </div>
       </div>
 
-        {/* Modal de Asignación */}
-        {selectedSede && (
-          <UserSedeRoleAssignmentModal
-            isOpen={showAssignmentModal}
-            onClose={() => setShowAssignmentModal(false)}
-            sede={selectedSede}
-            roles={roles}
-            assignments={assignments}
-            onAssign={handleAssignUser}
-            onRemoveAssignment={handleRemoveAssignment}
-            onSearchUsers={handleSearchUsers}
-          />
-        )}
-      </div>
+      {/* Modal de Asignación */}
+      {selectedSede && (
+        <UserSedeRoleAssignmentModal
+          isOpen={showAssignmentModal}
+          onClose={() => setShowAssignmentModal(false)}
+          sede={selectedSede}
+          roles={roles}
+          assignments={assignments}
+          onAssign={handleAssignUser}
+          onRemoveAssignment={handleRemoveAssignment}
+          onSearchUsers={handleSearchUsers}
+        />
+      )}
     </div>
   );
 }

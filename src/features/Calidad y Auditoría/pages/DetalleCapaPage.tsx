@@ -207,181 +207,179 @@ export default function DetalleCapaPage({ capaId, onVolver }: DetalleCapaPagePro
 
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Columna Principal */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Información General */}
-            <div className="bg-white shadow-sm rounded-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
-                Información General
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Descripción del Incidente
-                  </label>
-                  <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
-                    <p className="text-sm text-gray-900 whitespace-pre-wrap">
-                      {capa.descripcion_incidente}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      <Calendar size={16} className="inline mr-1" />
-                      Fecha de Detección
-                    </label>
-                    <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
-                      <p className="text-sm text-gray-900">
-                        {new Date(capa.fecha_deteccion).toLocaleDateString('es-ES', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      <User size={16} className="inline mr-1" />
-                      Responsable de Investigación
-                    </label>
-                    <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
-                      <p className="text-sm text-gray-900">
-                        {capa.responsable_investigacion
-                          ? `${capa.responsable_investigacion.nombre} ${capa.responsable_investigacion.apellidos || ''}`
-                          : 'Sin asignar'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Análisis de Causa Raíz */}
-            {editando ? (
-              <SeccionAnalisisCausaRaiz
-                analisisCausaRaiz={capa.analisis_causa_raiz}
-                onAnalisisChange={(analisis) => {
-                  setCapa({ ...capa, analisis_causa_raiz: analisis });
-                }}
-              />
-            ) : (
-              <SeccionAnalisisCausaRaiz
-                analisisCausaRaiz={capa.analisis_causa_raiz}
-                onAnalisisChange={() => {}}
-                readonly={true}
-              />
-            )}
-
-            {/* Plan de Acción */}
-            <PlanDeAccionComponent
-              capa={capa}
-              responsables={responsables}
-              readonly={!editando}
-            />
-
-            {/* Verificación de Efectividad */}
-            {capa.verificacion_efectividad && (
+            {/* Columna Principal */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Información General */}
               <div className="bg-white shadow-sm rounded-lg p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="bg-green-100 p-2 rounded-xl ring-1 ring-green-200/70">
-                    <CheckCircle size={24} className="text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Verificación de Efectividad
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      Resultado de la verificación de las acciones implementadas
-                    </p>
-                  </div>
-                </div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  Información General
+                </h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Descripción
+                      Descripción del Incidente
                     </label>
                     <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
-                      <p className="text-sm text-gray-900">
-                        {capa.verificacion_efectividad.descripcion}
+                      <p className="text-sm text-gray-900 whitespace-pre-wrap">
+                        {capa.descripcion_incidente}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-slate-700">Resultado:</span>
-                    <span
-                      className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
-                        capa.verificacion_efectividad.resultado === 'Efectiva'
-                          ? 'bg-green-100 text-green-800'
-                          : capa.verificacion_efectividad.resultado === 'No Efectiva'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}
-                    >
-                      {capa.verificacion_efectividad.resultado}
-                    </span>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <Calendar size={16} className="inline mr-1" />
+                        Fecha de Detección
+                      </label>
+                      <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
+                        <p className="text-sm text-gray-900">
+                          {new Date(capa.fecha_deteccion).toLocaleDateString('es-ES', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <User size={16} className="inline mr-1" />
+                        Responsable de Investigación
+                      </label>
+                      <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-3">
+                        <p className="text-sm text-gray-900">
+                          {capa.responsable_investigacion
+                            ? `${capa.responsable_investigacion.nombre} ${capa.responsable_investigacion.apellidos || ''}`
+                            : 'Sin asignar'}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            )}
 
-            {/* Documentos */}
-            <UploaderDocumentosCapa
-              documentos={capa.documentos_adjuntos}
-              onSubirArchivos={handleSubirArchivos}
-              readonly={!editando}
-            />
+              {/* Análisis de Causa Raíz */}
+              {editando ? (
+                <SeccionAnalisisCausaRaiz
+                  analisisCausaRaiz={capa.analisis_causa_raiz}
+                  onAnalisisChange={(analisis) => {
+                    setCapa({ ...capa, analisis_causa_raiz: analisis });
+                  }}
+                />
+              ) : (
+                <SeccionAnalisisCausaRaiz
+                  analisisCausaRaiz={capa.analisis_causa_raiz}
+                  onAnalisisChange={() => {}}
+                  readonly={true}
+                />
+              )}
+
+              {/* Plan de Acción */}
+              <PlanDeAccionComponent
+                capa={capa}
+                responsables={responsables}
+                readonly={!editando}
+              />
+
+              {/* Verificación de Efectividad */}
+              {capa.verificacion_efectividad && (
+                <div className="bg-white shadow-sm rounded-lg p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-green-100 p-2 rounded-xl ring-1 ring-green-200/70">
+                      <CheckCircle size={24} className="text-green-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Verificación de Efectividad
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Resultado de la verificación de las acciones implementadas
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                        Descripción
+                      </label>
+                      <div className="bg-slate-50 rounded-xl ring-1 ring-slate-200 p-4">
+                        <p className="text-sm text-gray-900">
+                          {capa.verificacion_efectividad.descripcion}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-slate-700">Resultado:</span>
+                      <span
+                        className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
+                          capa.verificacion_efectividad.resultado === 'Efectiva'
+                            ? 'bg-green-100 text-green-800'
+                            : capa.verificacion_efectividad.resultado === 'No Efectiva'
+                            ? 'bg-red-100 text-red-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}
+                      >
+                        {capa.verificacion_efectividad.resultado}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Documentos */}
+              <UploaderDocumentosCapa
+                documentos={capa.documentos_adjuntos}
+                onSubirArchivos={handleSubirArchivos}
+                readonly={!editando}
+              />
+            </div>
+
+            {/* Columna Lateral */}
+            <div className="space-y-6">
+              {/* Historial */}
+              <HistorialCapaTimeline historial={capa.historial || []} />
+            </div>
           </div>
 
-          {/* Columna Lateral */}
-          <div className="space-y-6">
-            {/* Historial */}
-            <HistorialCapaTimeline historial={capa.historial || []} />
-          </div>
+          {/* Botones de Acción */}
+          {editando && (
+            <div className="mt-6 flex items-center justify-end gap-4 bg-white shadow-sm rounded-lg p-4">
+              <button
+                onClick={() => {
+                  setEditando(false);
+                  cargarCapa();
+                }}
+                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+                disabled={guardando}
+              >
+                <X size={20} />
+                Cancelar
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await handleGuardar({
+                      analisis_causa_raiz: capa.analisis_causa_raiz,
+                      accion_correctiva: capa.accion_correctiva,
+                      accion_preventiva: capa.accion_preventiva,
+                      verificacion_efectividad: capa.verificacion_efectividad,
+                    });
+                  } catch (error) {
+                    // Error ya manejado en handleGuardar
+                  }
+                }}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                disabled={guardando}
+              >
+                <Save size={20} />
+                {guardando ? 'Guardando...' : 'Guardar Cambios'}
+              </button>
+            </div>
+          )}
         </div>
-
-        {/* Botones de Acción */}
-        {editando && (
-          <div className="mt-6 flex items-center justify-end gap-4 bg-white shadow-sm rounded-lg p-4">
-            <button
-              onClick={() => {
-                setEditando(false);
-                cargarCapa();
-              }}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
-              disabled={guardando}
-            >
-              <X size={20} />
-              Cancelar
-            </button>
-            <button
-              onClick={async () => {
-                try {
-                  await handleGuardar({
-                    analisis_causa_raiz: capa.analisis_causa_raiz,
-                    accion_correctiva: capa.accion_correctiva,
-                    accion_preventiva: capa.accion_preventiva,
-                    verificacion_efectividad: capa.verificacion_efectividad,
-                  });
-                } catch (error) {
-                  // Error ya manejado en handleGuardar
-                }
-              }}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              disabled={guardando}
-            >
-              <Save size={20} />
-              {guardando ? 'Guardando...' : 'Guardar Cambios'}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
 }
-
-
-

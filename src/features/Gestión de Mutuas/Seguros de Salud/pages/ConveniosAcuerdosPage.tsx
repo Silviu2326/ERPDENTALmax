@@ -3,7 +3,7 @@ import { FileText, Plus, AlertCircle, ChevronLeft, ChevronRight, X, CheckCircle,
 import {
   obtenerConvenios,
   Convenio,
-  FiltrosConvenios,
+  FiltrosConvenios as FiltrosConveniosType,
   PaginatedResponse,
   crearConvenio,
   actualizarConvenio,
@@ -20,7 +20,7 @@ export default function ConveniosAcuerdosPage() {
   const [convenios, setConvenios] = useState<Convenio[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filtros, setFiltros] = useState<FiltrosConvenios>({
+  const [filtros, setFiltros] = useState<FiltrosConveniosType>({
     page: 1,
     limit: 10,
   });
@@ -76,7 +76,7 @@ export default function ConveniosAcuerdosPage() {
     cargarConvenios();
   }, [filtros]);
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosConvenios) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosConveniosType) => {
     setFiltros((prev) => ({
       ...prev,
       ...nuevosFiltros,

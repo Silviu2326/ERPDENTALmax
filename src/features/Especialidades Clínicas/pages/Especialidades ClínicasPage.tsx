@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stethoscope, FileText, Heart, Activity, Brain, Eye, ClipboardCheck, Tooth, Calendar, Layers, Zap, TrendingUp, Baby, Shield, Package } from 'lucide-react';
+import { Stethoscope, FileText, Heart, Activity, Brain, Eye, ClipboardCheck, Circle, Calendar, Layers, Zap, TrendingUp, Baby, Shield, Package } from 'lucide-react';
 import PlanificacionEndodonciaPage from './PlanificacionEndodonciaPage';
 import EndodonciaControlPostoperatorioPage from './EndodonciaControlPostoperatorioPage';
 import PeriodontogramaPage from './PeriodontogramaPage';
@@ -59,7 +59,7 @@ export default function EspecialidadesClinicasPage({
       id: 'periodoncia' as const,
       nombre: 'Periodoncia',
       descripcion: 'Periodontograma avanzado y diagnóstico periodontal',
-      icono: Tooth,
+      icono: Circle,
       color: 'from-teal-600 to-cyan-600',
     },
     {

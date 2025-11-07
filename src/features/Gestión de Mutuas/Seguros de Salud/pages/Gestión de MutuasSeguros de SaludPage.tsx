@@ -25,7 +25,7 @@ interface GestionMutuasSegurosSaludPageProps {
 
 type TabType = 'mutuas' | 'convenios' | 'autorizaciones' | 'historial-pagos' | 'asistente-facturacion';
 
-export default function GestionMutuasSegurosSaludPage({ onAsistenteFacturacion }: GestionMutuasSegurosSaludPageProps = {}) {
+export default function GestionMutuasSegurosSaludPage({ onAsistenteFacturacion }: GestionMutuasSegurosSaludPageProps = { onAsistenteFacturacion: undefined }) {
   const [mutuas, setMutuas] = useState<Mutua[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -187,7 +187,6 @@ export default function GestionMutuasSegurosSaludPage({ onAsistenteFacturacion }
 
       {/* Contenedor Principal */}
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 py-8">
-
         {/* Tabs */}
         <div className="bg-white shadow-sm rounded-xl p-0">
           <div className="px-4 py-3">
@@ -364,18 +363,18 @@ export default function GestionMutuasSegurosSaludPage({ onAsistenteFacturacion }
         </div>
       </div>
 
-        {/* Modal de formulario */}
-        {mostrarFormulario && (
-          <FormularioMutua
-            mutua={mutuaEditando}
-            onGuardar={handleGuardarMutua}
-            onCancelar={handleCancelarFormulario}
-            loading={guardando}
-          />
-        )}
+      {/* Modal de formulario */}
+      {mostrarFormulario && (
+        <FormularioMutua
+          mutua={mutuaEditando}
+          onGuardar={handleGuardarMutua}
+          onCancelar={handleCancelarFormulario}
+          loading={guardando}
+        />
+      )}
 
-        {/* Modal de confirmación de eliminación */}
-        {mostrarModalConfirmacion && mutuaEliminar && (
+      {/* Modal de confirmación de eliminación */}
+      {mostrarModalConfirmacion && mutuaEliminar && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4">
@@ -409,10 +408,10 @@ export default function GestionMutuasSegurosSaludPage({ onAsistenteFacturacion }
               </div>
             </div>
           </div>
-        )}
+      )}
 
-        {/* Modal de detalle de mutua */}
-        {mostrarModalDetalle && mutuaDetalle && (
+      {/* Modal de detalle de mutua */}
+      {mostrarModalDetalle && mutuaDetalle && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
             <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full my-8 max-h-[90vh] overflow-y-auto">
               <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10 rounded-t-xl">
@@ -590,8 +589,7 @@ export default function GestionMutuasSegurosSaludPage({ onAsistenteFacturacion }
               </div>
             </div>
           </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

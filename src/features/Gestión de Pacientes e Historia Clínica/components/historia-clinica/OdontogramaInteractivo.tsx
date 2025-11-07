@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Tooth, RefreshCw } from 'lucide-react';
+import { Circle, RefreshCw } from 'lucide-react';
 import {
   obtenerOdontograma,
   agregarHallazgo,
@@ -180,7 +180,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-          <Tooth className="w-5 h-5 text-blue-600" />
+          <Circle className="w-5 h-5 text-blue-600" />
           Odontograma Interactivo
         </h3>
         <button
@@ -201,7 +201,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
                 <p className="text-sm text-gray-600">Total Hallazgos</p>
                 <p className="text-2xl font-bold text-blue-600">{totalHallazgos}</p>
               </div>
-              <Tooth className="w-8 h-8 text-blue-500 opacity-50" />
+              <Circle className="w-8 h-8 text-blue-500 opacity-50" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
@@ -211,7 +211,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
                 <p className="text-2xl font-bold text-green-600">{hallazgosRealizados}</p>
                 <p className="text-xs text-gray-500 mt-1">{porcentajeCompletado}%</p>
               </div>
-              <Tooth className="w-8 h-8 text-green-500 opacity-50" />
+              <Circle className="w-8 h-8 text-green-500 opacity-50" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
@@ -220,7 +220,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
                 <p className="text-sm text-gray-600">Planificados</p>
                 <p className="text-2xl font-bold text-yellow-600">{hallazgosPlanificados}</p>
               </div>
-              <Tooth className="w-8 h-8 text-yellow-500 opacity-50" />
+              <Circle className="w-8 h-8 text-yellow-500 opacity-50" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
@@ -229,7 +229,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
                 <p className="text-sm text-gray-600">En Progreso</p>
                 <p className="text-2xl font-bold text-purple-600">{hallazgosEnProgreso}</p>
               </div>
-              <Tooth className="w-8 h-8 text-purple-500 opacity-50" />
+              <Circle className="w-8 h-8 text-purple-500 opacity-50" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-orange-500">
@@ -238,7 +238,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
                 <p className="text-sm text-gray-600">Diagnóstico</p>
                 <p className="text-2xl font-bold text-orange-600">{hallazgosDiagnostico}</p>
               </div>
-              <Tooth className="w-8 h-8 text-orange-500 opacity-50" />
+              <Circle className="w-8 h-8 text-orange-500 opacity-50" />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-indigo-500">
@@ -247,7 +247,7 @@ export default function OdontogramaInteractivo({ pacienteId }: OdontogramaIntera
                 <p className="text-sm text-gray-600">Dientes Afectados</p>
                 <p className="text-2xl font-bold text-indigo-600">{dientesAfectados}</p>
               </div>
-              <Tooth className="w-8 h-8 text-indigo-500 opacity-50" />
+              <Circle className="w-8 h-8 text-indigo-500 opacity-50" />
             </div>
           </div>
         </div>

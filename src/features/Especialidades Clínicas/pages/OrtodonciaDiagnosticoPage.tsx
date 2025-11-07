@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Compare2, Calendar, FileText, Loader2, Package, AlertCircle, FileImage } from 'lucide-react';
+import { ArrowLeft, Plus, GitCompare, Calendar, FileText, Loader2, Package, AlertCircle, FileImage } from 'lucide-react';
 import TimelineEtapasTratamiento from '../components/TimelineEtapasTratamiento';
 import GaleriaDiagnosticoOrtodoncia from '../components/GaleriaDiagnosticoOrtodoncia';
 import UploaderArchivosDiagnostico from '../components/UploaderArchivosDiagnostico';
@@ -198,7 +198,7 @@ export default function OrtodonciaDiagnosticoPage({
                   disabled={diagnosticos.length < 2}
                   className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:ring-gray-200"
                 >
-                  <Compare2 size={18} />
+                  <GitCompare size={18} />
                   <span>Comparar</span>
                 </button>
                 <button

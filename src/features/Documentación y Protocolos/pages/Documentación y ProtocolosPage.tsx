@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, Settings, RefreshCw, FileCheck, Pill, Mail, PenTool, Building2, Tooth, FileCode, Receipt } from 'lucide-react';
+import { FileText, Settings, RefreshCw, FileCheck, Pill, Mail, PenTool, Building2, Circle, FileCode, Receipt } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import SelectorPlantillas from '../components/SelectorPlantillas';
 import BuscadorPacientes from '../components/BuscadorPacientes';
@@ -400,7 +400,7 @@ export default function DocumentacionYProtocolosPage() {
                   onClick={() => setVista('seguimiento-protesis')}
                   className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all bg-white text-slate-900 shadow-sm ring-1 ring-slate-200 hover:shadow-md"
                 >
-                  <Tooth size={18} />
+                  <Circle size={18} />
                   <span>Prótesis</span>
                 </button>
                 <button

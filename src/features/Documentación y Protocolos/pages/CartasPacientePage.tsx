@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Mail, RefreshCw, Settings } from 'lucide-react';
 import { PlantillaCarta } from '../api/plantillasCartaApi';
-import { generarPrevisualizacion, PrevisualizacionCarta } from '../api/cartasApi';
+import { generarPrevisualizacion, PrevisualizacionCarta as PrevisualizacionCartaType } from '../api/cartasApi';
 import GestionPlantillasCartas from '../components/GestionPlantillasCartas';
 import SelectorPacienteInput from '../components/SelectorPacienteInput';
 import PrevisualizacionCarta from '../components/PrevisualizacionCarta';
@@ -19,7 +19,7 @@ interface Paciente {
 export default function CartasPacientePage() {
   const [plantillaSeleccionada, setPlantillaSeleccionada] = useState<PlantillaCarta | null>(null);
   const [pacienteSeleccionado, setPacienteSeleccionado] = useState<Paciente | null>(null);
-  const [previsualizacion, setPrevisualizacion] = useState<PrevisualizacionCarta | null>(null);
+  const [previsualizacion, setPrevisualizacion] = useState<PrevisualizacionCartaType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mostrarModalEnvio, setMostrarModalEnvio] = useState(false);
@@ -221,16 +221,15 @@ export default function CartasPacientePage() {
         </div>
       </div>
 
-        {/* Modal de Envío */}
-        {mostrarModalEnvio && plantillaSeleccionada && pacienteSeleccionado && (
-          <ModalEnvioCarta
-            plantillaId={plantillaSeleccionada._id!}
-            paciente={pacienteSeleccionado}
-            onEnviado={handleCartaEnviada}
-            onCancelar={() => setMostrarModalEnvio(false)}
-          />
-        )}
-      </div>
+      {/* Modal de Envío */}
+      {mostrarModalEnvio && plantillaSeleccionada && pacienteSeleccionado && (
+        <ModalEnvioCarta
+          plantillaId={plantillaSeleccionada._id!}
+          paciente={pacienteSeleccionado}
+          onEnviado={handleCartaEnviada}
+          onCancelar={() => setMostrarModalEnvio(false)}
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { MapPin, Tooth } from 'lucide-react';
+import { MapPin, Circle } from 'lucide-react';
 import AnalysisConfidenceIndicator from './AnalysisConfidenceIndicator';
 
 export interface HallazgoIA {
@@ -60,7 +60,7 @@ export default function AnalysisFindingItem({
           </div>
           {hallazgo.dienteAfectado && (
             <div className="flex items-center gap-1.5 text-sm text-slate-700 mb-2">
-              <Tooth size={16} />
+              <Circle size={16} />
               <span className="font-medium">Diente: {hallazgo.dienteAfectado}</span>
             </div>
           )}

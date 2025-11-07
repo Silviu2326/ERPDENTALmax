@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Search, Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { FiltrosBusquedaProveedores } from '../api/proveedoresApi';
+import { FiltrosBusquedaProveedores as FiltrosBusquedaProveedoresType } from '../api/proveedoresApi';
 
 interface FiltrosBusquedaProveedoresProps {
-  filtros: FiltrosBusquedaProveedores;
-  onFiltrosChange: (filtros: FiltrosBusquedaProveedores) => void;
+  filtros: FiltrosBusquedaProveedoresType;
+  onFiltrosChange: (filtros: FiltrosBusquedaProveedoresType) => void;
 }
 
 export default function FiltrosBusquedaProveedores({

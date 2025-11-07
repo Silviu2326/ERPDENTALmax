@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Download, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { DatosPrevisualizacion } from '../api/contabilidadApi';
 import FormularioExportacion, { ParametrosExportacionForm } from '../components/FormularioExportacion';
 import PrevisualizacionDatosExportar from '../components/PrevisualizacionDatosExportar';
 import {

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { loadStripe, StripeElementsOptions, PaymentElement } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, useStripe, useElements, PaymentElement, StripeElementsOptions } from '@stripe/react-stripe-js';
 import { AlertCircle, Loader2 } from 'lucide-react';
 
 // Cargar Stripe con la clave pública (debe estar en variables de entorno)

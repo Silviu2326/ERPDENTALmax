@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Tooth, Activity, ClipboardList, Stethoscope, FileImage, CheckCircle, AlertTriangle } from 'lucide-react';
+import { FileText, Circle, Activity, ClipboardList, Stethoscope, FileImage, CheckCircle, AlertTriangle } from 'lucide-react';
 import { HistoriaClinica, obtenerHistoriaClinica, obtenerHistoriaMedica, actualizarHistoriaMedica, HistoriaMedica } from '../../api/historiaClinicaApi';
 import FormularioAnamnesis from './FormularioAnamnesis';
 import FormularioAntecedentesMedicos from '../FormularioAntecedentesMedicos';
@@ -49,7 +49,7 @@ export default function LayoutHistoriaClinica({ pacienteId }: LayoutHistoriaClin
   const secciones = [
     { id: 'anamnesis' as SeccionActiva, label: 'Anamnesis', icon: Stethoscope },
     { id: 'alergias-antecedentes' as SeccionActiva, label: 'Alergias y Antecedentes', icon: AlertTriangle },
-    { id: 'odontograma' as SeccionActiva, label: 'Odontograma', icon: Tooth },
+    { id: 'odontograma' as SeccionActiva, label: 'Odontograma', icon: Circle },
     { id: 'periodontograma' as SeccionActiva, label: 'Periodontograma', icon: Activity },
     { id: 'planes' as SeccionActiva, label: 'Planes de Tratamiento', icon: ClipboardList },
     { id: 'tratamientos-realizados' as SeccionActiva, label: 'Tratamientos Realizados', icon: CheckCircle },

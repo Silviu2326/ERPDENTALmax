@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar, Plus, RefreshCw, Wrench, Loader2, AlertCircle } from 'lucide-react';
 import {
   RevisionTecnica,
-  FiltrosRevisiones,
+  FiltrosRevisiones as FiltrosRevisionesType,
   obtenerRevisionesTecnicas,
 } from '../api/revisionesTecnicasApi';
 import CalendarioRevisionesGrid from '../components/CalendarioRevisionesGrid';
@@ -32,7 +32,7 @@ export default function CalendarioRevisionesTecnicasPage({}: CalendarioRevisione
   const [equipos, setEquipos] = useState<EquipoClinico[]>([]);
 
   // Inicializar filtros con el mes actual
-  const [filtros, setFiltros] = useState<FiltrosRevisiones>(() => {
+  const [filtros, setFiltros] = useState<FiltrosRevisionesType>(() => {
     const fechaInicio = new Date();
     fechaInicio.setHours(0, 0, 0, 0);
     const fechaFin = new Date();
@@ -139,7 +139,7 @@ export default function CalendarioRevisionesTecnicasPage({}: CalendarioRevisione
     cargarRevisiones();
   }, [filtros]);
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosRevisiones) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosRevisionesType) => {
     setFiltros(nuevosFiltros);
   };
 

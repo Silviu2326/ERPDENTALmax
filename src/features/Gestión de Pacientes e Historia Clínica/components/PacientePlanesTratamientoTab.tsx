@@ -88,47 +88,48 @@ export default function PacientePlanesTratamientoTab({ paciente }: PacientePlane
 
       {/* Estadísticas rápidas */}
       {planes.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total Planes</p>
-                <p className="text-2xl font-bold text-gray-900">{totalPlanes}</p>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Total Planes</p>
+                  <p className="text-2xl font-bold text-gray-900">{totalPlanes}</p>
+                </div>
+                <FileText className="w-8 h-8 text-blue-500 opacity-50" />
               </div>
-              <FileText className="w-8 h-8 text-blue-500 opacity-50" />
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Activos</p>
+                  <p className="text-2xl font-bold text-gray-900">{planesActivos}</p>
+                </div>
+                <Clock className="w-8 h-8 text-yellow-500 opacity-50" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Completados</p>
+                  <p className="text-2xl font-bold text-gray-900">{planesCompletados}</p>
+                </div>
+                <CheckCircle className="w-8 h-8 text-green-500 opacity-50" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Invertido</p>
+                  <p className="text-2xl font-bold text-gray-900">{totalInvertido.toFixed(0)}€</p>
+                </div>
+                <DollarSign className="w-8 h-8 text-purple-500 opacity-50" />
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Activos</p>
-                <p className="text-2xl font-bold text-gray-900">{planesActivos}</p>
-              </div>
-              <Clock className="w-8 h-8 text-yellow-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Completados</p>
-                <p className="text-2xl font-bold text-gray-900">{planesCompletados}</p>
-              </div>
-              <CheckCircle className="w-8 h-8 text-green-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Invertido</p>
-                <p className="text-2xl font-bold text-gray-900">{totalInvertido.toFixed(0)}€</p>
-              </div>
-              <DollarSign className="w-8 h-8 text-purple-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-        
-        {/* Estadísticas adicionales */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          
+          {/* Estadísticas adicionales */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-indigo-500">
             <div className="flex items-center justify-between">
               <div>
@@ -157,6 +158,7 @@ export default function PacientePlanesTratamientoTab({ paciente }: PacientePlane
             </div>
           </div>
         </div>
+        </>
       )}
 
       {planes.length === 0 ? (

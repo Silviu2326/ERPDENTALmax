@@ -11,20 +11,20 @@ export default function GraficoEvolucionDolor({ evaluaciones }: GraficoEvolucion
     if (evaluaciones.length === 0) return [];
 
     return evaluaciones
-      .filter((eval) => eval.anamnesis?.indiceFonseca !== undefined)
-      .map((eval) => {
-        const fecha = new Date(eval.fechaEvaluacion);
-        const promedioDolor = eval.examenClinico?.palpacionMuscular?.length
-          ? eval.examenClinico.palpacionMuscular.reduce((sum, p) => sum + p.dolor, 0) /
-            eval.examenClinico.palpacionMuscular.length
+      .filter((evaluacion) => evaluacion.anamnesis?.indiceFonseca !== undefined)
+      .map((evaluacion) => {
+        const fecha = new Date(evaluacion.fechaEvaluacion);
+        const promedioDolor = evaluacion.examenClinico?.palpacionMuscular?.length
+          ? evaluacion.examenClinico.palpacionMuscular.reduce((sum, p) => sum + p.dolor, 0) /
+            evaluacion.examenClinico.palpacionMuscular.length
           : 0;
 
         return {
           fecha: fecha.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }),
-          fechaCompleta: eval.fechaEvaluacion,
-          indiceFonseca: eval.anamnesis?.indiceFonseca || 0,
+          fechaCompleta: evaluacion.fechaEvaluacion,
+          indiceFonseca: evaluacion.anamnesis?.indiceFonseca || 0,
           promedioDolor: Number(promedioDolor.toFixed(1)),
-          aperturaMaxima: eval.examenClinico?.rangosMovimiento?.aperturaMaxima || 0,
+          aperturaMaxima: evaluacion.examenClinico?.rangosMovimiento?.aperturaMaxima || 0,
         };
       })
       .sort((a, b) => new Date(a.fechaCompleta).getTime() - new Date(b.fechaCompleta).getTime());

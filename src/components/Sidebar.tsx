@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { ROLE_LABELS } from '../types/auth';
 import { Home, LogOut, Stethoscope, ChevronLeft, ChevronRight, Calendar, Lock, Clock, RefreshCw, Users, Receipt, Calculator, DollarSign, CreditCard, Coins, PercentCircle, FileText, Download, Building2, FileCheck, ClipboardCheck, History, Warehouse, Package, BarChart3, FileBarChart, FileCode, Scan, Smartphone, Wallet, Shield, Activity, Droplets, Wrench, UserCircle, ClipboardList, Video, Building, KeyRound, Target, Megaphone, TrendingUp, Plug } from 'lucide-react';
 
-type Page = 'dashboard' | 'agenda-citas' | 'nueva-cita' | 'administracion-bloqueos' | 'gestion-disponibilidad' | 'reprogramacion-masiva' | 'gestion-pacientes' | 'paciente-perfil' | 'nueva-ficha-paciente' | 'presupuestos' | 'crear-presupuesto' | 'editar-presupuesto' | 'plan-tratamiento-builder' | 'lista-planes-paciente' | 'simulador-costos' | 'aprobar-presupuesto' | 'facturacion-cobros-contabilidad' | 'nueva-factura' | 'recibos-pagos' | 'anticipos' | 'comisiones-profesional' | 'liquidacion-mutuas' | 'exportacion-contabilidad' | 'gestion-mutuas-seguros' | 'convenios-acuerdos' | 'asistente-facturacion' | 'autorizaciones-tratamientos' | 'historial-pagos-seguros' | 'inventario-compras' | 'gestion-proveedores-almacen' | 'cuadro-mandos-informes' | 'informes-configurables' | 'documentacion-protocolos' | 'integracion-radiologica' | 'portal-cita-online-movil' | 'pasarela-pagos-financiacion' | 'seguridad-cumplimiento' | 'especialidades-clinicas' | 'esterilizacion-trazabilidad' | 'informes-trazabilidad' | 'mantenimiento-equipamiento' | 'portal-paciente' | 'portal-paciente-mis-citas' | 'portal-paciente-mis-documentos' | 'portal-paciente-mis-imagenes' | 'portal-paciente-mis-presupuestos' | 'portal-paciente-detalle-presupuesto' | 'portal-paciente-mensajeria' | 'portal-paciente-login' | 'portal-paciente-verify-email' | 'portal-paciente-reset-password' | 'portal-paciente-responder-encuesta' | 'gestion-encuestas' | 'resultados-encuesta' | 'teleodontologia' | 'multi-sede-franquicias' | 'transferencia-pacientes' | 'dashboard-sedes' | 'permisos-roles-sede' | 'calidad-auditoria' | 'marketing-avanzado-web' | 'analitica-avanzada-data' | 'integraciones-y-apis';
-
-interface SidebarProps {
-  currentPage: Page;
-  onPageChange: (page: Page) => void;
-}
-
-export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
+export default function Sidebar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  const currentPath = location.pathname;
+  
+  const isActive = (path: string) => {
+    if (path === '/dashboard') {
+      return currentPath === '/' || currentPath === '/dashboard';
+    }
+    return currentPath.startsWith(path);
+  };
 
   if (!user) return null;
 
@@ -64,9 +69,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
 
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
         <button
-          onClick={() => onPageChange('dashboard')}
+          onClick={() => navigate('/dashboard')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'dashboard'
+            isActive('/dashboard')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -78,9 +83,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('agenda-citas')}
+          onClick={() => navigate('/agenda-citas')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'agenda-citas'
+            isActive('/agenda-citas')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -92,9 +97,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('teleodontologia')}
+          onClick={() => navigate('/teleodontologia')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'teleodontologia'
+            isActive('/teleodontologia')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -106,9 +111,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('portal-cita-online-movil')}
+          onClick={() => navigate('/portal-cita-online-movil')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'portal-cita-online-movil'
+            isActive('/portal-cita-online-movil')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -120,9 +125,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('gestion-pacientes')}
+          onClick={() => navigate('/gestion-pacientes')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'gestion-pacientes'
+            isActive('/gestion-pacientes')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -134,9 +139,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('presupuestos')}
+          onClick={() => navigate('/presupuestos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'presupuestos'
+            isActive('/presupuestos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -148,9 +153,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('inventario-compras')}
+          onClick={() => navigate('/inventario-compras')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'inventario-compras'
+            isActive('/inventario-compras')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -162,9 +167,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('gestion-proveedores-almacen')}
+          onClick={() => navigate('/gestion-proveedores-almacen')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'gestion-proveedores-almacen'
+            isActive('/gestion-proveedores-almacen')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -176,9 +181,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('facturacion-cobros-contabilidad')}
+          onClick={() => navigate('/facturacion-cobros-contabilidad')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'facturacion-cobros-contabilidad'
+            isActive('/facturacion-cobros-contabilidad')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -190,9 +195,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('pasarela-pagos-financiacion')}
+          onClick={() => navigate('/pasarela-pagos-financiacion')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'pasarela-pagos-financiacion'
+            isActive('/pasarela-pagos-financiacion')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -204,9 +209,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('multi-sede-franquicias')}
+          onClick={() => navigate('/multi-sede-franquicias')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'multi-sede-franquicias' || currentPage === 'transferencia-pacientes' || currentPage === 'dashboard-sedes' || currentPage === 'permisos-roles-sede'
+            isActive('/multi-sede-franquicias') || isActive('/transferencia-pacientes') || isActive('/dashboard-sedes') || isActive('/permisos-roles-sede')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -218,9 +223,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('permisos-roles-sede')}
+          onClick={() => navigate('/permisos-roles-sede')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'permisos-roles-sede'
+            isActive('/permisos-roles-sede')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -232,9 +237,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('cuadro-mandos-informes')}
+          onClick={() => navigate('/cuadro-mandos-informes')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'cuadro-mandos-informes'
+            isActive('/cuadro-mandos-informes')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -246,9 +251,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('informes-configurables')}
+          onClick={() => navigate('/informes-configurables')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'informes-configurables'
+            isActive('/informes-configurables')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -260,9 +265,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('analitica-avanzada-data')}
+          onClick={() => navigate('/analitica-avanzada-data')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'analitica-avanzada-data'
+            isActive('/analitica-avanzada-data')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -274,9 +279,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('documentacion-protocolos')}
+          onClick={() => navigate('/documentacion-protocolos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'documentacion-protocolos'
+            isActive('/documentacion-protocolos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -288,9 +293,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('integracion-radiologica')}
+          onClick={() => navigate('/integracion-radiologica')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'integracion-radiologica'
+            isActive('/integracion-radiologica')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -302,9 +307,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('especialidades-clinicas')}
+          onClick={() => navigate('/especialidades-clinicas')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'especialidades-clinicas'
+            isActive('/especialidades-clinicas')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -316,9 +321,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('liquidacion-mutuas')}
+          onClick={() => navigate('/liquidacion-mutuas')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'liquidacion-mutuas'
+            isActive('/liquidacion-mutuas')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -330,9 +335,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('exportacion-contabilidad')}
+          onClick={() => navigate('/exportacion-contabilidad')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'exportacion-contabilidad'
+            isActive('/exportacion-contabilidad')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -344,9 +349,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('gestion-mutuas-seguros')}
+          onClick={() => navigate('/gestion-mutuas-seguros')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'gestion-mutuas-seguros'
+            isActive('/gestion-mutuas-seguros')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -358,9 +363,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('convenios-acuerdos')}
+          onClick={() => navigate('/convenios-acuerdos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'convenios-acuerdos'
+            isActive('/convenios-acuerdos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -372,9 +377,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('autorizaciones-tratamientos')}
+          onClick={() => navigate('/autorizaciones-tratamientos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'autorizaciones-tratamientos'
+            isActive('/autorizaciones-tratamientos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -386,9 +391,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('historial-pagos-seguros')}
+          onClick={() => navigate('/historial-pagos-seguros')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'historial-pagos-seguros'
+            isActive('/historial-pagos-seguros')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -400,9 +405,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('recibos-pagos')}
+          onClick={() => navigate('/recibos-pagos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'recibos-pagos'
+            isActive('/recibos-pagos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -414,9 +419,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('anticipos')}
+          onClick={() => navigate('/anticipos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'anticipos'
+            isActive('/anticipos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -428,9 +433,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('comisiones-profesional')}
+          onClick={() => navigate('/comisiones-profesional')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'comisiones-profesional'
+            isActive('/comisiones-profesional')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -442,9 +447,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('simulador-costos')}
+          onClick={() => navigate('/simulador-costos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'simulador-costos'
+            isActive('/simulador-costos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -456,9 +461,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('administracion-bloqueos')}
+          onClick={() => navigate('/administracion-bloqueos')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'administracion-bloqueos'
+            isActive('/administracion-bloqueos')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -470,9 +475,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('gestion-disponibilidad')}
+          onClick={() => navigate('/gestion-disponibilidad')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'gestion-disponibilidad'
+            isActive('/gestion-disponibilidad')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -484,9 +489,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('reprogramacion-masiva')}
+          onClick={() => navigate('/reprogramacion-masiva')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'reprogramacion-masiva'
+            isActive('/reprogramacion-masiva')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -498,9 +503,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('seguridad-cumplimiento')}
+          onClick={() => navigate('/seguridad-cumplimiento')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'seguridad-cumplimiento'
+            isActive('/seguridad-cumplimiento')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -512,9 +517,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('esterilizacion-trazabilidad')}
+          onClick={() => navigate('/esterilizacion-trazabilidad')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'esterilizacion-trazabilidad'
+            isActive('/esterilizacion-trazabilidad')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -526,9 +531,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('informes-trazabilidad')}
+          onClick={() => navigate('/informes-trazabilidad')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'informes-trazabilidad'
+            isActive('/informes-trazabilidad')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -540,9 +545,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('mantenimiento-equipamiento')}
+          onClick={() => navigate('/mantenimiento-equipamiento')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'mantenimiento-equipamiento'
+            isActive('/mantenimiento-equipamiento')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -554,9 +559,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('gestion-encuestas')}
+          onClick={() => navigate('/gestion-encuestas')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'gestion-encuestas' || currentPage === 'resultados-encuesta'
+            isActive('/gestion-encuestas') || isActive('/resultados-encuesta')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -568,9 +573,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('calidad-auditoria')}
+          onClick={() => navigate('/calidad-auditoria')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'calidad-auditoria'
+            isActive('/calidad-auditoria')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -582,9 +587,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('marketing-avanzado-web')}
+          onClick={() => navigate('/marketing-avanzado-web')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'marketing-avanzado-web'
+            isActive('/marketing-avanzado-web')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -596,9 +601,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         </button>
 
         <button
-          onClick={() => onPageChange('integraciones-y-apis')}
+          onClick={() => navigate('/integraciones-y-apis')}
           className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-            currentPage === 'integraciones-y-apis'
+            isActive('/integraciones-y-apis')
               ? 'bg-gradient-to-r from-blue-800/80 to-indigo-800/80 hover:from-blue-700 hover:to-indigo-700 border-blue-700/30'
               : 'bg-gradient-to-r from-blue-800/50 to-indigo-800/50 hover:from-blue-700/70 hover:to-indigo-700/70 border-blue-700/20'
           } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}
@@ -611,9 +616,9 @@ export default function Sidebar({ currentPage, onPageChange }: SidebarProps) {
 
         <div className="pt-4 mt-4 border-t border-blue-800/50">
           <button
-            onClick={() => onPageChange('portal-paciente-login')}
+            onClick={() => navigate('/portal-paciente-login')}
             className={`w-full flex items-center rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border ${
-              currentPage === 'portal-paciente' || currentPage === 'portal-paciente-login' || currentPage === 'portal-paciente-verify-email' || currentPage === 'portal-paciente-reset-password'
+              isActive('/portal-paciente') || isActive('/portal-paciente-login') || isActive('/portal-paciente-verify-email') || isActive('/portal-paciente-reset-password')
                 ? 'bg-gradient-to-r from-green-800/80 to-emerald-800/80 hover:from-green-700 hover:to-emerald-700 border-green-700/30'
                 : 'bg-gradient-to-r from-green-800/50 to-emerald-800/50 hover:from-green-700/70 hover:to-emerald-700/70 border-green-700/20'
             } ${isCollapsed ? 'justify-center px-3 py-3.5' : 'space-x-3 px-4 py-3.5'}`}

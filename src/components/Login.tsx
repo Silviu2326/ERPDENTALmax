@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { MOCK_USERS, ROLE_LABELS } from '../types/auth';
 import { Stethoscope } from 'lucide-react';
@@ -8,13 +9,21 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Obtener la ruta desde donde se intentó acceder (si existe)
+  const from = location.state?.from?.pathname || '/dashboard';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     const success = login(email, password);
-    if (!success) {
+    if (success) {
+      // Redirigir a la ruta desde donde vino o al dashboard
+      navigate(from, { replace: true });
+    } else {
       setError('Credenciales incorrectas');
     }
   };
@@ -24,7 +33,10 @@ export default function Login() {
     setPassword(userPassword);
     setError('');
     const success = login(userEmail, userPassword);
-    if (!success) {
+    if (success) {
+      // Redirigir a la ruta desde donde vino o al dashboard
+      navigate(from, { replace: true });
+    } else {
       setError('Credenciales incorrectas');
     }
   };

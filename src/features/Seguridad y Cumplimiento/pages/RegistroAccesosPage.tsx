@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Shield, RefreshCw } from 'lucide-react';
 import {
   obtenerRegistrosDeAcceso,
-  FiltrosRegistroAccesos,
+  FiltrosRegistroAccesos as FiltrosRegistroAccesosType,
   AccesoLog,
   PaginacionLogs,
 } from '../api/accesosApi';
@@ -24,7 +24,7 @@ export default function RegistroAccesosPage() {
   const [mostrarModal, setMostrarModal] = useState(false);
 
   // Inicializar filtros con los últimos 7 días
-  const [filtros, setFiltros] = useState<FiltrosRegistroAccesos>(() => {
+  const [filtros, setFiltros] = useState<FiltrosRegistroAccesosType>(() => {
     const fechaInicio = new Date();
     fechaInicio.setDate(fechaInicio.getDate() - 7);
     fechaInicio.setHours(0, 0, 0, 0);
@@ -74,7 +74,7 @@ export default function RegistroAccesosPage() {
     cargarLogs();
   }, [filtros]);
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosRegistroAccesos) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosRegistroAccesosType) => {
     setFiltros({ ...nuevosFiltros, page: 1 });
   };
 

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Search, Filter, Calendar, User, FileText } from 'lucide-react';
-import { obtenerLogsAuditoria, AuditLog, FiltrosLogs } from '../api/rgpdApi';
+import { obtenerLogsAuditoria, AuditLog, FiltrosLogs as FiltrosLogsType } from '../api/rgpdApi';
 import FiltrosLogs from './FiltrosLogs';
 
 export default function VisorLogsAcceso() {
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filtros, setFiltros] = useState<FiltrosLogs>({});
+  const [filtros, setFiltros] = useState<FiltrosLogsType>({});
 
   useEffect(() => {
     cargarLogs();
@@ -37,7 +37,7 @@ export default function VisorLogsAcceso() {
     });
   };
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosLogs) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosLogsType) => {
     setFiltros(nuevosFiltros);
   };
 

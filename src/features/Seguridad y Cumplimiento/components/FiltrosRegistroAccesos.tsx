@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Filter, X, Calendar, User, Activity, MapPin } from 'lucide-react';
-import { FiltrosRegistroAccesos, obtenerTiposAccion } from '../api/accesosApi';
+import { FiltrosRegistroAccesos as FiltrosRegistroAccesosType, obtenerTiposAccion } from '../api/accesosApi';
 
 interface FiltrosRegistroAccesosProps {
-  filtros: FiltrosRegistroAccesos;
-  onFiltrosChange: (filtros: FiltrosRegistroAccesos) => void;
+  filtros: FiltrosRegistroAccesosType;
+  onFiltrosChange: (filtros: FiltrosRegistroAccesosType) => void;
   usuarios?: Array<{ _id: string; nombre: string; apellidos?: string }>;
   sedes?: Array<{ _id: string; nombre: string }>;
 }
@@ -18,7 +18,7 @@ export default function FiltrosRegistroAccesos({
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const tiposAccion = obtenerTiposAccion();
 
-  const handleChange = (key: keyof FiltrosRegistroAccesos, value: string | number | undefined) => {
+  const handleChange = (key: keyof FiltrosRegistroAccesosType, value: string | number | undefined) => {
     onFiltrosChange({
       ...filtros,
       [key]: value || undefined,

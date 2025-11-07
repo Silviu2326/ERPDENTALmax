@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Receipt, RefreshCw, Plus, TrendingUp, DollarSign, CheckCircle, Clock, Calculator, FileText, ClipboardList, BarChart3, PieChart, TrendingDown, Users, Calendar, Percent } from 'lucide-react';
 import {
   Presupuesto,
-  FiltrosPresupuestos,
+  FiltrosPresupuestos as FiltrosPresupuestosType,
   obtenerPresupuestos,
   actualizarEstadoPresupuesto,
   eliminarPresupuesto,
@@ -31,7 +31,7 @@ export default function PresupuestosYPlanesDeTratamientoPage({ onNuevoPresupuest
   const [loading, setLoading] = useState(true);
   const [loadingPlanes, setLoadingPlanes] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filtros, setFiltros] = useState<FiltrosPresupuestos>({
+  const [filtros, setFiltros] = useState<FiltrosPresupuestosType>({
     page: 1,
     limit: 10,
     sortBy: 'fechaCreacion',
@@ -994,7 +994,7 @@ export default function PresupuestosYPlanesDeTratamientoPage({ onNuevoPresupuest
     }
   };
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosPresupuestos) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosPresupuestosType) => {
     setFiltros(nuevosFiltros);
   };
 

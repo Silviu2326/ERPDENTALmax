@@ -1,5 +1,5 @@
 import { Search, AlertCircle } from 'lucide-react';
-import { AnalisisCausaRaizInput } from './AnalisisCausaRaizInput';
+import AnalisisCausaRaizInput from './AnalisisCausaRaizInput';
 
 interface SeccionAnalisisCausaRaizProps {
   analisisCausaRaiz?: string;

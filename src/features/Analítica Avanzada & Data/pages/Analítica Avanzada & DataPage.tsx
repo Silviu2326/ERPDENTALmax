@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Users, Calendar, Filter, RefreshCw, FunnelChart as FunnelChartIcon, AlertCircle, Box, DollarSign, Bell, Loader2, Package } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Calendar, Filter, RefreshCw, AlertCircle, Box, DollarSign, Bell, Loader2, Package } from 'lucide-react';
 import { getCohortRetention, CohortRetentionParams, CohortRetentionResponse } from '../api/analiticaApi';
 import EmbudoConversionPage from './EmbudoConversionPage';
 import AnalisisAusenciasPage from './AnalisisAusenciasPage';
@@ -120,7 +120,7 @@ export default function AnaliticaAvanzadaDataPage() {
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                 }`}
               >
-                <FunnelChartIcon size={18} className={activeView === 'embudo-conversion' ? 'opacity-100' : 'opacity-70'} />
+                <Filter size={18} className={activeView === 'embudo-conversion' ? 'opacity-100' : 'opacity-70'} />
                 <span>Embudo de Conversión</span>
               </button>
               <button
@@ -187,7 +187,7 @@ export default function AnaliticaAvanzadaDataPage() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-2 bg-blue-100 rounded-xl ring-1 ring-blue-200/70">
-                    <FunnelChartIcon className="w-5 h-5 text-blue-600" />
+                    <Filter className="w-5 h-5 text-blue-600" />
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Embudo de Conversión</h3>

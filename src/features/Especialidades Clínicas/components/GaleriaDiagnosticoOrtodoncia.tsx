@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, File3D, Download, Trash2, Edit2, Eye } from 'lucide-react';
+import { Image, Layers, Download, Trash2, Edit2, Eye } from 'lucide-react';
 import { OrtodonciaDiagnostico, ArchivoDiagnostico } from '../api/ortodonciaDiagnosticoApi';
 import VisorImagenDentalAvanzado from './VisorImagenDentalAvanzado';
 
@@ -38,7 +38,7 @@ export default function GaleriaDiagnosticoOrtodoncia({
       return <Image className="w-5 h-5" />;
     }
     if (tipo.includes('3D')) {
-      return <File3D className="w-5 h-5" />;
+      return <Layers className="w-5 h-5" />;
     }
     return <Image className="w-5 h-5" />;
   };
@@ -105,7 +105,7 @@ export default function GaleriaDiagnosticoOrtodoncia({
             >
               {archivo.tipo.includes('3D') ? (
                 <div className="text-center p-4">
-                  <File3D size={48} className="text-gray-400 mx-auto mb-2" />
+                  <Layers size={48} className="text-gray-400 mx-auto mb-2" />
                   <p className="text-xs text-slate-600">{archivo.subtipo || archivo.tipo}</p>
                 </div>
               ) : (

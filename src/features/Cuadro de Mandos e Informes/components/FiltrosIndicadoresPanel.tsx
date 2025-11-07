@@ -53,7 +53,7 @@ export default function FiltrosIndicadoresPanel({
 
   const aplicarRangoPredefinido = (rango: string) => {
     const hoy = new Date();
-    const fechaFin = new Date();
+    let fechaFin = new Date();
     fechaFin.setHours(23, 59, 59, 999);
 
     let fechaInicio = new Date();

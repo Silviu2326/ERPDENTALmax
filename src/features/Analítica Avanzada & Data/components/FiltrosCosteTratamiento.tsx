@@ -1,9 +1,9 @@
 import { Filter, RefreshCw, Calendar, Building2, Stethoscope } from 'lucide-react';
-import { FiltrosCosteTratamiento } from '../api/analiticaApi';
+import { FiltrosCosteTratamiento as FiltrosCosteTratamientoType } from '../api/analiticaApi';
 
 interface FiltrosCosteTratamientoProps {
-  filtros: FiltrosCosteTratamiento;
-  onFiltrosChange: (filtros: FiltrosCosteTratamiento) => void;
+  filtros: FiltrosCosteTratamientoType;
+  onFiltrosChange: (filtros: FiltrosCosteTratamientoType) => void;
   onActualizar: () => void;
   loading?: boolean;
 }

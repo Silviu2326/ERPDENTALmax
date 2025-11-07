@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Tooth } from 'lucide-react';
+import { ArrowLeft, Circle } from 'lucide-react';
 import { crearOrdenProtesis, CrearOrdenProtesisData } from '../api/protesisApi';
 import FormularioOrdenProtesis from '../components/FormularioOrdenProtesis';
 
@@ -45,7 +45,7 @@ export default function CrearOrdenProtesisPage({
             <div className="flex items-center">
               {/* Icono con contenedor */}
               <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
-                <Tooth size={24} className="text-blue-600" />
+                <Circle size={24} className="text-blue-600" />
               </div>
               
               {/* Título y descripción */}

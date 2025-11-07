@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Filter, X } from 'lucide-react';
-import { FiltrosLogs } from '../api/rgpdApi';
+import { FiltrosLogs as FiltrosLogsType } from '../api/rgpdApi';
 
 interface FiltrosLogsProps {
-  onFiltrosChange: (filtros: FiltrosLogs) => void;
+  onFiltrosChange: (filtros: FiltrosLogsType) => void;
 }
 
 export default function FiltrosLogs({ onFiltrosChange }: FiltrosLogsProps) {
-  const [filtros, setFiltros] = useState<FiltrosLogs>({
+  const [filtros, setFiltros] = useState<FiltrosLogsType>({
     usuarioId: '',
     accion: '',
     entidadId: '',
@@ -15,14 +15,14 @@ export default function FiltrosLogs({ onFiltrosChange }: FiltrosLogsProps) {
     fechaFin: '',
   });
 
-  const handleChange = (field: keyof FiltrosLogs, value: string) => {
+  const handleChange = (field: keyof FiltrosLogsType, value: string) => {
     const nuevosFiltros = { ...filtros, [field]: value };
     setFiltros(nuevosFiltros);
     onFiltrosChange(nuevosFiltros);
   };
 
   const handleReset = () => {
-    const filtrosVacios: FiltrosLogs = {
+    const filtrosVacios: FiltrosLogsType = {
       usuarioId: '',
       accion: '',
       entidadId: '',

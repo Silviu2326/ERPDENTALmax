@@ -173,7 +173,7 @@ export default function RoleEditorForm({
                     <span className="text-sm text-slate-700">{getPermissionLabel(permission)}</span>
                   </label>
                 );
-              })}
+              })
             )}
           </div>
         </div>

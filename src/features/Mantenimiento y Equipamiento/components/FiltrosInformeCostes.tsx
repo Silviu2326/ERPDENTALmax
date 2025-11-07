@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Filter, Calendar, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { FiltrosInformeCostes } from '../api/informesEquipamientoApi';
+import { FiltrosInformeCostes as FiltrosInformeCostesType } from '../api/informesEquipamientoApi';
 
 interface FiltrosInformeCostesProps {
-  filtros: FiltrosInformeCostes;
-  onFiltrosChange: (filtros: FiltrosInformeCostes) => void;
+  filtros: FiltrosInformeCostesType;
+  onFiltrosChange: (filtros: FiltrosInformeCostesType) => void;
   sedes?: Array<{ _id: string; nombre: string }>;
   categorias?: Array<{ _id: string; nombre: string }>;
   onAplicarFiltros: () => void;

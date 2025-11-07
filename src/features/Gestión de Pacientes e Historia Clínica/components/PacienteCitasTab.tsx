@@ -150,47 +150,48 @@ export default function PacienteCitasTab({ paciente }: PacienteCitasTabProps) {
 
       {/* Resumen de citas */}
       {citasOrdenadas.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Programadas</p>
-                <p className="text-2xl font-bold text-blue-600">{citasProgramadas.length}</p>
+        <>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Programadas</p>
+                  <p className="text-2xl font-bold text-blue-600">{citasProgramadas.length}</p>
+                </div>
+                <Clock className="w-8 h-8 text-blue-500 opacity-50" />
               </div>
-              <Clock className="w-8 h-8 text-blue-500 opacity-50" />
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Realizadas</p>
+                  <p className="text-2xl font-bold text-green-600">{citasRealizadas.length}</p>
+                </div>
+                <CheckCircle className="w-8 h-8 text-green-500 opacity-50" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-red-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Canceladas</p>
+                  <p className="text-2xl font-bold text-red-600">{citasCanceladas.length}</p>
+                </div>
+                <XCircle className="w-8 h-8 text-red-500 opacity-50" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Horas Totales</p>
+                  <p className="text-2xl font-bold text-purple-600">{totalHorasTratamiento.toFixed(1)}h</p>
+                </div>
+                <Calendar className="w-8 h-8 text-purple-500 opacity-50" />
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-green-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Realizadas</p>
-                <p className="text-2xl font-bold text-green-600">{citasRealizadas.length}</p>
-              </div>
-              <CheckCircle className="w-8 h-8 text-green-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-red-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Canceladas</p>
-                <p className="text-2xl font-bold text-red-600">{citasCanceladas.length}</p>
-              </div>
-              <XCircle className="w-8 h-8 text-red-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Horas Totales</p>
-                <p className="text-2xl font-bold text-purple-600">{totalHorasTratamiento.toFixed(1)}h</p>
-              </div>
-              <Calendar className="w-8 h-8 text-purple-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-        
-        {/* Estadísticas adicionales */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+          
+          {/* Estadísticas adicionales */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
           <div className="bg-white rounded-lg shadow p-4 border-l-4 border-indigo-500">
             <div className="flex items-center justify-between">
               <div>
@@ -265,6 +266,7 @@ export default function PacienteCitasTab({ paciente }: PacienteCitasTabProps) {
             </div>
           </div>
         </div>
+        </>
       )}
 
       {citasOrdenadas.length === 0 ? (

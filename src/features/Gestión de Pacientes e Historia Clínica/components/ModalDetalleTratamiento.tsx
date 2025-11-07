@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Calendar, User, DollarSign, Tooth, FileText, Save, Loader2, AlertCircle } from 'lucide-react';
+import { X, Calendar, User, DollarSign, Circle, FileText, Save, Loader2, AlertCircle } from 'lucide-react';
 import {
   TratamientoRealizado,
   obtenerTratamientoRealizadoPorId,
@@ -154,7 +154,7 @@ export default function ModalDetalleTratamiento({
                 {tratamiento.piezaDental && (
                   <div className="bg-gray-50 rounded-lg p-4">
                     <div className="flex items-center gap-2 text-gray-600 mb-2">
-                      <Tooth className="w-5 h-5" />
+                      <Circle className="w-5 h-5" />
                       <span className="font-medium">Pieza Dental</span>
                     </div>
                     <p className="text-gray-900 font-semibold">

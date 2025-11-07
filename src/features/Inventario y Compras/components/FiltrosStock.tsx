@@ -1,9 +1,9 @@
 import { Search, X } from 'lucide-react';
-import { FiltrosStock } from '../api/stockApi';
+import { FiltrosStock as FiltrosStockType } from '../api/stockApi';
 
 interface FiltrosStockProps {
-  filtros: FiltrosStock;
-  onFiltrosChange: (filtros: FiltrosStock) => void;
+  filtros: FiltrosStockType;
+  onFiltrosChange: (filtros: FiltrosStockType) => void;
   categorias: string[];
   proveedores: Array<{ _id: string; nombre: string }>;
   sedes: Array<{ _id: string; nombre: string }>;

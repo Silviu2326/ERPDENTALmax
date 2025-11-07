@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DienteTratado } from '../api/odontopediatriaApi';
-import { Tooth } from 'lucide-react';
+import { Circle } from 'lucide-react';
 
 interface SelectorDientesInfantilProps {
   dientesSeleccionados: DienteTratado[];
@@ -103,7 +103,7 @@ export default function SelectorDientesInfantil({
           } ${editando ? 'ring-2 ring-blue-400 ring-offset-2' : ''}`}
           title={`Diente ${numero} ${esTemporal ? '(Temporal)' : '(Permanente)'}`}
         >
-          <Tooth className="w-5 h-5" />
+          <Circle className="w-5 h-5" />
         </button>
         <span className="text-xs text-gray-600 mt-1 block text-center">{numero}</span>
       </div>

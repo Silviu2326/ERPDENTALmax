@@ -3,7 +3,7 @@ import { Plus, RefreshCw, Package } from 'lucide-react';
 import {
   obtenerStockCompleto,
   ProductoInventario,
-  FiltrosStock,
+  FiltrosStock as FiltrosStockType,
 } from '../api/stockApi';
 import CardResumenStock from '../components/CardResumenStock';
 import FiltrosStock from '../components/FiltrosStock';
@@ -21,7 +21,7 @@ export default function ControlStockPage({ onVerDetalle }: ControlStockPageProps
   const [productos, setProductos] = useState<ProductoInventario[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filtros, setFiltros] = useState<FiltrosStock>({
+  const [filtros, setFiltros] = useState<FiltrosStockType>({
     page: 1,
     limit: 20,
   });
@@ -998,26 +998,25 @@ export default function ControlStockPage({ onVerDetalle }: ControlStockPageProps
         </div>
       </div>
 
-        {/* Modales */}
-        {mostrarModalNuevo && (
-          <ModalNuevoProducto
-            onClose={() => setMostrarModalNuevo(false)}
-            onProductoCreado={handleProductoCreado}
-            proveedores={proveedores}
-            sedes={sedes}
-            categorias={categorias}
-          />
-        )}
+      {/* Modales */}
+      {mostrarModalNuevo && (
+        <ModalNuevoProducto
+          onClose={() => setMostrarModalNuevo(false)}
+          onProductoCreado={handleProductoCreado}
+          proveedores={proveedores}
+          sedes={sedes}
+          categorias={categorias}
+        />
+      )}
 
-        {productoAjustar && user && (
-          <ModalAjusteStock
-            producto={productoAjustar}
-            onClose={() => setProductoAjustar(null)}
-            onAjusteCompletado={handleAjusteCompletado}
-            usuarioId={user.id}
-          />
-        )}
-      </div>
+      {productoAjustar && user && (
+        <ModalAjusteStock
+          producto={productoAjustar}
+          onClose={() => setProductoAjustar(null)}
+          onAjusteCompletado={handleAjusteCompletado}
+          usuarioId={user.id}
+        />
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Plus, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Proveedor,
-  FiltrosBusquedaProveedores,
+  FiltrosBusquedaProveedores as FiltrosBusquedaProveedoresType,
   NuevoProveedor,
 } from '../api/proveedoresApi';
 import FiltrosBusquedaProveedores from './FiltrosBusquedaProveedores';
@@ -15,7 +15,7 @@ export default function GestionProveedoresTab() {
   const [proveedores, setProveedores] = useState<Proveedor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filtros, setFiltros] = useState<FiltrosBusquedaProveedores>({
+  const [filtros, setFiltros] = useState<FiltrosBusquedaProveedoresType>({
     page: 1,
     limit: 20,
     estado: 'activo', // Por defecto mostrar solo activos
@@ -497,7 +497,7 @@ export default function GestionProveedoresTab() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtros]);
 
-  const handleFiltrosChange = (nuevosFiltros: FiltrosBusquedaProveedores) => {
+  const handleFiltrosChange = (nuevosFiltros: FiltrosBusquedaProveedoresType) => {
     setFiltros((prev) => ({
       ...prev,
       ...nuevosFiltros,

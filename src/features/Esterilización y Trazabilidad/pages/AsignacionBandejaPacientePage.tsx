@@ -208,17 +208,16 @@ export default function AsignacionBandejaPacientePage({ onVolver }: AsignacionBa
         </div>
       </div>
 
-        {/* Modal de confirmación */}
-        {mostrarModalConfirmacion && pacienteSeleccionado && bandejaEscaneada && (
-          <ModalConfirmarAsignacion
-            paciente={pacienteSeleccionado}
-            bandeja={bandejaEscaneada}
-            onConfirmar={handleConfirmarAsignacion}
-            onCancelar={() => setMostrarModalConfirmacion(false)}
-            loading={loading}
-          />
-        )}
-      </div>
+      {/* Modal de confirmación */}
+      {mostrarModalConfirmacion && pacienteSeleccionado && bandejaEscaneada && (
+        <ModalConfirmarAsignacion
+          paciente={pacienteSeleccionado}
+          bandeja={bandejaEscaneada}
+          onConfirmar={handleConfirmarAsignacion}
+          onCancelar={() => setMostrarModalConfirmacion(false)}
+          loading={loading}
+        />
+      )}
     </div>
   );
 }

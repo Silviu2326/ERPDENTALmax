@@ -15,7 +15,7 @@ export default function VisorFotosRetencion({ fotos }: VisorFotosRetencionProps)
 
   const fotoSiguiente = () => {
     setFotoActual((prev) => (prev === fotos.length - 1 ? 0 : prev + 1));
-  });
+  };
 
   if (fotos.length === 0) {
     return null;

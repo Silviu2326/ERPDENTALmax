@@ -1,4 +1,4 @@
-import { Tooth } from 'lucide-react';
+import { Circle } from 'lucide-react';
 
 interface DienteEndoSelectorProps {
   dienteSeleccionado?: number;
@@ -68,7 +68,7 @@ export default function DienteEndoSelector({
             `}
             title={diente.nombre}
           >
-            <Tooth size={24} className="mx-auto mb-1" />
+            <Circle size={24} className="mx-auto mb-1" />
             <span className="text-xs font-semibold">{diente.num}</span>
           </button>
         ))}

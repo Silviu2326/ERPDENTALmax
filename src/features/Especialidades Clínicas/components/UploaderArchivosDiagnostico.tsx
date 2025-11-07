@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Upload, X, File, Image, File3D } from 'lucide-react';
+import { Upload, X, File, Image, Layers } from 'lucide-react';
 
 interface ArchivoConMetadata {
   file: File;
@@ -88,7 +88,7 @@ export default function UploaderArchivosDiagnostico({
       return <Image className="w-5 h-5" />;
     }
     if (tipo.includes('3D')) {
-      return <File3D className="w-5 h-5" />;
+      return <Layers className="w-5 h-5" />;
     }
     return <File className="w-5 h-5" />;
   };

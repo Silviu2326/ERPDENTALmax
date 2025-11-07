@@ -23,7 +23,7 @@ interface ProtocolosLimpiezaPageProps {
   tabActiva?: 'lotes' | 'protocolos';
 }
 
-export default function ProtocolosLimpiezaPage({ onTabChange, tabActiva = 'protocolos' }: ProtocolosLimpiezaPageProps = {}) {
+export default function ProtocolosLimpiezaPage({ onTabChange, tabActiva = 'protocolos' }: ProtocolosLimpiezaPageProps) {
   const { user } = useAuth();
   const [protocolos, setProtocolos] = useState<Protocolo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -301,62 +301,63 @@ export default function ProtocolosLimpiezaPage({ onTabChange, tabActiva = 'proto
             </div>
           </div>
 
-        {/* Contenido Principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Lista de Protocolos */}
-          <div className="lg:col-span-1">
-            <ListaProtocolosComponent
-              protocolos={protocolosFiltrados}
-              loading={loading}
-              onSeleccionarProtocolo={handleVerDetalle}
-              protocoloSeleccionadoId={protocoloSeleccionado?._id}
-              esAdmin={esAdmin}
-              onEditar={handleAbrirModalGestion}
-              onArchivar={handleArchivarProtocolo}
-            />
-          </div>
-
-          {/* Visor de Detalle */}
-          <div className="lg:col-span-2">
-            {protocoloSeleccionado ? (
-              <VisorProtocoloDetalleComponent
-                protocolo={protocoloSeleccionado}
+          {/* Contenido Principal */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Lista de Protocolos */}
+            <div className="lg:col-span-1">
+              <ListaProtocolosComponent
+                protocolos={protocolosFiltrados}
+                loading={loading}
+                onSeleccionarProtocolo={handleVerDetalle}
+                protocoloSeleccionadoId={protocoloSeleccionado?._id}
                 esAdmin={esAdmin}
-                onConfirmarLectura={handleConfirmarLectura}
-                onVerHistorial={() => setMostrarHistorial(true)}
                 onEditar={handleAbrirModalGestion}
                 onArchivar={handleArchivarProtocolo}
               />
-            ) : (
-              <div className="bg-white shadow-sm rounded-lg p-8 text-center">
-                <FileText size={48} className="mx-auto text-gray-400 mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un protocolo</h3>
-                <p className="text-gray-600">Seleccione un protocolo de la lista para ver los detalles</p>
-              </div>
-            )}
+            </div>
+
+            {/* Visor de Detalle */}
+            <div className="lg:col-span-2">
+              {protocoloSeleccionado ? (
+                <VisorProtocoloDetalleComponent
+                  protocolo={protocoloSeleccionado}
+                  esAdmin={esAdmin}
+                  onConfirmarLectura={handleConfirmarLectura}
+                  onVerHistorial={() => setMostrarHistorial(true)}
+                  onEditar={handleAbrirModalGestion}
+                  onArchivar={handleArchivarProtocolo}
+                />
+              ) : (
+                <div className="bg-white shadow-sm rounded-lg p-8 text-center">
+                  <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Seleccione un protocolo</h3>
+                  <p className="text-gray-600">Seleccione un protocolo de la lista para ver los detalles</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Modal de Gestión */}
-        {mostrarModalGestion && (
-          <ModalGestionProtocolo
-            protocolo={protocoloEditando}
-            onGuardar={protocoloEditando ? handleEditarProtocolo : handleCrearProtocolo}
-            onCerrar={() => {
-              setMostrarModalGestion(false);
-              setProtocoloEditando(null);
-            }}
-          />
-        )}
-
-        {/* Modal de Historial */}
-        {mostrarHistorial && protocoloSeleccionado && (
-          <HistorialVersionesProtocolo
-            protocolo={protocoloSeleccionado}
-            onCerrar={() => setMostrarHistorial(false)}
-          />
-        )}
       </div>
+
+      {/* Modal de Gestión */}
+      {mostrarModalGestion && (
+        <ModalGestionProtocolo
+          protocolo={protocoloEditando}
+          onGuardar={protocoloEditando ? handleEditarProtocolo : handleCrearProtocolo}
+          onCerrar={() => {
+            setMostrarModalGestion(false);
+            setProtocoloEditando(null);
+          }}
+        />
+      )}
+
+      {/* Modal de Historial */}
+      {mostrarHistorial && protocoloSeleccionado && (
+        <HistorialVersionesProtocolo
+          protocolo={protocoloSeleccionado}
+          onCerrar={() => setMostrarHistorial(false)}
+        />
+      )}
     </div>
   );
 }

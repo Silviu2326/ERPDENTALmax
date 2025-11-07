@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Upload, AlertCircle, Loader2, Save, FileText, Boxes3D, X } from 'lucide-react';
+import { ArrowLeft, Upload, AlertCircle, Loader2, Save, FileText, Layers, X } from 'lucide-react';
 import {
   PlanificacionImplantologia3D,
   ImplanteVirtual,
@@ -169,7 +169,7 @@ export default function PlanificacionImplantologia3DPage({
                 <div className="flex items-center">
                   {/* Icono con contenedor */}
                   <div className="p-2 bg-blue-100 rounded-xl mr-4 ring-1 ring-blue-200/70">
-                    <Boxes3D size={24} className="text-blue-600" />
+                    <Layers size={24} className="text-blue-600" />
                   </div>
                   
                   {/* Título y descripción */}
