@@ -7,6 +7,7 @@ import FiltrosCalendario from '../components/FiltrosCalendario';
 import FiltrosVistaMensual from '../components/FiltrosVistaMensual';
 import ModalGestionCita from '../components/ModalGestionCita';
 import ModalEditarCita from '../components/ModalEditarCita';
+import MiniCalendarPanel from '../components/MiniCalendarPanel';
 
 interface AgendaDeCitasYProgramacionPageProps {
   onNuevaCita?: () => void;
@@ -21,6 +22,7 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
   const [citaSeleccionada, setCitaSeleccionada] = useState<Cita | null>(null);
   const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | undefined>();
   const [horaSeleccionada, setHoraSeleccionada] = useState<string | undefined>();
+  const [citaDestacada, setCitaDestacada] = useState<string | null>(null);
 
   // Estado para vista mensual
   const ahora = new Date();
@@ -43,26 +45,11 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
   });
 
   // Datos mock enriquecidos para profesionales, sedes y pacientes
-  const profesionales = [
+  const profesionales = useMemo(() => ([
     { _id: '1', nombre: 'Juan', apellidos: 'Pérez', especialidad: 'Ortodoncia', color: '#3B82F6', telefono: '612345001', email: 'juan.perez@clinicadental.com', activo: true },
     { _id: '2', nombre: 'María', apellidos: 'García', especialidad: 'Endodoncia', color: '#10B981', telefono: '612345002', email: 'maria.garcia@clinicadental.com', activo: true },
     { _id: '3', nombre: 'Carlos', apellidos: 'López', especialidad: 'Implantología', color: '#8B5CF6', telefono: '612345003', email: 'carlos.lopez@clinicadental.com', activo: true },
-    { _id: '4', nombre: 'Ana', apellidos: 'Fernández', especialidad: 'Periodoncia', color: '#F59E0B', telefono: '612345004', email: 'ana.fernandez@clinicadental.com', activo: true },
-    { _id: '5', nombre: 'Roberto', apellidos: 'Martínez', especialidad: 'Estética Dental', color: '#EF4444', telefono: '612345005', email: 'roberto.martinez@clinicadental.com', activo: true },
-    { _id: '6', nombre: 'Carmen', apellidos: 'Sánchez', especialidad: 'Odontopediatría', color: '#06B6D4', telefono: '612345006', email: 'carmen.sanchez@clinicadental.com', activo: true },
-    { _id: '7', nombre: 'Luis', apellidos: 'González', especialidad: 'Cirugía Oral', color: '#EC4899', telefono: '612345007', email: 'luis.gonzalez@clinicadental.com', activo: true },
-    { _id: '8', nombre: 'Patricia', apellidos: 'Ruiz', especialidad: 'Prótesis Dental', color: '#14B8A6', telefono: '612345008', email: 'patricia.ruiz@clinicadental.com', activo: true },
-    { _id: '9', nombre: 'David', apellidos: 'Morales', especialidad: 'Higienista Dental', color: '#6366F1', telefono: '612345009', email: 'david.morales@clinicadental.com', activo: true },
-    { _id: '10', nombre: 'Elena', apellidos: 'Vargas', especialidad: 'Radiología', color: '#F97316', telefono: '612345010', email: 'elena.vargas@clinicadental.com', activo: true },
-    { _id: '11', nombre: 'Sergio', apellidos: 'Ramírez', especialidad: 'Ortodoncia', color: '#3B82F6', telefono: '612345011', email: 'sergio.ramirez@clinicadental.com', activo: true },
-    { _id: '12', nombre: 'Isabel', apellidos: 'Torres', especialidad: 'Endodoncia', color: '#10B981', telefono: '612345012', email: 'isabel.torres@clinicadental.com', activo: true },
-    { _id: '13', nombre: 'Fernando', apellidos: 'Jiménez', especialidad: 'Implantología', color: '#8B5CF6', telefono: '612345013', email: 'fernando.jimenez@clinicadental.com', activo: true },
-    { _id: '14', nombre: 'Lucía', apellidos: 'Moreno', especialidad: 'Periodoncia', color: '#F59E0B', telefono: '612345014', email: 'lucia.moreno@clinicadental.com', activo: true },
-    { _id: '15', nombre: 'Pablo', apellidos: 'Castro', especialidad: 'Estética Dental', color: '#EF4444', telefono: '612345015', email: 'pablo.castro@clinicadental.com', activo: true },
-    { _id: '16', nombre: 'Marta', apellidos: 'Navarro', especialidad: 'Ortodoncia', color: '#3B82F6', telefono: '612345016', email: 'marta.navarro@clinicadental.com', activo: true },
-    { _id: '17', nombre: 'Alberto', apellidos: 'Vargas', especialidad: 'Cirugía Oral', color: '#EC4899', telefono: '612345017', email: 'alberto.vargas@clinicadental.com', activo: true },
-    { _id: '18', nombre: 'Cristina', apellidos: 'Méndez', especialidad: 'Periodoncia', color: '#F59E0B', telefono: '612345018', email: 'cristina.mendez@clinicadental.com', activo: true },
-  ];
+  ]), []);
 
   const sedes = [
     { _id: '1', nombre: 'Sede Central', direccion: 'Av. Principal 123', telefono: '912345678', email: 'central@clinicadental.com', horario: 'Lun-Vie: 9:00-20:00', activa: true },
@@ -506,8 +493,120 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
     });
   };
 
+  const handleDatePicked = (fecha: Date) => {
+    const fechaSeleccion = new Date(fecha);
+    fechaSeleccion.setHours(0, 0, 0, 0);
+
+    const fechaInicioSemana = new Date(fechaSeleccion);
+    const diaSemana = fechaInicioSemana.getDay();
+    const diff = diaSemana === 0 ? -6 : 1 - diaSemana;
+    fechaInicioSemana.setDate(fechaInicioSemana.getDate() + diff);
+
+    const fechaFinSemana = new Date(fechaInicioSemana);
+    fechaFinSemana.setDate(fechaFinSemana.getDate() + 6);
+    fechaFinSemana.setHours(23, 59, 59, 999);
+
+    setVista('semana');
+    setFiltros((prev) => ({
+      ...prev,
+      fecha_inicio: fechaInicioSemana.toISOString(),
+      fecha_fin: fechaFinSemana.toISOString(),
+    }));
+    setFechaSeleccionada(fechaSeleccion);
+  };
+
+  const handleCitaReprogramada = (
+    citaId: string,
+    nuevaFecha: Date,
+    nuevaHora: string,
+    profesionalId?: string,
+    boxId?: string
+  ) => {
+    const [horaStr, minutoStr] = nuevaHora.split(':');
+    const nuevaFechaInicio = new Date(nuevaFecha);
+    nuevaFechaInicio.setHours(parseInt(horaStr, 10), parseInt(minutoStr, 10), 0, 0);
+
+    setCitas((prevCitas) =>
+      prevCitas.map((cita) => {
+        if (cita._id !== citaId) return cita;
+
+        const nuevaFechaFin = new Date(nuevaFechaInicio);
+        nuevaFechaFin.setMinutes(nuevaFechaFin.getMinutes() + cita.duracion_minutos);
+
+        const profesionalDestino = profesionalId
+          ? profesionales.find((prof) => prof._id === profesionalId)
+          : null;
+
+        const historial = [
+          ...(cita.historial_cambios || []),
+          {
+            fecha: new Date().toISOString(),
+            usuario: 'Modo Demo',
+            cambio: `Cita movida a ${nuevaFechaInicio.toLocaleDateString('es-ES')} ${nuevaHora}`,
+          },
+        ];
+
+        return {
+          ...cita,
+          fecha_hora_inicio: nuevaFechaInicio.toISOString(),
+          fecha_hora_fin: nuevaFechaFin.toISOString(),
+          profesional: profesionalDestino
+            ? {
+                _id: profesionalDestino._id,
+                nombre: profesionalDestino.nombre,
+                apellidos: profesionalDestino.apellidos,
+              }
+            : cita.profesional,
+          box_asignado: boxId ?? cita.box_asignado,
+          historial_cambios: historial,
+        };
+      })
+    );
+
+    setCitaDestacada(citaId);
+    setTimeout(() => setCitaDestacada(null), 2500);
+  };
+
+  const handleCitaResizeStart = () => {
+    // Solo utilizado para activar estilos de redimensionamiento en CitaBlock
+  };
+
+  const handleCitaResizeEnd = (cita: Cita, nuevaDuracionMinutos: number) => {
+    if (!cita._id) return;
+
+    setCitas((prevCitas) =>
+      prevCitas.map((cActual) => {
+        if (cActual._id !== cita._id) return cActual;
+
+        const fechaInicio = new Date(cActual.fecha_hora_inicio);
+        const nuevaFechaFin = new Date(fechaInicio);
+        nuevaFechaFin.setMinutes(nuevaFechaFin.getMinutes() + nuevaDuracionMinutos);
+
+        const historial = [
+          ...(cActual.historial_cambios || []),
+          {
+            fecha: new Date().toISOString(),
+            usuario: 'Modo Demo',
+            cambio: `Duración ajustada a ${nuevaDuracionMinutos} minutos`,
+          },
+        ];
+
+        return {
+          ...cActual,
+          fecha_hora_fin: nuevaFechaFin.toISOString(),
+          duracion_minutos: nuevaDuracionMinutos,
+          historial_cambios: historial,
+        };
+      })
+    );
+
+    setCitaDestacada(cita._id);
+    setTimeout(() => setCitaDestacada(null), 2500);
+  };
+
   const fechaInicio = new Date(filtros.fecha_inicio);
   const fechaFin = new Date(filtros.fecha_fin);
+  const fechaReferenciaMini = fechaSeleccionada ?? fechaInicio;
 
   // Calcular estadísticas de las citas
   const estadisticas = useMemo(() => {
@@ -1126,8 +1225,20 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               vista={vista}
               onCitaClick={handleCitaClick}
               onSlotClick={handleSlotClick}
+              onCitaReprogramada={handleCitaReprogramada}
+              onCitaResizeStart={handleCitaResizeStart}
+              onCitaResizeEnd={handleCitaResizeEnd}
+              groupBy="profesional"
+              profesionales={profesionales}
+              userRole="director"
+              timeSlotDuration={30}
+              tratamientos={tratamientos}
+              citaDestacada={citaDestacada}
             />
           )}
+
+          {/* Mini Calendar */}
+          <MiniCalendarPanel fechaActual={fechaReferenciaMini} onDatePicked={handleDatePicked} />
 
           {/* Modal de Edición de Cita (si hay una cita seleccionada) */}
           {mostrarModal && citaSeleccionada && citaSeleccionada._id && (
