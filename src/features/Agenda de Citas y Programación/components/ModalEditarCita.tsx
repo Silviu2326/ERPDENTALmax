@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react';
-import { X, Save, AlertCircle, History } from 'lucide-react';
-import { Cita, NuevaCita, obtenerDetalleCita, actualizarCita } from '../api/citasApi';
+import { X, Save, AlertCircle, History, Bell } from 'lucide-react';
+import { Cita, NuevaCita, obtenerDetalleCita, actualizarCita, subirDocumentoCita, eliminarDocumentoCita, descargarDocumentoCita, DocumentoCita } from '../api/citasApi';
 import FormEditarCita from './FormEditarCita';
+import DocumentUploader from './DocumentUploader';
+import { useAuth } from '../../../contexts/AuthContext';
 
 interface ModalEditarCitaProps {
   citaId: string;
   onClose: () => void;
   onSave: () => void;
+  onAbrirRecordatorios?: (cita: Cita) => void;
+  onAbrirHistorial?: (cita: Cita) => void;
 }
 
 export default function ModalEditarCita({
   citaId,
   onClose,
   onSave,
+  onAbrirRecordatorios,
+  onAbrirHistorial,
 }: ModalEditarCitaProps) {
   const [cita, setCita] = useState<Cita | null>(null);
   const [formData, setFormData] = useState<Partial<NuevaCita>>({});
@@ -20,6 +26,8 @@ export default function ModalEditarCita({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [disponibilidadValida, setDisponibilidadValida] = useState<boolean | null>(null);
+  const [documentos, setDocumentos] = useState<DocumentoCita[]>([]);
+  const { user } = useAuth();
 
   // Cargar datos de la cita
   useEffect(() => {
@@ -74,9 +82,11 @@ export default function ModalEditarCita({
               cambio: 'Cita confirmada por teléfono',
             },
           ],
+          documentos: citaDataMock.documentos || [],
         };
         
         setCita(citaDataMock);
+        setDocumentos(citaDataMock.documentos || []);
 
         // Prellenar el formulario con los datos de la cita
         setFormData({
@@ -192,13 +202,35 @@ export default function ModalEditarCita({
               </p>
             )}
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition-colors"
-            aria-label="Cerrar"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-2">
+            {cita && onAbrirHistorial && (
+              <button
+                onClick={() => onAbrirHistorial(cita)}
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                title="Ver historial de cambios"
+              >
+                <History className="w-4 h-4" />
+                <span>Historial</span>
+              </button>
+            )}
+            {cita && onAbrirRecordatorios && (
+              <button
+                onClick={() => onAbrirRecordatorios(cita)}
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                title="Configurar recordatorios"
+              >
+                <Bell className="w-4 h-4" />
+                <span>Recordatorios</span>
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+              aria-label="Cerrar"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
         {/* Formulario */}
@@ -218,6 +250,67 @@ export default function ModalEditarCita({
               setDisponibilidadValida(valida);
             }}
           />
+
+          {/* Gestión de Documentos */}
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <DocumentUploader
+              documentos={documentos}
+              onUpload={async (file, descripcion) => {
+                if (!cita?._id) return;
+                try {
+                  const nuevoDocumento = await subirDocumentoCita(cita._id, file, descripcion);
+                  setDocumentos(prev => [...prev, nuevoDocumento]);
+                  // Actualizar la cita localmente
+                  if (cita) {
+                    setCita({
+                      ...cita,
+                      documentos: [...documentos, nuevoDocumento],
+                    });
+                  }
+                } catch (err) {
+                  throw err;
+                }
+              }}
+              onDelete={async (documentoId) => {
+                if (!cita?._id) return;
+                try {
+                  await eliminarDocumentoCita(cita._id, documentoId);
+                  setDocumentos(prev => prev.filter(d => d._id !== documentoId));
+                  // Actualizar la cita localmente
+                  if (cita) {
+                    setCita({
+                      ...cita,
+                      documentos: documentos.filter(d => d._id !== documentoId),
+                    });
+                  }
+                } catch (err) {
+                  throw err;
+                }
+              }}
+              onDownload={async (documento) => {
+                if (!cita?._id || !documento._id) return;
+                try {
+                  const blob = await descargarDocumentoCita(cita._id, documento._id);
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = documento.nombre;
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                  document.body.removeChild(a);
+                } catch (err) {
+                  throw err;
+                }
+              }}
+              onPreview={(documento) => {
+                if (documento.url) {
+                  window.open(documento.url, '_blank');
+                }
+              }}
+              usuarioActual={user ? { _id: user._id, nombre: user.nombre } : undefined}
+            />
+          </div>
 
           {/* Historial de Cambios */}
           {cita?.historial_cambios && cita.historial_cambios.length > 0 && (
@@ -246,23 +339,37 @@ export default function ModalEditarCita({
           )}
 
           {/* Botones de acción */}
-          <div className="flex justify-end space-x-3 pt-6 mt-6 border-t border-gray-200">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={saving}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={saving || !formData.paciente || !formData.profesional || !formData.fecha_hora_inicio}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-            >
-              <Save className="w-4 h-4" />
-              <span>{saving ? 'Guardando...' : 'Guardar Cambios'}</span>
-            </button>
+          <div className="flex justify-between items-center pt-6 mt-6 border-t border-gray-200">
+            <div>
+              {cita && onAbrirRecordatorios && (
+                <button
+                  type="button"
+                  onClick={() => onAbrirRecordatorios(cita)}
+                  className="px-4 py-2 text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors flex items-center space-x-2"
+                >
+                  <Bell className="w-4 h-4" />
+                  <span>Configurar Recordatorios</span>
+                </button>
+              )}
+            </div>
+            <div className="flex space-x-3">
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={saving}
+                className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={saving || !formData.paciente || !formData.profesional || !formData.fecha_hora_inicio}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+              >
+                <Save className="w-4 h-4" />
+                <span>{saving ? 'Guardando...' : 'Guardar Cambios'}</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>

@@ -1,9 +1,21 @@
+import { useState, useRef } from 'react';
 import { Cita } from '../api/citasApi';
 import { Clock, User, Stethoscope, MapPin, AlertCircle, Phone, Mail } from 'lucide-react';
+import { useDraggable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
+import { esCitaUrgente } from './UrgentAppointmentsPanel';
+import PatientBadgeStrip, { obtenerConfiguracionColoresBadges } from './PatientBadgeStrip';
 
 interface CitaBlockProps {
   cita: Cita;
   onClick: () => void;
+  disabled?: boolean; // Para deshabilitar drag en ciertos casos
+  onResizeStart?: (cita: Cita) => void;
+  onResizeEnd?: (cita: Cita, nuevaDuracionMinutos: number) => void;
+  duracionMinimaMinutos?: number; // Duración mínima del tratamiento
+  timeSlotDuration?: number; // Duración del slot en minutos para calcular altura
+  citasEnSlot?: Cita[]; // Otras citas en el mismo slot para detectar solapamientos
+  destacada?: boolean; // Si la cita debe destacarse visualmente
 }
 
 const estadoColors: Record<string, string> = {
@@ -30,7 +42,43 @@ const estadoIcons: Record<string, string> = {
   'no-asistio': '⚠️',
 };
 
-export default function CitaBlock({ cita, onClick }: CitaBlockProps) {
+export default function CitaBlock({ 
+  cita, 
+  onClick, 
+  disabled = false,
+  onResizeStart,
+  onResizeEnd,
+  duracionMinimaMinutos = 15,
+  timeSlotDuration = 30,
+  citasEnSlot = [],
+  destacada = false,
+}: CitaBlockProps) {
+  const [isResizing, setIsResizing] = useState(false);
+  const resizeStartYRef = useRef(0);
+  const resizeStartDuracionRef = useRef(0);
+  const resizeHandleRef = useRef<HTMLDivElement>(null);
+  const blockRef = useRef<HTMLDivElement>(null);
+  const isResizingRef = useRef(false);
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging,
+  } = useDraggable({
+    id: `cita-${cita._id}`,
+    disabled: disabled || cita.estado === 'realizada' || cita.estado === 'cancelada' || isResizing,
+    data: {
+      cita,
+    },
+  });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    opacity: isDragging ? 0.5 : 1,
+  };
+
   const fechaInicio = new Date(cita.fecha_hora_inicio);
   const fechaFin = new Date(cita.fecha_hora_fin);
   const horaInicio = fechaInicio.toLocaleTimeString('es-ES', {
@@ -50,16 +98,121 @@ export default function CitaBlock({ cita, onClick }: CitaBlockProps) {
     : `${duracionMinutos}m`;
 
   // Verificar si es urgente o tiene notas importantes
-  const esUrgente = cita.notas?.toLowerCase().includes('urgente') || false;
+  const esUrgente = esCitaUrgente(cita);
   const tieneNotasImportantes = cita.notas && cita.notas.length > 0;
+  const puedeArrastrar = !disabled && cita.estado !== 'realizada' && cita.estado !== 'cancelada' && !isResizing;
+  const puedeRedimensionar = puedeArrastrar && onResizeStart && onResizeEnd;
+
+  // Manejar inicio del resize
+  const handleResizeStart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!puedeRedimensionar) return;
+    
+    setIsResizing(true);
+    isResizingRef.current = true;
+    resizeStartYRef.current = e.clientY;
+    resizeStartDuracionRef.current = cita.duracion_minutos;
+    
+    if (onResizeStart) {
+      onResizeStart(cita);
+    }
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      if (!isResizingRef.current) return;
+      
+      const deltaY = moveEvent.clientY - resizeStartYRef.current;
+      // Calcular cambio en minutos basado en la altura del slot
+      // Asumimos que cada slot tiene aproximadamente 60px de altura para 30 minutos
+      const pixelsPorMinuto = 60 / timeSlotDuration;
+      const deltaMinutos = Math.round(deltaY / pixelsPorMinuto);
+      const nuevaDuracion = Math.max(duracionMinimaMinutos, resizeStartDuracionRef.current + deltaMinutos);
+      
+      // Verificar solapamientos con otras citas
+      const fechaInicio = new Date(cita.fecha_hora_inicio);
+      const nuevaFechaFin = new Date(fechaInicio);
+      nuevaFechaFin.setMinutes(nuevaFechaFin.getMinutes() + nuevaDuracion);
+      
+      // Verificar si hay solapamientos (solo si estamos reduciendo)
+      if (nuevaDuracion < resizeStartDuracionRef.current) {
+        const haySolapamiento = citasEnSlot.some(otraCita => {
+          if (otraCita._id === cita._id) return false;
+          const otraFechaInicio = new Date(otraCita.fecha_hora_inicio);
+          const otraFechaFin = new Date(otraCita.fecha_hora_fin);
+          
+          // Verificar si la nueva fecha fin se solapa con otra cita
+          return nuevaFechaFin > otraFechaInicio && nuevaFechaFin < otraFechaFin;
+        });
+        
+        if (haySolapamiento) {
+          return; // Bloquear la reducción
+        }
+      }
+    };
+
+    const handleMouseUp = (upEvent: MouseEvent) => {
+      if (!isResizingRef.current) return;
+      
+      const deltaY = upEvent.clientY - resizeStartYRef.current;
+      const pixelsPorMinuto = 60 / timeSlotDuration;
+      const deltaMinutos = Math.round(deltaY / pixelsPorMinuto);
+      const nuevaDuracion = Math.max(duracionMinimaMinutos, resizeStartDuracionRef.current + deltaMinutos);
+      
+      // Verificar solapamientos finales
+      const fechaInicio = new Date(cita.fecha_hora_inicio);
+      const nuevaFechaFin = new Date(fechaInicio);
+      nuevaFechaFin.setMinutes(nuevaFechaFin.getMinutes() + nuevaDuracion);
+      
+      if (nuevaDuracion < resizeStartDuracionRef.current) {
+        const haySolapamiento = citasEnSlot.some(otraCita => {
+          if (otraCita._id === cita._id) return false;
+          const otraFechaInicio = new Date(otraCita.fecha_hora_inicio);
+          const otraFechaFin = new Date(otraCita.fecha_hora_fin);
+          return nuevaFechaFin > otraFechaInicio && nuevaFechaFin < otraFechaFin;
+        });
+        
+        if (haySolapamiento) {
+          setIsResizing(false);
+          isResizingRef.current = false;
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+          return;
+        }
+      }
+      
+      if (onResizeEnd && nuevaDuracion !== cita.duracion_minutos) {
+        onResizeEnd(cita, nuevaDuracion);
+      }
+      
+      setIsResizing(false);
+      isResizingRef.current = false;
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  // Combinar refs
+  const combinedRef = (node: HTMLDivElement | null) => {
+    setNodeRef(node);
+    blockRef.current = node;
+  };
 
   return (
     <div
+      ref={combinedRef}
+      style={style}
+      {...(puedeArrastrar ? { ...attributes, ...listeners } : {})}
       onClick={onClick}
       className={`p-3 rounded-lg border-2 cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ${estadoColor} ${
         esUrgente ? 'ring-2 ring-red-400 ring-opacity-50' : ''
-      }`}
-      title={`${cita.paciente.nombre} ${cita.paciente.apellidos} - ${cita.tratamiento?.nombre || 'Sin tratamiento'} - ${estadoLabels[cita.estado] || cita.estado}`}
+      } ${isDragging ? 'z-50 shadow-2xl' : ''} ${puedeArrastrar ? 'cursor-grab active:cursor-grabbing' : ''} ${
+        isResizing ? 'ring-2 ring-blue-400' : ''
+      } ${
+        destacada ? 'ring-4 ring-yellow-400 ring-opacity-75 shadow-2xl animate-pulse' : ''
+      } relative`}
+      title={`${cita.paciente.nombre} ${cita.paciente.apellidos} - ${cita.tratamiento?.nombre || 'Sin tratamiento'} - ${estadoLabels[cita.estado] || cita.estado}${puedeArrastrar ? ' (Arrastra para reprogramar)' : ''}${puedeRedimensionar ? ' (Arrastra el borde inferior para redimensionar)' : ''}`}
     >
       <div className="flex items-start justify-between mb-2">
         <div className="flex-1 min-w-0">
@@ -71,6 +224,14 @@ export default function CitaBlock({ cita, onClick }: CitaBlockProps) {
             {esUrgente && (
               <AlertCircle className="w-3 h-3 text-red-600 flex-shrink-0" title="Urgente" />
             )}
+          </div>
+          {/* Patient Badge Strip */}
+          <div className="mt-1 mb-1">
+            <PatientBadgeStrip 
+              cita={cita} 
+              colors={obtenerConfiguracionColoresBadges()}
+              size="sm"
+            />
           </div>
           {cita.tratamiento && (
             <div className="flex items-center space-x-2 mt-1">
@@ -92,6 +253,17 @@ export default function CitaBlock({ cita, onClick }: CitaBlockProps) {
             <span className="mr-1">{estadoIcons[cita.estado] || '📋'}</span>
             {estadoLabels[cita.estado] || cita.estado}
           </span>
+          {/* Badge de canal de confirmación */}
+          {cita.canalConfirmacion && (cita.estado === 'confirmada' || cita.estado === 'cancelada') && (
+            <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium bg-white/80 backdrop-blur-sm border ${
+              cita.canalConfirmacion === 'email' ? 'text-blue-700 border-blue-300' :
+              cita.canalConfirmacion === 'sms' ? 'text-purple-700 border-purple-300' :
+              'text-green-700 border-green-300'
+            }`} title={`Confirmado vía ${cita.canalConfirmacion.toUpperCase()}`}>
+              {cita.canalConfirmacion === 'email' ? '📧' :
+               cita.canalConfirmacion === 'sms' ? '💬' : '💚'}
+            </span>
+          )}
         </div>
       </div>
 
@@ -157,6 +329,18 @@ export default function CitaBlock({ cita, onClick }: CitaBlockProps) {
           </div>
         )}
       </div>
+      
+      {/* Handle de redimensionamiento en el borde inferior */}
+      {puedeRedimensionar && (
+        <div
+          ref={resizeHandleRef}
+          onMouseDown={handleResizeStart}
+          className="absolute bottom-0 left-0 right-0 h-2 cursor-ns-resize hover:bg-blue-400/30 rounded-b-lg transition-colors flex items-center justify-center group"
+          title="Arrastra para redimensionar la duración"
+        >
+          <div className="w-8 h-0.5 bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+      )}
     </div>
   );
 }

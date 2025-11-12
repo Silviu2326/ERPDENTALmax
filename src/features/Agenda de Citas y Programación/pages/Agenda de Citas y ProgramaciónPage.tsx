@@ -1,18 +1,42 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Calendar, Plus, RefreshCw, TrendingUp, CheckCircle, Clock, X, Users, MapPin, BarChart3, Activity, Zap, Bell, AlertCircle } from 'lucide-react';
-import { Cita, FiltrosCalendario as IFiltrosCalendario, FiltrosResumenMensual } from '../api/citasApi';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { Calendar, Plus, RefreshCw, TrendingUp, CheckCircle, Clock, X, Users, MapPin, BarChart3, Activity, Zap, Bell, AlertCircle, List, AlertTriangle, Globe, History, Settings, Download } from 'lucide-react';
+import { Cita, FiltrosCalendario as IFiltrosCalendario, FiltrosResumenMensual, moverCita, actualizarCita, programarCitaPendiente, CitaPendiente, obtenerDetalleCita, crearCita, cancelarCita, obtenerCitasCalendario } from '../api/citasApi';
 import CalendarioGrid from '../components/CalendarioGrid';
+import CalendarioGridVirtualized from '../components/CalendarioGridVirtualized';
+import SyncStatusIndicator, { useSyncOperations } from '../components/SyncStatusIndicator';
 import CalendarioMensualGrid from '../components/CalendarioMensualGrid';
 import FiltrosCalendario from '../components/FiltrosCalendario';
 import FiltrosVistaMensual from '../components/FiltrosVistaMensual';
 import ModalGestionCita from '../components/ModalGestionCita';
 import ModalEditarCita from '../components/ModalEditarCita';
+import MiniCalendarPanel from '../components/MiniCalendarPanel';
+import DaysRangeSelector from '../components/DaysRangeSelector';
+import TimeConfigModal from '../components/TimeConfigModal';
+import ModalConfirmacionCambioSede from '../components/ModalConfirmacionCambioSede';
+import PendingAppointmentsPanel from '../components/PendingAppointmentsPanel';
+import UrgentAppointmentsPanel, { esCitaUrgente } from '../components/UrgentAppointmentsPanel';
+import WaitlistPanel from '../components/WaitlistPanel';
+import OnlineRequestsPanel from '../components/OnlineRequestsPanel';
+import ReminderSettingsModal from '../components/ReminderSettingsModal';
+import ToastArea, { Toast } from '../components/ToastArea';
+import NotificacionesRecientesPanel, { NotificacionReciente } from '../components/NotificacionesRecientesPanel';
+import HistoryTimeline from '../components/HistoryTimeline';
+import AgendaHeatmapCard from '../components/AgendaHeatmapCard';
+import KpiConfigurator, { KpiConfig, loadKpiConfig } from '../components/KpiConfigurator';
+import ExportCitasModal from '../components/ExportCitasModal';
+import OfflineBanner from '../components/OfflineBanner';
+import { CitasWebSocket, EventoCitaActualizada, EventoNotificacionCita } from '../api/citasWebSocket';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useOffline } from '../hooks/useOffline';
+import { citasCache } from '../utils/citasCache';
+import { setupNetworkSimulatorInWindow } from '../utils/networkSimulator';
 
 interface AgendaDeCitasYProgramacionPageProps {
   onNuevaCita?: () => void;
 }
 
 export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDeCitasYProgramacionPageProps = {}) {
+  const { user } = useAuth();
   const [citas, setCitas] = useState<Cita[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,6 +45,81 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
   const [citaSeleccionada, setCitaSeleccionada] = useState<Cita | null>(null);
   const [fechaSeleccionada, setFechaSeleccionada] = useState<Date | undefined>();
   const [horaSeleccionada, setHoraSeleccionada] = useState<string | undefined>();
+  const [mostrarMiniCalendario, setMostrarMiniCalendario] = useState(false);
+  const [diasVisibles, setDiasVisibles] = useState<number>(7);
+  const [groupBy, setGroupBy] = useState<'profesional' | 'box'>('profesional');
+  const [timeSlotDuration, setTimeSlotDuration] = useState<10 | 15 | 30>(30);
+  const [visibleHours, setVisibleHours] = useState<{ start: number; end: number }>({ start: 7, end: 20 });
+  const [mostrarConfigTiempo, setMostrarConfigTiempo] = useState(false);
+  const [mostrarPanelPendientes, setMostrarPanelPendientes] = useState(false);
+  const [mostrarPanelUrgencias, setMostrarPanelUrgencias] = useState(false);
+  const [mostrarPanelListaEspera, setMostrarPanelListaEspera] = useState(false);
+  const [mostrarPanelSolicitudesOnline, setMostrarPanelSolicitudesOnline] = useState(false);
+  const [mostrarModalRecordatorios, setMostrarModalRecordatorios] = useState(false);
+  const [citaParaRecordatorios, setCitaParaRecordatorios] = useState<Cita | null>(null);
+  const [citaResizeInicial, setCitaResizeInicial] = useState<Cita | null>(null);
+  
+  // Estado para modal de confirmación de cambio de sede
+  const [mostrarModalCambioSede, setMostrarModalCambioSede] = useState(false);
+  const [reprogramacionPendiente, setReprogramacionPendiente] = useState<{
+    citaId: string;
+    nuevaFecha: Date;
+    nuevaHora: string;
+    profesionalId?: string;
+    boxId?: string;
+  } | null>(null);
+  const [reprogramando, setReprogramando] = useState(false);
+
+  // Estado para WebSocket y notificaciones
+  const wsRef = useRef<CitasWebSocket | null>(null);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const [notificaciones, setNotificaciones] = useState<NotificacionReciente[]>([]);
+  const [mostrarPanelNotificaciones, setMostrarPanelNotificaciones] = useState(false);
+  const [citaDestacada, setCitaDestacada] = useState<string | null>(null); // ID de cita destacada
+  const [mostrarHistorialTimeline, setMostrarHistorialTimeline] = useState(false);
+  const [citaParaHistorial, setCitaParaHistorial] = useState<Cita | null>(null);
+  const [mostrarHeatmap, setMostrarHeatmap] = useState(false);
+  
+  // Estado para configuración de KPIs
+  const [kpiConfig, setKpiConfig] = useState<KpiConfig>(() => loadKpiConfig(user?.id));
+  const [mostrarKpiConfigurator, setMostrarKpiConfigurator] = useState(false);
+  
+  // Estado para modal de exportación
+  const [mostrarExportModal, setMostrarExportModal] = useState(false);
+
+  // Estado para virtualización (activada por defecto para grandes volúmenes)
+  const [usarVirtualizacion, setUsarVirtualizacion] = useState(true);
+  const [performanceMetrics, setPerformanceMetrics] = useState<{
+    fps: number;
+    renderTime: number;
+    itemCount: number;
+  } | null>(null);
+
+  // Hook para operaciones de sincronización
+  const {
+    operations: syncOperations,
+    trackMutation,
+    retryOperation,
+    removeOperation,
+  } = useSyncOperations();
+
+  // Hook para gestión de estado offline/online (definido antes para usar en cargarCitas)
+  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
+  const [isReconnecting, setIsReconnecting] = useState(false);
+  
+  // Referencia para cargarCitas para usar en useOffline
+  const cargarCitasRef = useRef<((forceRefresh?: boolean) => Promise<void>) | null>(null);
+  
+  // Hook para gestión de estado offline/online (sin callbacks iniciales, se actualizarán después)
+  const {
+    isOnline,
+    isOffline,
+    wasOffline,
+    lastOnlineTime,
+    checkConnection,
+  } = useOffline({
+    checkInterval: 5000, // Verificar cada 5 segundos
+  });
 
   // Estado para vista mensual
   const ahora = new Date();
@@ -138,18 +237,85 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
     { _id: '25', nombre: 'Prótesis removible - Ajuste', duracionEstimadaMinutos: 45, precio: 90, categoria: 'Prótesis' },
   ];
 
-  const cargarCitas = async () => {
+  // Inicializar simulador de red en desarrollo
+  useEffect(() => {
+    setupNetworkSimulatorInWindow();
+  }, []);
+
+  // Función para agregar toast (definida antes de cargarCitas para usarla allí)
+  const agregarToast = useCallback((toast: Omit<Toast, 'id'>) => {
+    const nuevoToast: Toast = {
+      ...toast,
+      id: `toast-${Date.now()}-${Math.random()}`,
+    };
+    setToasts(prev => [...prev, nuevoToast]);
+  }, []);
+
+  const cargarCitas = useCallback(async (forceRefresh = false) => {
     setLoading(true);
     setError(null);
+    
     try {
-      // Generar datos mock más completos y realistas
-      const datosMock: Cita[] = [];
-      const ahora = new Date();
-      const estados: Array<'programada' | 'confirmada' | 'cancelada' | 'realizada' | 'no-asistio'> = 
-        ['programada', 'confirmada', 'cancelada', 'realizada', 'no-asistio'];
+      // Si estamos offline, intentar cargar desde cache
+      if (isOffline && !forceRefresh) {
+        const cachedCitas = await citasCache.getCitas(filtros);
+        if (cachedCitas) {
+          setCitas(cachedCitas);
+          const lastUpdated = await citasCache.getLastUpdated(filtros);
+          setLastSyncTime(lastUpdated);
+          setLoading(false);
+          agregarToast({
+            tipo: 'info',
+            titulo: 'Modo offline',
+            mensaje: 'Mostrando datos en caché. Las ediciones están deshabilitadas.',
+          });
+          return;
+        } else {
+          // No hay cache disponible
+          setError('No hay conexión y no hay datos en caché disponibles.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Si estamos online, intentar cargar desde el servidor
+      let citasData: Cita[] = [];
       
-      // Generar citas para los próximos 120 días (más rango)
-      for (let dia = -30; dia < 120; dia++) {
+      try {
+        // Intentar obtener citas del servidor
+        citasData = await obtenerCitasCalendario(filtros);
+        
+        // Guardar en cache
+        await citasCache.saveCitas(citasData, filtros);
+        setLastSyncTime(new Date());
+      } catch (fetchError) {
+        // Si falla la petición, intentar usar cache
+        console.warn('Error al obtener citas del servidor, intentando usar cache:', fetchError);
+        const cachedCitas = await citasCache.getCitas(filtros);
+        
+        if (cachedCitas) {
+          citasData = cachedCitas;
+          const lastUpdated = await citasCache.getLastUpdated(filtros);
+          setLastSyncTime(lastUpdated);
+          agregarToast({
+            tipo: 'warning',
+            titulo: 'Usando datos en caché',
+            mensaje: 'No se pudo conectar al servidor. Mostrando datos guardados localmente.',
+          });
+        } else {
+          throw fetchError;
+        }
+      }
+
+      // Generar datos mock más completos y realistas (solo si no hay datos del servidor)
+      if (citasData.length === 0) {
+        const datosMock: Cita[] = [];
+        const ahora = new Date();
+        const estados: Array<'programada' | 'confirmada' | 'cancelada' | 'realizada' | 'no-asistio'> = 
+          ['programada', 'confirmada', 'cancelada', 'realizada', 'no-asistio'];
+        
+        // Generar citas para los próximos 120 días (más rango)
+        for (let dia = -30; dia < 120; dia++) {
         const fechaBase = new Date(ahora);
         fechaBase.setDate(fechaBase.getDate() + dia);
         const diaSemana = fechaBase.getDay();
@@ -415,42 +581,295 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
         }
       }
       
-      // Filtrar citas dentro del rango
-      const fechaInicio = new Date(filtros.fecha_inicio);
-      const fechaFin = new Date(filtros.fecha_fin);
-      let citasFiltradas = datosMock.filter((cita) => {
-        const fechaCita = new Date(cita.fecha_hora_inicio);
-        return fechaCita >= fechaInicio && fechaCita <= fechaFin;
-      });
+        // Filtrar citas dentro del rango
+        const fechaInicio = new Date(filtros.fecha_inicio);
+        const fechaFin = new Date(filtros.fecha_fin);
+        let citasFiltradas = datosMock.filter((cita) => {
+          const fechaCita = new Date(cita.fecha_hora_inicio);
+          return fechaCita >= fechaInicio && fechaCita <= fechaFin;
+        });
+        
+        // Aplicar filtros adicionales
+        if (filtros.profesional_id) {
+          citasFiltradas = citasFiltradas.filter(
+            (cita) => cita.profesional._id === filtros.profesional_id
+          );
+        }
+        if (filtros.sede_id) {
+          citasFiltradas = citasFiltradas.filter(
+            (cita) => cita.sede._id === filtros.sede_id
+          );
+        }
+        if (filtros.estado) {
+          citasFiltradas = citasFiltradas.filter(
+            (cita) => cita.estado === filtros.estado
+          );
+        }
+        if (filtros.box_id) {
+          citasFiltradas = citasFiltradas.filter(
+            (cita) => cita.box_asignado === filtros.box_id
+          );
+        }
+        
+        citasData = citasFiltradas;
+        
+        // Guardar datos mock en cache
+        await citasCache.saveCitas(citasData, filtros);
+        setLastSyncTime(new Date());
+      }
       
-      // Aplicar filtros adicionales
-      if (filtros.profesional_id) {
-        citasFiltradas = citasFiltradas.filter(
-          (cita) => cita.profesional._id === filtros.profesional_id
-        );
-      }
-      if (filtros.sede_id) {
-        citasFiltradas = citasFiltradas.filter(
-          (cita) => cita.sede._id === filtros.sede_id
-        );
-      }
-      if (filtros.estado) {
-        citasFiltradas = citasFiltradas.filter(
-          (cita) => cita.estado === filtros.estado
-        );
-      }
-      
-      setCitas(citasFiltradas);
+      setCitas(citasData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al cargar las citas');
     } finally {
       setLoading(false);
     }
-  };
+  }, [filtros, isOffline, agregarToast]);
+
+  // Guardar referencia de cargarCitas
+  cargarCitasRef.current = cargarCitas;
+
+  // Efecto para manejar cambios de estado online/offline
+  useEffect(() => {
+    if (isOnline && wasOffline) {
+      // Se recuperó la conexión
+      setIsReconnecting(true);
+      setTimeout(() => {
+        if (cargarCitasRef.current) {
+          cargarCitasRef.current(true).finally(() => {
+            setIsReconnecting(false);
+          });
+        }
+      }, 1000);
+    } else if (isOffline) {
+      // Se perdió la conexión
+      agregarToast({
+        tipo: 'warning',
+        titulo: 'Conexión perdida',
+        mensaje: 'Se ha perdido la conexión. La agenda está en modo solo lectura.',
+      });
+    }
+  }, [isOnline, isOffline, wasOffline, agregarToast]);
 
   useEffect(() => {
     cargarCitas();
-  }, [filtros]);
+  }, [cargarCitas, filtros]);
+
+  // Función para remover toast
+  const removerToast = useCallback((id: string) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  }, []);
+
+  // Función para agregar notificación
+  const agregarNotificacion = useCallback((notificacion: Omit<NotificacionReciente, 'id' | 'leida'>) => {
+    const nuevaNotificacion: NotificacionReciente = {
+      ...notificacion,
+      id: `notif-${Date.now()}-${Math.random()}`,
+      leida: false,
+    };
+    setNotificaciones(prev => {
+      const actualizadas = [nuevaNotificacion, ...prev].slice(0, 20); // Mantener solo las últimas 20
+      return actualizadas;
+    });
+  }, []);
+
+  // Cargar configuración de KPIs cuando cambia el usuario
+  useEffect(() => {
+    if (user?.id) {
+      const config = loadKpiConfig(user.id);
+      setKpiConfig(config);
+    }
+  }, [user?.id]);
+
+  // Configurar WebSocket para eventos en tiempo real
+  useEffect(() => {
+    // Inicializar WebSocket
+    const ws = new CitasWebSocket();
+    wsRef.current = ws;
+
+    // Conectar
+    ws.connect()
+      .then(() => {
+        console.log('WebSocket de citas conectado');
+
+        // Suscribirse a eventos de cita actualizada (confirmación/cancelación desde enlace externo)
+        ws.on('cita-actualizada', async (data: EventoCitaActualizada) => {
+          console.log('Cita actualizada desde enlace externo:', data);
+          
+          // Actualizar la cita específica en el estado local
+          if (data.cita) {
+            setCitas(prevCitas =>
+              prevCitas.map(c =>
+                c._id === data.citaId
+                  ? { ...c, ...data.cita, canalConfirmacion: data.canalConfirmacion, estado: data.estado }
+                  : c
+              )
+            );
+          } else {
+            // Si no viene la cita completa, obtenerla del servidor
+            try {
+              const citaActualizada = await obtenerDetalleCita(data.citaId);
+              setCitas(prevCitas =>
+                prevCitas.map(c =>
+                  c._id === data.citaId
+                    ? { ...citaActualizada, canalConfirmacion: data.canalConfirmacion }
+                    : c
+                )
+              );
+            } catch (error) {
+              console.error('Error al obtener detalle de cita:', error);
+              // Recargar todas las citas como fallback
+              cargarCitas();
+            }
+          }
+
+          // Mostrar toast de notificación
+          const canalTexto = data.canalConfirmacion 
+            ? ` vía ${data.canalConfirmacion.toUpperCase()}` 
+            : '';
+          const mensaje = data.estado === 'confirmada'
+            ? `Cita confirmada${canalTexto}`
+            : data.estado === 'cancelada'
+            ? `Cita cancelada${canalTexto}`
+            : `Cita actualizada${canalTexto}`;
+
+          agregarToast({
+            tipo: data.estado === 'confirmada' ? 'success' : data.estado === 'cancelada' ? 'warning' : 'info',
+            titulo: 'Cita actualizada',
+            mensaje: mensaje,
+            citaId: data.citaId,
+            accion: {
+              etiqueta: 'Ver cita',
+              onClick: () => {
+                setCitas(prevCitas => {
+                  const cita = prevCitas.find(c => c._id === data.citaId);
+                  if (cita) {
+                    setCitaSeleccionada(cita);
+                    setMostrarModal(true);
+                  }
+                  return prevCitas;
+                });
+              },
+            },
+          });
+
+          // Agregar a notificaciones recientes
+          agregarNotificacion({
+            tipo: data.estado === 'confirmada' ? 'confirmada' : 'cancelada_paciente',
+            citaId: data.citaId,
+            mensaje: mensaje,
+            timestamp: data.timestamp,
+            canalConfirmacion: data.canalConfirmacion,
+            cita: data.cita,
+          });
+        });
+
+        // Suscribirse a notificaciones de citas (asignación, reprogramación, cancelación)
+        ws.on('notificacion-cita', (data: EventoNotificacionCita) => {
+          console.log('Notificación de cita:', data);
+
+          // Solo mostrar notificaciones si el usuario es el profesional asignado
+          if (data.profesionalId && user?._id === data.profesionalId) {
+            agregarToast({
+              tipo: data.tipo === 'cancelada' ? 'warning' : 'info',
+              titulo: 'Notificación de cita',
+              mensaje: data.mensaje,
+              citaId: data.citaId,
+              accion: {
+                etiqueta: 'Ver cita',
+                onClick: () => {
+                  setCitas(prevCitas => {
+                    const cita = prevCitas.find(c => c._id === data.citaId);
+                    if (cita) {
+                      setCitaSeleccionada(cita);
+                      setMostrarModal(true);
+                      // Destacar la cita
+                      setCitaDestacada(data.citaId);
+                      setTimeout(() => setCitaDestacada(null), 3000);
+                    }
+                    return prevCitas;
+                  });
+                },
+              },
+            });
+
+            // Agregar a notificaciones recientes
+            agregarNotificacion({
+              tipo: data.tipo,
+              citaId: data.citaId,
+              mensaje: data.mensaje,
+              timestamp: data.timestamp,
+              profesionalId: data.profesionalId,
+              cita: data.cita,
+            });
+          }
+        });
+
+        // Manejar errores
+        ws.on('error', (data: { mensaje: string }) => {
+          console.error('Error en WebSocket:', data.mensaje);
+          agregarToast({
+            tipo: 'error',
+            titulo: 'Error de conexión',
+            mensaje: data.mensaje,
+          });
+        });
+      })
+      .catch((error) => {
+        console.error('Error al conectar WebSocket:', error);
+      });
+
+    return () => {
+      ws.disconnect();
+      wsRef.current = null;
+    };
+  }, [user?._id, agregarToast, agregarNotificacion, cargarCitas]); // Reconectar si cambia el usuario
+
+  // Función para manejar click en toast
+  const handleToastClick = useCallback((toast: Toast) => {
+    if (toast.citaId) {
+      setCitas(prevCitas => {
+        const cita = prevCitas.find(c => c._id === toast.citaId);
+        if (cita) {
+          setCitaSeleccionada(cita);
+          setMostrarModal(true);
+          // Destacar la cita
+          setCitaDestacada(toast.citaId);
+          setTimeout(() => setCitaDestacada(null), 3000);
+        }
+        return prevCitas;
+      });
+    }
+  }, []);
+
+  // Función para manejar click en notificación
+  const handleNotificacionClick = useCallback((notificacion: NotificacionReciente) => {
+    if (notificacion.citaId) {
+      setCitas(prevCitas => {
+        const cita = prevCitas.find(c => c._id === notificacion.citaId) || notificacion.cita;
+        if (cita) {
+          setCitaSeleccionada(cita);
+          setMostrarModal(true);
+          // Destacar la cita
+          setCitaDestacada(notificacion.citaId);
+          setTimeout(() => setCitaDestacada(null), 3000);
+        }
+        return prevCitas;
+      });
+    }
+  }, []);
+
+  // Función para marcar notificación como leída
+  const handleMarcarLeida = useCallback((id: string) => {
+    setNotificaciones(prev =>
+      prev.map(n => n.id === id ? { ...n, leida: true } : n)
+    );
+  }, []);
+
+  // Función para limpiar todas las notificaciones
+  const handleLimpiarNotificaciones = useCallback(() => {
+    setNotificaciones([]);
+  }, []);
 
   const handleFiltrosChange = (nuevosFiltros: IFiltrosCalendario) => {
     setFiltros(nuevosFiltros);
@@ -461,7 +880,23 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
     setMostrarModal(true);
   };
 
+  // Handler para abrir modal de recordatorios desde el modal de edición
+  const handleAbrirRecordatorios = (cita: Cita) => {
+    setCitaParaRecordatorios(cita);
+    setMostrarModalRecordatorios(true);
+  };
+
   const handleSlotClick = (fecha: Date, hora: string) => {
+    // Bloquear si está offline
+    if (isOffline) {
+      agregarToast({
+        tipo: 'error',
+        titulo: 'Modo offline',
+        mensaje: 'No se pueden crear nuevas citas sin conexión. Por favor, espera a que se recupere la conexión.',
+      });
+      return;
+    }
+
     setCitaSeleccionada(null);
     setFechaSeleccionada(fecha);
     setHoraSeleccionada(hora);
@@ -475,8 +910,255 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
     setHoraSeleccionada(undefined);
   };
 
-  const handleGuardarCita = () => {
-    cargarCitas();
+  const handleGuardarCita = async () => {
+    // Bloquear si está offline
+    if (isOffline) {
+      agregarToast({
+        tipo: 'error',
+        titulo: 'Modo offline',
+        mensaje: 'No se pueden guardar cambios sin conexión. Por favor, espera a que se recupere la conexión.',
+      });
+      return;
+    }
+
+    await cargarCitas();
+  };
+
+  // Handler para reprogramar citas mediante drag & drop
+  const handleReprogramarCita = async (
+    citaId: string,
+    nuevaFecha: Date,
+    nuevaHora: string,
+    profesionalId?: string,
+    boxId?: string
+  ) => {
+    const cita = citas.find(c => c._id === citaId);
+    if (!cita) return;
+
+    // Calcular nueva fecha y hora
+    const [horaStr, minutoStr] = nuevaHora.split(':');
+    const nuevaFechaHora = new Date(nuevaFecha);
+    nuevaFechaHora.setHours(parseInt(horaStr), parseInt(minutoStr), 0, 0);
+
+    // Verificar si hay cambio de sede
+    let nuevaSedeId: string | undefined;
+    if (profesionalId) {
+      const nuevoProfesional = profesionales.find(p => p._id === profesionalId);
+      // Aquí se podría obtener la sede del profesional, por ahora usamos la misma
+      // En producción, esto debería venir de los datos del profesional
+    }
+
+    const hayCambioSede = nuevaSedeId && nuevaSedeId !== cita.sede._id;
+
+    // Si hay cambio de sede, mostrar modal de confirmación
+    if (hayCambioSede) {
+      setReprogramacionPendiente({
+        citaId,
+        nuevaFecha,
+        nuevaHora,
+        profesionalId,
+        boxId,
+      });
+      setMostrarModalCambioSede(true);
+      return;
+    }
+
+    // Si no hay cambio de sede, proceder directamente
+    await ejecutarReprogramacion(citaId, nuevaFechaHora, profesionalId, boxId);
+  };
+
+  // Ejecutar la reprogramación
+  const ejecutarReprogramacion = async (
+    citaId: string,
+    nuevaFechaHora: Date,
+    profesionalId?: string,
+    boxId?: string
+  ) => {
+    // Bloquear si está offline
+    if (isOffline) {
+      agregarToast({
+        tipo: 'error',
+        titulo: 'Modo offline',
+        mensaje: 'No se pueden realizar ediciones sin conexión. Por favor, espera a que se recupere la conexión.',
+      });
+      return;
+    }
+
+    setReprogramando(true);
+    try {
+      const cita = citas.find(c => c._id === citaId);
+      const fechaAnterior = cita ? new Date(cita.fecha_hora_inicio) : null;
+      
+      const citaActualizada = await trackMutation(
+        'mover',
+        () => moverCita(
+          citaId,
+          nuevaFechaHora.toISOString(),
+          profesionalId,
+          boxId
+        ),
+        () => moverCita(
+          citaId,
+          nuevaFechaHora.toISOString(),
+          profesionalId,
+          boxId
+        )
+      );
+
+      // Agregar entrada de auditoría para drag & drop
+      if (citaActualizada.historial_cambios) {
+        citaActualizada.historial_cambios.push({
+          fecha: new Date().toISOString(),
+          usuario: user?.nombre || 'Usuario',
+          cambio: `Cita movida mediante drag & drop de ${fechaAnterior?.toLocaleString('es-ES')} a ${nuevaFechaHora.toLocaleString('es-ES')}`,
+        });
+      }
+
+      // Actualizar la cita en el estado local
+      setCitas(prevCitas =>
+        prevCitas.map(c =>
+          c._id === citaId ? citaActualizada : c
+        )
+      );
+
+      // Recargar citas para asegurar sincronización
+      await cargarCitas();
+    } catch (error) {
+      console.error('Error al reprogramar la cita:', error);
+      alert(error instanceof Error ? error.message : 'Error al reprogramar la cita');
+    } finally {
+      setReprogramando(false);
+      setMostrarModalCambioSede(false);
+      setReprogramacionPendiente(null);
+    }
+  };
+
+  // Confirmar cambio de sede
+  const handleConfirmarCambioSede = async () => {
+    if (!reprogramacionPendiente) return;
+
+    const [horaStr, minutoStr] = reprogramacionPendiente.nuevaHora.split(':');
+    const nuevaFechaHora = new Date(reprogramacionPendiente.nuevaFecha);
+    nuevaFechaHora.setHours(parseInt(horaStr), parseInt(minutoStr), 0, 0);
+
+    await ejecutarReprogramacion(
+      reprogramacionPendiente.citaId,
+      nuevaFechaHora,
+      reprogramacionPendiente.profesionalId,
+      reprogramacionPendiente.boxId
+    );
+  };
+
+  // Handler para inicio de resize de cita
+  const handleCitaResizeStart = (cita: Cita) => {
+    setCitaResizeInicial(cita);
+  };
+
+  // Handler para fin de resize de cita
+  const handleCitaResizeEnd = async (cita: Cita, nuevaDuracionMinutos: number) => {
+    if (!citaResizeInicial || !cita._id) return;
+
+    // Bloquear si está offline
+    if (isOffline) {
+      agregarToast({
+        tipo: 'error',
+        titulo: 'Modo offline',
+        mensaje: 'No se pueden realizar ediciones sin conexión. Por favor, espera a que se recupere la conexión.',
+      });
+      return;
+    }
+
+    try {
+      const fechaInicio = new Date(cita.fecha_hora_inicio);
+      const nuevaFechaFin = new Date(fechaInicio);
+      nuevaFechaFin.setMinutes(nuevaFechaFin.getMinutes() + nuevaDuracionMinutos);
+
+      // Guardar duración previa para el historial
+      const duracionPrevia = citaResizeInicial.duracion_minutos;
+
+      // Actualizar la cita
+      const citaActualizada = await trackMutation(
+        'resize',
+        () => actualizarCita(cita._id, {
+          fecha_hora_fin: nuevaFechaFin.toISOString(),
+          // Nota: En producción, aquí se debería actualizar el historial con la duración previa
+        }),
+        () => actualizarCita(cita._id, {
+          fecha_hora_fin: nuevaFechaFin.toISOString(),
+        })
+      );
+
+      // Actualizar en el estado local
+      setCitas(prevCitas =>
+        prevCitas.map(c =>
+          c._id === cita._id ? citaActualizada : c
+        )
+      );
+
+      // Actualizar historial (simulado - en producción esto debería hacerse en el backend)
+      if (citaActualizada.historial_cambios) {
+        citaActualizada.historial_cambios.push({
+          fecha: new Date().toISOString(),
+          usuario: user?.nombre || 'Usuario',
+          cambio: `Duración modificada mediante resize de ${duracionPrevia} a ${nuevaDuracionMinutos} minutos`,
+        });
+      }
+
+      // Recargar citas
+      await cargarCitas();
+    } catch (error) {
+      console.error('Error al redimensionar la cita:', error);
+      alert(error instanceof Error ? error.message : 'Error al redimensionar la cita');
+    } finally {
+      setCitaResizeInicial(null);
+    }
+  };
+
+  // Handler para cuando se programa una cita pendiente desde el panel
+  const handleCitaPendienteProgramada = async (
+    citaPendiente: CitaPendiente,
+    fecha: Date,
+    hora: string,
+    profesionalId?: string,
+    boxId?: string
+  ) => {
+    // Bloquear si está offline
+    if (isOffline) {
+      agregarToast({
+        tipo: 'error',
+        titulo: 'Modo offline',
+        mensaje: 'No se pueden realizar ediciones sin conexión. Por favor, espera a que se recupere la conexión.',
+      });
+      return;
+    }
+
+    try {
+      const [horaStr, minutoStr] = hora.split(':');
+      const fechaHoraInicio = new Date(fecha);
+      fechaHoraInicio.setHours(parseInt(horaStr), parseInt(minutoStr), 0, 0);
+
+      await trackMutation(
+        'crear',
+        () => programarCitaPendiente(
+          citaPendiente._id,
+          fechaHoraInicio.toISOString(),
+          profesionalId || citaPendiente.profesional?._id,
+          boxId
+        ),
+        () => programarCitaPendiente(
+          citaPendiente._id,
+          fechaHoraInicio.toISOString(),
+          profesionalId || citaPendiente.profesional?._id,
+          boxId
+        )
+      );
+
+      // Recargar citas
+      await cargarCitas();
+    } catch (error) {
+      console.error('Error al programar la cita pendiente:', error);
+      alert(error instanceof Error ? error.message : 'Error al programar la cita pendiente');
+    }
   };
 
   const handleDiaClickMensual = (fecha: Date) => {
@@ -503,6 +1185,50 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
       profesionalId: nuevosFiltros.profesionalId,
       sedeId: nuevosFiltros.sedeId,
       estado: nuevosFiltros.estado,
+    });
+  };
+
+  // Handler para cuando se selecciona una fecha en el mini calendario
+  const handleDatePicked = (fecha: Date) => {
+    // Ajustar filtros para enfocar la semana elegida
+    const fechaInicio = new Date(fecha);
+    fechaInicio.setHours(0, 0, 0, 0);
+    
+    // Calcular la fecha fin basada en los días visibles
+    const fechaFin = new Date(fechaInicio);
+    fechaFin.setDate(fechaFin.getDate() + diasVisibles - 1);
+    fechaFin.setHours(23, 59, 59, 999);
+    
+    setFiltros({
+      ...filtros,
+      fecha_inicio: fechaInicio.toISOString(),
+      fecha_fin: fechaFin.toISOString(),
+    });
+    
+    // Cerrar el panel del mini calendario
+    setMostrarMiniCalendario(false);
+    
+    // Cambiar a vista semana si está en otra vista
+    if (vista === 'mes') {
+      setVista('semana');
+    }
+  };
+
+  // Handler para cambiar el número de días visibles
+  const handleDiasVisiblesChange = (dias: number) => {
+    setDiasVisibles(dias);
+    
+    // Ajustar el rango de fechas basado en los días visibles
+    const fechaInicio = new Date(filtros.fecha_inicio);
+    fechaInicio.setHours(0, 0, 0, 0);
+    const fechaFin = new Date(fechaInicio);
+    fechaFin.setDate(fechaFin.getDate() + dias - 1);
+    fechaFin.setHours(23, 59, 59, 999);
+    
+    setFiltros({
+      ...filtros,
+      fecha_inicio: fechaInicio.toISOString(),
+      fecha_fin: fechaFin.toISOString(),
     });
   };
 
@@ -547,8 +1273,8 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
     const totalConAsistencia = realizadas + noAsistio;
     const tasaAsistencia = totalConAsistencia > 0 ? Math.round((realizadas / totalConAsistencia) * 100) : 0;
     
-    // Calcular citas urgentes
-    const citasUrgentes = citas.filter(c => c.notas?.toLowerCase().includes('urgente')).length;
+    // Calcular citas urgentes usando la función del componente
+    const citasUrgentes = citas.filter(c => esCitaUrgente(c)).length;
     
     // Calcular citas hoy
     const hoy = new Date();
@@ -641,6 +1367,14 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
     // Calcular tasa de no asistencia
     const tasaNoAsistencia = total > 0 ? Math.round((noAsistio / total) * 100) : 0;
     
+    // Calcular ingresos por hora (simulado - en producción vendría de facturación)
+    // Asumimos un precio promedio por tratamiento
+    const precioPromedio = 150; // Euros
+    const citasRealizadas = realizadas;
+    const ingresosTotales = citasRealizadas * precioPromedio;
+    const horasTrabajadas = horasTotales;
+    const ingresosPorHora = horasTrabajadas > 0 ? Math.round((ingresosTotales / horasTrabajadas) * 100) / 100 : 0;
+    
     return {
       total,
       confirmadas,
@@ -672,14 +1406,33 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
       duracionMaxima,
       tasaCancelacion,
       tasaNoAsistencia,
+      ingresosPorHora,
     };
   }, [citas]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Banner de modo offline */}
+      <OfflineBanner
+        isOffline={isOffline}
+        isReconnecting={isReconnecting}
+        lastSyncTime={lastSyncTime}
+        onRetry={async () => {
+          const isConnected = await checkConnection();
+          if (isConnected) {
+            await cargarCitas(true);
+          } else {
+            agregarToast({
+              tipo: 'error',
+              titulo: 'Sin conexión',
+              mensaje: 'Aún no hay conexión disponible. Por favor, verifica tu conexión a internet.',
+            });
+          }
+        }}
+      />
       {/* Header */}
       <div className="border-b border-gray-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6">
+        <div className={`mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-6 ${isOffline ? 'pt-20' : 'pt-4'}`}>
           <div className="py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -700,6 +1453,16 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               </div>
               <button
                 onClick={() => {
+                  // Bloquear si está offline
+                  if (isOffline) {
+                    agregarToast({
+                      tipo: 'error',
+                      titulo: 'Modo offline',
+                      mensaje: 'No se pueden crear nuevas citas sin conexión. Por favor, espera a que se recupere la conexión.',
+                    });
+                    return;
+                  }
+
                   if (onNuevaCita) {
                     onNuevaCita();
                   } else {
@@ -710,6 +1473,7 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
                     setMostrarModal(true);
                   }
                 }}
+                disabled={isOffline}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"
               >
                 <Plus size={20} className="mr-2" />
@@ -727,290 +1491,365 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
           {/* Panel de estadísticas mejorado - Solo en vista día/semana */}
           {vista !== 'mes' && !loading && citas.length > 0 && (
             <div className="space-y-6">
+              {/* Header con botones de configuración y exportación */}
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900">Métricas y Estadísticas</h2>
+                <div className="flex items-center space-x-2">
+                  {/* Botón de configuración de KPIs - Solo para administradores */}
+                  {(user?.role === 'propietario' || user?.role === 'director') && (
+                    <button
+                      onClick={() => setMostrarKpiConfigurator(true)}
+                      className="flex items-center gap-2 px-3 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-50 transition-all border border-gray-300 shadow-sm"
+                      title="Configurar KPIs visibles"
+                    >
+                      <Settings size={18} />
+                      <span className="text-sm">Configurar KPIs</span>
+                    </button>
+                  )}
+                  {/* Botón de exportación - Para coordinadores y administradores */}
+                  {(user?.role === 'propietario' || user?.role === 'director' || user?.role === 'recepcionista') && (
+                    <button
+                      onClick={() => setMostrarExportModal(true)}
+                      className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all shadow-sm"
+                      title="Exportar citas visibles"
+                    >
+                      <Download size={18} />
+                      <span className="text-sm">Exportar</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+              
               {/* Estadísticas principales */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-6">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Total de Citas</p>
-                  <p className="text-2xl font-bold text-blue-700">{estadisticas.total}</p>
-                  <p className="text-xs text-gray-500 mt-1">En el rango seleccionado</p>
-                </div>
-                <div className="bg-blue-200 rounded-full p-3">
-                  <Calendar className="w-6 h-6 text-blue-700" />
-                </div>
-              </div>
-            </div>
-            
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Confirmadas</p>
-                  <p className="text-2xl font-bold text-green-700">{estadisticas.confirmadas}</p>
-                  <p className="text-xs text-gray-500 mt-1">{estadisticas.tasaConfirmacion}% del total</p>
-                </div>
-                <div className="bg-green-200 rounded-full p-3">
-                  <CheckCircle className="w-6 h-6 text-green-700" />
-                </div>
-              </div>
-            </div>
-            
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Programadas</p>
-                  <p className="text-2xl font-bold text-indigo-700">{estadisticas.programadas}</p>
-                  <p className="text-xs text-gray-500 mt-1">Pendientes de confirmar</p>
-                </div>
-                <div className="bg-indigo-200 rounded-full p-3">
-                  <Clock className="w-6 h-6 text-indigo-700" />
-                </div>
-              </div>
-            </div>
-            
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Duración Promedio</p>
-                  <p className="text-2xl font-bold text-purple-700">{estadisticas.duracionPromedio} min</p>
-                  <p className="text-xs text-gray-500 mt-1">{estadisticas.horasTotales}h totales</p>
-                </div>
-                <div className="bg-purple-200 rounded-full p-3">
-                  <TrendingUp className="w-6 h-6 text-purple-700" />
-                </div>
-              </div>
-            </div>
-            
-              {estadisticas.citasHoy > 0 && (
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Citas Hoy</p>
-                    <p className="text-2xl font-bold text-orange-700">{estadisticas.citasHoy}</p>
-                    <p className="text-xs text-gray-500 mt-1">Día actual</p>
-                  </div>
-                  <div className="bg-orange-200 rounded-full p-3">
-                    <Calendar className="w-6 h-6 text-orange-700" />
-                  </div>
-                </div>
-              </div>
-            )}
-            
-              {estadisticas.citasUrgentes > 0 && (
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Urgentes</p>
-                    <p className="text-2xl font-bold text-red-700">{estadisticas.citasUrgentes}</p>
-                    <p className="text-xs text-gray-500 mt-1">Requieren atención</p>
-                  </div>
-                  <div className="bg-red-200 rounded-full p-3">
-                    <X className="w-6 h-6 text-red-700" />
-                  </div>
-                </div>
-              </div>
-            )}
-            
-              {estadisticas.realizadas > 0 && (
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Realizadas</p>
-                    <p className="text-2xl font-bold text-emerald-700">{estadisticas.realizadas}</p>
-                    <p className="text-xs text-gray-500 mt-1">{estadisticas.tasaAsistencia}% asistencia</p>
-                  </div>
-                  <div className="bg-emerald-200 rounded-full p-3">
-                    <CheckCircle className="w-6 h-6 text-emerald-700" />
-                  </div>
-                </div>
-              </div>
-            )}
-            
-              {estadisticas.canceladas > 0 && (
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Canceladas</p>
-                    <p className="text-2xl font-bold text-gray-700">{estadisticas.canceladas}</p>
-                    <p className="text-xs text-gray-500 mt-1">{estadisticas.tasaCancelacion}% del total</p>
-                  </div>
-                  <div className="bg-gray-200 rounded-full p-3">
-                    <X className="w-6 h-6 text-gray-700" />
-                  </div>
-                </div>
-              </div>
-            )}
-              </div>
-              
-              {/* Estadísticas secundarias y métricas avanzadas */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {/* Pacientes únicos */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Pacientes Únicos</p>
-                    <p className="text-2xl font-bold text-indigo-700">{estadisticas.pacientesUnicos}</p>
-                    <p className="text-xs text-gray-500 mt-1">En el rango</p>
-                  </div>
-                  <div className="bg-indigo-200 rounded-full p-3">
-                    <Users className="w-6 h-6 text-indigo-700" />
-                  </div>
-                </div>
-              </div>
-              
-                {/* Profesionales activos */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Profesionales</p>
-                    <p className="text-2xl font-bold text-violet-700">{estadisticas.profesionalesUnicos}</p>
-                    <p className="text-xs text-gray-500 mt-1">Activos en período</p>
-                  </div>
-                  <div className="bg-violet-200 rounded-full p-3">
-                    <Users className="w-6 h-6 text-violet-700" />
-                  </div>
-                </div>
-              </div>
-              
-                {/* Sedes activas */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Sedes</p>
-                    <p className="text-2xl font-bold text-cyan-700">{estadisticas.sedesUnicas}</p>
-                    <p className="text-xs text-gray-500 mt-1">Con actividad</p>
-                  </div>
-                  <div className="bg-cyan-200 rounded-full p-3">
-                    <MapPin className="w-6 h-6 text-cyan-700" />
-                  </div>
-                </div>
-              </div>
-              
-                {/* Citas con notas */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Con Notas</p>
-                    <p className="text-2xl font-bold text-amber-700">{estadisticas.citasConNotas}</p>
-                    <p className="text-xs text-gray-500 mt-1">{Math.round((estadisticas.citasConNotas / estadisticas.total) * 100)}% del total</p>
-                  </div>
-                  <div className="bg-amber-200 rounded-full p-3">
-                    <Bell className="w-6 h-6 text-amber-700" />
-                  </div>
-                </div>
-              </div>
-              </div>
-              
-              {/* Métricas de tiempo y distribución */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                {/* Citas mañana */}
-                {estadisticas.citasManana > 0 && (
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1 font-medium">Mañana</p>
-                      <p className="text-2xl font-bold text-teal-700">{estadisticas.citasManana}</p>
-                      <p className="text-xs text-gray-500 mt-1">Citas programadas</p>
+                {kpiConfig.total && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Total de Citas</p>
+                        <p className="text-2xl font-bold text-blue-700">{estadisticas.total}</p>
+                        <p className="text-xs text-gray-500 mt-1">En el rango seleccionado</p>
+                      </div>
+                      <div className="bg-blue-200 rounded-full p-3">
+                        <Calendar className="w-6 h-6 text-blue-700" />
+                      </div>
                     </div>
-                    <div className="bg-teal-200 rounded-full p-3">
-                      <Calendar className="w-5 h-5 text-teal-700" />
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-                {/* Próximos 3 días */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Próximos 3 Días</p>
-                    <p className="text-2xl font-bold text-sky-700">{estadisticas.citasProximos3Dias}</p>
-                    <p className="text-xs text-gray-500 mt-1">Citas próximas</p>
-                  </div>
-                  <div className="bg-sky-200 rounded-full p-3">
-                    <Activity className="w-5 h-5 text-sky-700" />
-                  </div>
-                </div>
-              </div>
-              
-                {/* Citas próximas (2 horas) */}
-                {estadisticas.citasProximas > 0 && (
-                  <div className="bg-white rounded-lg shadow-sm border border-yellow-200 p-4 ring-2 ring-yellow-300">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1 font-medium">Próximas 2h</p>
-                      <p className="text-2xl font-bold text-yellow-700">{estadisticas.citasProximas}</p>
-                      <p className="text-xs text-gray-500 mt-1">Requieren atención</p>
-                    </div>
-                    <div className="bg-yellow-200 rounded-full p-3">
-                      <Zap className="w-5 h-5 text-yellow-700" />
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-                {/* Hora más ocupada */}
-                {estadisticas.horaMasOcupada > 0 && (
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1 font-medium">Hora Pico</p>
-                      <p className="text-2xl font-bold text-rose-700">{estadisticas.horaMasOcupada}:00</p>
-                      <p className="text-xs text-gray-500 mt-1">Mayor ocupación</p>
-                    </div>
-                    <div className="bg-rose-200 rounded-full p-3">
-                      <BarChart3 className="w-5 h-5 text-rose-700" />
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-                {/* Duración mínima/máxima */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1 font-medium">Duración</p>
-                    <p className="text-lg font-bold text-pink-700">
-                      {estadisticas.duracionMinima}-{estadisticas.duracionMaxima} min
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">Rango de duraciones</p>
-                  </div>
-                  <div className="bg-pink-200 rounded-full p-3">
-                    <Clock className="w-5 h-5 text-pink-700" />
-                  </div>
-                </div>
-              </div>
-              </div>
-              
-              {/* Resumen de profesionales y sedes */}
-              {(estadisticas.profesionalMasOcupado || estadisticas.sedeMasOcupada) && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {estadisticas.profesionalMasOcupado && (
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Users className="w-5 h-5 text-blue-600" />
-                      <h3 className="font-semibold text-gray-800">Profesional Más Ocupado</h3>
-                    </div>
-                    <p className="text-lg font-bold text-blue-700">{estadisticas.profesionalMasOcupado}</p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {estadisticas.porProfesional[estadisticas.profesionalMasOcupado] || 0} citas en el período
-                    </p>
                   </div>
                 )}
                 
-                {estadisticas.sedeMasOcupada && (
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <MapPin className="w-5 h-5 text-green-600" />
-                      <h3 className="font-semibold text-gray-800">Sede Más Ocupada</h3>
+                {kpiConfig.confirmadas && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Confirmadas</p>
+                        <p className="text-2xl font-bold text-green-700">{estadisticas.confirmadas}</p>
+                        <p className="text-xs text-gray-500 mt-1">{estadisticas.tasaConfirmacion}% del total</p>
+                      </div>
+                      <div className="bg-green-200 rounded-full p-3">
+                        <CheckCircle className="w-6 h-6 text-green-700" />
+                      </div>
                     </div>
-                    <p className="text-lg font-bold text-green-700">{estadisticas.sedeMasOcupada}</p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {estadisticas.porSede[estadisticas.sedeMasOcupada] || 0} citas en el período
-                    </p>
+                  </div>
+                )}
+                
+                {kpiConfig.programadas && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Programadas</p>
+                        <p className="text-2xl font-bold text-indigo-700">{estadisticas.programadas}</p>
+                        <p className="text-xs text-gray-500 mt-1">Pendientes de confirmar</p>
+                      </div>
+                      <div className="bg-indigo-200 rounded-full p-3">
+                        <Clock className="w-6 h-6 text-indigo-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {kpiConfig.duracionPromedio && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Duración Promedio</p>
+                        <p className="text-2xl font-bold text-purple-700">{estadisticas.duracionPromedio} min</p>
+                        <p className="text-xs text-gray-500 mt-1">{estadisticas.horasTotales}h totales</p>
+                      </div>
+                      <div className="bg-purple-200 rounded-full p-3">
+                        <TrendingUp className="w-6 h-6 text-purple-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {kpiConfig.citasHoy && estadisticas.citasHoy > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Citas Hoy</p>
+                        <p className="text-2xl font-bold text-orange-700">{estadisticas.citasHoy}</p>
+                        <p className="text-xs text-gray-500 mt-1">Día actual</p>
+                      </div>
+                      <div className="bg-orange-200 rounded-full p-3">
+                        <Calendar className="w-6 h-6 text-orange-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {kpiConfig.citasUrgentes && estadisticas.citasUrgentes > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Urgentes</p>
+                        <p className="text-2xl font-bold text-red-700">{estadisticas.citasUrgentes}</p>
+                        <p className="text-xs text-gray-500 mt-1">Requieren atención</p>
+                      </div>
+                      <div className="bg-red-200 rounded-full p-3">
+                        <X className="w-6 h-6 text-red-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {kpiConfig.realizadas && estadisticas.realizadas > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Realizadas</p>
+                        <p className="text-2xl font-bold text-emerald-700">{estadisticas.realizadas}</p>
+                        <p className="text-xs text-gray-500 mt-1">{estadisticas.tasaAsistencia}% asistencia</p>
+                      </div>
+                      <div className="bg-emerald-200 rounded-full p-3">
+                        <CheckCircle className="w-6 h-6 text-emerald-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {kpiConfig.canceladas && estadisticas.canceladas > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Canceladas</p>
+                        <p className="text-2xl font-bold text-gray-700">{estadisticas.canceladas}</p>
+                        <p className="text-xs text-gray-500 mt-1">{estadisticas.tasaCancelacion}% del total</p>
+                      </div>
+                      <div className="bg-gray-200 rounded-full p-3">
+                        <X className="w-6 h-6 text-gray-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* KPIs Avanzados */}
+                {kpiConfig.tasaNoShow && (
+                  <div className="bg-white rounded-lg shadow-sm border border-purple-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Tasa No-Show</p>
+                        <p className="text-2xl font-bold text-purple-700">{estadisticas.tasaNoAsistencia}%</p>
+                        <p className="text-xs text-gray-500 mt-1">No asistieron</p>
+                      </div>
+                      <div className="bg-purple-200 rounded-full p-3">
+                        <TrendingUp className="w-6 h-6 text-purple-700" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {kpiConfig.ingresosPorHora && estadisticas.ingresosPorHora > 0 && (
+                  <div className="bg-white rounded-lg shadow-sm border border-green-200 p-4 hover:shadow-md transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1 font-medium">Ingresos/Hora</p>
+                        <p className="text-2xl font-bold text-green-700">€{estadisticas.ingresosPorHora}</p>
+                        <p className="text-xs text-gray-500 mt-1">Promedio</p>
+                      </div>
+                      <div className="bg-green-200 rounded-full p-3">
+                        <BarChart3 className="w-6 h-6 text-green-700" />
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
+              
+              {/* Estadísticas secundarias y métricas avanzadas */}
+              {(kpiConfig.pacientesUnicos || kpiConfig.profesionalesUnicos || kpiConfig.sedesUnicas || kpiConfig.citasConNotas) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {kpiConfig.pacientesUnicos && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Pacientes Únicos</p>
+                          <p className="text-2xl font-bold text-indigo-700">{estadisticas.pacientesUnicos}</p>
+                          <p className="text-xs text-gray-500 mt-1">En el rango</p>
+                        </div>
+                        <div className="bg-indigo-200 rounded-full p-3">
+                          <Users className="w-6 h-6 text-indigo-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.profesionalesUnicos && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Profesionales</p>
+                          <p className="text-2xl font-bold text-violet-700">{estadisticas.profesionalesUnicos}</p>
+                          <p className="text-xs text-gray-500 mt-1">Activos en período</p>
+                        </div>
+                        <div className="bg-violet-200 rounded-full p-3">
+                          <Users className="w-6 h-6 text-violet-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.sedesUnicas && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Sedes</p>
+                          <p className="text-2xl font-bold text-cyan-700">{estadisticas.sedesUnicas}</p>
+                          <p className="text-xs text-gray-500 mt-1">Con actividad</p>
+                        </div>
+                        <div className="bg-cyan-200 rounded-full p-3">
+                          <MapPin className="w-6 h-6 text-cyan-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.citasConNotas && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Con Notas</p>
+                          <p className="text-2xl font-bold text-amber-700">{estadisticas.citasConNotas}</p>
+                          <p className="text-xs text-gray-500 mt-1">{Math.round((estadisticas.citasConNotas / estadisticas.total) * 100)}% del total</p>
+                        </div>
+                        <div className="bg-amber-200 rounded-full p-3">
+                          <Bell className="w-6 h-6 text-amber-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Métricas de tiempo y distribución */}
+              {(kpiConfig.citasManana || kpiConfig.citasProximos3Dias || kpiConfig.citasProximas || kpiConfig.horaMasOcupada || kpiConfig.duracionMinMax) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                  {kpiConfig.citasManana && estadisticas.citasManana > 0 && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Mañana</p>
+                          <p className="text-2xl font-bold text-teal-700">{estadisticas.citasManana}</p>
+                          <p className="text-xs text-gray-500 mt-1">Citas programadas</p>
+                        </div>
+                        <div className="bg-teal-200 rounded-full p-3">
+                          <Calendar className="w-5 h-5 text-teal-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.citasProximos3Dias && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Próximos 3 Días</p>
+                          <p className="text-2xl font-bold text-sky-700">{estadisticas.citasProximos3Dias}</p>
+                          <p className="text-xs text-gray-500 mt-1">Citas próximas</p>
+                        </div>
+                        <div className="bg-sky-200 rounded-full p-3">
+                          <Activity className="w-5 h-5 text-sky-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.citasProximas && estadisticas.citasProximas > 0 && (
+                    <div className="bg-white rounded-lg shadow-sm border border-yellow-200 p-4 ring-2 ring-yellow-300">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Próximas 2h</p>
+                          <p className="text-2xl font-bold text-yellow-700">{estadisticas.citasProximas}</p>
+                          <p className="text-xs text-gray-500 mt-1">Requieren atención</p>
+                        </div>
+                        <div className="bg-yellow-200 rounded-full p-3">
+                          <Zap className="w-5 h-5 text-yellow-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.horaMasOcupada && estadisticas.horaMasOcupada > 0 && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Hora Pico</p>
+                          <p className="text-2xl font-bold text-rose-700">{estadisticas.horaMasOcupada}:00</p>
+                          <p className="text-xs text-gray-500 mt-1">Mayor ocupación</p>
+                        </div>
+                        <div className="bg-rose-200 rounded-full p-3">
+                          <BarChart3 className="w-5 h-5 text-rose-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.duracionMinMax && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1 font-medium">Duración</p>
+                          <p className="text-lg font-bold text-pink-700">
+                            {estadisticas.duracionMinima}-{estadisticas.duracionMaxima} min
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">Rango de duraciones</p>
+                        </div>
+                        <div className="bg-pink-200 rounded-full p-3">
+                          <Clock className="w-5 h-5 text-pink-700" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Resumen de profesionales y sedes */}
+              {(kpiConfig.profesionalMasOcupado || kpiConfig.sedeMasOcupada) && (estadisticas.profesionalMasOcupado || estadisticas.sedeMasOcupada) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {kpiConfig.profesionalMasOcupado && estadisticas.profesionalMasOcupado && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Users className="w-5 h-5 text-blue-600" />
+                        <h3 className="font-semibold text-gray-800">Profesional Más Ocupado</h3>
+                      </div>
+                      <p className="text-lg font-bold text-blue-700">{estadisticas.profesionalMasOcupado}</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {estadisticas.porProfesional[estadisticas.profesionalMasOcupado] || 0} citas en el período
+                      </p>
+                    </div>
+                  )}
+                  
+                  {kpiConfig.sedeMasOcupada && estadisticas.sedeMasOcupada && (
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <MapPin className="w-5 h-5 text-green-600" />
+                        <h3 className="font-semibold text-gray-800">Sede Más Ocupada</h3>
+                      </div>
+                      <p className="text-lg font-bold text-green-700">{estadisticas.sedeMasOcupada}</p>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {estadisticas.porSede[estadisticas.sedeMasOcupada] || 0} citas en el período
+                      </p>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}
@@ -1081,9 +1920,173 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
             />
           )}
 
-          {/* Toolbar - Botón de actualizar */}
+          {/* Toolbar - Selector de días visibles y botón de actualizar */}
           {vista !== 'mes' && (
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                {/* Selector de días visibles */}
+                <DaysRangeSelector
+                  valorInicial={diasVisibles}
+                  onChange={handleDiasVisiblesChange}
+                />
+                
+                {/* Toggle de agrupación (Profesionales/Boxes) */}
+                <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-gray-300 shadow-sm">
+                  <span className="text-sm text-gray-700 font-medium">Agrupar por:</span>
+                  <div className="flex items-center bg-gray-100 rounded-lg p-1">
+                    <button
+                      onClick={() => setGroupBy('profesional')}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition-all ${
+                        groupBy === 'profesional'
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                    >
+                      Profesionales
+                    </button>
+                    <button
+                      onClick={() => setGroupBy('box')}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition-all ${
+                        groupBy === 'box'
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                    >
+                      Boxes
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Botón para abrir mini calendario */}
+                <button
+                  onClick={() => setMostrarMiniCalendario(!mostrarMiniCalendario)}
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all border border-gray-300 shadow-sm"
+                  title="Abrir mini calendario para saltar a cualquier día"
+                >
+                  <Calendar size={20} />
+                  <span>Calendario</span>
+                </button>
+                
+                {/* Botón para configurar tiempo */}
+                <button
+                  onClick={() => setMostrarConfigTiempo(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all border border-gray-300 shadow-sm"
+                  title="Configurar escala temporal y rango horario"
+                >
+                  <Clock size={20} />
+                  <span>Config. Tiempo</span>
+                </button>
+                
+                {/* Botón para panel de citas pendientes */}
+                <button
+                  onClick={() => setMostrarPanelPendientes(!mostrarPanelPendientes)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-sm ${
+                    mostrarPanelPendientes
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title="Mostrar/ocultar panel de citas pendientes"
+                >
+                  <List size={20} />
+                  <span>Citas Pendientes</span>
+                </button>
+                
+                {/* Botón para panel de urgencias */}
+                <button
+                  onClick={() => setMostrarPanelUrgencias(!mostrarPanelUrgencias)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-sm relative ${
+                    mostrarPanelUrgencias
+                      ? 'bg-red-600 text-white border-red-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title="Mostrar/ocultar bandeja de urgencias"
+                >
+                  <AlertTriangle size={20} />
+                  <span>Urgencias</span>
+                  {estadisticas.citasUrgentes > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                      {estadisticas.citasUrgentes}
+                    </span>
+                  )}
+                </button>
+                
+                {/* Botón para panel de lista de espera */}
+                <button
+                  onClick={() => setMostrarPanelListaEspera(!mostrarPanelListaEspera)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-sm ${
+                    mostrarPanelListaEspera
+                      ? 'bg-purple-600 text-white border-purple-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title="Mostrar/ocultar lista de espera"
+                >
+                  <Clock size={20} />
+                  <span>Lista de Espera</span>
+                </button>
+                
+                {/* Botón para panel de solicitudes online */}
+                <button
+                  onClick={() => setMostrarPanelSolicitudesOnline(!mostrarPanelSolicitudesOnline)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-sm ${
+                    mostrarPanelSolicitudesOnline
+                      ? 'bg-indigo-600 text-white border-indigo-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title="Mostrar/ocultar solicitudes online pendientes"
+                >
+                  <Globe size={20} />
+                  <span>Solicitudes Online</span>
+                </button>
+                
+                {/* Botón para panel de notificaciones */}
+                <button
+                  onClick={() => setMostrarPanelNotificaciones(!mostrarPanelNotificaciones)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-sm relative ${
+                    mostrarPanelNotificaciones
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title="Mostrar/ocultar notificaciones recientes"
+                >
+                  <Bell size={20} />
+                  <span>Notificaciones</span>
+                  {notificaciones.filter(n => !n.leida).length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                      {notificaciones.filter(n => !n.leida).length}
+                    </span>
+                  )}
+                </button>
+                
+                {/* Botón para historial de cambios */}
+                {citaSeleccionada && (
+                  <button
+                    onClick={() => {
+                      setCitaParaHistorial(citaSeleccionada);
+                      setMostrarHistorialTimeline(true);
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all border border-gray-300 shadow-sm"
+                    title="Ver historial de cambios de la cita seleccionada"
+                  >
+                    <History size={20} />
+                    <span>Historial</span>
+                  </button>
+                )}
+                
+                {/* Botón para heatmap */}
+                <button
+                  onClick={() => setMostrarHeatmap(!mostrarHeatmap)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all border shadow-sm ${
+                    mostrarHeatmap
+                      ? 'bg-orange-600 text-white border-orange-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title="Mostrar/ocultar heatmap de ocupación"
+                >
+                  <BarChart3 size={20} />
+                  <span>Heatmap</span>
+                </button>
+              </div>
+              
               <button
                 onClick={cargarCitas}
                 disabled={loading}
@@ -1118,6 +2121,27 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               <RefreshCw size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
               <p className="text-gray-600">Cargando citas...</p>
             </div>
+          ) : usarVirtualizacion ? (
+            <CalendarioGridVirtualized
+              citas={citas}
+              fechaInicio={fechaInicio}
+              fechaFin={fechaFin}
+              vista={vista}
+              onCitaClick={handleCitaClick}
+              onSlotClick={handleSlotClick}
+              onCitaReprogramada={handleReprogramarCita}
+              onCitaResizeStart={handleCitaResizeStart}
+              onCitaResizeEnd={handleCitaResizeEnd}
+              visibleDays={diasVisibles}
+              groupBy={groupBy}
+              timeSlotDuration={timeSlotDuration}
+              visibleHours={visibleHours}
+              profesionales={profesionales}
+              userRole={user?.role}
+              tratamientos={tratamientos}
+              citaDestacada={citaDestacada}
+              onPerformanceMetrics={setPerformanceMetrics}
+            />
           ) : (
             <CalendarioGrid
               citas={citas}
@@ -1126,6 +2150,26 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               vista={vista}
               onCitaClick={handleCitaClick}
               onSlotClick={handleSlotClick}
+              onCitaReprogramada={handleReprogramarCita}
+              onCitaResizeStart={handleCitaResizeStart}
+              onCitaResizeEnd={handleCitaResizeEnd}
+              visibleDays={diasVisibles}
+              groupBy={groupBy}
+              timeSlotDuration={timeSlotDuration}
+              visibleHours={visibleHours}
+              profesionales={profesionales}
+              userRole={user?.role}
+              tratamientos={tratamientos}
+              citaDestacada={citaDestacada}
+            />
+          )}
+
+          {/* Mini Calendar Panel */}
+          {mostrarMiniCalendario && (
+            <MiniCalendarPanel
+              fechaActual={fechaInicio}
+              onDatePicked={handleDatePicked}
+              onClose={() => setMostrarMiniCalendario(false)}
             />
           )}
 
@@ -1135,6 +2179,11 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               citaId={citaSeleccionada._id}
               onClose={handleCerrarModal}
               onSave={handleGuardarCita}
+              onAbrirRecordatorios={handleAbrirRecordatorios}
+              onAbrirHistorial={(cita) => {
+                setCitaParaHistorial(cita);
+                setMostrarHistorialTimeline(true);
+              }}
             />
           )}
 
@@ -1151,6 +2200,159 @@ export default function AgendaDeCitasYProgramacionPage({ onNuevaCita }: AgendaDe
               tratamientos={tratamientos}
             />
           )}
+
+          {/* Modal de Configuración de Tiempo */}
+          <TimeConfigModal
+            isOpen={mostrarConfigTiempo}
+            onClose={() => setMostrarConfigTiempo(false)}
+            timeSlotDuration={timeSlotDuration}
+            visibleHours={visibleHours}
+            onSave={(duration, hours) => {
+              setTimeSlotDuration(duration);
+              setVisibleHours(hours);
+            }}
+            sedeId={filtros.sede_id}
+            sedes={sedes}
+          />
+
+          {/* Modal de Confirmación de Cambio de Sede */}
+          {reprogramacionPendiente && (
+            <ModalConfirmacionCambioSede
+              isOpen={mostrarModalCambioSede}
+              onClose={() => {
+                setMostrarModalCambioSede(false);
+                setReprogramacionPendiente(null);
+              }}
+              onConfirm={handleConfirmarCambioSede}
+              sedeOrigen={
+                citas.find(c => c._id === reprogramacionPendiente.citaId)?.sede.nombre || 'Sede actual'
+              }
+              sedeDestino={
+                reprogramacionPendiente.profesionalId
+                  ? profesionales.find(p => p._id === reprogramacionPendiente.profesionalId)?.nombre || 'Nueva sede'
+                  : 'Nueva sede'
+              }
+              pacienteNombre={
+                citas.find(c => c._id === reprogramacionPendiente.citaId)?.paciente.nombre + ' ' +
+                citas.find(c => c._id === reprogramacionPendiente.citaId)?.paciente.apellidos || 'Paciente'
+              }
+              loading={reprogramando}
+            />
+          )}
+
+          {/* Panel de Citas Pendientes */}
+          <PendingAppointmentsPanel
+            isOpen={mostrarPanelPendientes}
+            onClose={() => setMostrarPanelPendientes(false)}
+            onCitaProgramada={cargarCitas}
+            especialidades={Array.from(new Set(profesionales.map(p => p.especialidad).filter(Boolean)))}
+          />
+
+          {/* Panel de Urgencias */}
+          <UrgentAppointmentsPanel
+            isOpen={mostrarPanelUrgencias}
+            onClose={() => setMostrarPanelUrgencias(false)}
+            citas={citas}
+            onCitaActualizada={cargarCitas}
+          />
+
+          {/* Panel de Lista de Espera */}
+          <WaitlistPanel
+            isOpen={mostrarPanelListaEspera}
+            onClose={() => setMostrarPanelListaEspera(false)}
+            onCitaCreada={cargarCitas}
+            especialidades={Array.from(new Set(profesionales.map(p => p.especialidad).filter(Boolean)))}
+            citas={citas}
+          />
+
+          {/* Panel de Solicitudes Online */}
+          <OnlineRequestsPanel
+            isOpen={mostrarPanelSolicitudesOnline}
+            onClose={() => setMostrarPanelSolicitudesOnline(false)}
+            onCitaCreada={cargarCitas}
+            profesionales={profesionales}
+            tratamientos={tratamientos}
+          />
+
+          {/* Modal de Configuración de Recordatorios */}
+          {citaParaRecordatorios && (
+            <ReminderSettingsModal
+              isOpen={mostrarModalRecordatorios}
+              onClose={() => {
+                setMostrarModalRecordatorios(false);
+                setCitaParaRecordatorios(null);
+              }}
+              citaId={citaParaRecordatorios._id || ''}
+              pacienteNombre={`${citaParaRecordatorios.paciente.nombre} ${citaParaRecordatorios.paciente.apellidos}`}
+              fechaCita={citaParaRecordatorios.fecha_hora_inicio}
+            />
+          )}
+
+          {/* ToastArea para notificaciones en tiempo real */}
+          <ToastArea
+            toasts={toasts}
+            onRemove={removerToast}
+            onToastClick={handleToastClick}
+          />
+
+          {/* Panel de Notificaciones Recientes */}
+          <NotificacionesRecientesPanel
+            isOpen={mostrarPanelNotificaciones}
+            onClose={() => setMostrarPanelNotificaciones(false)}
+            notificaciones={notificaciones}
+            onNotificacionClick={handleNotificacionClick}
+            onMarcarLeida={handleMarcarLeida}
+            onLimpiarTodas={handleLimpiarNotificaciones}
+          />
+
+          {/* Panel de Historial de Cambios */}
+          <HistoryTimeline
+            isOpen={mostrarHistorialTimeline}
+            onClose={() => {
+              setMostrarHistorialTimeline(false);
+              setCitaParaHistorial(null);
+            }}
+            cita={citaParaHistorial}
+          />
+
+          {/* Card de Heatmap de Ocupación */}
+          {mostrarHeatmap && vista !== 'mes' && (
+            <AgendaHeatmapCard
+              citas={citas}
+              filtros={filtros}
+              onFiltrosChange={handleFiltrosChange}
+            />
+          )}
+
+          {/* Modal de Configuración de KPIs */}
+          <KpiConfigurator
+            isOpen={mostrarKpiConfigurator}
+            onClose={() => setMostrarKpiConfigurator(false)}
+            config={kpiConfig}
+            onConfigChange={(newConfig) => {
+              setKpiConfig(newConfig);
+              // Los cambios se reflejan inmediatamente sin recargar
+            }}
+          />
+
+          {/* Modal de Exportación de Citas */}
+          <ExportCitasModal
+            isOpen={mostrarExportModal}
+            onClose={() => setMostrarExportModal(false)}
+            citas={citas}
+            filtros={filtros}
+            profesionales={profesionales}
+            sedes={sedes}
+          />
+
+          {/* Indicador de Estado de Sincronización */}
+          <SyncStatusIndicator
+            operations={syncOperations}
+            onRetry={retryOperation}
+            onDismiss={removeOperation}
+            maxVisible={3}
+            autoHideDelay={3000}
+          />
         </div>
       </div>
     </div>

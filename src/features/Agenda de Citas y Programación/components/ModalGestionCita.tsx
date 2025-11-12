@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { X, Save, Calendar, User, Clock, Stethoscope, FileText, MapPin, AlertCircle } from 'lucide-react';
-import { Cita, NuevaCita, crearCita, actualizarCita } from '../api/citasApi';
+import { Cita, NuevaCita, crearCita, actualizarCita, subirDocumentoCita, eliminarDocumentoCita, descargarDocumentoCita, DocumentoCita } from '../api/citasApi';
+import DocumentUploader from './DocumentUploader';
+import { useAuth } from '../../../contexts/AuthContext';
 
 interface ModalGestionCitaProps {
   cita?: Cita | null;
@@ -34,6 +36,9 @@ export default function ModalGestionCita({
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [documentos, setDocumentos] = useState<DocumentoCita[]>(cita?.documentos || []);
+  const [citaIdTemporal, setCitaIdTemporal] = useState<string | null>(cita?._id || null);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (fechaSeleccionada && horaSeleccionada) {
@@ -116,17 +121,23 @@ export default function ModalGestionCita({
         throw new Error('La fecha de fin debe ser posterior a la fecha de inicio');
       }
       
-      // Simular guardado exitoso
+      // Guardar cita
+      let citaGuardada: Cita;
       if (cita?._id) {
-        // Simular actualización
-        console.log('Actualizando cita:', cita._id, formData);
+        // Actualizar cita existente
+        citaGuardada = await actualizarCita(cita._id, formData);
+        setCitaIdTemporal(cita._id);
       } else {
-        // Simular creación
-        console.log('Creando nueva cita:', formData);
+        // Crear nueva cita
+        citaGuardada = await crearCita(formData);
+        setCitaIdTemporal(citaGuardada._id || null);
       }
       
       onSave();
-      onClose();
+      // No cerrar el modal si hay documentos pendientes de subir
+      if (documentos.length === 0) {
+        onClose();
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al guardar la cita');
     } finally {
@@ -350,6 +361,60 @@ export default function ModalGestionCita({
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
+
+          {/* Gestión de Documentos - Solo mostrar si la cita ya tiene ID o después de guardar */}
+          {(cita?._id || citaIdTemporal) && (
+            <div className="pt-6 border-t border-gray-200">
+              <DocumentUploader
+                documentos={documentos}
+                onUpload={async (file, descripcion) => {
+                  const idCita = citaIdTemporal || cita?._id;
+                  if (!idCita) {
+                    throw new Error('La cita debe estar guardada antes de subir documentos');
+                  }
+                  try {
+                    const nuevoDocumento = await subirDocumentoCita(idCita, file, descripcion);
+                    setDocumentos(prev => [...prev, nuevoDocumento]);
+                  } catch (err) {
+                    throw err;
+                  }
+                }}
+                onDelete={async (documentoId) => {
+                  const idCita = citaIdTemporal || cita?._id;
+                  if (!idCita) return;
+                  try {
+                    await eliminarDocumentoCita(idCita, documentoId);
+                    setDocumentos(prev => prev.filter(d => d._id !== documentoId));
+                  } catch (err) {
+                    throw err;
+                  }
+                }}
+                onDownload={async (documento) => {
+                  const idCita = citaIdTemporal || cita?._id;
+                  if (!idCita || !documento._id) return;
+                  try {
+                    const blob = await descargarDocumentoCita(idCita, documento._id);
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = documento.nombre;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                  } catch (err) {
+                    throw err;
+                  }
+                }}
+                onPreview={(documento) => {
+                  if (documento.url) {
+                    window.open(documento.url, '_blank');
+                  }
+                }}
+                usuarioActual={user ? { _id: user._id, nombre: user.nombre } : undefined}
+              />
+            </div>
+          )}
 
           <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
             <button

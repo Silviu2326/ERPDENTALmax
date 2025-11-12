@@ -46,7 +46,7 @@ export default function FiltrosCalendario({
     });
   };
 
-  const tieneFiltrosActivos = filtros.profesional_id || filtros.sede_id || filtros.estado || busquedaPaciente;
+  const tieneFiltrosActivos = filtros.profesional_id || filtros.sede_id || filtros.estado || filtros.box_id || busquedaPaciente;
 
   // Presets de fechas rápidas
   const aplicarPresetFecha = (preset: 'hoy' | 'semana' | 'mes' | 'proximoMes') => {
@@ -115,7 +115,7 @@ export default function FiltrosCalendario({
               <span>Filtros</span>
               {tieneFiltrosActivos && (
                 <span className="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">
-                  {[filtros.profesional_id, filtros.sede_id, filtros.estado, busquedaPaciente].filter(Boolean).length}
+                  {[filtros.profesional_id, filtros.sede_id, filtros.estado, filtros.box_id, busquedaPaciente].filter(Boolean).length}
                 </span>
               )}
             </button>
@@ -164,7 +164,7 @@ export default function FiltrosCalendario({
         {/* Panel de Filtros Avanzados */}
         {mostrarFiltros && (
           <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-4 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   <Users size={16} className="inline mr-1" />
@@ -221,6 +221,30 @@ export default function FiltrosCalendario({
                   ))}
                 </select>
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <MapPin size={16} className="inline mr-1" />
+                  Box
+                </label>
+                <select
+                  value={filtros.box_id || ''}
+                  onChange={(e) => handleChange('box_id', e.target.value)}
+                  className="w-full rounded-xl bg-white text-slate-900 ring-1 ring-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-400 px-3 py-2.5"
+                >
+                  <option value="">Todos los boxes</option>
+                  {Array.from({ length: 8 }, (_, i) => i + 1).map((num) => (
+                    <option key={num} value={num.toString()}>
+                      Box {num}
+                    </option>
+                  ))}
+                  {['A', 'B', 'C', 'D'].map((letra) => (
+                    <option key={letra} value={letra}>
+                      Box {letra}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             
             {/* Filtros de fecha personalizados */}
@@ -262,7 +286,7 @@ export default function FiltrosCalendario({
         {/* Resumen de resultados */}
         {tieneFiltrosActivos && (
           <div className="flex justify-between items-center text-sm text-slate-600 border-t border-slate-200 pt-4">
-            <span>Filtros aplicados: {[filtros.profesional_id, filtros.sede_id, filtros.estado, busquedaPaciente].filter(Boolean).length}</span>
+            <span>Filtros aplicados: {[filtros.profesional_id, filtros.sede_id, filtros.estado, filtros.box_id, busquedaPaciente].filter(Boolean).length}</span>
             <div className="flex flex-wrap gap-2">
               {filtros.profesional_id && (
                 <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
@@ -277,6 +301,11 @@ export default function FiltrosCalendario({
               {filtros.estado && (
                 <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
                   {estados.find(e => e.value === filtros.estado)?.label}
+                </span>
+              )}
+              {filtros.box_id && (
+                <span className="px-2 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">
+                  Box {filtros.box_id}
                 </span>
               )}
               {busquedaPaciente && (
