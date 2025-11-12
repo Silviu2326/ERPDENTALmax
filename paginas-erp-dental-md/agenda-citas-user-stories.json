@@ -1,0 +1,120 @@
+{
+  "user_stories": [
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero un mini calendario mensual anclado en la agenda para saltar a cualquier día y que, al seleccionar una fecha, el código cree un nuevo componente `MiniCalendarPanel.tsx` en `components/` que emita `onDatePicked`, ajuste `filtros`, enfoque automáticamente la semana elegida y registre métricas de uso. Se debe actualizar `Agenda de Citas y ProgramaciónPage.tsx` para montar y desmontar el panel, añadir pruebas unitarias para el evento `onDatePicked` y documentar el nuevo panel en la guía interna."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Coordinador/a",
+      "description": "Como coordinador/a quiero un selector de número de días visibles (1, 3, 5 o 7) incrustado en la toolbar para adaptar la pantalla, por lo que se debe crear el control `DaysRangeSelector`, modificar `CalendarioGrid` para aceptar un prop `visibleDays` que recalcula las columnas, persistir la preferencia en `localStorage` y cubrir la lógica con pruebas de regresión visual."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Coordinador/a",
+      "description": "Como coordinador/a quiero alternar la agrupación entre profesionales y boxes desde un toggle en `Agenda de Citas y ProgramaciónPage.tsx`, obligando a introducir un prop `groupBy` en `CalendarioGrid`, actualizar la lógica de columnas, enganchar nuevos selectores para filtrar por box, y validar la experiencia con pruebas E2E (seleccionar box y visualizar citas correctas)."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero poder configurar la escala temporal (10, 15, 30 minutos) y el rango horario visible sin salir de la agenda; se debe añadir estado `timeSlotDuration` y `visibleHours` en la página, ajustar `CalendarioGrid` para cortar slots fuera del rango, exponer un modal de configuración rápida y agregar validaciones para los límites horarios por sede."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero arrastrar una cita a otro horario dentro del mismo profesional, por lo que hay que integrar una librería de drag & drop ligera en la página, habilitar `draggable` en cada celda de `CalendarioGrid`, persistir los cambios mediante un handler `handleReprogramarCita`, mostrar una previsualización durante el arrastre y registrar la acción en el historial de la cita."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Coordinador/a",
+      "description": "Como coordinador/a quiero mover citas entre profesionales o boxes compatibles desde la misma cuadrícula; se deben añadir validaciones en `CalendarioGrid` para comprobar permisos, mantener historial, rechazar arrastres hacia profesionales sin capacidad para el tratamiento, y ejecutar un flujo de confirmación cuando la reasignación implique cambio de sede."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero redimensionar la duración de una cita arrastrando su borde inferior; hay que añadir controladores `onResizeStart`/`onResizeEnd` en `CalendarioGrid`, recalcular `fecha_hora_fin` respetando la duración mínima de cada tratamiento, bloquear reducciones en solapamientos y actualizar el historial con la duración previa."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista necesito un panel lateral de citas sin hora para arrastrarlas a la agenda, lo que implica construir `components/PendingAppointmentsPanel.tsx`, alimentarlo con la colección `citasPendientes`, sincronizarlo con el backend al programar un hueco, ofrecer filtros por especialidad y permitir marcar items como descartados."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero una bandeja de urgencias destacada dentro de la agenda; se debe añadir un filtro que identifique `notas` o flags `esUrgente`, mostrar un panel anclado con estilo de alerta, permitir marcar la cita como atendida sin abandonar la vista principal y activar un sonido o animación configurable."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero gestionar una lista de espera que sugiera huecos tras cancelaciones; debemos crear la estructura `listaEspera` en estado, un panel `WaitlistPanel`, un algoritmo que recomiende slots similares cuando se libere un espacio, y un registro de intentos de reasignación para auditoría."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero revisar y aprobar solicitudes online desde la agenda; se debe añadir `OnlineRequestsPanel` que consuma un endpoint de reservas pendientes (vía webhook o polling), permita aceptar o proponer horarios alternos, genere la cita confirmada sin salir de la página y envíe un correo automático al paciente con el resultado."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Coordinador/a",
+      "description": "Como coordinador/a quiero configurar recordatorios automáticos por SMS/email sin abandonar la agenda; se debe agregar un modal `ReminderSettingsModal`, enlazarlo con endpoints de notificaciones, registrar la programación de recordatorios en tabla `recordatorios_citas`, y mostrar en cada cita el estado del último envío y próximos envíos programados."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero que la agenda actualice automáticamente el estado de una cita cuando el paciente confirme o cancele desde un enlace externo; hay que suscribirse a un canal de eventos (webhook o websocket), refrescar la cita específica en el estado local, guardar el canal de confirmación utilizado y mostrar un badge con la fuente (email, SMS, WhatsApp)."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Profesional",
+      "description": "Como profesional quiero recibir notificaciones en la agenda cuando se me asigna, reprograma o cancela una cita; se debe integrar un `ToastArea`, conectarlo al servicio de notificaciones en tiempo real, destacar la tarjeta correspondiente al abrir la alerta y añadir una sección \"Notificaciones recientes\" que guarde las últimas 20 acciones relevantes."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero ver badges en cada cita que indiquen si el paciente es VIP, ansioso o tiene movilidad reducida; hay que mapear tags en el objeto `cita` a un set de iconos, renderizar `PatientBadgeStrip` dentro de cada celda del `CalendarioGrid`, permitir personalizar colores desde configuración y añadir tooltip accesible."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Profesional",
+      "description": "Como profesional quiero adjuntar y consultar documentos desde el modal de la cita; se debe ampliar `ModalGestionCita`/`ModalEditarCita` para incorporar un uploader con previsualización, almacenar metadatos en la cita, habilitar descargas seguras, versionar archivos y registrar quién subió cada documento."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Administrador/a",
+      "description": "Como administrador/a quiero filtrar y exportar el historial de cambios de una cita desde la agenda; hay que crear un panel `HistoryTimeline` con filtros por tipo de evento, paginar resultados si exceden X registros, ofrecer botón de exportación CSV/Excel y agregar auditoría específica para cambios realizados por drag & drop o API."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Coordinador/a",
+      "description": "Como coordinador/a quiero visualizar un heatmap de ocupación por hora y día dentro de la agenda; se debe añadir un nuevo bloque `AgendaHeatmapCard`, reutilizar los filtros actuales, soportar cambio de rangos (día, semana, mes), permitir exportar la imagen del mapa de calor y registrar el dato de \"hora pico\" seleccionado."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Administrador/a",
+      "description": "Como administrador/a quiero configurar qué KPIs aparecen en el panel superior; hay que crear un modal `KpiConfigurator`, persistir las preferencias por usuario, añadir toggles para KPIs avanzados (tasa no-show, ingresos por hora), y validar que los cambios se reflejan inmediatamente sin recargar."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Coordinador/a",
+      "description": "Como coordinador/a quiero exportar las citas visibles con los filtros actuales; se debe añadir un botón `Exportar` que genere CSV/Excel usando los datos ya cargados, permitir seleccionar columnas opcionales, incluir metadatos de filtros aplicados y generar logs de exportación para seguimiento."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Administrador/a",
+      "description": "Como administrador/a quiero que la agenda virtualice slots y citas para mantener el rendimiento con grandes volúmenes; hay que sustituir el renderizado plano de `CalendarioGrid` por virtualización (`react-window` o similar), garantizar compatibilidad con drag & drop, medir el rendimiento antes/después e instrumentar métricas de frame rate."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero un indicador de sincronización que muestre el estado de los cambios enviados; se debe crear un componente `SyncStatusIndicator`, escuchar las promesas de mutación, mostrar estados `Sincronizando`, `Guardado` o `Error`, ofrecer reintento manual y emitir eventos para analítica de fallos."
+    },
+    {
+      "feature": "src/features/Agenda de Citas y Programación/pages/Agenda de Citas y ProgramaciónPage.tsx",
+      "persona": "Recepcionista",
+      "description": "Como recepcionista quiero seguir consultando la agenda en modo lectura cuando se pierda la conexión; se debe implementar cache local (IndexedDB o service worker), mostrar un banner \"Modo offline\", impedir ediciones hasta recuperar la conexión, re-sincronizar automáticamente y añadir pruebas simuladas de pérdida de red."
+    }
+  ]
+}
+
